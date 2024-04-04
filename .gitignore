@@ -3,3 +3,7 @@
 .desktop.ini
 ./ocnet/.vs
 ./ocnet/desktop.ini
+./vs
+/.vs
+/ocnet/.vs
+/ocnet/desktop.ini

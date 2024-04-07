@@ -7,3 +7,5 @@
 /.vs
 /ocnet/.vs
 /ocnet/desktop.ini
+/ocnet/Builds/VisualStudio2022/.vs/ocnet
+/ocnet/Builds/VisualStudio2022/x64/Debug

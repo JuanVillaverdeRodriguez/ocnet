@@ -8,11 +8,24 @@
 
 #pragma once
 
+#include "SynthVoice.h"
+#include "SynthSound.h"
 #include <JuceHeader.h>
+#include <juce_dsp/juce_dsp.h>
+
 
 //==============================================================================
 /**
 */
+
+struct ChainSettings {
+    float volume{ 0 };
+    float panning{ 0 };
+
+};
+
+ChainSettings getChainSettings(juce::AudioProcessorValueTreeState& apvts);
+
 class OcnetAudioProcessor  : public juce::AudioProcessor
 {
 public:
@@ -53,7 +66,20 @@ public:
     void getStateInformation (juce::MemoryBlock& destData) override;
     void setStateInformation (const void* data, int sizeInBytes) override;
 
+    //==============================================================================
+    float noteOnVel;
+
+    static juce::AudioProcessorValueTreeState::ParameterLayout
+        createParameterLayout();
+
+    juce::AudioProcessorValueTreeState apvts { *this, nullptr, "Parameters", createParameterLayout() };
+
 private:
     //==============================================================================
+
+    
+
+    juce::Synthesiser synth;
+    
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (OcnetAudioProcessor)
 };

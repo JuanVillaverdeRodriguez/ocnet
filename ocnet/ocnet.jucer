@@ -2,9 +2,11 @@
 
 <JUCERPROJECT id="x4XYiE" name="ocnet" projectType="audioplug" useAppConfig="0"
               addUsingNamespaceToJuceHeader="0" displaySplashScreen="1" jucerFormatVersion="1"
-              pluginFormats="buildVST3">
+              pluginFormats="buildVST3" pluginAUMainType="'augn'" pluginVST3Category="Instrument"
+              pluginVSTCategory="kPlugCategSynth" pluginCharacteristicsValue="pluginIsSynth,pluginWantsMidiIn">
   <MAINGROUP id="Fay8LI" name="ocnet">
     <GROUP id="{B897E036-BD65-2195-C049-E6C429F0FF25}" name="Source">
+      <FILE id="YewoTv" name="SynthSound.h" compile="0" resource="0" file="Source/SynthSound.h"/>
       <FILE id="yGLvQj" name="PluginProcessor.cpp" compile="1" resource="0"
             file="Source/PluginProcessor.cpp"/>
       <FILE id="aIKcr7" name="PluginProcessor.h" compile="0" resource="0"
@@ -12,6 +14,8 @@
       <FILE id="XtJAib" name="PluginEditor.cpp" compile="1" resource="0"
             file="Source/PluginEditor.cpp"/>
       <FILE id="PY1HNR" name="PluginEditor.h" compile="0" resource="0" file="Source/PluginEditor.h"/>
+      <FILE id="jrODdM" name="SynthVoice.cpp" compile="1" resource="0" file="Source/SynthVoice.cpp"/>
+      <FILE id="Rh7hjm" name="SynthVoice.h" compile="0" resource="0" file="Source/SynthVoice.h"/>
     </GROUP>
   </MAINGROUP>
   <MODULES>
@@ -24,10 +28,12 @@
     <MODULE id="juce_audio_utils" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>
     <MODULE id="juce_core" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>
     <MODULE id="juce_data_structures" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>
+    <MODULE id="juce_dsp" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>
     <MODULE id="juce_events" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>
     <MODULE id="juce_graphics" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>
     <MODULE id="juce_gui_basics" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>
     <MODULE id="juce_gui_extra" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>
+    <MODULE id="juce_osc" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>
   </MODULES>
   <JUCEOPTIONS JUCE_STRICT_REFCOUNTEDPOINTER="1" JUCE_VST3_CAN_REPLACE_VST2="0"/>
   <EXPORTFORMATS>
@@ -49,6 +55,8 @@
         <MODULEPATH id="juce_graphics" path="../../Juce/JUCE/modules"/>
         <MODULEPATH id="juce_gui_basics" path="../../Juce/JUCE/modules"/>
         <MODULEPATH id="juce_gui_extra" path="../../Juce/JUCE/modules"/>
+        <MODULEPATH id="juce_dsp" path="../../Juce/JUCE/modules"/>
+        <MODULEPATH id="juce_osc" path="../../Juce/JUCE/modules"/>
       </MODULEPATHS>
     </VS2022>
   </EXPORTFORMATS>

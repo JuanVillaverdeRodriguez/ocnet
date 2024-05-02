@@ -5,9 +5,9 @@
 
   ==============================================================================
 */
-
 #include "PluginProcessor.h"
 #include "PluginEditor.h"
+#include <windows.h>
 
 //==============================================================================
 OcnetAudioProcessor::OcnetAudioProcessor()
@@ -22,6 +22,8 @@ OcnetAudioProcessor::OcnetAudioProcessor()
                        )
 #endif
 {
+    synth.addSound(new SynthSound());
+    synth.addVoice(new SynthVoice());
 }
 
 OcnetAudioProcessor::~OcnetAudioProcessor()
@@ -95,6 +97,19 @@ void OcnetAudioProcessor::prepareToPlay (double sampleRate, int samplesPerBlock)
 {
     // Use this method as the place to do any pre-playback
     // initialisation that you need..
+
+    
+
+    synth.setCurrentPlaybackSampleRate(sampleRate);
+
+    for (int i = 0; i < synth.getNumVoices(); i++) {
+
+        if (auto voice = dynamic_cast<SynthVoice*>(synth.getVoice(i))) {
+            voice->prepareToPlay(sampleRate, samplesPerBlock, getTotalNumOutputChannels());
+        }
+    }
+
+    
 }
 
 void OcnetAudioProcessor::releaseResources()
@@ -132,30 +147,68 @@ bool OcnetAudioProcessor::isBusesLayoutSupported (const BusesLayout& layouts) co
 void OcnetAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juce::MidiBuffer& midiMessages)
 {
     juce::ScopedNoDenormals noDenormals;
-    auto totalNumInputChannels  = getTotalNumInputChannels();
+    auto totalNumInputChannels = getTotalNumInputChannels();
     auto totalNumOutputChannels = getTotalNumOutputChannels();
 
-    // In case we have more outputs than inputs, this code clears any output
-    // channels that didn't contain input data, (because these aren't
-    // guaranteed to be empty - they may contain garbage).
-    // This is here to avoid people getting screaming feedback
-    // when they first compile a plugin, but obviously you don't need to keep
-    // this code if your algorithm always overwrites all the output channels.
-    for (auto i = totalNumInputChannels; i < totalNumOutputChannels; ++i)
-        buffer.clear (i, 0, buffer.getNumSamples());
 
-    // This is the place where you'd normally do the guts of your plugin's
-    // audio processing...
-    // Make sure to reset the state if your inner loop is processing
-    // the samples and the outer loop is handling the channels.
-    // Alternatively, you can process the samples with the channels
-    // interleaved by keeping the same state.
+    for (auto i = totalNumInputChannels; i < totalNumOutputChannels; ++i)
+        buffer.clear(i, 0, buffer.getNumSamples());
+
+
+    for (int i = 0; i < synth.getNumVoices(); ++i) {
+        if (auto voice = dynamic_cast<juce::SynthesiserVoice*>(synth.getVoice(i))) { // Si la voz es del tipo juce::SynthesiserVoice...
+            // OSC controls
+            // ADSR
+            // LFO
+        }
+    }
+
+    synth.renderNextBlock(buffer, midiMessages, 0, buffer.getNumSamples());
+
+
+
+    auto chainSettings = getChainSettings(apvts);
+    noteOnVel = chainSettings.volume;
+    DBG("INPUT CHANNELS: " + std::to_string((totalNumInputChannels)));
+    DBG("OUTPUT CHANNELS: " + std::to_string((totalNumOutputChannels)));
+
+    const auto panAngle = chainSettings.volume * juce::MathConstants<float>::halfPi;
+    const auto* const* read = buffer.getArrayOfReadPointers();
+
+    auto* const* write = buffer.getArrayOfWritePointers();
+
+    for (auto channel = 0; channel < buffer.getNumChannels(); ++channel) {
+
+        const auto pan = channel == 0 ? std::cos(panAngle) : std::sin(panAngle);
+
+        for (auto sample = 0; sample < buffer.getNumSamples(); ++sample) {
+
+            write[channel][sample] = read[channel][sample] * pan;
+        }
+    }
     for (int channel = 0; channel < totalNumInputChannels; ++channel)
     {
-        auto* channelData = buffer.getWritePointer (channel);
+        auto* channelData = buffer.getWritePointer(channel);
+        
+        for (int sample = 0; sample < buffer.getNumSamples(); ++sample) {
+
+
+            if (chainSettings.panning > 0.0f && channel == 1) {
+                channelData[sample] = buffer.getSample(0, sample) * 1;;
+                channelData[sample] = buffer.getSample(1, sample) * (1 - chainSettings.panning);;
+
+            }
+            if (chainSettings.panning <= 0.0f && channel == 0) {
+                channelData[sample] = buffer.getSample(1, sample) * (1 + chainSettings.panning);;
+                channelData[sample] = buffer.getSample(0, sample) * 1 ;;
+            }
+            
+        }
+
 
         // ..do something to the data...
     }
+    
 }
 
 //==============================================================================
@@ -166,7 +219,8 @@ bool OcnetAudioProcessor::hasEditor() const
 
 juce::AudioProcessorEditor* OcnetAudioProcessor::createEditor()
 {
-    return new OcnetAudioProcessorEditor (*this);
+    //return new OcnetAudioProcessorEditor (*this);
+    return new juce::GenericAudioProcessorEditor(*this);
 }
 
 //==============================================================================
@@ -183,6 +237,23 @@ void OcnetAudioProcessor::setStateInformation (const void* data, int sizeInBytes
     // whose contents will have been created by the getStateInformation() call.
 }
 
+ChainSettings getChainSettings(juce::AudioProcessorValueTreeState& apvts) {
+    ChainSettings settings;
+
+    settings.volume = apvts.getRawParameterValue("VolumeGain")->load();
+    settings.panning = apvts.getRawParameterValue("Panning")->load();
+
+    return settings;
+}
+juce::AudioProcessorValueTreeState::ParameterLayout OcnetAudioProcessor::createParameterLayout() {
+
+    juce::AudioProcessorValueTreeState::ParameterLayout layout;
+    layout.add(std::make_unique<juce::AudioParameterFloat> ("VolumeGain", "VolumeGain", juce::NormalisableRange<float>(0.f, 1.f, 0.01f, 1.f), 0.5f));
+
+    layout.add(std::make_unique<juce::AudioParameterFloat>("Panning", "Panning", juce::NormalisableRange<float>(-1.f, 1.f, 0.01f, 1.f), 0.0f));
+
+    return layout;
+}
 //==============================================================================
 // This creates new instances of the plugin..
 juce::AudioProcessor* JUCE_CALLTYPE createPluginFilter()

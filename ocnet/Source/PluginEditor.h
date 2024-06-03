@@ -10,9 +10,8 @@
 
 #include <JuceHeader.h>
 #include "PluginProcessor.h"
-#include "../Builds/VisualStudio2022/Knob1.h"
 #include "../Builds/VisualStudio2022/FullGui.h"
-#include "../Builds/VisualStudio2022/OscilatorSection.h"
+#include "Knobs/Knob1.h"
 
 
 
@@ -43,7 +42,23 @@ private:
 
     std::vector<juce::Component*> getComps();
     Knob1 midiVolume;
-    OscilatorSection oscilator;
+    //OscilatorSection oscilator;
+
+    Knob1 attackKnob;
+    Knob1 decayKnob;
+    Knob1 sustainKnob;
+    Knob1 releaseKnob;
+    juce::ComboBox oscSelector;
+
+    using SliderAttachment = juce::AudioProcessorValueTreeState::SliderAttachment;
+    std::unique_ptr<SliderAttachment> attackAttachment; //A
+    std::unique_ptr<SliderAttachment> decayAttachment; //D
+    std::unique_ptr<SliderAttachment> sustainAttachment; //S
+    std::unique_ptr<SliderAttachment> releaseAttachment; //R
+
+    std::unique_ptr<juce::AudioProcessorValueTreeState::ComboBoxAttachment> oscSelectorAttachment;
+    //Unique ponteirs para que al cerrar la UI (el plugin se destruye) se libere la memoria
+
 
     /*using APVTS = juce::AudioProcessorValueTreeState;
     using Attachment = APVTS::SliderAttachment;*/

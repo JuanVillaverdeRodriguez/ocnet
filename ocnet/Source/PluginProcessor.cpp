@@ -97,9 +97,7 @@ void OcnetAudioProcessor::prepareToPlay (double sampleRate, int samplesPerBlock)
 {
     // Use this method as the place to do any pre-playback
     // initialisation that you need..
-
     
-
     synth.setCurrentPlaybackSampleRate(sampleRate);
 
     for (int i = 0; i < synth.getNumVoices(); i++) {
@@ -150,27 +148,37 @@ void OcnetAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juce::
     auto totalNumInputChannels = getTotalNumInputChannels();
     auto totalNumOutputChannels = getTotalNumOutputChannels();
 
+   
+
 
     for (auto i = totalNumInputChannels; i < totalNumOutputChannels; ++i)
         buffer.clear(i, 0, buffer.getNumSamples());
 
 
     for (int i = 0; i < synth.getNumVoices(); ++i) {
-        if (auto voice = dynamic_cast<juce::SynthesiserVoice*>(synth.getVoice(i))) { // Si la voz es del tipo juce::SynthesiserVoice...
+        if (auto voice = dynamic_cast<SynthVoice*>(synth.getVoice(i))) { // Si la voz es del tipo juce::SynthesiserVoice...
+            
+            auto& attack = *apvts.getRawParameterValue("ATTACK");
+            auto& decay = *apvts.getRawParameterValue("DECAY");
+            auto& sustain = *apvts.getRawParameterValue("SUSTAIN");
+            auto& release = *apvts.getRawParameterValue("RELEASE");
+
+            voice->updateADSR(attack.load(), decay.load(), sustain.load(), release.load());
             // OSC controls
             // ADSR
             // LFO
+            
         }
     }
 
-    synth.renderNextBlock(buffer, midiMessages, 0, buffer.getNumSamples());
+    synth.renderNextBlock(buffer, midiMessages,  0, buffer.getNumSamples());
+
+    /*DBG("INPUT CHANNELS: " + std::to_string((buffer.getNumSamples())));
 
 
 
     auto chainSettings = getChainSettings(apvts);
     noteOnVel = chainSettings.volume;
-    DBG("INPUT CHANNELS: " + std::to_string((totalNumInputChannels)));
-    DBG("OUTPUT CHANNELS: " + std::to_string((totalNumOutputChannels)));
 
     const auto panAngle = chainSettings.volume * juce::MathConstants<float>::halfPi;
     const auto* const* read = buffer.getArrayOfReadPointers();
@@ -185,30 +193,7 @@ void OcnetAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juce::
 
             write[channel][sample] = read[channel][sample] * pan;
         }
-    }
-    for (int channel = 0; channel < totalNumInputChannels; ++channel)
-    {
-        auto* channelData = buffer.getWritePointer(channel);
-        
-        for (int sample = 0; sample < buffer.getNumSamples(); ++sample) {
-
-
-            if (chainSettings.panning > 0.0f && channel == 1) {
-                channelData[sample] = buffer.getSample(0, sample) * 1;;
-                channelData[sample] = buffer.getSample(1, sample) * (1 - chainSettings.panning);;
-
-            }
-            if (chainSettings.panning <= 0.0f && channel == 0) {
-                channelData[sample] = buffer.getSample(1, sample) * (1 + chainSettings.panning);;
-                channelData[sample] = buffer.getSample(0, sample) * 1 ;;
-            }
-            
-        }
-
-
-        // ..do something to the data...
-    }
-    
+    }    */
 }
 
 //==============================================================================
@@ -219,8 +204,8 @@ bool OcnetAudioProcessor::hasEditor() const
 
 juce::AudioProcessorEditor* OcnetAudioProcessor::createEditor()
 {
-    //return new OcnetAudioProcessorEditor (*this);
-    return new juce::GenericAudioProcessorEditor(*this);
+    return new OcnetAudioProcessorEditor (*this);
+    //return new juce::GenericAudioProcessorEditor(*this);
 }
 
 //==============================================================================
@@ -248,9 +233,24 @@ ChainSettings getChainSettings(juce::AudioProcessorValueTreeState& apvts) {
 juce::AudioProcessorValueTreeState::ParameterLayout OcnetAudioProcessor::createParameterLayout() {
 
     juce::AudioProcessorValueTreeState::ParameterLayout layout;
+    //std::vector<std::unique_ptr<juce::RangedAudioParameter>> params;
+
+
+    //VOLUME
     layout.add(std::make_unique<juce::AudioParameterFloat> ("VolumeGain", "VolumeGain", juce::NormalisableRange<float>(0.f, 1.f, 0.01f, 1.f), 0.5f));
 
+    //PANNING
     layout.add(std::make_unique<juce::AudioParameterFloat>("Panning", "Panning", juce::NormalisableRange<float>(-1.f, 1.f, 0.01f, 1.f), 0.0f));
+    
+    
+    //OSCILLATOR
+    layout.add(std::make_unique<juce::AudioParameterChoice>("OSC", "Oscillator", juce::StringArray {"Sine", "Saw", "Square"}, 0));
+
+    //ADSR
+    layout.add(std::make_unique<juce::AudioParameterFloat>("ATTACK", "Attack", juce::NormalisableRange<float>(0.f, 1.f, 0.01f, 1.f), 0.0f));
+    layout.add(std::make_unique<juce::AudioParameterFloat>("DECAY", "Decay", juce::NormalisableRange<float>(0.f, 1.f, 0.01f, 1.f), 0.0f));
+    layout.add(std::make_unique<juce::AudioParameterFloat>("SUSTAIN", "Sustain", juce::NormalisableRange<float>(0.f, 1.f, 0.01f, 1.f), 0.0f));
+    layout.add(std::make_unique<juce::AudioParameterFloat>("RELEASE", "Release", juce::NormalisableRange<float>(0.f, 1.f, 0.01f, 1.f), 0.0f));
 
     return layout;
 }

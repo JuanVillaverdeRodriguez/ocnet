@@ -16,32 +16,21 @@
 OcnetAudioProcessorEditor::OcnetAudioProcessorEditor (OcnetAudioProcessor& p)
     : AudioProcessorEditor (&p), audioProcessor (p)
 {
-    // Make sure that before the constructor has finished, you've set the
-    // editor's size to whatever you need it to be.
-
     setSize (900, 300);
+    using SliderAttachment = juce::AudioProcessorValueTreeState::SliderAttachment;
 
-    //addAndMakeVisible(&fullGui);
 
-    for(auto* comp : getComps()) {
+    for (auto* comp : getComps()) {
         addAndMakeVisible(comp);
         //comp->addListener(this);
     }
 
-    // these define the parameters of our slider object
+    attackAttachment = std::make_unique<SliderAttachment>(audioProcessor.apvts, "ATTACK", attackKnob);
+    decayAttachment = std::make_unique<SliderAttachment>(audioProcessor.apvts, "DECAY", decayKnob);
+    sustainAttachment = std::make_unique<SliderAttachment>(audioProcessor.apvts, "SUSTAIN", sustainKnob);
+    releaseAttachment = std::make_unique<SliderAttachment>(audioProcessor.apvts, "RELEASE", releaseKnob);
 
-    /*midiVolume2.setSliderStyle(juce::Slider::LinearBarVertical);
-    midiVolume2.setRange(0.0, 1.0, 0.01);
-    midiVolume2.setTextBoxStyle(juce::Slider::NoTextBox, false, 90, 0);
-    midiVolume2.setPopupDisplayEnabled(true, false, this);
-    midiVolume2.setTextValueSuffix(" Volume");
-    midiVolume2.setValue(50.0);*/
-
-    // this function adds the slider to the editor
-    //addAndMakeVisible(&midiVolume2);
-
-    // add the listener to the slider
-    //midiVolume2.addListener(this);
+    //oscSelectorAttachment = std::make_unique<juce::AudioProcessorValueTreeState::ComboBoxAttachment>(audioProcessor.apvts, "OSC", oscSelector);
 
 }
 
@@ -70,9 +59,24 @@ void OcnetAudioProcessorEditor::resized()
     /*for (auto* comp : getComps()) {
         comp.setPosition()
     }*/
+
+
+
+
     auto bounds = getLocalBounds();
-    oscilator.setBounds(40, 30, 100, getHeight() - 60);
-    oscilator.resized();
+
+    attackKnob.setBounds(60, 30, 100, getHeight() - 60);
+    decayKnob.setBounds(160, 30, 100, getHeight() - 60);
+    sustainKnob.setBounds(260, 30, 100, getHeight() - 60);
+    releaseKnob.setBounds(360, 30, 100, getHeight() - 60);
+
+    /*oscilator.setBounds(40, 30, 100, getHeight() - 60);
+    oscilator.resized();*/
+
+
+
+
+
     //fullGui.setBounds(bounds);
 
     //midiVolume.setBounds(40, 30, 100, getHeight() - 60);
@@ -91,6 +95,10 @@ void OcnetAudioProcessorEditor::resized()
 // De hecho, solo habria que cargar un unico componente => InterfazGeneral
 std::vector<juce::Component*> OcnetAudioProcessorEditor::getComps() {
     return {
-        &oscilator
+        &attackKnob,
+        &decayKnob,
+        &sustainKnob,
+        &releaseKnob
     };
 }
+//&oscilator

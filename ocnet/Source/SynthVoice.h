@@ -13,7 +13,7 @@
 #include "SynthSound.h"
 
 
-class SynthVoice:public juce::SynthesiserVoice
+class SynthVoice : public juce::SynthesiserVoice
 {
 public:
     bool canPlaySound(juce::SynthesiserSound* sound) override;
@@ -23,6 +23,8 @@ public:
     void renderNextBlock(juce::AudioBuffer< float >&outputBuffer, int startSample, int numSamples) override;
     void pitchWheelMoved(int newPitchWheelValue) override;
     void prepareToPlay(double sampleRate, int samplesPerBlock, int outputChannels);
+    void updateADSR(const float attack, const float decay, const float sustain, const float release);
+
 private:
     //using OscillatorA = juce::dsp::Oscillator<float>;
     /*juce::dsp::Oscillator<float> oscillator{
@@ -31,10 +33,16 @@ private:
 
     juce::ADSR adsr;
     juce::ADSR::Parameters adsrParams;
+    juce::dsp::IIR::Filter<float> filtro;
+
+    //juce::dsp::IIR::Coefficients<float>::makeLowPass;
 
     juce::dsp::Oscillator<float> oscillator{
-        [](float x) { return x / juce::MathConstants<float>::pi; }
+        [](float x) { return sin(x); }
     };
     juce::dsp::Gain<float> gain;
+
+    juce::AudioBuffer<float> synthBuffer;
     bool isPrepared = false;
+
 };

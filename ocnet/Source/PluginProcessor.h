@@ -13,11 +13,6 @@
 #include <JuceHeader.h>
 #include <juce_dsp/juce_dsp.h>
 
-
-//==============================================================================
-/**
-*/
-
 struct ChainSettings {
     float volume{ 0 };
     float panning{ 0 };

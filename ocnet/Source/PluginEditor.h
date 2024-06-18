@@ -10,7 +10,6 @@
 
 #include <JuceHeader.h>
 #include "PluginProcessor.h"
-#include "../Builds/VisualStudio2022/FullGui.h"
 #include "Knobs/Knob1.h"
 
 

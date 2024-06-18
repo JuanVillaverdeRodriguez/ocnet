@@ -72,7 +72,7 @@ void SynthVoice::renderNextBlock(juce::AudioBuffer<float>& outputBuffer, int sta
 
     gain.process(processContext);
 
-    // Añadir synthBuffer al outputBuffer
+    // AÃ±adir synthBuffer al outputBuffer
     for (int channel = 0; channel < 1; ++channel) {
         outputBuffer.addFrom(channel, startSample, synthBuffer, channel, 0, numSamples);
     }
@@ -182,12 +182,12 @@ juce::AudioSampleBuffer SynthVoice::createSawWaveTable(int tableSize)
     // Generar onda de sierra
     for (int i = 0; i < tableSize; ++i)
     {
-        // Normalizando la posición en el rango [-1, 1)
+        // Normalizando la posiciÃ³n en el rango [-1, 1)
         float phase = static_cast<float>(i) / static_cast<float>(tableSize);
         samples[i] = 2.0f * phase - 1.0f; // Convierte la fase de [0, 1) a [-1, 1)
     }
 
-    // Hacer la tabla cíclica copiando la primera muestra al final
+    // Hacer la tabla cÃ­clica copiando la primera muestra al final
     samples[tableSize] = samples[0];
 
     DBG("NUMERO DE CHANELS: " + sawTable.getNumChannels());
@@ -337,7 +337,7 @@ std::vector<WavetableStruct> SynthVoice::fillWavetables(double *freqWaveRe, doub
     freqWaveRe[0] = freqWaveIm[0] = 0.0;
     freqWaveRe[tableSize >> 1] = freqWaveIm[tableSize >> 1] = 0.0;
 
-    // El numero de tablas resultante será log2(tablseSize), por lo que maxHarmonic se calculara log2(tablseSize) veces, (mirar whileLoop)
+    // El numero de tablas resultante serÃ¡ log2(tablseSize), por lo que maxHarmonic se calculara log2(tablseSize) veces, (mirar whileLoop)
     // Determinar maxHarmonic, el mayor harmonico distinto de 0 en la onda.
     int maxHarmonic = tableSize >> 1; //Divide a la mitad tablesize
     const double minVal = 0.000001; // -120 dB
@@ -406,13 +406,13 @@ inline void saw(double *freqWaveRe, int tableSize) {
 inline void square(double* freqWaveRe, int tableSize) {
     freqWaveRe[0] = freqWaveRe[tableSize >> 1] = 0.0;
     for (int idx = 1; idx < (tableSize >> 1); idx++) {
-        if (idx % 2 != 0) { // Solo los índices impares
+        if (idx % 2 != 0) { // Solo los Ã­ndices impares
             freqWaveRe[idx] = 1.0 / idx;                    // espectro de onda cuadrada
             freqWaveRe[tableSize - idx] = -freqWaveRe[idx]; // espejo
         }
         else {
-            freqWaveRe[idx] = 0.0;                          // los índices pares son 0
-            freqWaveRe[tableSize - idx] = 0.0;              // los índices pares son 0
+            freqWaveRe[idx] = 0.0;                          // los Ã­ndices pares son 0
+            freqWaveRe[tableSize - idx] = 0.0;              // los Ã­ndices pares son 0
         }
     }
 }

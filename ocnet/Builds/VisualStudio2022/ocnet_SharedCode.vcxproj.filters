@@ -2,6 +2,12 @@
 
 <Project ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
+    <Filter Include="ocnet\Source\Synth\Oscillator">
+      <UniqueIdentifier>{02BE70E3-AF16-7DD3-A381-05A59130FD90}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ocnet\Source\Synth">
+      <UniqueIdentifier>{B9BE1447-B856-2913-DC96-09D75E4DC0A3}</UniqueIdentifier>
+    </Filter>
     <Filter Include="ocnet\Source\Knobs">
       <UniqueIdentifier>{33C4AA2E-1BEC-9802-6AF7-3E589E1E9222}</UniqueIdentifier>
     </Filter>
@@ -634,22 +640,22 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\Source\Synth\Oscillator\WavetableOsc.cpp">
+      <Filter>ocnet\Source\Synth\Oscillator</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Synth\Synth.cpp">
+      <Filter>ocnet\Source\Synth</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Synth\SynthVoice.cpp">
+      <Filter>ocnet\Source\Synth</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\Source\Knobs\Knob1.cpp">
-      <Filter>ocnet\Source\Knobs</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\Knobs\WavetableOsc.cpp">
-      <Filter>ocnet\Source\Knobs</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\Knobs\WavetableOscPolyBLEP.cpp">
       <Filter>ocnet\Source\Knobs</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\PluginProcessor.cpp">
       <Filter>ocnet\Source</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\PluginEditor.cpp">
-      <Filter>ocnet\Source</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\SynthVoice.cpp">
       <Filter>ocnet\Source</Filter>
     </ClCompile>
     <ClCompile Include="..\..\JuceLibraryCode\modules\juce_audio_basics\audio_play_head\juce_AudioPlayHead.cpp">
@@ -3258,28 +3264,28 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\Source\Synth\Oscillator\WavetableOsc.h">
+      <Filter>ocnet\Source\Synth\Oscillator</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Synth\Oscillator\WavetableTypes.h">
+      <Filter>ocnet\Source\Synth\Oscillator</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Synth\Synth.h">
+      <Filter>ocnet\Source\Synth</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Synth\SynthSound.h">
+      <Filter>ocnet\Source\Synth</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Synth\SynthVoice.h">
+      <Filter>ocnet\Source\Synth</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\Source\Knobs\Knob1.h">
       <Filter>ocnet\Source\Knobs</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\Knobs\WavetableOsc.h">
-      <Filter>ocnet\Source\Knobs</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\Knobs\WavetableOscPolyBLEP.h">
-      <Filter>ocnet\Source\Knobs</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\Knobs\WavetableTypes.h">
-      <Filter>ocnet\Source\Knobs</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\SynthSound.h">
-      <Filter>ocnet\Source</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\PluginProcessor.h">
       <Filter>ocnet\Source</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\PluginEditor.h">
-      <Filter>ocnet\Source</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\SynthVoice.h">
       <Filter>ocnet\Source</Filter>
     </ClInclude>
     <ClInclude Include="..\..\JuceLibraryCode\modules\juce_audio_basics\audio_play_head\juce_AudioPlayHead.h">

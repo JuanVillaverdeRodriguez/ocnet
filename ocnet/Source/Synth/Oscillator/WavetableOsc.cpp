@@ -15,7 +15,7 @@
     : wavetable(wavetableToUse),
     tableSize(wavetableToUse.getNumSamples() - 1),
 {
-    jassert(wavetable.getNumChannels() == 1); // Asegúrate de que la wavetable sea mono
+    jassert(wavetable.getNumChannels() == 1); // AsegÃºrate de que la wavetable sea mono
     currentIndex = 0.0f;
     tableDelta = 0.0f;
 }*/
@@ -25,7 +25,7 @@ WavetableOsc::WavetableOsc(std::vector<WavetableStruct>& tables)
     tableSize(tables[0].waveTable.getNumSamples() - 1),
     tables(tables)
 {
-    //jassert(wavetable.waveTable.getNumChannels() == 1); // Asegúrate de que la wavetable sea mono
+    //jassert(wavetable.waveTable.getNumChannels() == 1); // AsegÃºrate de que la wavetable sea mono
     currentIndex = 0.0f;
     tableDelta = 0.0f;
     numWavetables = tables.size();

@@ -11,8 +11,9 @@
 
 #include <JuceHeader.h>
 #include "SynthSound.h"
-#include "Knobs/WavetableOsc.h"
-#include "Knobs/WavetableTypes.h"
+#include "Oscillator/WavetableOsc.h"
+#include "Oscillator/WavetableTypes.h"
+
 #define M_PI 3.14159265358979323846
 
 class SynthVoice : public juce::SynthesiserVoice

@@ -6,20 +6,24 @@
               pluginVSTCategory="kPlugCategSynth" pluginCharacteristicsValue="pluginIsSynth,pluginWantsMidiIn">
   <MAINGROUP id="Fay8LI" name="ocnet">
     <GROUP id="{B897E036-BD65-2195-C049-E6C429F0FF25}" name="Source">
+      <GROUP id="{F3B0B463-C0DE-0D39-E0FD-236DC0836EDE}" name="Synth">
+        <GROUP id="{4A9F1CA4-B01E-EC61-DC4B-9F84457822C7}" name="Oscillator">
+          <FILE id="YxV4mN" name="WavetableOsc.cpp" compile="1" resource="0"
+                file="Source/Synth/Oscillator/WavetableOsc.cpp"/>
+          <FILE id="wUhKcB" name="WavetableOsc.h" compile="0" resource="0" file="Source/Synth/Oscillator/WavetableOsc.h"/>
+          <FILE id="olJNoU" name="WavetableTypes.h" compile="0" resource="0"
+                file="Source/Synth/Oscillator/WavetableTypes.h"/>
+        </GROUP>
+        <FILE id="pgI66N" name="Synth.cpp" compile="1" resource="0" file="Source/Synth/Synth.cpp"/>
+        <FILE id="WEqNJ6" name="Synth.h" compile="0" resource="0" file="Source/Synth/Synth.h"/>
+        <FILE id="uwdQrN" name="SynthSound.h" compile="0" resource="0" file="Source/Synth/SynthSound.h"/>
+        <FILE id="wzcXey" name="SynthVoice.cpp" compile="1" resource="0" file="Source/Synth/SynthVoice.cpp"/>
+        <FILE id="SNJRtb" name="SynthVoice.h" compile="0" resource="0" file="Source/Synth/SynthVoice.h"/>
+      </GROUP>
       <GROUP id="{E271F7C7-47CA-46E4-1FD4-7F8AD6D9FE83}" name="Knobs">
         <FILE id="cqEOg6" name="Knob1.cpp" compile="1" resource="0" file="Source/Knobs/Knob1.cpp"/>
         <FILE id="CnyiZ3" name="Knob1.h" compile="0" resource="0" file="Source/Knobs/Knob1.h"/>
-        <FILE id="Q59RAS" name="WavetableOsc.cpp" compile="1" resource="0"
-              file="Source/Knobs/WavetableOsc.cpp"/>
-        <FILE id="TObbvz" name="WavetableOsc.h" compile="0" resource="0" file="Source/Knobs/WavetableOsc.h"/>
-        <FILE id="mMH0Vx" name="WavetableOscPolyBLEP.cpp" compile="1" resource="0"
-              file="Source/Knobs/WavetableOscPolyBLEP.cpp"/>
-        <FILE id="yldNIu" name="WavetableOscPolyBLEP.h" compile="0" resource="0"
-              file="Source/Knobs/WavetableOscPolyBLEP.h"/>
-        <FILE id="yyiGn2" name="WavetableTypes.h" compile="0" resource="0"
-              file="Source/Knobs/WavetableTypes.h"/>
       </GROUP>
-      <FILE id="YewoTv" name="SynthSound.h" compile="0" resource="0" file="Source/SynthSound.h"/>
       <FILE id="yGLvQj" name="PluginProcessor.cpp" compile="1" resource="0"
             file="Source/PluginProcessor.cpp"/>
       <FILE id="aIKcr7" name="PluginProcessor.h" compile="0" resource="0"
@@ -27,8 +31,6 @@
       <FILE id="XtJAib" name="PluginEditor.cpp" compile="1" resource="0"
             file="Source/PluginEditor.cpp"/>
       <FILE id="PY1HNR" name="PluginEditor.h" compile="0" resource="0" file="Source/PluginEditor.h"/>
-      <FILE id="jrODdM" name="SynthVoice.cpp" compile="1" resource="0" file="Source/SynthVoice.cpp"/>
-      <FILE id="Rh7hjm" name="SynthVoice.h" compile="0" resource="0" file="Source/SynthVoice.h"/>
     </GROUP>
   </MAINGROUP>
   <MODULES>

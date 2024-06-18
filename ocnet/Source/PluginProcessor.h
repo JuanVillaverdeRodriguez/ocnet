@@ -8,10 +8,11 @@
 
 #pragma once
 
-#include "SynthVoice.h"
-#include "SynthSound.h"
 #include <JuceHeader.h>
 #include <juce_dsp/juce_dsp.h>
+#include "Synth/SynthVoice.h"
+#include "Synth/SynthSound.h"
+
 
 struct ChainSettings {
     float volume{ 0 };

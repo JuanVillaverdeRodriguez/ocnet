@@ -3,11 +3,14 @@
 #include <windows.h>
 
 
+
 Knob1::Knob1() {
 
 	this->setSliderStyle(RotaryHorizontalVerticalDrag);
 	this->setTextBoxStyle(juce::Slider::TextBoxBelow, true, 90, 0);
 }
+
+
 
 /*void Knob1::sliderValueChanged(juce::Slider* slider)
 {

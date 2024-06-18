@@ -12,6 +12,12 @@
         <FILE id="Q59RAS" name="WavetableOsc.cpp" compile="1" resource="0"
               file="Source/Knobs/WavetableOsc.cpp"/>
         <FILE id="TObbvz" name="WavetableOsc.h" compile="0" resource="0" file="Source/Knobs/WavetableOsc.h"/>
+        <FILE id="mMH0Vx" name="WavetableOscPolyBLEP.cpp" compile="1" resource="0"
+              file="Source/Knobs/WavetableOscPolyBLEP.cpp"/>
+        <FILE id="yldNIu" name="WavetableOscPolyBLEP.h" compile="0" resource="0"
+              file="Source/Knobs/WavetableOscPolyBLEP.h"/>
+        <FILE id="yyiGn2" name="WavetableTypes.h" compile="0" resource="0"
+              file="Source/Knobs/WavetableTypes.h"/>
       </GROUP>
       <FILE id="YewoTv" name="SynthSound.h" compile="0" resource="0" file="Source/SynthSound.h"/>
       <FILE id="yGLvQj" name="PluginProcessor.cpp" compile="1" resource="0"
@@ -50,20 +56,20 @@
         <CONFIGURATION isDebug="0" name="Release" targetName="ocnet"/>
       </CONFIGURATIONS>
       <MODULEPATHS>
-        <MODULEPATH id="juce_audio_basics" path="../../Juce/JUCE/modules"/>
-        <MODULEPATH id="juce_audio_devices" path="../../Juce/JUCE/modules"/>
-        <MODULEPATH id="juce_audio_formats" path="../../Juce/JUCE/modules"/>
-        <MODULEPATH id="juce_audio_plugin_client" path="../../Juce/JUCE/modules"/>
-        <MODULEPATH id="juce_audio_processors" path="../../Juce/JUCE/modules"/>
-        <MODULEPATH id="juce_audio_utils" path="../../Juce/JUCE/modules"/>
-        <MODULEPATH id="juce_core" path="../../Juce/JUCE/modules"/>
-        <MODULEPATH id="juce_data_structures" path="../../Juce/JUCE/modules"/>
-        <MODULEPATH id="juce_events" path="../../Juce/JUCE/modules"/>
-        <MODULEPATH id="juce_graphics" path="../../Juce/JUCE/modules"/>
-        <MODULEPATH id="juce_gui_basics" path="../../Juce/JUCE/modules"/>
-        <MODULEPATH id="juce_gui_extra" path="../../Juce/JUCE/modules"/>
-        <MODULEPATH id="juce_dsp" path="../../Juce/JUCE/modules"/>
-        <MODULEPATH id="juce_osc" path="../../Juce/JUCE/modules"/>
+        <MODULEPATH id="juce_audio_basics" path="..\..\..\Juce\JUCE\modules"/>
+        <MODULEPATH id="juce_audio_devices" path="..\..\..\Juce\JUCE\modules"/>
+        <MODULEPATH id="juce_audio_formats" path="..\..\..\Juce\JUCE\modules"/>
+        <MODULEPATH id="juce_audio_plugin_client" path="..\..\..\Juce\JUCE\modules"/>
+        <MODULEPATH id="juce_audio_processors" path="..\..\..\Juce\JUCE\modules"/>
+        <MODULEPATH id="juce_audio_utils" path="..\..\..\Juce\JUCE\modules"/>
+        <MODULEPATH id="juce_core" path="..\..\..\Juce\JUCE\modules"/>
+        <MODULEPATH id="juce_data_structures" path="..\..\..\Juce\JUCE\modules"/>
+        <MODULEPATH id="juce_events" path="..\..\..\Juce\JUCE\modules"/>
+        <MODULEPATH id="juce_graphics" path="..\..\..\Juce\JUCE\modules"/>
+        <MODULEPATH id="juce_gui_basics" path="..\..\..\Juce\JUCE\modules"/>
+        <MODULEPATH id="juce_gui_extra" path="..\..\..\Juce\JUCE\modules"/>
+        <MODULEPATH id="juce_dsp" path="..\..\..\Juce\JUCE\modules"/>
+        <MODULEPATH id="juce_osc" path="..\..\..\Juce\JUCE\modules"/>
       </MODULEPATHS>
     </VS2022>
   </EXPORTFORMATS>

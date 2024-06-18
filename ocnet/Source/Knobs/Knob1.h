@@ -2,9 +2,8 @@
 #include <JuceHeader.h>
 
 class Knob1 : public juce::Slider {
-	
-public:
 
+public:
 	Knob1();
 	
 private:

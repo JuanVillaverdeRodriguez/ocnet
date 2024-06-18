@@ -17,13 +17,14 @@ OcnetAudioProcessor::OcnetAudioProcessor()
                       #if ! JucePlugin_IsSynth
                        .withInput  ("Input",  juce::AudioChannelSet::stereo(), true)
                       #endif
-                       .withOutput ("Output", juce::AudioChannelSet::stereo(), true)
+                       .withOutput ("Output", juce::AudioChannelSet::mono(), true)
                      #endif
                        )
 #endif
 {
     synth.addSound(new SynthSound());
-    synth.addVoice(new SynthVoice());
+    for (int i = 0; i < numVoices; ++i) 
+        synth.addVoice(new SynthVoice());
 }
 
 OcnetAudioProcessor::~OcnetAudioProcessor()
@@ -95,19 +96,13 @@ void OcnetAudioProcessor::changeProgramName (int index, const juce::String& newN
 //==============================================================================
 void OcnetAudioProcessor::prepareToPlay (double sampleRate, int samplesPerBlock)
 {
-    // Use this method as the place to do any pre-playback
-    // initialisation that you need..
-    
     synth.setCurrentPlaybackSampleRate(sampleRate);
 
     for (int i = 0; i < synth.getNumVoices(); i++) {
-
         if (auto voice = dynamic_cast<SynthVoice*>(synth.getVoice(i))) {
             voice->prepareToPlay(sampleRate, samplesPerBlock, getTotalNumOutputChannels());
         }
     }
-
-    
 }
 
 void OcnetAudioProcessor::releaseResources()

@@ -21,8 +21,6 @@ class SynthVoice : public juce::SynthesiserVoice
 
 public:
     SynthVoice()
-        : tables(createSawWaveTables(2048)),
-        wavetableOsc(tables)
     {
     }
 
@@ -34,6 +32,8 @@ public:
     void pitchWheelMoved(int newPitchWheelValue) override;
     void prepareToPlay(double sampleRate, int samplesPerBlock, int outputChannels);
     void updateADSR(const float attack, const float decay, const float sustain, const float release);
+
+    void addWavetableOscillator();
 
     juce::AudioSampleBuffer createWaveTable(int tableSize);
     juce::AudioSampleBuffer createSawWaveTable(int tableSize);
@@ -72,7 +72,10 @@ private:
     
 
     std::vector<WavetableStruct> tables;
-    WavetableOsc wavetableOsc;
+    //WavetableOsc wavetableOsc;
+    std::vector<WavetableOsc*> wavetableOscV;
+    //std::vector<WavetableOsc> wavetableOscs;
+
 
     //juce::AudioSampleBuffer wavetablePolyBLEP;
     juce::AudioBuffer<float> synthBuffer;

@@ -13,22 +13,45 @@
 #include <iostream>
 
 //==============================================================================
-OcnetAudioProcessorEditor::OcnetAudioProcessorEditor (OcnetAudioProcessor& p)
-    : AudioProcessorEditor (&p), audioProcessor (p)
+OcnetAudioProcessorEditor::OcnetAudioProcessorEditor(OcnetAudioProcessor& p)
+    : AudioProcessorEditor(&p), audioProcessor(p)
 {
-    setSize (900, 300);
+    setSize(900, 300);
     using SliderAttachment = juce::AudioProcessorValueTreeState::SliderAttachment;
+    button.setClickingTogglesState(true);
+    button.onClick = [&]() {
+        juce::PopupMenu menu;
+        menu.addItem(1, "Wavetable oscillator");
+        menu.addItem(2, "Sampler");
+        menu.addItem(3, "Opcion 3");
 
+        menu.showMenuAsync(juce::PopupMenu::Options().withTargetComponent(button),
+            [this](int result)
+            {
+                if (result > 0) {
+                    juce::Logger::writeToLog("Seleccionaste la opcion: " + juce::String(result));
+
+                    audioProcessor.addWavetableOscillator();
+
+                }
+            });
+        };
 
     for (auto* comp : getComps()) {
         addAndMakeVisible(comp);
         //comp->addListener(this);
     }
+    
+    //button.setButtonText("Mostrar Menú");
+    //button.addListener(this);
 
     attackAttachment = std::make_unique<SliderAttachment>(audioProcessor.apvts, "ATTACK", attackKnob);
     decayAttachment = std::make_unique<SliderAttachment>(audioProcessor.apvts, "DECAY", decayKnob);
     sustainAttachment = std::make_unique<SliderAttachment>(audioProcessor.apvts, "SUSTAIN", sustainKnob);
     releaseAttachment = std::make_unique<SliderAttachment>(audioProcessor.apvts, "RELEASE", releaseKnob);
+
+    buttonAttachment = std::make_unique<ButtonAttachment>(audioProcessor.apvts, "BUTTON", button);
+
 
     //oscSelectorAttachment = std::make_unique<juce::AudioProcessorValueTreeState::ComboBoxAttachment>(audioProcessor.apvts, "OSC", oscSelector);
 
@@ -69,6 +92,7 @@ void OcnetAudioProcessorEditor::resized()
     decayKnob.setBounds(160, 30, 100, getHeight() - 60);
     sustainKnob.setBounds(260, 30, 100, getHeight() - 60);
     releaseKnob.setBounds(360, 30, 100, getHeight() - 60);
+    button.setBounds(460, 30, 100, getHeight() - 60);
 
     /*oscilator.setBounds(40, 30, 100, getHeight() - 60);
     oscilator.resized();*/
@@ -98,7 +122,8 @@ std::vector<juce::Component*> OcnetAudioProcessorEditor::getComps() {
         &attackKnob,
         &decayKnob,
         &sustainKnob,
-        &releaseKnob
+        &releaseKnob,
+        &button
     };
 }
 //&oscilator

@@ -18,7 +18,7 @@
 /**
 */
 
-class OcnetAudioProcessorEditor  : public juce::AudioProcessorEditor
+class OcnetAudioProcessorEditor  : public juce::AudioProcessorEditor//, private juce::Button::Listener
 {
 public:
     OcnetAudioProcessorEditor (OcnetAudioProcessor&);
@@ -33,15 +33,8 @@ private:
     // access the processor object that created it.
     OcnetAudioProcessor& audioProcessor;
 
-    //juce::Slider midiVolume2;    
-    //Knob1 *midiVolume  = new Knob1();
-    //Knob1 midiVolume;
-
-    //FullGui fullGui;
-
     std::vector<juce::Component*> getComps();
     Knob1 midiVolume;
-    //OscilatorSection oscilator;
 
     Knob1 attackKnob;
     Knob1 decayKnob;
@@ -50,20 +43,24 @@ private:
     juce::ComboBox oscSelector;
 
     using SliderAttachment = juce::AudioProcessorValueTreeState::SliderAttachment;
+
+
     std::unique_ptr<SliderAttachment> attackAttachment; //A
     std::unique_ptr<SliderAttachment> decayAttachment; //D
     std::unique_ptr<SliderAttachment> sustainAttachment; //S
     std::unique_ptr<SliderAttachment> releaseAttachment; //R
 
+    using ButtonAttachment = juce::AudioProcessorValueTreeState::ButtonAttachment;
+    using OptionAttachment = juce::AudioProcessorValueTreeState::SliderAttachment;
+
+    std::unique_ptr<ButtonAttachment> buttonAttachment; //R
+    std::unique_ptr<OptionAttachment> optionAttachment; //R
+
+
     std::unique_ptr<juce::AudioProcessorValueTreeState::ComboBoxAttachment> oscSelectorAttachment;
     //Unique ponteirs para que al cerrar la UI (el plugin se destruye) se libere la memoria
 
-
-    /*using APVTS = juce::AudioProcessorValueTreeState;
-    using Attachment = APVTS::SliderAttachment;*/
-
-    //Attachment midiVolumeAttachment;
-    //std::unique_ptr<Knob1> midiVolume;
+    juce::TextButton button{ "Mostrar Menu" };
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (OcnetAudioProcessorEditor)
 };

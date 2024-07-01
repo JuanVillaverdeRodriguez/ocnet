@@ -12,6 +12,7 @@
 #include <juce_dsp/juce_dsp.h>
 #include "Synth/SynthVoice.h"
 #include "Synth/SynthSound.h"
+#include "Synth/OcnetSynthesiser.h"
 
 
 struct ChainSettings {
@@ -72,11 +73,13 @@ public:
     //juce::AudioProcessorValueTreeState apvts;
 
 
+    void addWavetableOscillator();
+
 private:
     //==============================================================================
 
-    juce::Synthesiser synth;
-
+    OcnetSynthesiser synth;
+    
     int numVoices = 8;
 
     

@@ -18,7 +18,12 @@ bool SynthVoice::canPlaySound(juce::SynthesiserSound* sound) {
 void SynthVoice::startNote(int midiNoteNumber, float velocity, juce::SynthesiserSound* sound, int currentPitchWheelPosition) {
     //oscillator.setFrequency(juce::MidiMessage::getMidiNoteInHertz (midiNoteNumber), true);
     auto frequency = juce::MidiMessage::getMidiNoteInHertz(midiNoteNumber);
-    wavetableOsc.setFrequency(static_cast<float>(frequency), getSampleRate());
+    //wavetableOsc.setFrequency(static_cast<float>(frequency), getSampleRate());
+
+    for each (WavetableOsc* wavetableOsc in wavetableOscV)
+    {
+        wavetableOsc->setFrequency(static_cast<float>(frequency), getSampleRate());
+    }
 
     adsr.noteOn();
 
@@ -35,10 +40,12 @@ void SynthVoice::controllerMoved(int controllerNumber, int newControllerValue) {
 }
 
 void SynthVoice::renderNextBlock(juce::AudioBuffer<float>& outputBuffer, int startSample, int numSamples) {
-    jassert(isPrepared); // No deberia ser necesario, JUCE ya lo deberia comprobar, pero por si acaso
+    //jassert(isPrepared); // No deberia ser necesario, JUCE ya lo deberia comprobar, pero por si acaso
 
     if (!isVoiceActive()) // Si no hay voces, no devuelve nada
         return;
+
+
 
     synthBuffer.setSize(1, numSamples, false, false, true);
     synthBuffer.clear();
@@ -49,13 +56,18 @@ void SynthVoice::renderNextBlock(juce::AudioBuffer<float>& outputBuffer, int sta
 
         for (int sample = 0; sample < numSamples; ++sample) {
 
-            float currentSample = wavetableOsc.getNextSample();
+            for each (WavetableOsc* wavetableOsc in wavetableOscV)
+            {
+                float currentSample = wavetableOsc->getNextSample();
+                float envValue = adsr.getNextSample();
+                currentSample *= envValue;
+                buffer[sample] = currentSample;
+
+            }
+            //float currentSample = wavetableOsc.getNextSample();
 
             // Aplicar la envolvente ADSR a cada muestra
-            float envValue = adsr.getNextSample();
-            currentSample *= envValue;
 
-            buffer[sample] = currentSample;
         }
     }
 
@@ -75,7 +87,12 @@ void SynthVoice::renderNextBlock(juce::AudioBuffer<float>& outputBuffer, int sta
     // Añadir synthBuffer al outputBuffer
     for (int channel = 0; channel < 1; ++channel) {
         outputBuffer.addFrom(channel, startSample, synthBuffer, channel, 0, numSamples);
+
     }
+
+
+
+
 
     // Si la envolvente ADSR ha terminado, limpiar la nota actual
     if (!adsr.isActive())
@@ -116,6 +133,14 @@ void SynthVoice::updateADSR(const float attack, const float decay, const float s
     adsrParams.release = release;
 
     adsr.setParameters(adsrParams);
+}
+
+void SynthVoice::addWavetableOscillator()
+{
+    tables = createSawWaveTables(2048);
+
+    wavetableOscV.push_back(new WavetableOsc(tables));
+
 }
 
 /*juce::AudioSampleBuffer SynthVoice::createWaveTable(int tableSize)
@@ -429,10 +454,10 @@ std::vector<WavetableStruct> SynthVoice::createSawWaveTables(int tableSize) {
     }
 
     // Saw
-    //saw(freqWaveRe, tableSize);
+    saw(freqWaveRe, tableSize);
 
     // Square
-    square(freqWaveRe, tableSize);
+    // square(freqWaveRe, tableSize);
 
     
     wavetablesStructs = fillWavetables(freqWaveRe, freqWaveIm, tableSize);

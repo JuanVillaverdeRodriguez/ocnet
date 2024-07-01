@@ -5,6 +5,7 @@
 
   ==============================================================================
 */
+
 #include "PluginProcessor.h"
 #include "PluginEditor.h"
 #include <windows.h>
@@ -23,7 +24,7 @@ OcnetAudioProcessor::OcnetAudioProcessor()
 #endif
 {
     synth.addSound(new SynthSound());
-    for (int i = 0; i < numVoices; ++i) 
+    for (int i = 0; i < numVoices; ++i)
         synth.addVoice(new SynthVoice());
 }
 
@@ -143,7 +144,6 @@ void OcnetAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juce::
     auto totalNumInputChannels = getTotalNumInputChannels();
     auto totalNumOutputChannels = getTotalNumOutputChannels();
 
-
     for (auto i = totalNumInputChannels; i < totalNumOutputChannels; ++i)
         buffer.clear(i, 0, buffer.getNumSamples());
 
@@ -165,28 +165,13 @@ void OcnetAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juce::
     }
 
     synth.renderNextBlock(buffer, midiMessages,  0, buffer.getNumSamples());
+}
 
-    /*DBG("INPUT CHANNELS: " + std::to_string((buffer.getNumSamples())));
+void OcnetAudioProcessor::addWavetableOscillator() {
+    DBG("AÑADIENDO OSCILADOR");
 
+    synth.addWavetableOscillator();
 
-
-    auto chainSettings = getChainSettings(apvts);
-    noteOnVel = chainSettings.volume;
-
-    const auto panAngle = chainSettings.volume * juce::MathConstants<float>::halfPi;
-    const auto* const* read = buffer.getArrayOfReadPointers();
-
-    auto* const* write = buffer.getArrayOfWritePointers();
-
-    for (auto channel = 0; channel < buffer.getNumChannels(); ++channel) {
-
-        const auto pan = channel == 0 ? std::cos(panAngle) : std::sin(panAngle);
-
-        for (auto sample = 0; sample < buffer.getNumSamples(); ++sample) {
-
-            write[channel][sample] = read[channel][sample] * pan;
-        }
-    }    */
 }
 
 //==============================================================================
@@ -228,7 +213,6 @@ juce::AudioProcessorValueTreeState::ParameterLayout OcnetAudioProcessor::createP
     juce::AudioProcessorValueTreeState::ParameterLayout layout;
     //std::vector<std::unique_ptr<juce::RangedAudioParameter>> params;
 
-
     //VOLUME
     layout.add(std::make_unique<juce::AudioParameterFloat> ("VolumeGain", "VolumeGain", juce::NormalisableRange<float>(0.f, 1.f, 0.01f, 1.f), 0.5f));
 
@@ -244,6 +228,13 @@ juce::AudioProcessorValueTreeState::ParameterLayout OcnetAudioProcessor::createP
     layout.add(std::make_unique<juce::AudioParameterFloat>("DECAY", "Decay", juce::NormalisableRange<float>(0.f, 1.f, 0.01f, 1.f), 1.0f));
     layout.add(std::make_unique<juce::AudioParameterFloat>("SUSTAIN", "Sustain", juce::NormalisableRange<float>(0.f, 1.f, 0.01f, 1.f), 1.0f));
     layout.add(std::make_unique<juce::AudioParameterFloat>("RELEASE", "Release", juce::NormalisableRange<float>(0.f, 1.f, 0.01f, 1.f), 1.0f));
+
+    layout.add(std::make_unique<juce::AudioParameterBool>("BUTTON", "Button", false));
+    layout.add(std::make_unique<juce::AudioParameterInt>("SELECTED_OPTION", "Selected Option", 0, 3, 0));
+
+    layout.add(std::make_unique<juce::AudioParameterChoice>("oscType", "Oscillator Type", juce::StringArray{ "Wavetable", "Sampler", "Option 3" }, 0));
+    
+
 
     return layout;
 }

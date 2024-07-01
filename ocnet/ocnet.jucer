@@ -14,8 +14,10 @@
           <FILE id="olJNoU" name="WavetableTypes.h" compile="0" resource="0"
                 file="Source/Synth/Oscillator/WavetableTypes.h"/>
         </GROUP>
-        <FILE id="pgI66N" name="Synth.cpp" compile="1" resource="0" file="Source/Synth/Synth.cpp"/>
-        <FILE id="WEqNJ6" name="Synth.h" compile="0" resource="0" file="Source/Synth/Synth.h"/>
+        <FILE id="jC3Xay" name="OcnetSynthesiser.cpp" compile="1" resource="0"
+              file="Source/Synth/OcnetSynthesiser.cpp"/>
+        <FILE id="FUaeIR" name="OcnetSynthesiser.h" compile="0" resource="0"
+              file="Source/Synth/OcnetSynthesiser.h"/>
         <FILE id="uwdQrN" name="SynthSound.h" compile="0" resource="0" file="Source/Synth/SynthSound.h"/>
         <FILE id="wzcXey" name="SynthVoice.cpp" compile="1" resource="0" file="Source/Synth/SynthVoice.cpp"/>
         <FILE id="SNJRtb" name="SynthVoice.h" compile="0" resource="0" file="Source/Synth/SynthVoice.h"/>

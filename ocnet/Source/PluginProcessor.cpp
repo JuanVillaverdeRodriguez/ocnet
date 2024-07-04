@@ -167,11 +167,26 @@ void OcnetAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juce::
     synth.renderNextBlock(buffer, midiMessages,  0, buffer.getNumSamples());
 }
 
+std::function<void()> getEditor(OcnetAudioProcessor *processor) {
+    auto lambda = [processor]()
+        {
+            jassert(juce::MessageManager::getInstance()->isThisTheMessageThread());
+
+            if (auto activeEditor = dynamic_cast<OcnetAudioProcessorEditor*>(processor->getActiveEditor()))
+            {
+                activeEditor->addOscillator();
+            }
+        };
+
+    return lambda;
+
+}
+
 void OcnetAudioProcessor::addWavetableOscillator() {
     DBG("AÑADIENDO OSCILADOR");
 
     synth.addWavetableOscillator();
-
+    juce::MessageManager::getInstance()->callAsync(getEditor(this));
 }
 
 //==============================================================================

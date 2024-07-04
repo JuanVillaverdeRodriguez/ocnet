@@ -11,12 +11,16 @@
 #include <JuceHeader.h>
 #include "PluginProcessor.h"
 #include "Knobs/Knob1.h"
+#include "GUI.h"
+#include "Controller.h"
 
 
 
 //==============================================================================
 /**
 */
+
+// OcnetAudioProcessorEditor se comporta como el controlador de MVC
 
 class OcnetAudioProcessorEditor  : public juce::AudioProcessorEditor//, private juce::Button::Listener
 {
@@ -28,39 +32,12 @@ public:
     void paint (juce::Graphics&) override;
     void resized() override;
 
+    void addOscillator();
 private:
-    // This reference is provided as a quick way for your editor to
-    // access the processor object that created it.
-    OcnetAudioProcessor& audioProcessor;
+    OcnetAudioProcessor& audioProcessor; // Modelo
+    GUI ocnetGUI; // Vista
+    Controller ocnetController; // Controlador
 
-    std::vector<juce::Component*> getComps();
-    Knob1 midiVolume;
-
-    Knob1 attackKnob;
-    Knob1 decayKnob;
-    Knob1 sustainKnob;
-    Knob1 releaseKnob;
-    juce::ComboBox oscSelector;
-
-    using SliderAttachment = juce::AudioProcessorValueTreeState::SliderAttachment;
-
-
-    std::unique_ptr<SliderAttachment> attackAttachment; //A
-    std::unique_ptr<SliderAttachment> decayAttachment; //D
-    std::unique_ptr<SliderAttachment> sustainAttachment; //S
-    std::unique_ptr<SliderAttachment> releaseAttachment; //R
-
-    using ButtonAttachment = juce::AudioProcessorValueTreeState::ButtonAttachment;
-    using OptionAttachment = juce::AudioProcessorValueTreeState::SliderAttachment;
-
-    std::unique_ptr<ButtonAttachment> buttonAttachment; //R
-    std::unique_ptr<OptionAttachment> optionAttachment; //R
-
-
-    std::unique_ptr<juce::AudioProcessorValueTreeState::ComboBoxAttachment> oscSelectorAttachment;
-    //Unique ponteirs para que al cerrar la UI (el plugin se destruye) se libere la memoria
-
-    juce::TextButton button{ "Mostrar Menu" };
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (OcnetAudioProcessorEditor)
 };

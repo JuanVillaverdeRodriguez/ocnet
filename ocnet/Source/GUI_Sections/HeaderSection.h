@@ -25,6 +25,8 @@ public:
 
     void resized() override;
 
+    void addListener(Listener* listener);
+
     void HeaderSection::buttonClicked(juce::Button* clickedButton) override;
 
 

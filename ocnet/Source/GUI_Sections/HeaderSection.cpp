@@ -15,6 +15,11 @@ HeaderSection::HeaderSection()
     this->addAndMakeVisible(oscillatorsButton);
     this->addAndMakeVisible(effectsButton);
 
+    oscillatorsButton.addListener(this);
+    effectsButton.addListener(this);
+
+
+
     oscillatorsButton.setButtonText("OSC");
     effectsButton.setButtonText("EFFECTS");
 
@@ -26,6 +31,11 @@ void HeaderSection::resized()
 
     oscillatorsButton.setBounds(0, 0, area.getWidth()/2, 50);
     effectsButton.setBounds(oscillatorsButton.getWidth(), 0, area.getWidth() / 2, 50);
+}
+
+void HeaderSection::addListener(Listener* listener)
+{
+    listeners.push_back(listener);
 }
 
 void HeaderSection::buttonClicked(juce::Button* clickedButton) {

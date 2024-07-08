@@ -22,3 +22,13 @@ void OcnetSynthesiser::addWavetableOscillator()
         }
     }
 }
+
+
+void OcnetSynthesiser::addEnvelope(int numberOfEnvelopes)
+{
+    for (int i = 0; i < getNumVoices(); i++) {
+        if (auto voice = dynamic_cast<SynthVoice*>(getVoice(i))) {
+            voice->addEnvelope();
+        }
+    }
+}

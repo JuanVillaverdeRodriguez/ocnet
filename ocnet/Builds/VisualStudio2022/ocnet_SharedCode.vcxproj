@@ -139,6 +139,9 @@
     </Bscmake>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\Source\GUI_Subsections\Modulators\EnvelopeSubsection.cpp"/>
+    <ClCompile Include="..\..\Source\GUI_Subsections\Oscillators\WavetableOscillatorSubsection.cpp"/>
+    <ClCompile Include="..\..\Source\GUI_Subsections\Subsection.cpp"/>
     <ClCompile Include="..\..\Source\GUI_Sections\ModulatorsSection.cpp"/>
     <ClCompile Include="..\..\Source\GUI_Sections\EffectsSection.cpp"/>
     <ClCompile Include="..\..\Source\GUI_Sections\FooterSection.cpp"/>
@@ -2863,6 +2866,9 @@
     <ClCompile Include="..\..\JuceLibraryCode\include_juce_osc.cpp"/>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\Source\GUI_Subsections\Modulators\EnvelopeSubsection.h"/>
+    <ClInclude Include="..\..\Source\GUI_Subsections\Oscillators\WavetableOscillatorSubsection.h"/>
+    <ClInclude Include="..\..\Source\GUI_Subsections\Subsection.h"/>
     <ClInclude Include="..\..\Source\LookAndFeel_V4\OcnetLookAndFeel.h"/>
     <ClInclude Include="..\..\Source\GUI_Sections\ModulatorsSection.h"/>
     <ClInclude Include="..\..\Source\GUI_Sections\EffectsSection.h"/>

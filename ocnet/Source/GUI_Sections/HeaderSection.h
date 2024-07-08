@@ -27,7 +27,7 @@ public:
 
     void addListener(Listener* listener);
 
-    void HeaderSection::buttonClicked(juce::Button* clickedButton) override;
+    void buttonClicked(juce::Button* clickedButton) override;
 
 
 private:

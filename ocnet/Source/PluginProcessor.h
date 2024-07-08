@@ -67,18 +67,27 @@ public:
     float noteOnVel;
 
     static juce::AudioProcessorValueTreeState::ParameterLayout
-        createParameterLayout();
+        createParameterLayout(int maxNumberOfOscillators, int maxNumberOfModulators, int maxNumberOfEffectChains, int maxNumberOfEffects);
 
-    juce::AudioProcessorValueTreeState apvts { *this, nullptr, "Parameters", createParameterLayout() };
+    juce::AudioProcessorValueTreeState apvts { *this, nullptr, "Parameters", createParameterLayout(maxNumberOfOscillators, maxNumberOfModulators, maxNumberOfEffectChains, maxNumberOfEffects) };
     //juce::AudioProcessorValueTreeState apvts;
 
-
+    void applyModulators();
+    void addEnvelope(int numberOfEnvelopes);
     void addWavetableOscillator();
 
 private:
     //==============================================================================
+    juce::AudioProcessorValueTreeState::ParameterLayout layout;
 
     OcnetSynthesiser synth;
+
+    bool hasEnvelope = false;
+
+    int maxNumberOfOscillators = 50;
+    int maxNumberOfModulators = 2;
+    int maxNumberOfEffectChains = 50;
+    int maxNumberOfEffects = 50;
     
     int numVoices = 8;
 

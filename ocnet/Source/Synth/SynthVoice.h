@@ -34,6 +34,8 @@ public:
     void updateADSR(const float attack, const float decay, const float sustain, const float release);
 
     void addWavetableOscillator();
+    void addEnvelope();
+
 
     juce::AudioSampleBuffer createWaveTable(int tableSize);
     juce::AudioSampleBuffer createSawWaveTable(int tableSize);
@@ -53,6 +55,8 @@ private:
     /*juce::dsp::Oscillator<float> oscillator{
         [](float x) { return std::sin(x); }
     };*/
+
+    double sampleRate;
 
     juce::ADSR adsr;
     juce::ADSR::Parameters adsrParams;
@@ -74,6 +78,9 @@ private:
     std::vector<WavetableStruct> tables;
     //WavetableOsc wavetableOsc;
     std::vector<WavetableOsc*> wavetableOscV;
+
+    std::vector<juce::ADSR> adsrEnvelopeV;
+
     //std::vector<WavetableOsc> wavetableOscs;
 
 

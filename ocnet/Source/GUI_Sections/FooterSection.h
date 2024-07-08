@@ -29,7 +29,7 @@ public:
     void resized() override;
 
     void sliderValueChanged(juce::Slider* slider) override;
-    void FooterSection::paint(juce::Graphics& g) override;
+    void paint(juce::Graphics& g) override;
 
 
 

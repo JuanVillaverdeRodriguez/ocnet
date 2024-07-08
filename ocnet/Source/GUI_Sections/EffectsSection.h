@@ -27,9 +27,9 @@ public:
 
     void addListener(Listener* listener);
 
-    void EffectsSection::buttonClicked(juce::Button* clickedButton) override;
+    void buttonClicked(juce::Button* clickedButton) override;
 
-    void EffectsSection::paint(juce::Graphics& g) override;
+    void paint(juce::Graphics& g) override;
 
 
 private:

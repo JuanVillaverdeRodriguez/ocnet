@@ -21,14 +21,8 @@ OcnetGUI::~OcnetGUI()
 }
 
 void OcnetGUI::attachParams(juce::AudioProcessorValueTreeState& apvts) {
-    /*using SliderAttachment = juce::AudioProcessorValueTreeState::SliderAttachment;
-    using ButtonAttachment = juce::AudioProcessorValueTreeState::ButstonAttachment;
 
-    attackAttachment = std::make_unique<SliderAttachment>(apvts, "ATTACK", attackKnob);
-    decayAttachment = std::make_unique<SliderAttachment>(apvts, "DECAY", decayKnob);
-    sustainAttachment = std::make_unique<SliderAttachment>(apvts, "SUSTAIN", sustainKnob);
-    releaseAttachment = std::make_unique<SliderAttachment>(apvts, "RELEASE", releaseKnob);
-    buttonAttachment = std::make_unique<ButtonAttachment>(apvts, "BUTTON", addOscillatorButton);*/
+    //getModulatorsSection()->attachParams(apvts);
 }
 
 

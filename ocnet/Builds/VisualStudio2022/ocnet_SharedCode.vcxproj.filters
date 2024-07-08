@@ -2,6 +2,15 @@
 
 <Project ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
+    <Filter Include="ocnet\Source\GUI_Subsections\Modulators">
+      <UniqueIdentifier>{C9A44F08-A6B9-6423-DF4D-0F909B1EA85A}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ocnet\Source\GUI_Subsections\Oscillators">
+      <UniqueIdentifier>{287CB96A-EC13-CF92-50F4-E2F4EFEC7B28}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ocnet\Source\GUI_Subsections">
+      <UniqueIdentifier>{FBBC2E83-66DB-735D-EE44-8F190E26BB79}</UniqueIdentifier>
+    </Filter>
     <Filter Include="ocnet\Source\LookAndFeel_V4">
       <UniqueIdentifier>{F33B6161-2CBD-9DBF-39F8-798D94E33BC1}</UniqueIdentifier>
     </Filter>
@@ -718,6 +727,15 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\Source\GUI_Subsections\Modulators\EnvelopeSubsection.cpp">
+      <Filter>ocnet\Source\GUI_Subsections\Modulators</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\GUI_Subsections\Oscillators\WavetableOscillatorSubsection.cpp">
+      <Filter>ocnet\Source\GUI_Subsections\Oscillators</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\GUI_Subsections\Subsection.cpp">
+      <Filter>ocnet\Source\GUI_Subsections</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\Source\GUI_Sections\ModulatorsSection.cpp">
       <Filter>ocnet\Source\GUI_Sections</Filter>
     </ClCompile>
@@ -3645,6 +3663,15 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\Source\GUI_Subsections\Modulators\EnvelopeSubsection.h">
+      <Filter>ocnet\Source\GUI_Subsections\Modulators</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\GUI_Subsections\Oscillators\WavetableOscillatorSubsection.h">
+      <Filter>ocnet\Source\GUI_Subsections\Oscillators</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\GUI_Subsections\Subsection.h">
+      <Filter>ocnet\Source\GUI_Subsections</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\Source\LookAndFeel_V4\OcnetLookAndFeel.h">
       <Filter>ocnet\Source\LookAndFeel_V4</Filter>
     </ClInclude>

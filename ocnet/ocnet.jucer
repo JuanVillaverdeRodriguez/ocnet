@@ -6,6 +6,24 @@
               pluginVSTCategory="kPlugCategSynth" pluginCharacteristicsValue="pluginIsSynth,pluginWantsMidiIn">
   <MAINGROUP id="Fay8LI" name="ocnet">
     <GROUP id="{B897E036-BD65-2195-C049-E6C429F0FF25}" name="Source">
+      <GROUP id="{B172D91C-232C-204D-990B-B098D55147A4}" name="GUI_Subsections">
+        <GROUP id="{51DD87FF-BFF9-2549-083C-9ADEB615EB13}" name="EffectChains"/>
+        <GROUP id="{92FB6D28-4C7B-1793-4DBB-E52D07FBB922}" name="Effects"/>
+        <GROUP id="{52A041BF-AD4F-4C01-D669-48DDF46103E9}" name="Modulators">
+          <FILE id="BIptSF" name="EnvelopeSubsection.cpp" compile="1" resource="0"
+                file="Source/GUI_Subsections/Modulators/EnvelopeSubsection.cpp"/>
+          <FILE id="fQkPwv" name="EnvelopeSubsection.h" compile="0" resource="0"
+                file="Source/GUI_Subsections/Modulators/EnvelopeSubsection.h"/>
+        </GROUP>
+        <GROUP id="{3C75C2FB-65E8-33DF-3A3A-FDCFFB6A5E76}" name="Oscillators">
+          <FILE id="tA03u8" name="WavetableOscillatorSubsection.cpp" compile="1"
+                resource="0" file="Source/GUI_Subsections/Oscillators/WavetableOscillatorSubsection.cpp"/>
+          <FILE id="uSBclJ" name="WavetableOscillatorSubsection.h" compile="0"
+                resource="0" file="Source/GUI_Subsections/Oscillators/WavetableOscillatorSubsection.h"/>
+        </GROUP>
+        <FILE id="uKCpxl" name="Subsection.cpp" compile="1" resource="0" file="Source/GUI_Subsections/Subsection.cpp"/>
+        <FILE id="whsOBA" name="Subsection.h" compile="0" resource="0" file="Source/GUI_Subsections/Subsection.h"/>
+      </GROUP>
       <GROUP id="{A8633C04-BAF0-C482-E4B8-B30DCE05F41B}" name="LookAndFeel_V4">
         <FILE id="QbAx0j" name="OcnetLookAndFeel.h" compile="0" resource="0"
               file="Source/LookAndFeel_V4/OcnetLookAndFeel.h"/>

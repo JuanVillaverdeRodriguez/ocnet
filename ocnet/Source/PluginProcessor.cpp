@@ -148,21 +148,11 @@ void OcnetAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juce::
         buffer.clear(i, 0, buffer.getNumSamples());
 
 
-    for (int i = 0; i < synth.getNumVoices(); ++i) {
-        if (auto voice = dynamic_cast<SynthVoice*>(synth.getVoice(i))) { // Si la voz es del tipo juce::SynthesiserVoice...
-            
-            auto& attack = *apvts.getRawParameterValue("ATTACK");
-            auto& decay = *apvts.getRawParameterValue("DECAY");
-            auto& sustain = *apvts.getRawParameterValue("SUSTAIN");
-            auto& release = *apvts.getRawParameterValue("RELEASE");
+    
 
-            voice->updateADSR(attack.load(), decay.load(), sustain.load(), release.load());
-            // OSC controls
-            // ADSR
-            // LFO
-            
-        }
-    }
+    applyModulators();
+
+    
 
     synth.renderNextBlock(buffer, midiMessages,  0, buffer.getNumSamples());
 }
@@ -179,6 +169,37 @@ std::function<void()> getEditor(OcnetAudioProcessor *processor) {
         };
 
     return lambda;
+
+}
+
+void OcnetAudioProcessor::applyModulators()
+{
+    if (hasEnvelope) {
+        for (int i = 0; i < synth.getNumVoices(); ++i) {
+            if (auto voice = dynamic_cast<SynthVoice*>(synth.getVoice(i))) { // Si la voz es del tipo juce::SynthesiserVoice...
+
+                auto& attack = *apvts.getRawParameterValue("ENVELOPE_ATTACK_0");
+                auto& decay = *apvts.getRawParameterValue("ENVELOPE_DECAY_0");
+                auto& sustain = *apvts.getRawParameterValue("ENVELOPE_SUSTAIN_0");
+                auto& release = *apvts.getRawParameterValue("ENVELOPE_RELEASE_0");
+
+                voice->updateADSR(attack.load(), decay.load(), sustain.load(), release.load());
+                // OSC controls
+                // ADSR
+                // LFO
+            }
+        }
+    }
+    
+}
+
+void OcnetAudioProcessor::addEnvelope(int numberOfEnvelopes)
+{
+    DBG("OcnetAudioProcessor::addEnvelope()");
+    synth.addEnvelope(numberOfEnvelopes);
+
+    hasEnvelope = true;
+
 
 }
 
@@ -221,35 +242,22 @@ ChainSettings getChainSettings(juce::AudioProcessorValueTreeState& apvts) {
     settings.volume = apvts.getRawParameterValue("VolumeGain")->load();
     settings.panning = apvts.getRawParameterValue("Panning")->load();
 
+
     return settings;
 }
-juce::AudioProcessorValueTreeState::ParameterLayout OcnetAudioProcessor::createParameterLayout() {
+juce::AudioProcessorValueTreeState::ParameterLayout OcnetAudioProcessor::createParameterLayout(int maxNumberOfOscillators, int maxNumberOfModulators, int maxNumberOfEffectChains, int maxNumberOfEffects) {
 
     juce::AudioProcessorValueTreeState::ParameterLayout layout;
-    //std::vector<std::unique_ptr<juce::RangedAudioParameter>> params;
-
-    //VOLUME
-    layout.add(std::make_unique<juce::AudioParameterFloat> ("VolumeGain", "VolumeGain", juce::NormalisableRange<float>(0.f, 1.f, 0.01f, 1.f), 0.5f));
-
-    //PANNING
-    layout.add(std::make_unique<juce::AudioParameterFloat>("Panning", "Panning", juce::NormalisableRange<float>(-1.f, 1.f, 0.01f, 1.f), 0.0f));
-    
-    
-    //OSCILLATOR
-    layout.add(std::make_unique<juce::AudioParameterChoice>("OSC", "Oscillator", juce::StringArray {"Sine", "Saw", "Square"}, 0));
 
     //ADSR
-    layout.add(std::make_unique<juce::AudioParameterFloat>("ATTACK", "Attack", juce::NormalisableRange<float>(0.f, 1.f, 0.01f, 1.f), 1.0f));
-    layout.add(std::make_unique<juce::AudioParameterFloat>("DECAY", "Decay", juce::NormalisableRange<float>(0.f, 1.f, 0.01f, 1.f), 1.0f));
-    layout.add(std::make_unique<juce::AudioParameterFloat>("SUSTAIN", "Sustain", juce::NormalisableRange<float>(0.f, 1.f, 0.01f, 1.f), 1.0f));
-    layout.add(std::make_unique<juce::AudioParameterFloat>("RELEASE", "Release", juce::NormalisableRange<float>(0.f, 1.f, 0.01f, 1.f), 1.0f));
+    layout.add(std::make_unique<juce::AudioParameterFloat>("ENVELOPE_ATTACK_0", "Attack", juce::NormalisableRange<float>(0.f, 1.f, 0.01f, 1.f), 1.0f));
+    layout.add(std::make_unique<juce::AudioParameterFloat>("ENVELOPE_DECAY_0", "Decay", juce::NormalisableRange<float>(0.f, 1.f, 0.01f, 1.f), 1.0f));
+    layout.add(std::make_unique<juce::AudioParameterFloat>("ENVELOPE_SUSTAIN_0", "Sustain", juce::NormalisableRange<float>(0.f, 1.f, 0.01f, 1.f), 1.0f));
+    layout.add(std::make_unique<juce::AudioParameterFloat>("ENVELOPE_RELEASE_0", "Release", juce::NormalisableRange<float>(0.f, 1.f, 0.01f, 1.f), 1.0f));
 
-    layout.add(std::make_unique<juce::AudioParameterBool>("BUTTON", "Button", false));
-    layout.add(std::make_unique<juce::AudioParameterInt>("SELECTED_OPTION", "Selected Option", 0, 3, 0));
-
-    layout.add(std::make_unique<juce::AudioParameterChoice>("oscType", "Oscillator Type", juce::StringArray{ "Wavetable", "Sampler", "Option 3" }, 0));
-    
-
+    /*for (int i = 0; i < maxNumberOfModulators; i++) {
+        
+    }*/
 
     return layout;
 }

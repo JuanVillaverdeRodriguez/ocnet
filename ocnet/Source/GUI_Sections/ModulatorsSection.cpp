@@ -12,10 +12,10 @@
 
 ModulatorsSection::ModulatorsSection()
 {
-    this->addAndMakeVisible(addOscillatorButton);
-    addOscillatorButton.setButtonText("+");
+    this->addAndMakeVisible(addModulatorButton);
+    addModulatorButton.setButtonText("+");
 
-    addOscillatorButton.addListener(this);
+    addModulatorButton.addListener(this);
 }
 
 void ModulatorsSection::paint(juce::Graphics& g)
@@ -28,7 +28,15 @@ void ModulatorsSection::resized()
 {
     auto area = getLocalBounds();
 
-    addOscillatorButton.setBounds(area.getWidth() / 2 - 25, 5, 50, 50);
+    int lastModulatorPositionY = 0;
+
+    for (auto& envelope : envelopeSubsections) {
+        envelope->setBounds(5, lastModulatorPositionY + 5, area.getWidth(), 50);
+        lastModulatorPositionY += 50;
+    }
+    
+
+    addModulatorButton.setBounds(area.getWidth() / 2 - 25, lastModulatorPositionY + 5, 50, 50);
 }
 
 void ModulatorsSection::addListener(Listener* listener)
@@ -36,15 +44,39 @@ void ModulatorsSection::addListener(Listener* listener)
     listeners.push_back(listener);
 }
 
+void ModulatorsSection::attachParams(juce::AudioProcessorValueTreeState& apvts)
+{
+    DBG("ModulatorsSection::attachParams(juce::AudioProcessorValueTreeState& apvts)");
+
+    for (auto& envelope : envelopeSubsections) {
+        envelope->attachParams(apvts);
+    }
+}
+
+void ModulatorsSection::addEnvelope(int numberOfEnvelopes, juce::AudioProcessorValueTreeState& apvts)
+{
+    std::unique_ptr<EnvelopeSubsection> envelope = std::make_unique<EnvelopeSubsection>();
+
+    envelope->setId(numberOfEnvelopes);
+
+    envelopeSubsections.push_back(std::move(envelope));
+    this->addAndMakeVisible(*envelopeSubsections.back());
+    resized();
+    envelopeSubsections.back()->attachParams(apvts);
+
+
+}
+
+
 void ModulatorsSection::buttonClicked(juce::Button* clickedButton)
 {
-    if (clickedButton == &addOscillatorButton) {
+    if (clickedButton == &addModulatorButton) {
         juce::PopupMenu menu;
         menu.addItem(1, "Envelope");
         menu.addItem(2, "LFO");
         menu.addItem(3, "Macro");
 
-        menu.showMenuAsync(juce::PopupMenu::Options().withTargetComponent(addOscillatorButton),
+        menu.showMenuAsync(juce::PopupMenu::Options().withTargetComponent(addModulatorButton),
             [this](int result)
             {
                 listeners[0]->addModulator(result);

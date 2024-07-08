@@ -8,10 +8,6 @@
 #include "GUI_Sections/ModulatorsSection.h"
 #include "GUI_Sections/EffectsSection.h"
 
-
-
-
-
 class OcnetGUI : public juce::Component, HeaderSection::Listener
 {
 public:
@@ -46,22 +42,7 @@ protected:
     std::unique_ptr<EffectsSection> effectsSection;
 
 
-    /*Knob1 attackKnob;
-    Knob1 decayKnob;
-    Knob1 sustainKnob;
-    Knob1 releaseKnob;
-
-    using SliderAttachment = juce::AudioProcessorValueTreeState::SliderAttachment;
-
-    std::unique_ptr<SliderAttachment> attackAttachment; //A
-    std::unique_ptr<SliderAttachment> decayAttachment; //D
-    std::unique_ptr<SliderAttachment> sustainAttachment; //S
-    std::unique_ptr<SliderAttachment> releaseAttachment; //R
-
-
-    using ButtonAttachment = juce::AudioProcessorValueTreeState::ButtonAttachment;
-    using OptionAttachment = juce::AudioProcessorValueTreeState::SliderAttachment;*/
-    //Unique ponteirs para que al cerrar la UI (el plugin se destruye) se libere la memoria
+    
 
 
 

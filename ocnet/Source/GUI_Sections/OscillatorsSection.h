@@ -27,9 +27,9 @@ public:
 
     void addListener(Listener *listener);
 
-    void OscillatorsSection::buttonClicked(juce::Button* clickedButton) override;
+    void buttonClicked(juce::Button* clickedButton) override;
 
-    void OscillatorsSection::paint(juce::Graphics& g) override;
+    void paint(juce::Graphics& g) override;
 
 
 

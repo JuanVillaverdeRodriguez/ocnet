@@ -143,6 +143,10 @@ void SynthVoice::addWavetableOscillator()
 
 }
 
+void SynthVoice::addEnvelope()
+{
+}
+
 /*juce::AudioSampleBuffer SynthVoice::createWaveTable(int tableSize)
 {
     juce::AudioSampleBuffer sineTable(1, tableSize);

@@ -17,6 +17,7 @@ public:
     OcnetSynthesiser();
 
     void addWavetableOscillator();
-private:
+    void addEnvelope(int numberOfEnvelopes);
 
+private:
 };

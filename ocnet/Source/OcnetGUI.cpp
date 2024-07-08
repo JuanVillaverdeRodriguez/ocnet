@@ -72,19 +72,19 @@ void OcnetGUI::resized()
     DBG("TotalWidth: " + juce::String(area.getWidth()));
     DBG("TotalHeight: " + juce::String(area.getHeight()));
 
-    auto headerSectionBounds = area.withTrimmedRight(area.getWidth() / 2).withTrimmedBottom(area.getHeight() - 50);
+    auto headerSectionBounds = area.withTrimmedRight(area.getWidth() / 2.2).withTrimmedBottom(area.getHeight() - 50);
 
     area = getLocalBounds();
     auto footerSectionBounds = getLocalBounds().removeFromBottom(50);
 
     area = getLocalBounds();
-    auto oscillatorsSectionBounds = area.withTrimmedRight(headerSectionBounds.getWidth()).withTrimmedTop(headerSectionBounds.getHeight()).withTrimmedBottom(footerSectionBounds.getHeight());
+    auto oscillatorsSectionBounds = area.removeFromLeft(headerSectionBounds.getWidth()).withTrimmedTop(headerSectionBounds.getHeight()).withTrimmedBottom(footerSectionBounds.getHeight());
 
     area = getLocalBounds();
     auto modulatorsSectionBounds = area.withTrimmedLeft(headerSectionBounds.getWidth()).withTrimmedBottom(footerSectionBounds.getHeight());
 
     area = getLocalBounds();
-    auto effectsSectionBounds = area.withTrimmedRight(headerSectionBounds.getWidth()).withTrimmedTop(headerSectionBounds.getHeight()).withTrimmedBottom(footerSectionBounds.getHeight());
+    auto effectsSectionBounds = area.removeFromLeft(headerSectionBounds.getWidth()).withTrimmedTop(headerSectionBounds.getHeight()).withTrimmedBottom(footerSectionBounds.getHeight());
 
     footerSection.get()->setBounds(footerSectionBounds);
     modulatorsSection.get()->setBounds(modulatorsSectionBounds);

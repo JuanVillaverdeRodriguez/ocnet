@@ -25,6 +25,8 @@ OcnetGUI_interface::OcnetGUI_interface(OcnetAudioProcessor *processor) : process
 
 void OcnetGUI_interface::addOscillator(int option)
 {
+    DBG("OcnetGUI_interface::addOscillator(int option)");
+
     if (option > 0) {
         if (option == 1) {
             processor.addWavetableOscillator();
@@ -45,5 +47,7 @@ void OcnetGUI_interface::addEffectsChain()
 
 void OcnetGUI_interface::addModulator(int option)
 {
+    DBG("OcnetGUI_interface::addModulator(int option)");
+
 }
 

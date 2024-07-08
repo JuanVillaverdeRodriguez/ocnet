@@ -8,9 +8,7 @@ OcnetGUI::OcnetGUI()
     footerSection = std::make_unique<FooterSection>();
     oscillatorsSection = std::make_unique<OscillatorsSection>();
     modulatorsSection = std::make_unique<ModulatorsSection>();
-
-    oscillatorsSection->addListener(this);
-    modulatorsSection->addListener(this);
+    effectsSection = std::make_unique<EffectsSection>();
 
     initializeGUI();
 
@@ -21,53 +19,31 @@ OcnetGUI::~OcnetGUI()
 }
 
 void OcnetGUI::attachParams(juce::AudioProcessorValueTreeState& apvts) {
-    using SliderAttachment = juce::AudioProcessorValueTreeState::SliderAttachment;
+    /*using SliderAttachment = juce::AudioProcessorValueTreeState::SliderAttachment;
     using ButtonAttachment = juce::AudioProcessorValueTreeState::ButtonAttachment;
 
     attackAttachment = std::make_unique<SliderAttachment>(apvts, "ATTACK", attackKnob);
     decayAttachment = std::make_unique<SliderAttachment>(apvts, "DECAY", decayKnob);
     sustainAttachment = std::make_unique<SliderAttachment>(apvts, "SUSTAIN", sustainKnob);
     releaseAttachment = std::make_unique<SliderAttachment>(apvts, "RELEASE", releaseKnob);
-    buttonAttachment = std::make_unique<ButtonAttachment>(apvts, "BUTTON", addOscillatorButton);
+    buttonAttachment = std::make_unique<ButtonAttachment>(apvts, "BUTTON", addOscillatorButton);*/
 }
 
 
 void OcnetGUI::initializeGUI()
 {
-    addOscillatorButton.setClickingTogglesState(true);
-
-    /*for (auto* comp : getComps()) {
-        this->addAndMakeVisible(comp);
-        //comp->addListener(this);
-    }*/
-
     this->addAndMakeVisible(headerSection.get());
     this->addAndMakeVisible(footerSection.get());
     this->addAndMakeVisible(oscillatorsSection.get());
     this->addAndMakeVisible(modulatorsSection.get());
-
-
-    addOscillatorButton.addListener(this);
-    effectsButton.addListener(this);
-
-}
-
-void OcnetGUI::addModulator(int option)
-{
-    listeners_[0]->addModulator(option);
-}
-
-void OcnetGUI::assignController(Listener* listener)
-{
-    listeners_.push_back(listener);
+    this->addAndMakeVisible(effectsSection.get());
 }
 
 void OcnetGUI::clear() {
-    for (auto* comp : getComps()) {
+    /*for (auto* comp : getComps()) {
         comp->setVisible(false);
         //comp->addListener(this);
-    }
-    effectsButton.setVisible(true);
+    }*/
 }
 
 void OcnetGUI::visualizeOscillatorSection()
@@ -77,21 +53,11 @@ void OcnetGUI::visualizeOscillatorSection()
 
 void OcnetGUI::visualizeEffectsSection()
 {
-    clear();
+    //clear();
+    oscillatorsSection->setVisible(false);
+    currentView = 1;
 }
 
-void OcnetGUI::addOscillator(int option)
-{
-    listeners_[0]->addOscillator(option);
-}
-
-void OcnetGUI::buttonClicked(juce::Button* clickedButton)
-{
-    if (clickedButton == &effectsButton) {
-        visualizeEffectsSection();
-    }
-    // Lo mismo con efectos, cadena de efectos y moduladores
-}
 
 void OcnetGUI::resized()
 {
@@ -113,45 +79,19 @@ void OcnetGUI::resized()
     area = getLocalBounds();
     auto modulatorsSectionBounds = area.withTrimmedLeft(headerSectionBounds.getWidth()).withTrimmedBottom(footerSectionBounds.getHeight());
 
+    area = getLocalBounds();
+    auto effectsSectionBounds = area.withTrimmedRight(headerSectionBounds.getWidth()).withTrimmedTop(headerSectionBounds.getHeight()).withTrimmedBottom(footerSectionBounds.getHeight());
+
+    footerSection.get()->setBounds(footerSectionBounds);
+    modulatorsSection.get()->setBounds(modulatorsSectionBounds);
+    headerSection.get()->setBounds(headerSectionBounds);
+
     if (currentView == 0) { // Si la vista actual es la de synth...
-        headerSection.get()->setBounds(headerSectionBounds);
+        //effectsSection.get()->setBounds(effectsSectionBounds);
         oscillatorsSection.get()->setBounds(oscillatorsSectionBounds);
-        footerSection.get()->setBounds(footerSectionBounds);
-        modulatorsSection.get()->setBounds(modulatorsSectionBounds);
-
-
     }
     else { // Si es la de efectos...
-
+        effectsSection.get()->setBounds(effectsSectionBounds);
     }
-    /*attackKnob.setBounds(60, 30, 100, getHeight() - 60);
-    decayKnob.setBounds(160, 30, 100, getHeight() - 60);
-    sustainKnob.setBounds(260, 30, 100, getHeight() - 60);
-    releaseKnob.setBounds(360, 30, 100, getHeight() - 60);
-    addOscillatorButton.setBounds(460, 30, 100, getHeight() - 60);
-    effectsButton.setBounds(560, 30, 100, getHeight() - 60);*/
-}
-
-
-
-
-
-
-
-
-
-
-// En vez de meter knobs individuales, aqui irian componentes generales 
-// (Oscilador, efecto, lfo, interfaz general)
-// De hecho, solo habria que cargar un unico componente => InterfazGeneral
-std::vector<juce::Component*> OcnetGUI::getComps() {
-    return {
-        &attackKnob,
-        &decayKnob,
-        &sustainKnob,
-        &releaseKnob,
-        &addOscillatorButton,
-        &effectsButton
-    };
 
 }

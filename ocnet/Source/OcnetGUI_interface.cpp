@@ -10,11 +10,17 @@
 
 #include "OcnetGUI_interface.h"
 
-OcnetGUI_interface::OcnetGUI_interface(OcnetAudioProcessor *processor) : processor(*processor), OcnetGUI::Listener()
+OcnetGUI_interface::OcnetGUI_interface(OcnetAudioProcessor *processor) : processor(*processor)
 {
     gui_ = std::make_unique<OcnetGUI>();
-    gui_->assignController(this);
     gui_->attachParams(processor->apvts);
+
+    //gui_->getHeaderSection()->addListener(this);
+    //gui_->getFooterSection()->addListener(this);
+    gui_->getOscillatorsSection()->addListener(this);
+    gui_->getModulatorsSection()->addListener(this);
+    gui_->getEffectsSection()->addListener(this);
+
 }
 
 void OcnetGUI_interface::addOscillator(int option)
@@ -32,19 +38,12 @@ void OcnetGUI_interface::addOscillator(int option)
     }
 }
 
-void OcnetGUI_interface::addEffect(int option)
+void OcnetGUI_interface::addEffectsChain()
 {
-}
-
-void OcnetGUI_interface::addEffectsChain(int option)
-{
+    DBG("OcnetGUI_interface::addEffectsChain()");
 }
 
 void OcnetGUI_interface::addModulator(int option)
-{
-}
-
-void OcnetGUI_interface::attachParams()
 {
 }
 

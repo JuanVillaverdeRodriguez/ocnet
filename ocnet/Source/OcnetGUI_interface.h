@@ -13,20 +13,17 @@
 #include "OcnetGUI.h"
 #include "JuceHeader.h"
 #include "PluginProcessor.h"
+#include "GUI_Sections/EffectsSection.h"
 
-class OcnetGUI_interface : public OcnetGUI::Listener {
+class OcnetGUI_interface : EffectsSection::Listener, ModulatorsSection::Listener, OscillatorsSection::Listener {
 public:
     OcnetGUI_interface(OcnetAudioProcessor *processor);
 
     void addOscillator(int option) override;
 
-    void addEffect(int option) override;
-
-    void addEffectsChain(int option) override;
+    void addEffectsChain() override;
 
     void addModulator(int option) override;
-
-    void attachParams() override;
 
     OcnetGUI* getGui() { return gui_.get(); }
 

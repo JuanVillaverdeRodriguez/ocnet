@@ -1,11 +1,3 @@
-/*
-  ==============================================================================
-
-    This file contains the basic framework code for a JUCE plugin editor.
-
-  ==============================================================================
-*/
-
 #include "PluginProcessor.h"
 #include "PluginEditor.h"
 #include <windows.h>
@@ -13,11 +5,16 @@
 #include <iostream>
 
 //==============================================================================
-OcnetAudioProcessorEditor::OcnetAudioProcessorEditor(OcnetAudioProcessor& ocnetAudioProcessor)
-    : AudioProcessorEditor(&ocnetAudioProcessor), audioProcessor(ocnetAudioProcessor), ocnetGUI(), ocnetController(ocnetAudioProcessor, ocnetGUI)
+OcnetAudioProcessorEditor::OcnetAudioProcessorEditor(OcnetAudioProcessor & ocnetAudioProcessor)
+    : AudioProcessorEditor(&ocnetAudioProcessor), audioProcessor(ocnetAudioProcessor), OcnetGUI_interface(&ocnetAudioProcessor)
 {
-    setSize(900, 300);
+    addAndMakeVisible(getGui());
 
+    setSize(1280 / 1.5, 720 / 1.5);
+
+
+    //ocnetGUI->assignAudioEditor(*this);
+    //ocnetGUI.attachParams(audioProcessor.apvts);
 }
 
 OcnetAudioProcessorEditor::~OcnetAudioProcessorEditor()
@@ -25,31 +22,19 @@ OcnetAudioProcessorEditor::~OcnetAudioProcessorEditor()
 }
 
 //==============================================================================
-void OcnetAudioProcessorEditor::paint (juce::Graphics& g)
+void OcnetAudioProcessorEditor::paint(juce::Graphics& g)
 {
     // (Our component is opaque, so we must completely fill the background with a solid colour)
-    g.fillAll (getLookAndFeel().findColour (juce::ResizableWindow::backgroundColourId));
+    g.fillAll(getLookAndFeel().findColour(juce::ResizableWindow::backgroundColourId));
 
-    g.setColour (juce::Colours::white);
-    g.setFont (15.0f);
-    g.drawFittedText("Midi Volume", 0, 0, getWidth(), 30, juce::Justification::centred, 1);
+    g.setColour(juce::Colours::white);
+    g.setFont(15.0f);
+    //g.drawFittedText("Midi Volume", 0, 0, getWidth(), 30, juce::Justification::centred, 1);
 }
 
 void OcnetAudioProcessorEditor::resized()
 {
-    //ocnetGUI.resized();
-
-    ocnetGUI.setBounds(getLocalBounds());
-
-    
+    //getGui()->setBounds(getLocalBounds());
+    getGui()->setBounds(getLocalBounds());
 
 }
-
-void OcnetAudioProcessorEditor::addOscillator()
-{
-    DBG("ASDASDASDADSADAD");
-
-    //GUI.addOscillator();
-}
-
-

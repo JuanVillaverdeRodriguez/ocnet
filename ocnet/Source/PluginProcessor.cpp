@@ -174,7 +174,7 @@ std::function<void()> getEditor(OcnetAudioProcessor *processor) {
 
             if (auto activeEditor = dynamic_cast<OcnetAudioProcessorEditor*>(processor->getActiveEditor()))
             {
-                activeEditor->addOscillator();
+                activeEditor->addOscillator(0);
             }
         };
 
@@ -186,7 +186,7 @@ void OcnetAudioProcessor::addWavetableOscillator() {
     DBG("AÑADIENDO OSCILADOR");
 
     synth.addWavetableOscillator();
-    juce::MessageManager::getInstance()->callAsync(getEditor(this));
+    //juce::MessageManager::getInstance()->callAsync(getEditor(this));
 }
 
 //==============================================================================

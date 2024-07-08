@@ -6,6 +6,40 @@
               pluginVSTCategory="kPlugCategSynth" pluginCharacteristicsValue="pluginIsSynth,pluginWantsMidiIn">
   <MAINGROUP id="Fay8LI" name="ocnet">
     <GROUP id="{B897E036-BD65-2195-C049-E6C429F0FF25}" name="Source">
+      <GROUP id="{A8633C04-BAF0-C482-E4B8-B30DCE05F41B}" name="LookAndFeel_V4">
+        <FILE id="QbAx0j" name="OcnetLookAndFeel.h" compile="0" resource="0"
+              file="Source/LookAndFeel_V4/OcnetLookAndFeel.h"/>
+      </GROUP>
+      <GROUP id="{0CFAC4A2-8953-FE87-2F35-5E3903C2974E}" name="GUI_Sections">
+        <FILE id="vRk8If" name="ModulatorsSection.cpp" compile="1" resource="0"
+              file="Source/GUI_Sections/ModulatorsSection.cpp"/>
+        <FILE id="FMEYsp" name="ModulatorsSection.h" compile="0" resource="0"
+              file="Source/GUI_Sections/ModulatorsSection.h"/>
+        <FILE id="FcTmUC" name="EffectsSection.cpp" compile="1" resource="0"
+              file="Source/GUI_Sections/EffectsSection.cpp"/>
+        <FILE id="uCHeE5" name="EffectsSection.h" compile="0" resource="0"
+              file="Source/GUI_Sections/EffectsSection.h"/>
+        <FILE id="YE9sTw" name="FooterSection.cpp" compile="1" resource="0"
+              file="Source/GUI_Sections/FooterSection.cpp"/>
+        <FILE id="ZZvFuK" name="FooterSection.h" compile="0" resource="0" file="Source/GUI_Sections/FooterSection.h"/>
+        <FILE id="maquIo" name="HeaderSection.cpp" compile="1" resource="0"
+              file="Source/GUI_Sections/HeaderSection.cpp"/>
+        <FILE id="laaWpm" name="HeaderSection.h" compile="0" resource="0" file="Source/GUI_Sections/HeaderSection.h"/>
+        <FILE id="RS2Cdd" name="SectionSeparators.cpp" compile="1" resource="0"
+              file="Source/GUI_Sections/SectionSeparators.cpp"/>
+        <FILE id="iMpRKY" name="SectionSeparators.h" compile="0" resource="0"
+              file="Source/GUI_Sections/SectionSeparators.h"/>
+        <FILE id="Ez6FzM" name="OscillatorsSection.cpp" compile="1" resource="0"
+              file="Source/GUI_Sections/OscillatorsSection.cpp"/>
+        <FILE id="ferNER" name="OscillatorsSection.h" compile="0" resource="0"
+              file="Source/GUI_Sections/OscillatorsSection.h"/>
+      </GROUP>
+      <FILE id="zzKHiV" name="OcnetGUI.cpp" compile="1" resource="0" file="Source/OcnetGUI.cpp"/>
+      <FILE id="qxmDCK" name="OcnetGUI.h" compile="0" resource="0" file="Source/OcnetGUI.h"/>
+      <FILE id="AeJIJI" name="OcnetGUI_interface.cpp" compile="1" resource="0"
+            file="Source/OcnetGUI_interface.cpp"/>
+      <FILE id="bQXL1R" name="OcnetGUI_interface.h" compile="0" resource="0"
+            file="Source/OcnetGUI_interface.h"/>
       <GROUP id="{F3B0B463-C0DE-0D39-E0FD-236DC0836EDE}" name="Synth">
         <GROUP id="{4A9F1CA4-B01E-EC61-DC4B-9F84457822C7}" name="Oscillator">
           <FILE id="YxV4mN" name="WavetableOsc.cpp" compile="1" resource="0"

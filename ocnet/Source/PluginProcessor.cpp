@@ -245,21 +245,25 @@ ChainSettings getChainSettings(juce::AudioProcessorValueTreeState& apvts) {
 
     return settings;
 }
-juce::AudioProcessorValueTreeState::ParameterLayout OcnetAudioProcessor::createParameterLayout(int maxNumberOfOscillators, int maxNumberOfModulators, int maxNumberOfEffectChains, int maxNumberOfEffects) {
 
+juce::AudioProcessorValueTreeState::ParameterLayout OcnetAudioProcessor::createParameterLayout() {
+    
     juce::AudioProcessorValueTreeState::ParameterLayout layout;
+    int maxNumberOfParams = 64;
 
     //ADSR
-    layout.add(std::make_unique<juce::AudioParameterFloat>("ENVELOPE_ATTACK_0", "Attack", juce::NormalisableRange<float>(0.f, 1.f, 0.01f, 1.f), 1.0f));
-    layout.add(std::make_unique<juce::AudioParameterFloat>("ENVELOPE_DECAY_0", "Decay", juce::NormalisableRange<float>(0.f, 1.f, 0.01f, 1.f), 1.0f));
-    layout.add(std::make_unique<juce::AudioParameterFloat>("ENVELOPE_SUSTAIN_0", "Sustain", juce::NormalisableRange<float>(0.f, 1.f, 0.01f, 1.f), 1.0f));
-    layout.add(std::make_unique<juce::AudioParameterFloat>("ENVELOPE_RELEASE_0", "Release", juce::NormalisableRange<float>(0.f, 1.f, 0.01f, 1.f), 1.0f));
+    DBG("MAX MODULATORS: " + juce::String(maxNumberOfParams));
 
-    /*for (int i = 0; i < maxNumberOfModulators; i++) {
-        
-    }*/
+    for (int i = 0; i < maxNumberOfParams; i++) {
+        layout.add(std::make_unique<juce::AudioParameterFloat>("ENVELOPE_ATTACK_" + juce::String(i), "Attack", juce::NormalisableRange<float>(0.f, 1.f, 0.01f, 1.f), 1.0f));
+        layout.add(std::make_unique<juce::AudioParameterFloat>("ENVELOPE_DECAY_" + juce::String(i), "Decay", juce::NormalisableRange<float>(0.f, 1.f, 0.01f, 1.f), 1.0f));
+        layout.add(std::make_unique<juce::AudioParameterFloat>("ENVELOPE_SUSTAIN_" + juce::String(i), "Sustain", juce::NormalisableRange<float>(0.f, 1.f, 0.01f, 1.f), 1.0f));
+        layout.add(std::make_unique<juce::AudioParameterFloat>("ENVELOPE_RELEASE_" + juce::String(i), "Release", juce::NormalisableRange<float>(0.f, 1.f, 0.01f, 1.f), 1.0f));
+    }
 
     return layout;
+
+
 }
 //==============================================================================
 // This creates new instances of the plugin..

@@ -12,6 +12,8 @@
 
 OcnetSynthesiser::OcnetSynthesiser()
 {
+    hasEnvelope = false;
+
 }
 
 void OcnetSynthesiser::addWavetableOscillator()
@@ -31,4 +33,7 @@ void OcnetSynthesiser::addEnvelope(int numberOfEnvelopes)
             voice->addEnvelope();
         }
     }
+
+    hasEnvelope = true;
+
 }

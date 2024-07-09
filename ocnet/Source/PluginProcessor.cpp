@@ -23,9 +23,9 @@ OcnetAudioProcessor::OcnetAudioProcessor()
                        )
 #endif
 {
-    synth.addSound(new SynthSound());
+    addSound(new SynthSound());
     for (int i = 0; i < numVoices; ++i)
-        synth.addVoice(new SynthVoice());
+        addVoice(new SynthVoice());
 }
 
 OcnetAudioProcessor::~OcnetAudioProcessor()
@@ -97,10 +97,10 @@ void OcnetAudioProcessor::changeProgramName (int index, const juce::String& newN
 //==============================================================================
 void OcnetAudioProcessor::prepareToPlay (double sampleRate, int samplesPerBlock)
 {
-    synth.setCurrentPlaybackSampleRate(sampleRate);
+    setCurrentPlaybackSampleRate(sampleRate);
 
-    for (int i = 0; i < synth.getNumVoices(); i++) {
-        if (auto voice = dynamic_cast<SynthVoice*>(synth.getVoice(i))) {
+    for (int i = 0; i < getNumVoices(); i++) {
+        if (auto voice = dynamic_cast<SynthVoice*>(getVoice(i))) {
             voice->prepareToPlay(sampleRate, samplesPerBlock, getTotalNumOutputChannels());
         }
     }
@@ -146,15 +146,13 @@ void OcnetAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juce::
 
     for (auto i = totalNumInputChannels; i < totalNumOutputChannels; ++i)
         buffer.clear(i, 0, buffer.getNumSamples());
-
-
     
 
     applyModulators();
 
     
 
-    synth.renderNextBlock(buffer, midiMessages,  0, buffer.getNumSamples());
+    renderNextBlock(buffer, midiMessages,  0, buffer.getNumSamples());
 }
 
 std::function<void()> getEditor(OcnetAudioProcessor *processor) {
@@ -174,9 +172,9 @@ std::function<void()> getEditor(OcnetAudioProcessor *processor) {
 
 void OcnetAudioProcessor::applyModulators()
 {
-    if (hasEnvelope) {
-        for (int i = 0; i < synth.getNumVoices(); ++i) {
-            if (auto voice = dynamic_cast<SynthVoice*>(synth.getVoice(i))) { // Si la voz es del tipo juce::SynthesiserVoice...
+    if (getHasEnvelope()) {
+        for (int i = 0; i < getNumVoices(); ++i) {
+            if (auto voice = dynamic_cast<SynthVoice*>(getVoice(i))) { // Si la voz es del tipo juce::SynthesiserVoice...
 
                 auto& attack = *apvts.getRawParameterValue("ENVELOPE_ATTACK_0");
                 auto& decay = *apvts.getRawParameterValue("ENVELOPE_DECAY_0");
@@ -191,23 +189,6 @@ void OcnetAudioProcessor::applyModulators()
         }
     }
     
-}
-
-void OcnetAudioProcessor::addEnvelope(int numberOfEnvelopes)
-{
-    DBG("OcnetAudioProcessor::addEnvelope()");
-    synth.addEnvelope(numberOfEnvelopes);
-
-    hasEnvelope = true;
-
-
-}
-
-void OcnetAudioProcessor::addWavetableOscillator() {
-    DBG("AÑADIENDO OSCILADOR");
-
-    synth.addWavetableOscillator();
-    //juce::MessageManager::getInstance()->callAsync(getEditor(this));
 }
 
 //==============================================================================
@@ -253,6 +234,10 @@ juce::AudioProcessorValueTreeState::ParameterLayout OcnetAudioProcessor::createP
 
     //ADSR
     DBG("MAX MODULATORS: " + juce::String(maxNumberOfParams));
+
+    /*for (int i = 0; i < maxNumberOfParams; i++) {
+        layout.add(std::make_unique<juce::AudioParameterFloat>("param_" + juce::String(i), "Attack", juce::NormalisableRange<float>(0.f, 1.f, 0.01f, 1.f), 1.0f));
+    }*/
 
     for (int i = 0; i < maxNumberOfParams; i++) {
         layout.add(std::make_unique<juce::AudioParameterFloat>("ENVELOPE_ATTACK_" + juce::String(i), "Attack", juce::NormalisableRange<float>(0.f, 1.f, 0.01f, 1.f), 1.0f));

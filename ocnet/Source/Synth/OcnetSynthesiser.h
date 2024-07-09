@@ -19,5 +19,9 @@ public:
     void addWavetableOscillator();
     void addEnvelope(int numberOfEnvelopes);
 
+    bool getHasEnvelope() { return hasEnvelope; }
+
 private:
+    bool hasEnvelope = true;
+
 };

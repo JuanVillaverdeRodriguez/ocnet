@@ -23,7 +23,7 @@ struct ChainSettings {
 
 ChainSettings getChainSettings(juce::AudioProcessorValueTreeState& apvts);
 
-class OcnetAudioProcessor  : public juce::AudioProcessor
+class OcnetAudioProcessor  : public juce::AudioProcessor, public OcnetSynthesiser
 {
 public:
     //==============================================================================
@@ -73,18 +73,11 @@ public:
     //juce::AudioProcessorValueTreeState apvts;
 
     void applyModulators();
-    void addEnvelope(int numberOfEnvelopes);
-    void addWavetableOscillator();
 
 private:
     //==============================================================================
     juce::AudioProcessorValueTreeState::ParameterLayout layout;
 
-    OcnetSynthesiser synth;
-
-    bool hasEnvelope = false;
-
-    
     int numVoices = 8;
 
     

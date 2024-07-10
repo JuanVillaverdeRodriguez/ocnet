@@ -13,6 +13,7 @@
 #include "Synth/SynthVoice.h"
 #include "Synth/SynthSound.h"
 #include "Synth/OcnetSynthesiser.h"
+#include "ParameterHandler/ParameterHandler.h"
 
 
 struct ChainSettings {
@@ -70,6 +71,9 @@ public:
         createParameterLayout();
 
     juce::AudioProcessorValueTreeState apvts { *this, nullptr, "Parameters", createParameterLayout() };
+
+    ParameterHandler parameterHandler;
+
     //juce::AudioProcessorValueTreeState apvts;
 
     void applyModulators();

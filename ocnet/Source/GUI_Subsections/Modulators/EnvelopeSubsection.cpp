@@ -32,16 +32,16 @@ void EnvelopeSubsection::resized()
     releaseKnob.setBounds(150, 0, 50, 50);
 }
 
-void EnvelopeSubsection::attachParams(juce::AudioProcessorValueTreeState& apvts)
-{
-    using SliderAttachment = juce::AudioProcessorValueTreeState::SliderAttachment;
+void EnvelopeSubsection::attachParams(ParameterHandler& parameterHandler) {
+    std::unique_ptr<Parameter2> attackParameter = std::make_unique<Parameter2>(attackKnob);
+    std::unique_ptr<Parameter2> decayParameter = std::make_unique<Parameter2>(decayKnob);
+    std::unique_ptr<Parameter2> sustainParameter = std::make_unique<Parameter2>(sustainKnob);
+    std::unique_ptr<Parameter2> releaseParameter = std::make_unique<Parameter2>(releaseKnob);
 
-    DBG("ENVELOPE_ATTACK_" + juce::String(getId()));
-    auto attackString = "ENVELOPE_ATTACK_" + juce::String(getId());
-    attackAttachment = std::make_unique<SliderAttachment>(apvts, "ENVELOPE_ATTACK_0", attackKnob);
-    decayAttachment = std::make_unique<SliderAttachment>(apvts, "ENVELOPE_DECAY_" + juce::String(getId()), decayKnob);
-    sustainAttachment = std::make_unique<SliderAttachment>(apvts, "ENVELOPE_SUSTAIN_" + juce::String(getId()), sustainKnob);
-    releaseAttachment = std::make_unique<SliderAttachment>(apvts, "ENVELOPE_RELEASE_" + juce::String(getId()), releaseKnob);
+    std::unique_ptr<EnvelopeAttachment> envelopeParameters = std::make_unique<EnvelopeAttachment>(std::move(attackParameter), std::move(decayParameter), std::move(sustainParameter), std::move(releaseParameter));
+
+    parameterHandler.attachParameter(std::move(envelopeParameters));
 }
+
 
 

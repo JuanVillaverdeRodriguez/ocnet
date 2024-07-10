@@ -50,7 +50,7 @@ void OcnetGUI_interface::addModulator(int option)
 {
     if (option > 0) {
         if (option == 1) {
-            gui_->getModulatorsSection()->addEnvelope(numberOfEnvelopes, processor.apvts);
+            gui_->getModulatorsSection()->addEnvelope(numberOfEnvelopes, processor.parameterHandler);
             processor.addEnvelope(numberOfEnvelopes);
 
         }
@@ -58,4 +58,3 @@ void OcnetGUI_interface::addModulator(int option)
     DBG("OcnetGUI_interface::addModulator(int option)");
 
 }
-

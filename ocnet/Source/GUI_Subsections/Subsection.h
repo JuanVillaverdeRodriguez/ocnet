@@ -11,15 +11,14 @@
 #pragma once
 
 #include <JuceHeader.h>
+#include "../ParameterHandler/ParameterHandler.h"
 
 class Subsection : public juce::Component {
 public:
     void inline setId(int id) { this->id = id; }
-
     int inline getId() { return id; }
 
-    virtual void attachParams(juce::AudioProcessorValueTreeState& apvts) = 0 {}
-
+    virtual void attachParams(ParameterHandler& parameterHandler) = 0 {}
 private:
     int id;
     

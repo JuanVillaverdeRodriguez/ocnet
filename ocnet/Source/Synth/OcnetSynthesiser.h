@@ -21,6 +21,8 @@ public:
 
     bool getHasEnvelope() { return hasEnvelope; }
 
+    void handleSliderValueChanged(juce::Slider* slider, juce::String sliderNameID);
+
 private:
     bool hasEnvelope = true;
 

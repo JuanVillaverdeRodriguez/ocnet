@@ -9,6 +9,7 @@
 */
 
 #include "ModulatorsSection.h"
+#include "../ParameterHandler/ParameterHandler.h"
 
 ModulatorsSection::ModulatorsSection()
 {
@@ -44,25 +45,18 @@ void ModulatorsSection::addListener(Listener* listener)
     listeners.push_back(listener);
 }
 
-void ModulatorsSection::attachParams(juce::AudioProcessorValueTreeState& apvts)
-{
-    DBG("ModulatorsSection::attachParams(juce::AudioProcessorValueTreeState& apvts)");
 
-    for (auto& envelope : envelopeSubsections) {
-        envelope->attachParams(apvts);
-    }
-}
 
-void ModulatorsSection::addEnvelope(int numberOfEnvelopes, juce::AudioProcessorValueTreeState& apvts)
+void ModulatorsSection::addEnvelope(int numberOfEnvelopes, ParameterHandler& parameterHandler)
 {
     std::unique_ptr<EnvelopeSubsection> envelope = std::make_unique<EnvelopeSubsection>();
 
     envelope->setId(numberOfEnvelopes);
-
     envelopeSubsections.push_back(std::move(envelope));
     this->addAndMakeVisible(*envelopeSubsections.back());
     resized();
-    envelopeSubsections.back()->attachParams(apvts);
+    envelopeSubsections.back()->attachParams(parameterHandler);
+    //envelopeSubsections.back()->attachParams(apvts);
 
 
 }

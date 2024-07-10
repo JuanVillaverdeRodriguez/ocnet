@@ -176,12 +176,17 @@ void OcnetAudioProcessor::applyModulators()
         for (int i = 0; i < getNumVoices(); ++i) {
             if (auto voice = dynamic_cast<SynthVoice*>(getVoice(i))) { // Si la voz es del tipo juce::SynthesiserVoice...
 
-                auto& attack = *apvts.getRawParameterValue("ENVELOPE_ATTACK_0");
+                /*auto& attack = *apvts.getRawParameterValue("ENVELOPE_ATTACK_0");
                 auto& decay = *apvts.getRawParameterValue("ENVELOPE_DECAY_0");
                 auto& sustain = *apvts.getRawParameterValue("ENVELOPE_SUSTAIN_0");
-                auto& release = *apvts.getRawParameterValue("ENVELOPE_RELEASE_0");
+                auto& release = *apvts.getRawParameterValue("ENVELOPE_RELEASE_0");*/
 
-                voice->updateADSR(attack.load(), decay.load(), sustain.load(), release.load());
+                auto attack = parameterHandler.getParameterValue(ocnet::ParameterOwnerType::Envelope, ocnet::EnvelopeParameterID::ATTACK, 0);
+                auto decay = parameterHandler.getParameterValue(ocnet::ParameterOwnerType::Envelope, ocnet::EnvelopeParameterID::DECAY, 0);
+                auto sustain = parameterHandler.getParameterValue(ocnet::ParameterOwnerType::Envelope, ocnet::EnvelopeParameterID::SUSTAIN, 0);
+                auto release = parameterHandler.getParameterValue(ocnet::ParameterOwnerType::Envelope, ocnet::EnvelopeParameterID::RELEASE, 0);
+
+                voice->updateADSR(attack, decay, sustain, release);
                 // OSC controls
                 // ADSR
                 // LFO
@@ -235,21 +240,13 @@ juce::AudioProcessorValueTreeState::ParameterLayout OcnetAudioProcessor::createP
     //ADSR
     DBG("MAX MODULATORS: " + juce::String(maxNumberOfParams));
 
-    /*for (int i = 0; i < maxNumberOfParams; i++) {
-        layout.add(std::make_unique<juce::AudioParameterFloat>("param_" + juce::String(i), "Attack", juce::NormalisableRange<float>(0.f, 1.f, 0.01f, 1.f), 1.0f));
-    }*/
-
     for (int i = 0; i < maxNumberOfParams; i++) {
-        layout.add(std::make_unique<juce::AudioParameterFloat>("ENVELOPE_ATTACK_" + juce::String(i), "Attack", juce::NormalisableRange<float>(0.f, 1.f, 0.01f, 1.f), 1.0f));
-        layout.add(std::make_unique<juce::AudioParameterFloat>("ENVELOPE_DECAY_" + juce::String(i), "Decay", juce::NormalisableRange<float>(0.f, 1.f, 0.01f, 1.f), 1.0f));
-        layout.add(std::make_unique<juce::AudioParameterFloat>("ENVELOPE_SUSTAIN_" + juce::String(i), "Sustain", juce::NormalisableRange<float>(0.f, 1.f, 0.01f, 1.f), 1.0f));
-        layout.add(std::make_unique<juce::AudioParameterFloat>("ENVELOPE_RELEASE_" + juce::String(i), "Release", juce::NormalisableRange<float>(0.f, 1.f, 0.01f, 1.f), 1.0f));
+        layout.add(std::make_unique<juce::AudioParameterFloat>("param_" + juce::String(i), "Attack", juce::NormalisableRange<float>(0.f, 1.f, 0.01f, 1.f), 1.0f));
     }
 
     return layout;
-
-
 }
+
 //==============================================================================
 // This creates new instances of the plugin..
 juce::AudioProcessor* JUCE_CALLTYPE createPluginFilter()

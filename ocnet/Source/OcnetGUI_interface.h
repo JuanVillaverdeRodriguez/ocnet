@@ -25,11 +25,12 @@ public:
 
     void addModulator(int option) override;
 
+
     OcnetGUI* getGui() { return gui_.get(); }
 
 private:
-    std::unique_ptr<OcnetGUI> gui_;
-    OcnetAudioProcessor& processor;
+    std::unique_ptr<OcnetGUI> gui_; //Vista
+    OcnetAudioProcessor& processor; //Modelo
 
     int numberOfEnvelopes;
 

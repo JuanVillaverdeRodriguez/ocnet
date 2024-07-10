@@ -28,9 +28,7 @@ public:
 
     void addListener(Listener* listener);
 
-    void attachParams(juce::AudioProcessorValueTreeState& apvts);
-
-    void addEnvelope(int numberOfEnvelopes, juce::AudioProcessorValueTreeState& apvts);
+    void addEnvelope(int numberOfEnvelopes, ParameterHandler& apvts);
 
     void buttonClicked(juce::Button* clickedButton) override;
 

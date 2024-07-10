@@ -6,6 +6,24 @@
               pluginVSTCategory="kPlugCategSynth" pluginCharacteristicsValue="pluginIsSynth,pluginWantsMidiIn">
   <MAINGROUP id="Fay8LI" name="ocnet">
     <GROUP id="{B897E036-BD65-2195-C049-E6C429F0FF25}" name="Source">
+      <GROUP id="{3886D1F5-0388-AA25-2786-5DDC6F87D140}" name="ParameterHandler">
+        <GROUP id="{EBD5C8A6-549F-83B5-5589-A4BA06A02337}" name="SubsectionAttachments">
+          <FILE id="mxWhcS" name="EnvelopeAttachment.cpp" compile="1" resource="0"
+                file="Source/ParameterHandler/SubsectionAttachments/EnvelopeAttachment.cpp"/>
+          <FILE id="Lg3Mo7" name="EnvelopeAttachment.h" compile="0" resource="0"
+                file="Source/ParameterHandler/SubsectionAttachments/EnvelopeAttachment.h"/>
+          <FILE id="mLnB2t" name="SubsectionAttachment.cpp" compile="1" resource="0"
+                file="Source/ParameterHandler/SubsectionAttachments/SubsectionAttachment.cpp"/>
+          <FILE id="BurG8c" name="SubsectionAttachment.h" compile="0" resource="0"
+                file="Source/ParameterHandler/SubsectionAttachments/SubsectionAttachment.h"/>
+        </GROUP>
+        <FILE id="Xy1vaw" name="Parameter.cpp" compile="1" resource="0" file="Source/ParameterHandler/Parameter.cpp"/>
+        <FILE id="tT6DKv" name="Parameter.h" compile="0" resource="0" file="Source/ParameterHandler/Parameter.h"/>
+        <FILE id="ULBX8J" name="ParameterHandler.cpp" compile="1" resource="0"
+              file="Source/ParameterHandler/ParameterHandler.cpp"/>
+        <FILE id="O9uNYn" name="ParameterHandler.h" compile="0" resource="0"
+              file="Source/ParameterHandler/ParameterHandler.h"/>
+      </GROUP>
       <GROUP id="{B172D91C-232C-204D-990B-B098D55147A4}" name="GUI_Subsections">
         <GROUP id="{51DD87FF-BFF9-2549-083C-9ADEB615EB13}" name="EffectChains"/>
         <GROUP id="{92FB6D28-4C7B-1793-4DBB-E52D07FBB922}" name="Effects"/>

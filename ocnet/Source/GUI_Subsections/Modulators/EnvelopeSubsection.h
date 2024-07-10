@@ -15,30 +15,24 @@
 
 #include <JuceHeader.h>
 
-class EnvelopeSubsection  : public Subsection {
+class EnvelopeSubsection : public Subsection {
 public:
     EnvelopeSubsection();
 
     void resized() override;
 
-    void attachParams(juce::AudioProcessorValueTreeState& apvts) override;
+    void attachParams(ParameterHandler& parameterHandler);
 
     bool isMainEnvelope() { return this->mainEnvelope; }
     void setAsMainEnvelope() { this->mainEnvelope = true; }
     void unsetAsMainEnvelope() { this->mainEnvelope = false; }
+
 
 private:
     Knob1 attackKnob;
     Knob1 decayKnob;
     Knob1 sustainKnob;
     Knob1 releaseKnob;
-
-    using SliderAttachment = juce::AudioProcessorValueTreeState::SliderAttachment;
-
-    std::unique_ptr<SliderAttachment> attackAttachment; //A
-    std::unique_ptr<SliderAttachment> decayAttachment; //D
-    std::unique_ptr<SliderAttachment> sustainAttachment; //S
-    std::unique_ptr<SliderAttachment> releaseAttachment; //R
 
     bool mainEnvelope;
 

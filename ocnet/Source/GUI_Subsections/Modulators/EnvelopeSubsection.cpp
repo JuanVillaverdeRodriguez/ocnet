@@ -14,8 +14,6 @@ EnvelopeSubsection::EnvelopeSubsection()
 {
     mainEnvelope = false;
 
-    
-
     this->addAndMakeVisible(attackKnob);
     this->addAndMakeVisible(decayKnob);
     this->addAndMakeVisible(sustainKnob);

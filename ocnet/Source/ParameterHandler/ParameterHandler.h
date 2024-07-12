@@ -12,7 +12,6 @@
 
 #include "Parameter.h"
 #include "JuceHeader.h"
-#include "SubsectionAttachments/EnvelopeAttachment.h"
 
 namespace ocnet {
     enum ParameterOwnerType {

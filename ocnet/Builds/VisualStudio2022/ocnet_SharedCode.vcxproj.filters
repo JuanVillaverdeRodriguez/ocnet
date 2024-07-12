@@ -2,9 +2,6 @@
 
 <Project ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="ocnet\Source\ParameterHandler\SubsectionAttachments">
-      <UniqueIdentifier>{1C60428A-DB7D-CD2E-D9B1-AC588460EB31}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ocnet\Source\ParameterHandler">
       <UniqueIdentifier>{1448AEC1-050E-FCAA-19B9-8523D8F7AE9B}</UniqueIdentifier>
     </Filter>
@@ -733,9 +730,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\Source\ParameterHandler\SubsectionAttachments\EnvelopeAttachment.cpp">
-      <Filter>ocnet\Source\ParameterHandler\SubsectionAttachments</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\Source\ParameterHandler\Parameter.cpp">
       <Filter>ocnet\Source\ParameterHandler</Filter>
     </ClCompile>
@@ -743,6 +737,9 @@
       <Filter>ocnet\Source\ParameterHandler</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\GUI_Subsections\Modulators\EnvelopeSubsection.cpp">
+      <Filter>ocnet\Source\GUI_Subsections\Modulators</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\GUI_Subsections\Modulators\LFOSubsection.cpp">
       <Filter>ocnet\Source\GUI_Subsections\Modulators</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\GUI_Subsections\Oscillators\WavetableOscillatorSubsection.cpp">
@@ -3678,9 +3675,6 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\Source\ParameterHandler\SubsectionAttachments\EnvelopeAttachment.h">
-      <Filter>ocnet\Source\ParameterHandler\SubsectionAttachments</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\Source\ParameterHandler\Parameter.h">
       <Filter>ocnet\Source\ParameterHandler</Filter>
     </ClInclude>
@@ -3688,6 +3682,9 @@
       <Filter>ocnet\Source\ParameterHandler</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\GUI_Subsections\Modulators\EnvelopeSubsection.h">
+      <Filter>ocnet\Source\GUI_Subsections\Modulators</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\GUI_Subsections\Modulators\LFOSubsection.h">
       <Filter>ocnet\Source\GUI_Subsections\Modulators</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\GUI_Subsections\Oscillators\WavetableOscillatorSubsection.h">

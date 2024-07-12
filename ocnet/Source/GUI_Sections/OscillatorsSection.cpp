@@ -28,12 +28,32 @@ void OscillatorsSection::resized()
 {
     auto area = getLocalBounds();
 
-    addOscillatorButton.setBounds(area.getWidth()/2 - 25, 5, 50, 50);
+    int lastOscillatorPosition = 0;
+
+    for (auto& wavetableOscillator : wavetableOscillatorSubsection) {
+        wavetableOscillator->setBounds(5, lastOscillatorPosition + 5, area.getWidth(), 50);
+        lastOscillatorPosition += 50;
+    }
+
+
+    addOscillatorButton.setBounds(area.getWidth() / 2 - 25, lastOscillatorPosition + 5, 50, 50);
 }
 
 void OscillatorsSection::addListener(Listener *listener)
 {
     listeners.push_back(listener);
+}
+
+void OscillatorsSection::addWavetableOscillator(int numberOfWavetableOscillators, ParameterHandler& parameterHandler)
+{
+    std::unique_ptr<WavetableOscillatorSubsection> wavetableOscillator = std::make_unique<WavetableOscillatorSubsection>();
+
+    wavetableOscillator->setId(numberOfWavetableOscillators);
+    wavetableOscillatorSubsection.push_back(std::move(wavetableOscillator));
+    this->addAndMakeVisible(*wavetableOscillatorSubsection.back());
+    resized();
+    wavetableOscillatorSubsection.back()->attachParams(parameterHandler);
+    //envelopeSubsections.back()->attachParams(apvts);
 }
 
 void OscillatorsSection::buttonClicked(juce::Button* clickedButton)

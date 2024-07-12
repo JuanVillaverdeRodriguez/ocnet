@@ -33,6 +33,7 @@ private:
     OcnetAudioProcessor& processor; //Modelo
 
     int numberOfEnvelopes;
+    int numberOfWavetableOscillators;
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(OcnetGUI_interface)
 

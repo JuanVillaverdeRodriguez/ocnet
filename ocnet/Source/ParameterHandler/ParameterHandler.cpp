@@ -53,7 +53,12 @@ ParameterHandler::ParameterHandler()
     static juce::Identifier envelopesIdentifier("Envelopes");
     juce::ValueTree envelopesNode(envelopesIdentifier);
 
+    static juce::Identifier wavetableOscillatorsIdentifier("WavetableOscillators");
+    juce::ValueTree wavetableOscillatorsNode(wavetableOscillatorsIdentifier);
+
     rootNode.addChild(envelopesNode, -1, nullptr);
+    rootNode.addChild(wavetableOscillatorsNode, -1, nullptr);
+
 
 
 }

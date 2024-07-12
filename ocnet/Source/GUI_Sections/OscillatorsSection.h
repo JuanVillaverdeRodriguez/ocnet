@@ -12,6 +12,7 @@
 
 #include <JuceHeader.h>
 #include "../LookAndFeel_V4/OcnetLookAndFeel.h"
+#include "../GUI_Subsections/Oscillators/WavetableOscillatorSubsection.h"
 
 class OscillatorsSection : public juce::Component, juce::Button::Listener {
 public:
@@ -27,6 +28,8 @@ public:
 
     void addListener(Listener *listener);
 
+    void addWavetableOscillator(int numberOfWavetableOscillators, ParameterHandler& parameterHandler);
+
     void buttonClicked(juce::Button* clickedButton) override;
 
     void paint(juce::Graphics& g) override;
@@ -37,7 +40,7 @@ private:
     std::vector<Listener*> listeners;
     OcnetLookAndFeel lookAndFeel;
 
-    //std::vector<std::unique_ptr<WavetableOscillatorSection>> wavetableOscillatorsSections;
+    std::vector<std::unique_ptr<WavetableOscillatorSubsection>> wavetableOscillatorSubsection;
 
     juce::TextButton addOscillatorButton;
 

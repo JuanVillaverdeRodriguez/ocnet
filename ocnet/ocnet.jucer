@@ -7,12 +7,6 @@
   <MAINGROUP id="Fay8LI" name="ocnet">
     <GROUP id="{B897E036-BD65-2195-C049-E6C429F0FF25}" name="Source">
       <GROUP id="{3886D1F5-0388-AA25-2786-5DDC6F87D140}" name="ParameterHandler">
-        <GROUP id="{EBD5C8A6-549F-83B5-5589-A4BA06A02337}" name="SubsectionAttachments">
-          <FILE id="mxWhcS" name="EnvelopeAttachment.cpp" compile="1" resource="0"
-                file="Source/ParameterHandler/SubsectionAttachments/EnvelopeAttachment.cpp"/>
-          <FILE id="Lg3Mo7" name="EnvelopeAttachment.h" compile="0" resource="0"
-                file="Source/ParameterHandler/SubsectionAttachments/EnvelopeAttachment.h"/>
-        </GROUP>
         <FILE id="Xy1vaw" name="Parameter.cpp" compile="1" resource="0" file="Source/ParameterHandler/Parameter.cpp"/>
         <FILE id="tT6DKv" name="Parameter.h" compile="0" resource="0" file="Source/ParameterHandler/Parameter.h"/>
         <FILE id="ULBX8J" name="ParameterHandler.cpp" compile="1" resource="0"
@@ -28,6 +22,9 @@
                 file="Source/GUI_Subsections/Modulators/EnvelopeSubsection.cpp"/>
           <FILE id="fQkPwv" name="EnvelopeSubsection.h" compile="0" resource="0"
                 file="Source/GUI_Subsections/Modulators/EnvelopeSubsection.h"/>
+          <FILE id="pX3vrp" name="LFOSubsection.cpp" compile="1" resource="0"
+                file="Source/GUI_Subsections/Modulators/LFOSubsection.cpp"/>
+          <FILE id="HmQUst" name="LFOSubsection.h" compile="0" resource="0" file="Source/GUI_Subsections/Modulators/LFOSubsection.h"/>
         </GROUP>
         <GROUP id="{3C75C2FB-65E8-33DF-3A3A-FDCFFB6A5E76}" name="Oscillators">
           <FILE id="tA03u8" name="WavetableOscillatorSubsection.cpp" compile="1"

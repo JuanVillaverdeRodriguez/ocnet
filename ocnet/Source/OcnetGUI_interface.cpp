@@ -15,6 +15,7 @@ OcnetGUI_interface::OcnetGUI_interface(OcnetAudioProcessor *processor) : process
     DBG("OcnetGUI_interface::OcnetGUI_interface(OcnetAudioProcessor *processor)");
 
     numberOfEnvelopes = 0;
+    numberOfWavetableOscillators = 0;
     gui_ = std::make_unique<OcnetGUI>();
     //gui_->attachParams(processor->apvts);
 
@@ -32,6 +33,8 @@ void OcnetGUI_interface::addOscillator(int option)
 
     if (option > 0) {
         if (option == 1) {
+            gui_->getOscillatorsSection()->addWavetableOscillator(numberOfWavetableOscillators, processor.parameterHandler);
+
             processor.addWavetableOscillator();
         }
         else if (option == 2) {

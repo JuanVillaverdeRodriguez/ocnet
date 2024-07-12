@@ -28,6 +28,8 @@ void OcnetGUI::attachParams(juce::AudioProcessorValueTreeState& apvts) {
 
 void OcnetGUI::initializeGUI()
 {
+    DBG("OcnetGUI::initializeGUI()");
+
     this->addAndMakeVisible(headerSection.get());
     this->addAndMakeVisible(footerSection.get());
     this->addAndMakeVisible(oscillatorsSection.get());

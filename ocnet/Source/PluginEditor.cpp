@@ -8,6 +8,8 @@
 OcnetAudioProcessorEditor::OcnetAudioProcessorEditor(OcnetAudioProcessor & ocnetAudioProcessor)
     : AudioProcessorEditor(&ocnetAudioProcessor), audioProcessor(ocnetAudioProcessor), OcnetGUI_interface(&ocnetAudioProcessor)
 {
+    DBG("OcnetAudioProcessorEditor::OcnetAudioProcessorEditor(OcnetAudioProcessor & ocnetAudioProcessor)");
+
     addAndMakeVisible(getGui());
 
     setSize(1280 / 1.5, 720 / 1.5);

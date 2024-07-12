@@ -12,6 +12,8 @@
 
 OcnetGUI_interface::OcnetGUI_interface(OcnetAudioProcessor *processor) : processor(*processor)
 {
+    DBG("OcnetGUI_interface::OcnetGUI_interface(OcnetAudioProcessor *processor)");
+
     numberOfEnvelopes = 0;
     gui_ = std::make_unique<OcnetGUI>();
     //gui_->attachParams(processor->apvts);

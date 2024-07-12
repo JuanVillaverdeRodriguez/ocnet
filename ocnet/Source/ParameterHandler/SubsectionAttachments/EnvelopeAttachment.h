@@ -14,7 +14,7 @@
 #include "../Parameter.h"
 
 namespace ocnet {
-    enum EnvelopeParameterID
+    enum EnvParamID
     {
         ATTACK,
         DECAY,
@@ -27,6 +27,8 @@ class EnvelopeAttachment {
 public:
     EnvelopeAttachment(std::unique_ptr<Parameter2> attack, std::unique_ptr<Parameter2> decay, std::unique_ptr<Parameter2> sustain, std::unique_ptr<Parameter2> release);
     ~EnvelopeAttachment();
+
+    void setTree(juce::ValueTree envelopesTree);
 
     float getParameterValue(int parameterTag);
 private:

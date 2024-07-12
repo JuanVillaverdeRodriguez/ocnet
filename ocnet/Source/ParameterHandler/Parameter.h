@@ -13,7 +13,7 @@
 #include "JuceHeader.h"
 
 
-class Parameter2 : juce::Slider::Listener {
+class Parameter2 : juce::Slider::Listener, juce::ValueTree::Listener {
 public:
     Parameter2(juce::Slider& component);
 
@@ -21,6 +21,11 @@ public:
     inline float getValue() { return value; }
 
     void sliderValueChanged(juce::Slider* slider) override;
+
+    void setTreeListener(juce::ValueTree tree, juce::String& propertyName);
+
+    void valueTreePropertyChanged(juce::ValueTree& treeWhosePropertyHasChanged,
+        const juce::Identifier& property) override;
 
     //Parameter(juce::Slider component, int ownerID, int ownerType, int parameterId);
     //Parameter(juce::ComboBox component, int ownerID, int ownerType, int parameterId);
@@ -36,6 +41,8 @@ public:
 
 private:
     float value; //Valor guardado
+    juce::ValueTree valueTree;
+    juce::Identifier propertyIdentifier;
 
     //int ownerType; //Envelope, LFO, Oscillator...
     //int ownerID; //Envelope 0, LFO 7, Oscillador 3...

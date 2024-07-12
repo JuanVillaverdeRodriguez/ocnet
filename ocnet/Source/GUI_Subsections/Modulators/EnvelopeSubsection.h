@@ -36,6 +36,11 @@ private:
 
     bool mainEnvelope;
 
+    std::unique_ptr<Parameter2> attackParameter;
+    std::unique_ptr<Parameter2> decayParameter;
+    std::unique_ptr<Parameter2> sustainParameter;
+    std::unique_ptr<Parameter2> releaseParameter;
+
     //using ButtonAttachment = juce::AudioProcessorValueTreeState::ButtonAttachment;
     //using OptionAttachment = juce::AudioProcessorValueTreeState::SliderAttachment;
 };

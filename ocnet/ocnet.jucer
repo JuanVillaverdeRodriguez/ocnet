@@ -12,10 +12,6 @@
                 file="Source/ParameterHandler/SubsectionAttachments/EnvelopeAttachment.cpp"/>
           <FILE id="Lg3Mo7" name="EnvelopeAttachment.h" compile="0" resource="0"
                 file="Source/ParameterHandler/SubsectionAttachments/EnvelopeAttachment.h"/>
-          <FILE id="mLnB2t" name="SubsectionAttachment.cpp" compile="1" resource="0"
-                file="Source/ParameterHandler/SubsectionAttachments/SubsectionAttachment.cpp"/>
-          <FILE id="BurG8c" name="SubsectionAttachment.h" compile="0" resource="0"
-                file="Source/ParameterHandler/SubsectionAttachments/SubsectionAttachment.h"/>
         </GROUP>
         <FILE id="Xy1vaw" name="Parameter.cpp" compile="1" resource="0" file="Source/ParameterHandler/Parameter.cpp"/>
         <FILE id="tT6DKv" name="Parameter.h" compile="0" resource="0" file="Source/ParameterHandler/Parameter.h"/>

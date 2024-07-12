@@ -181,10 +181,11 @@ void OcnetAudioProcessor::applyModulators()
                 auto& sustain = *apvts.getRawParameterValue("ENVELOPE_SUSTAIN_0");
                 auto& release = *apvts.getRawParameterValue("ENVELOPE_RELEASE_0");*/
 
-                auto attack = parameterHandler.getParameterValue(ocnet::ParameterOwnerType::Envelope, ocnet::EnvelopeParameterID::ATTACK, 0);
-                auto decay = parameterHandler.getParameterValue(ocnet::ParameterOwnerType::Envelope, ocnet::EnvelopeParameterID::DECAY, 0);
-                auto sustain = parameterHandler.getParameterValue(ocnet::ParameterOwnerType::Envelope, ocnet::EnvelopeParameterID::SUSTAIN, 0);
-                auto release = parameterHandler.getParameterValue(ocnet::ParameterOwnerType::Envelope, ocnet::EnvelopeParameterID::RELEASE, 0);
+                auto attack = parameterHandler.getParameterValue(juce::String("Envelopes"), juce::String("0"), juce::String("attack"));
+                auto decay = parameterHandler.getParameterValue(juce::String("Envelopes"), juce::String("0"), juce::String("decay"));
+                auto sustain = parameterHandler.getParameterValue(juce::String("Envelopes"), juce::String("0"), juce::String("sustain"));
+                auto release = parameterHandler.getParameterValue(juce::String("Envelopes"), juce::String("0"), juce::String("release"));
+
 
                 voice->updateADSR(attack, decay, sustain, release);
                 // OSC controls

@@ -25,6 +25,7 @@ public:
 
     void addModulator(int option) override;
 
+    //void deleteOscillator(int id) override;
 
     OcnetGUI* getGui() { return gui_.get(); }
 

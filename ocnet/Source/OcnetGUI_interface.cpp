@@ -46,6 +46,7 @@ void OcnetGUI_interface::addOscillator(int option)
     }
 }
 
+
 void OcnetGUI_interface::addEffectsChain()
 {
     DBG("OcnetGUI_interface::addEffectsChain()");
@@ -63,3 +64,11 @@ void OcnetGUI_interface::addModulator(int option)
     DBG("OcnetGUI_interface::addModulator(int option)");
 
 }
+
+/*void OcnetGUI_interface::deleteOscillator(int id)
+{
+    gui_->getOscillatorsSection()->deleteOscillator(id); // Elimina el oscilador de la vista
+    processor.parameterHandler.removeOscillatorParameters(id); // Elimina los parametros asociados a este oscilador
+    processor.deleteOscillator(id); // Elimina el oscilador del modelo
+}
+*/

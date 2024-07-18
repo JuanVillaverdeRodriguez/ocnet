@@ -70,10 +70,32 @@
       <FILE id="bQXL1R" name="OcnetGUI_interface.h" compile="0" resource="0"
             file="Source/OcnetGUI_interface.h"/>
       <GROUP id="{F3B0B463-C0DE-0D39-E0FD-236DC0836EDE}" name="Synth">
+        <GROUP id="{E55E5413-BAED-13DF-5573-AF7ABCF50AC1}" name="Processors">
+          <FILE id="e7zpmr" name="ProcessorHandler.cpp" compile="1" resource="0"
+                file="Source/Synth/Processors/ProcessorHandler.cpp"/>
+          <FILE id="fas4ma" name="ProcessorHandler.h" compile="0" resource="0"
+                file="Source/Synth/Processors/ProcessorHandler.h"/>
+          <GROUP id="{F42BDE12-C9CD-9A85-C66D-85900EFF7C78}" name="Oscillators">
+            <FILE id="R44Eph" name="WavetableOscillatorProcessor.cpp" compile="1"
+                  resource="0" file="Source/Synth/Processors/Oscillators/WavetableOscillatorProcessor.cpp"/>
+            <FILE id="SsHFrw" name="WavetableOscillatorProcessor.h" compile="0"
+                  resource="0" file="Source/Synth/Processors/Oscillators/WavetableOscillatorProcessor.h"/>
+          </GROUP>
+          <GROUP id="{A0D7E883-2E8B-DAB9-94D8-C766BB592BE4}" name="EffectsChains"/>
+          <GROUP id="{E9BC3EE7-B3EF-6C8B-FB4D-C92AA9B0031D}" name="Effects"/>
+          <GROUP id="{56F0D0BF-3FB3-CBB3-8460-81F27FB410F7}" name="Modulators">
+            <FILE id="a06LBG" name="EnvelopeProcessor.cpp" compile="1" resource="0"
+                  file="Source/Synth/Processors/Modulators/EnvelopeProcessor.cpp"/>
+            <FILE id="XeNtgA" name="EnvelopeProcessor.h" compile="0" resource="0"
+                  file="Source/Synth/Processors/Modulators/EnvelopeProcessor.h"/>
+            <FILE id="oQKRKq" name="LFOProcessor.cpp" compile="1" resource="0"
+                  file="Source/Synth/Processors/Modulators/LFOProcessor.cpp"/>
+            <FILE id="KvHQZx" name="LFOProcessor.h" compile="0" resource="0" file="Source/Synth/Processors/Modulators/LFOProcessor.h"/>
+          </GROUP>
+          <FILE id="N1n00d" name="Processor.cpp" compile="1" resource="0" file="Source/Synth/Processors/Processor.cpp"/>
+          <FILE id="QOZrJm" name="Processor.h" compile="0" resource="0" file="Source/Synth/Processors/Processor.h"/>
+        </GROUP>
         <GROUP id="{4A9F1CA4-B01E-EC61-DC4B-9F84457822C7}" name="Oscillator">
-          <FILE id="YxV4mN" name="WavetableOsc.cpp" compile="1" resource="0"
-                file="Source/Synth/Oscillator/WavetableOsc.cpp"/>
-          <FILE id="wUhKcB" name="WavetableOsc.h" compile="0" resource="0" file="Source/Synth/Oscillator/WavetableOsc.h"/>
           <FILE id="olJNoU" name="WavetableTypes.h" compile="0" resource="0"
                 file="Source/Synth/Oscillator/WavetableTypes.h"/>
         </GROUP>

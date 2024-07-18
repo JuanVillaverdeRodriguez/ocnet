@@ -9,30 +9,32 @@
 */
 
 #include "SynthVoice.h"
+#include "Processors/Oscillators/WavetableOscillatorProcessor.h"
+#include "Processors/Modulators/EnvelopeProcessor.h"
 
+SynthVoice::SynthVoice(){
+    spec = { 44100.0 ,512, 2 };
+    sampleRate = 44100.0;
+}
 
 bool SynthVoice::canPlaySound(juce::SynthesiserSound* sound) {
     return dynamic_cast<juce::SynthesiserSound*>(sound) != nullptr;
 }
 
 void SynthVoice::startNote(int midiNoteNumber, float velocity, juce::SynthesiserSound* sound, int currentPitchWheelPosition) {
-    //oscillator.setFrequency(juce::MidiMessage::getMidiNoteInHertz (midiNoteNumber), true);
-    auto frequency = juce::MidiMessage::getMidiNoteInHertz(midiNoteNumber);
-    //wavetableOsc.setFrequency(static_cast<float>(frequency), getSampleRate());
-
-    for each (WavetableOsc* wavetableOsc in wavetableOscV)
-    {
-        wavetableOsc->setFrequency(static_cast<float>(frequency), getSampleRate());
-    }
-
-    adsr.noteOn();
+    processorhHandler.startNote(midiNoteNumber, velocity, sound, currentPitchWheelPosition);
 
 }
-void SynthVoice::stopNote(float velocity, bool allowTailOff) {
-    adsr.noteOff();
 
-    if (!allowTailOff || !adsr.isActive())
+void SynthVoice::stopNote(float velocity, bool allowTailOff) {
+    processorhHandler.stopNote(velocity, allowTailOff);
+    
+
+    if (!allowTailOff || processorhHandler.canClearNote())
         clearCurrentNote();
+
+    /*if (!allowTailOff || !adsr.isActive())
+        clearCurrentNote();*/
 
 }
 void SynthVoice::controllerMoved(int controllerNumber, int newControllerValue) {
@@ -40,64 +42,33 @@ void SynthVoice::controllerMoved(int controllerNumber, int newControllerValue) {
 }
 
 void SynthVoice::renderNextBlock(juce::AudioBuffer<float>& outputBuffer, int startSample, int numSamples) {
-    //jassert(isPrepared); // No deberia ser necesario, JUCE ya lo deberia comprobar, pero por si acaso
 
     if (!isVoiceActive()) // Si no hay voces, no devuelve nada
         return;
+    
+    jassert(isPrepared); // No deberia ser necesario, JUCE ya lo deberia comprobar, pero por si acaso
 
-
-
+    // Preparamos un buffer auxiliar para evitar clicks del audio
     synthBuffer.setSize(1, numSamples, false, false, true);
     synthBuffer.clear();
 
+    //updateGraph();
+    processorhHandler.processBlock(synthBuffer);
 
-    for (int channel = 0; channel < 1; ++channel) {
-        auto* buffer = synthBuffer.getWritePointer(channel);
-
-        for (int sample = 0; sample < numSamples; ++sample) {
-
-            for each (WavetableOsc* wavetableOsc in wavetableOscV)
-            {
-                float currentSample = wavetableOsc->getNextSample();
-                float envValue = adsr.getNextSample();
-                currentSample *= envValue;
-                buffer[sample] = currentSample;
-
-            }
-            //float currentSample = wavetableOsc.getNextSample();
-
-            // Aplicar la envolvente ADSR a cada muestra
-
-        }
-    }
-
-    //Habria que cambiar todo esto a esto, que cada processor procese
-    /*for each (Processor processor in ProcessorList) {
-        juce::dsp::AudioBlock<float> audioBLock{ synthBuffer };
-        juce::dsp::ProcessContextReplacing<float> processContext{ audioBLock };
-
-        processor.process(processContext);
-    }*/
-
-    juce::dsp::AudioBlock<float> audioBLock { synthBuffer };
-    juce::dsp::ProcessContextReplacing<float> processContext { audioBLock };
-
-    gain.process(processContext);
 
     // Añadir synthBuffer al outputBuffer
     for (int channel = 0; channel < 1; ++channel) {
         outputBuffer.addFrom(channel, startSample, synthBuffer, channel, 0, numSamples);
-
     }
 
-
-
-
-
     // Si la envolvente ADSR ha terminado, limpiar la nota actual
-    if (!adsr.isActive())
+    if (processorhHandler.canClearNote())
         clearCurrentNote();
+
+    /*if (!adsr.isActive())
+        clearCurrentNote();*/
 }
+
 
 void SynthVoice::pitchWheelMoved(int newPitchWheelValue) {
 
@@ -106,45 +77,72 @@ void SynthVoice::pitchWheelMoved(int newPitchWheelValue) {
 void SynthVoice::prepareToPlay(double sampleRate, int samplesPerBlock, int outputChannels) {
     DBG("PREPARE TO PLAY");
 
-    juce::dsp::ProcessSpec spec;
-
-
     spec.maximumBlockSize = samplesPerBlock;
 
     spec.numChannels = outputChannels;
 
     spec.sampleRate = sampleRate;
 
-    adsr.setSampleRate(sampleRate);
+    //gain.prepare(spec); 
+
+    //gain.setGainDecibels(-48.0f);
 
 
-
-    gain.prepare(spec);
-
-    gain.setGainDecibels(-48.0f);
+    processorhHandler.prepareToPlay(spec);
 
     isPrepared = true;
 }
 
-void SynthVoice::updateADSR(const float attack, const float decay, const float sustain, const float release) {
-    adsrParams.attack = attack;
-    adsrParams.decay = decay;
-    adsrParams.sustain = sustain;
-    adsrParams.release = release;
-
-    adsr.setParameters(adsrParams);
+void SynthVoice::releaseResources()
+{
+    processorhHandler.releaseResources();
 }
 
 void SynthVoice::addWavetableOscillator()
 {
+    isPrepared = false;
+
     tables = createSawWaveTables(2048);
 
-    wavetableOscV.push_back(new WavetableOsc(tables));
+    processorhHandler.addWavetableOscillator(tables);
+    processorhHandler.prepareToPlay(spec);
+
+    isPrepared = true;
+
+
+    //wavetableOscV.push_back(new WavetableOsc(tables));
+
+    //processorGraph.addNode(std::make_unique<WavetableOsc>(tables));
+
+    /*Node::Ptr wavetableOscillatorNode = processorGraph.addNode(std::make_unique<WavetableOscillatorProcessor>(tables));
+
+    for (int channel = 0; channel < 2; ++channel) {
+        processorGraph.removeConnection({ { audioInputNode->nodeID, channel },{ audioOutputNode->nodeID, channel } });
+        processorGraph.addConnection({ { audioInputNode->nodeID, channel },{ wavetableOscillatorNode->nodeID, channel } });
+        processorGraph.addConnection({ { wavetableOscillatorNode->nodeID, channel },{ audioOutputNode->nodeID, channel } });
+    }
+
+    lastOscillatorNode = wavetableOscillatorNode;*/
+    
 
 }
 
 void SynthVoice::addEnvelope()
 {
+    processorhHandler.addEnvelope();
+
+    //Node::Ptr envelopeNode = processorGraph.addNode(std::make_unique<EnvelopeProcessor>());
+
+    /*for (int channel = 0; channel < 2; ++channel) {
+        processorGraph.removeConnection({ { lastOscillatorNode->nodeID, channel },{ audioOutputNode->nodeID, channel } });
+        processorGraph.addConnection({ { lastOscillatorNode->nodeID, channel },{ envelopeNode->nodeID, channel } });
+        processorGraph.addConnection({ { envelopeNode->nodeID, channel },{ audioOutputNode->nodeID, channel } });
+    }*/
+}
+
+void SynthVoice::updateParameterValues(ParameterHandler& parameterHandler)
+{
+    //processorhHandler.updateParameterValues(parameterHandler);
 }
 
 /*juce::AudioSampleBuffer SynthVoice::createWaveTable(int tableSize)

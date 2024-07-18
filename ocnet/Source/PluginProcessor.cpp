@@ -108,6 +108,14 @@ void OcnetAudioProcessor::prepareToPlay (double sampleRate, int samplesPerBlock)
 
 void OcnetAudioProcessor::releaseResources()
 {
+    DBG("OcnetAudioProcessor::releaseResources()");
+    for (int i = 0; i < getNumVoices(); i++) {
+        if (auto voice = dynamic_cast<SynthVoice*>(getVoice(i))) {
+            voice->releaseResources();
+
+        }
+    }
+
     // When playback stops, you can use this as an opportunity to free up any
     // spare memory, etc.
 }
@@ -144,14 +152,15 @@ void OcnetAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juce::
     auto totalNumInputChannels = getTotalNumInputChannels();
     auto totalNumOutputChannels = getTotalNumOutputChannels();
 
+    // Limpiar el buffer
     for (auto i = totalNumInputChannels; i < totalNumOutputChannels; ++i)
         buffer.clear(i, 0, buffer.getNumSamples());
+
+    // Rellenar el buffer de modulaciones
+    //applyModulators();
+
     
-
-    applyModulators();
-
-    
-
+    // Procesar el bloque en cada voz
     renderNextBlock(buffer, midiMessages,  0, buffer.getNumSamples());
 }
 
@@ -172,14 +181,14 @@ std::function<void()> getEditor(OcnetAudioProcessor *processor) {
 
 void OcnetAudioProcessor::applyModulators()
 {
-    if (getHasEnvelope()) {
+    /*if (getHasEnvelope()) {
         for (int i = 0; i < getNumVoices(); ++i) {
             if (auto voice = dynamic_cast<SynthVoice*>(getVoice(i))) { // Si la voz es del tipo juce::SynthesiserVoice...
 
                 /*auto& attack = *apvts.getRawParameterValue("ENVELOPE_ATTACK_0");
                 auto& decay = *apvts.getRawParameterValue("ENVELOPE_DECAY_0");
                 auto& sustain = *apvts.getRawParameterValue("ENVELOPE_SUSTAIN_0");
-                auto& release = *apvts.getRawParameterValue("ENVELOPE_RELEASE_0");*/
+                auto& release = *apvts.getRawParameterValue("ENVELOPE_RELEASE_0");
 
                 auto attack = parameterHandler.getParameterValue(juce::String("Envelopes"), juce::String("0"), juce::String("attack"));
                 auto decay = parameterHandler.getParameterValue(juce::String("Envelopes"), juce::String("0"), juce::String("decay"));
@@ -192,6 +201,12 @@ void OcnetAudioProcessor::applyModulators()
                 // ADSR
                 // LFO
             }
+        }
+    }*/
+
+    for (int i = 0; i < getNumVoices(); ++i) {
+        if (auto voice = dynamic_cast<SynthVoice*>(getVoice(i))) { // Si la voz es del tipo juce::SynthesiserVoice...
+            voice->updateParameterValues(parameterHandler);
         }
     }
     

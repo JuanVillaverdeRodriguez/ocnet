@@ -35,5 +35,7 @@ private:
 
     int numWavetables;
 
+    float oscGain;
+
     const std::vector<WavetableStruct>& tables;
 };

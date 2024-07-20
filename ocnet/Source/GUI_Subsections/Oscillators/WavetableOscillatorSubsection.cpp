@@ -34,7 +34,10 @@ void WavetableOscillatorSubsection::attachParams(ParameterHandler& parameterHand
     volumeParameter = std::make_unique<Parameter2>(volumeKnob);
     panningParameter = std::make_unique<Parameter2>(panningKnob);
 
-    parameterHandler.attachParameter(juce::String("WavetableOscillators"), juce::String(getId()), juce::String("volume"), volumeParameter);
-    parameterHandler.attachParameter(juce::String("WavetableOscillators"), juce::String(getId()), juce::String("panning"), panningParameter);
+    DBG("WavetableOscillatorSubsection::attachParams(ParameterHandler& parameterHandler)");
+    DBG(juce::String(getId()));
+
+    parameterHandler.attachParameter(juce::String("Oscillators"), juce::String("0"), juce::String("volume"), volumeParameter);
+    parameterHandler.attachParameter(juce::String("Oscillators"), juce::String("0"), juce::String("panning"), panningParameter);
 
 }

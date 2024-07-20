@@ -17,6 +17,8 @@ WavetableOscillatorProcessor::WavetableOscillatorProcessor(std::vector<Wavetable
 {
     setId(id);
     //jassert(wavetable.waveTable.getNumChannels() == 1); // Asegúrate de que la wavetable sea mono
+    oscGain = 1.0f;
+
     isPrepared = false;
     sampleRate = 0.0f;
     currentIndex = 0.0f;
@@ -69,6 +71,8 @@ float WavetableOscillatorProcessor::getNextSample()
 
     //DBG("CURRENT SAMPLE: " + juce::String(currentSample) + "CURRENT INDEX: " + juce::String(currentIndex) + "WAVE TABLE SAMPLES: " + juce::String(wavetable.getNumSamples()) + "\n Value0" + juce::String(table[index0]) + "\n Value1" + juce::String(table[index1]));
 
+    //DBG("OSC GAIN: " + juce::String(oscGain));
+    currentSample *= oscGain;
 
     return currentSample;
 }
@@ -87,6 +91,10 @@ void WavetableOscillatorProcessor::stopNote(float velocity, bool allowTailOff)
 
 void WavetableOscillatorProcessor::updateParameterValues(ParameterHandler parameterHandler)
 {
+    //DBG("WavetableOscillatorProcessor::updateParameterValues(ParameterHandler parameterHandler)");
+    //DBG(juce::String(getId()));
+
+    oscGain = parameterHandler.getParameterValue(juce::String("Oscillators"), juce::String("0"), juce::String("volume"));
 }
 
 void WavetableOscillatorProcessor::prepareToPlay(juce::dsp::ProcessSpec spec)

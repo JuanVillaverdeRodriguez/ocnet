@@ -44,10 +44,10 @@ void EnvelopeProcessor::updateParameterValues(ParameterHandler parameterHandler)
     adsrParams.sustain = parameterHandler.getParameterValue(juce::String("Envelopes"), juce::String("0"), juce::String("sustain"));
     adsrParams.release = parameterHandler.getParameterValue(juce::String("Envelopes"), juce::String("0"), juce::String("release"));
 
-    DBG(juce::String(adsrParams.attack));
-    DBG(juce::String(adsrParams.decay));
-    DBG(juce::String(adsrParams.sustain));
-    DBG(juce::String(adsrParams.release));
+    //DBG(juce::String(adsrParams.attack));
+    //DBG(juce::String(adsrParams.decay));
+    //DBG(juce::String(adsrParams.sustain));
+    //DBG(juce::String(adsrParams.release));
 
     adsr.setParameters(adsrParams);
 }

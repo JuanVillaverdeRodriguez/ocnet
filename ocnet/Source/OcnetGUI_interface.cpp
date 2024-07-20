@@ -31,11 +31,15 @@ void OcnetGUI_interface::addOscillator(int option)
 {
     DBG("OcnetGUI_interface::addOscillator(int option)");
 
+    if (!processor.getHasEnvelope()) {
+        addModulator(1);
+    }
+
     if (option > 0) {
         if (option == 1) {
             gui_->getOscillatorsSection()->addWavetableOscillator(numberOfWavetableOscillators, processor.parameterHandler);
 
-            processor.addWavetableOscillator();
+            processor.addWavetableOscillator(numberOfWavetableOscillators);
         }
         else if (option == 2) {
             //processor.addSampler();

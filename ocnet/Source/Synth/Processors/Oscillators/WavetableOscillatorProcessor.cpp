@@ -10,11 +10,12 @@
 
 #include "WavetableOscillatorProcessor.h"
 
-WavetableOscillatorProcessor::WavetableOscillatorProcessor(std::vector<WavetableStruct>& tables)
+WavetableOscillatorProcessor::WavetableOscillatorProcessor(std::vector<WavetableStruct>& tables, int id)
     : wavetable(tables[9]),
     tableSize(tables[0].waveTable.getNumSamples() - 1),
     tables(tables)
 {
+    setId(id);
     //jassert(wavetable.waveTable.getNumChannels() == 1); // Asegúrate de que la wavetable sea mono
     isPrepared = false;
     sampleRate = 0.0f;
@@ -22,19 +23,6 @@ WavetableOscillatorProcessor::WavetableOscillatorProcessor(std::vector<Wavetable
     tableDelta = 0.0f;
     numWavetables = tables.size();
     DBG("TAMANO: " + juce::String(numWavetables));
-}
-
-void WavetableOscillatorProcessor::process(juce::AudioBuffer<float>& outputBuffer)
-{
-    int numSamples = outputBuffer.getNumSamples();
-
-    for (int channel = 0; channel < 1; ++channel) {
-        auto* buffer = outputBuffer.getWritePointer(channel);
-
-        for (int sample = 0; sample < numSamples; ++sample) {
-                buffer[sample] = getNextSample();
-        }
-    }
 }
 
 void WavetableOscillatorProcessor::setFrequency(float frequency, float sampleRate)
@@ -61,7 +49,7 @@ void WavetableOscillatorProcessor::setFrequency(float frequency, float sampleRat
     wavetable = tables[waveTableIdx];
 }
 
-float WavetableOscillatorProcessor::getNextSample() noexcept
+float WavetableOscillatorProcessor::getNextSample()
 {
     auto index0 = (unsigned int)currentIndex;
     auto index1 = index0 + 1;

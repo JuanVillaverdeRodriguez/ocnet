@@ -16,21 +16,21 @@ OcnetSynthesiser::OcnetSynthesiser()
 
 }
 
-void OcnetSynthesiser::addWavetableOscillator()
+void OcnetSynthesiser::addWavetableOscillator(int id)
 {
     for (int i = 0; i < getNumVoices(); i++) {
         if (auto voice = dynamic_cast<SynthVoice*>(getVoice(i))) {
-            voice->addWavetableOscillator();
+            voice->addWavetableOscillator(id);
         }
     }
 }
 
 
-void OcnetSynthesiser::addEnvelope(int numberOfEnvelopes)
+void OcnetSynthesiser::addEnvelope(int id)
 {
     for (int i = 0; i < getNumVoices(); i++) {
         if (auto voice = dynamic_cast<SynthVoice*>(getVoice(i))) {
-            voice->addEnvelope();
+            voice->addEnvelope(id);
         }
     }
 

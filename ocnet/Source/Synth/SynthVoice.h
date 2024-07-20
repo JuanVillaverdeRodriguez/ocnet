@@ -33,8 +33,8 @@ public:
     void prepareToPlay(double sampleRate, int samplesPerBlock, int outputChannels);
     void releaseResources();
 
-    void addWavetableOscillator();
-    void addEnvelope();
+    void addWavetableOscillator(int id);
+    void addEnvelope(int id);
 
     void updateParameterValues(ParameterHandler& parameterHandler);
 

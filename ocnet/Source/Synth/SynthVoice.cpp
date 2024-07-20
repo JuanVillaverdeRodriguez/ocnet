@@ -98,13 +98,13 @@ void SynthVoice::releaseResources()
     processorhHandler.releaseResources();
 }
 
-void SynthVoice::addWavetableOscillator()
+void SynthVoice::addWavetableOscillator(int id)
 {
     isPrepared = false;
 
     tables = createSawWaveTables(2048);
 
-    processorhHandler.addWavetableOscillator(tables);
+    processorhHandler.addWavetableOscillator(tables, id);
     processorhHandler.prepareToPlay(spec);
 
     isPrepared = true;
@@ -127,9 +127,14 @@ void SynthVoice::addWavetableOscillator()
 
 }
 
-void SynthVoice::addEnvelope()
+void SynthVoice::addEnvelope(int id)
 {
-    processorhHandler.addEnvelope();
+    isPrepared = false;
+
+    processorhHandler.addEnvelope(id);
+    processorhHandler.prepareToPlay(spec);
+
+    isPrepared = true;
 
     //Node::Ptr envelopeNode = processorGraph.addNode(std::make_unique<EnvelopeProcessor>());
 
@@ -142,7 +147,7 @@ void SynthVoice::addEnvelope()
 
 void SynthVoice::updateParameterValues(ParameterHandler& parameterHandler)
 {
-    //processorhHandler.updateParameterValues(parameterHandler);
+    processorhHandler.updateParameterValues(parameterHandler);
 }
 
 /*juce::AudioSampleBuffer SynthVoice::createWaveTable(int tableSize)

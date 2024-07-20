@@ -21,10 +21,10 @@ class ProcessorHandler {
 public:
     ProcessorHandler();
 
-    void addWavetableOscillator(std::vector<WavetableStruct>& tables);
+    void addWavetableOscillator(std::vector<WavetableStruct>& tables, int id);
 
-    //void addWavetableOscillator();
-    void addEnvelope();
+
+    void addEnvelope(int id);
 
     void releaseResources();
 
@@ -40,11 +40,14 @@ public:
     void updateParameterValues(ParameterHandler parameterHandler);
 
 private:
+    void freeMainEnvelope();
+
     std::list<std::unique_ptr<Processor>> oscillatorsProcessorsList;
     std::list<std::unique_ptr<Processor>> modulatorProcessorsList;
 
-    juce::ADSR mainEnvelope;
-    juce::ADSR::Parameters parametersADSR;
+    bool hasDefaultEnvelope;
+
+    EnvelopeProcessor* mainEnvelope;
 
     //====================================================================================0
     std::vector<WavetableStruct> tables;

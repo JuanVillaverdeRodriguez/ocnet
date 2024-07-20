@@ -157,7 +157,7 @@ void OcnetAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juce::
         buffer.clear(i, 0, buffer.getNumSamples());
 
     // Rellenar el buffer de modulaciones
-    //applyModulators();
+    applyModulators();
 
     
     // Procesar el bloque en cada voz

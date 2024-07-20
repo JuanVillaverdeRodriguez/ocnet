@@ -16,12 +16,12 @@ class OcnetSynthesiser : public juce::Synthesiser {
 public:
     OcnetSynthesiser();
 
-    void addWavetableOscillator();
-    void addEnvelope(int numberOfEnvelopes);
+    void addWavetableOscillator(int id);
+    void addEnvelope(int id);
 
     bool getHasEnvelope() { return hasEnvelope; }
 
 private:
-    bool hasEnvelope = true;
+    bool hasEnvelope = false;
 
 };

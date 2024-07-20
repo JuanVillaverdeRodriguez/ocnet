@@ -20,7 +20,7 @@ public:
     virtual void startNote(int midiNoteNumber, float velocity, juce::SynthesiserSound* sound, int currentPitchWheelPosition) = 0 {};
     virtual void stopNote(float velocity, bool allowTailOff) = 0 {};
     virtual void updateParameterValues(ParameterHandler parameterHandler) = 0 {};
-    virtual void process(juce::AudioBuffer<float>& outputBuffer) = 0 {};
+    virtual float getNextSample() = 0 {};
 
     void inline setId(int id) { this->id = id; }
     int inline getId() { return id; }

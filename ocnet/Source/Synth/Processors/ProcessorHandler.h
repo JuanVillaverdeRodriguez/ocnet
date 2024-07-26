@@ -48,6 +48,8 @@ private:
     std::list<std::unique_ptr<Modulator>> modulatorProcessorsList;
     //std::list<std::unique_ptr<Processor>> processorList;
 
+    int numSamplesProcessed = 0;
+    int maxSamplesForNextModulationUpdate = 0;
 
     bool hasDefaultEnvelope;
 

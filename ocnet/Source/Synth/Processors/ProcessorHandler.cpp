@@ -35,6 +35,8 @@
 
 ProcessorHandler::ProcessorHandler()
 {
+    numSamplesProcessed = 0;
+    maxSamplesForNextModulationUpdate = 100;
     mainEnvelope = new EnvelopeProcessor(0);
     hasDefaultEnvelope = true;
 }
@@ -85,6 +87,19 @@ void ProcessorHandler::processBlock(juce::AudioBuffer<float>& outputBuffer)
             for (auto& processor : modulatorProcessorsList) {
                 processor->getNextSample();
             }
+
+            // *********************************************************c
+            // Aplicar las modulaciones a los parametros cada 100 samples
+            if (numSamplesProcessed >= maxSamplesForNextModulationUpdate) {
+                for (auto& processor : modulatorProcessorsList) {
+                    processor->updateModulationValue(); // Actualizar la modulacion en los parametros asignados
+                }
+                numSamplesProcessed = 0;
+            }
+            else {
+                numSamplesProcessed++;
+            }
+            // *********************************************************c
 
             for (auto& processor : oscillatorsProcessorsList) {
                 buffer[sample] = processor->getNextSample();

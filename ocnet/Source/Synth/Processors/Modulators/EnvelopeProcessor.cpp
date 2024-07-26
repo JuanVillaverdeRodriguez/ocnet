@@ -25,7 +25,6 @@ float EnvelopeProcessor::getNextSample()
     float currentValue = adsr.getNextSample();
     //DBG("CURRENT ENVELOPE VALUE: " + juce::String(currentValue));
     setModulationValue(currentValue); // Asignar el valor de la modulacion
-    updateModulationValue(); // Actualizar la modulacion en los parametros asignados
     return currentValue;
 }
 

@@ -8,7 +8,7 @@
 #include "GUI_Sections/ModulatorsSection.h"
 #include "GUI_Sections/EffectsSection.h"
 
-class OcnetGUI : public juce::Component, HeaderSection::Listener
+class OcnetGUI : public juce::Component, HeaderSection::Listener, public juce::DragAndDropContainer
 {
 public:
     OcnetGUI();

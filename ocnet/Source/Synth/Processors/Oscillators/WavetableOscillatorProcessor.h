@@ -35,6 +35,8 @@ private:
 
     int numWavetables;
 
+    juce::dsp::Gain<float> gain;
+
     float oscGain;
 
     const std::vector<WavetableStruct>& tables;

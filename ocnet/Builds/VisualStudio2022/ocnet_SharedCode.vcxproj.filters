@@ -2,6 +2,9 @@
 
 <Project ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
+    <Filter Include="ocnet\Source\Utils">
+      <UniqueIdentifier>{49F13C8E-AC01-BB31-93E4-10188FD27542}</UniqueIdentifier>
+    </Filter>
     <Filter Include="ocnet\Source\ParameterHandler">
       <UniqueIdentifier>{1448AEC1-050E-FCAA-19B9-8523D8F7AE9B}</UniqueIdentifier>
     </Filter>
@@ -739,6 +742,9 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\Source\Utils\Utils.cpp">
+      <Filter>ocnet\Source\Utils</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\Source\ParameterHandler\Parameter.cpp">
       <Filter>ocnet\Source\ParameterHandler</Filter>
     </ClCompile>
@@ -781,6 +787,9 @@
     <ClCompile Include="..\..\Source\OcnetGUI_interface.cpp">
       <Filter>ocnet\Source</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Source\Synth\Processors\Modulator.cpp">
+      <Filter>ocnet\Source\Synth\Processors</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\Source\Synth\Processors\ProcessorHandler.cpp">
       <Filter>ocnet\Source\Synth\Processors</Filter>
     </ClCompile>
@@ -801,6 +810,9 @@
     </ClCompile>
     <ClCompile Include="..\..\Source\Synth\SynthVoice.cpp">
       <Filter>ocnet\Source\Synth</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Knobs\DragZone.cpp">
+      <Filter>ocnet\Source\Knobs</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\Knobs\Knob1.cpp">
       <Filter>ocnet\Source\Knobs</Filter>
@@ -3696,6 +3708,9 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\Source\Utils\Utils.h">
+      <Filter>ocnet\Source\Utils</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\Source\ParameterHandler\Parameter.h">
       <Filter>ocnet\Source\ParameterHandler</Filter>
     </ClInclude>
@@ -3741,6 +3756,9 @@
     <ClInclude Include="..\..\Source\OcnetGUI_interface.h">
       <Filter>ocnet\Source</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Source\Synth\Processors\Modulator.h">
+      <Filter>ocnet\Source\Synth\Processors</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\Source\Synth\Processors\ProcessorHandler.h">
       <Filter>ocnet\Source\Synth\Processors</Filter>
     </ClInclude>
@@ -3767,6 +3785,9 @@
     </ClInclude>
     <ClInclude Include="..\..\Source\Synth\SynthVoice.h">
       <Filter>ocnet\Source\Synth</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Knobs\DragZone.h">
+      <Filter>ocnet\Source\Knobs</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\Knobs\Knob1.h">
       <Filter>ocnet\Source\Knobs</Filter>

@@ -11,18 +11,17 @@
 #pragma once
 
 #include <JuceHeader.h>
-#include "../Processor.h"
-#include "../../../ParameterHandler/ParameterHandler.h"
+#include "../Modulator.h"
 
-class EnvelopeProcessor : public Processor {
+class EnvelopeProcessor : public Modulator {
 public:
     EnvelopeProcessor(int id);
 
     float getNextSample() override;
 
+    void updateParameterValues(ParameterHandler parameterHandler) override;
     void startNote(int midiNoteNumber, float velocity, juce::SynthesiserSound* sound, int currentPitchWheelPosition) override;
     void stopNote(float velocity, bool allowTailOff) override;
-    void updateParameterValues(ParameterHandler parameterHandler) override;
     void prepareToPlay(juce::dsp::ProcessSpec spec) override;
     bool isActive();
 

@@ -16,16 +16,14 @@
 
 class WavetableOscillatorSubsection : public Subsection {
 public:
-    WavetableOscillatorSubsection();
+    WavetableOscillatorSubsection(int id);
+    void paint(juce::Graphics& g) override;
 
     void resized() override;
 
     void attachParams(ParameterHandler& parameterHandler) override;
 
 private:
-    Knob1 volumeKnob;
-    Knob1 panningKnob;
-
-    std::unique_ptr<Parameter2> volumeParameter;
-    std::unique_ptr<Parameter2> panningParameter;
+    std::unique_ptr<Knob1> volumeKnob;
+    std::unique_ptr<Knob1> panningKnob;
 };

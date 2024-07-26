@@ -9,6 +9,7 @@
 */
 
 #include "WavetableOscillatorProcessor.h"
+#include "../Source/Utils/Utils.h"
 
 WavetableOscillatorProcessor::WavetableOscillatorProcessor(std::vector<WavetableStruct>& tables, int id)
     : wavetable(tables[9]),
@@ -37,14 +38,14 @@ void WavetableOscillatorProcessor::setFrequency(float frequency, float sampleRat
     float frequencyOverSamplerate = frequency / sampleRate;
 
     while ((frequencyOverSamplerate >= tables[waveTableIdx].topFreq) && (waveTableIdx < (numWavetables - 1))) {
-        DBG("topFreq" + juce::String(waveTableIdx) + ": " + juce::String(tables[waveTableIdx].topFreq));
+        //DBG("topFreq" + juce::String(waveTableIdx) + ": " + juce::String(tables[waveTableIdx].topFreq));
         ++waveTableIdx;
     }
 
-    DBG("waveTableIdx: " + juce::String(waveTableIdx));
-    DBG("tableDelta: " + juce::String(tableDelta));
-    DBG("frequency: " + juce::String(frequencyOverSamplerate));
-    DBG("topFreq: " + juce::String(tables[waveTableIdx].topFreq));
+    //DBG("waveTableIdx: " + juce::String(waveTableIdx));
+    //DBG("tableDelta: " + juce::String(tableDelta));
+    //DBG("frequency: " + juce::String(frequencyOverSamplerate));
+    //DBG("topFreq: " + juce::String(tables[waveTableIdx].topFreq));
 
 
 
@@ -70,9 +71,8 @@ float WavetableOscillatorProcessor::getNextSample()
         currentIndex -= (float)tableSize;
 
     //DBG("CURRENT SAMPLE: " + juce::String(currentSample) + "CURRENT INDEX: " + juce::String(currentIndex) + "WAVE TABLE SAMPLES: " + juce::String(wavetable.getNumSamples()) + "\n Value0" + juce::String(table[index0]) + "\n Value1" + juce::String(table[index1]));
-
-    //DBG("OSC GAIN: " + juce::String(oscGain));
-    currentSample *= oscGain;
+    //DBG("OSC GAIN: " + juce::String(currentSample));
+    currentSample *= gain.getGainLinear();
 
     return currentSample;
 }
@@ -89,12 +89,21 @@ void WavetableOscillatorProcessor::stopNote(float velocity, bool allowTailOff)
 {
 }
 
+
 void WavetableOscillatorProcessor::updateParameterValues(ParameterHandler parameterHandler)
 {
     //DBG("WavetableOscillatorProcessor::updateParameterValues(ParameterHandler parameterHandler)");
     //DBG(juce::String(getId()));
 
-    oscGain = parameterHandler.getParameterValue(juce::String("Oscillators"), juce::String("0"), juce::String("volume"));
+    oscGain = parameterHandler.getParameterValue(juce::String("Oscillators"), juce::String(getId()), juce::String("volume"));
+    gain.setGainLinear(oscGain);
+
+    //oscGain = Utils::linearToDecibels(oscGain);
+    //DBG("Current thread: ");
+    //DBG("PROCESOR GAIN DB" + juce::String(gain.getGainDecibels()));
+    //DBG("PROCESOR GAIN LINEAR" + juce::String(gain.getGainLinear()));
+
+
 }
 
 void WavetableOscillatorProcessor::prepareToPlay(juce::dsp::ProcessSpec spec)
@@ -102,6 +111,7 @@ void WavetableOscillatorProcessor::prepareToPlay(juce::dsp::ProcessSpec spec)
     DBG("WavetableOscillatorProcessor::prepareToPlay(juce::dsp::ProcessSpec spec)");
 
     sampleRate = spec.sampleRate;
+    gain.prepare(spec);
     DBG(juce::String(spec.sampleRate));
 
 }

@@ -9,42 +9,51 @@
 */
 
 #pragma once
-
 #include "JuceHeader.h"
 
+struct ParameterInfo {
+    juce::String nodeIndentifierName;
+    juce::String nodeId;
+    juce::String propertyName;
 
-class Parameter2 : juce::Slider::Listener, juce::ValueTree::Listener {
+    // Sobrecarga del operador ==
+    bool operator==(const ParameterInfo& other) const {
+        return nodeIndentifierName == other.nodeIndentifierName &&
+            nodeId == other.nodeId &&
+            propertyName == other.propertyName;
+    }
+};
+
+class Parameter2 :juce::ValueTree::Listener {
 public:
-    Parameter2(juce::Slider& component);
+    Parameter2(ParameterInfo parameterInfo);
 
     inline void setValue(int value) { this->value = value; }
     inline float getValue() { return value; }
 
-    void sliderValueChanged(juce::Slider* slider) override;
+    void updateValue(float value);
 
-    void setTreeListener(juce::ValueTree tree, juce::String& propertyName);
+    void setTreeListener(juce::ValueTree tree);
 
     void valueTreePropertyChanged(juce::ValueTree& treeWhosePropertyHasChanged,
         const juce::Identifier& property) override;
 
-    //Parameter(juce::Slider component, int ownerID, int ownerType, int parameterId);
-    //Parameter(juce::ComboBox component, int ownerID, int ownerType, int parameterId);
-    //void comboBoxChanged(juce::ComboBox* comboBoxThatHasChanged) override;
+    inline void setModulationValue(float value) { modulation = value; }
+    inline float getModulationValue() { return modulation; }
 
-    /*inline void setOwnerID(int ownerID) { this->ownerID = ownerID; }
-    inline int getOwnerID() { return ownerID; }
-
-    inline void setOwnerType(int ownerType) { this->ownerType = ownerType; }
-    inline int getOwnerType() { return ownerType; }
-
-    virtual inline int type() = 0; */
+    inline void setParameterInfo(ParameterInfo parameterInfo) { this->parameterInfo = parameterInfo; }
+    inline ParameterInfo getParameterInfo() { return parameterInfo; }
+    
+    void updateModulationValue(float newModulationValue);
 
 private:
+    //int id;
     float value; //Valor guardado
+    float modulation;
+    float totalValue;
+
+    ParameterInfo parameterInfo;
     juce::ValueTree valueTree;
     juce::Identifier propertyIdentifier;
-
-    //int ownerType; //Envelope, LFO, Oscillator...
-    //int ownerID; //Envelope 0, LFO 7, Oscillador 3...
-    //int parameterTag; // ATTACK, VOLUME, PAN...
 };
+

@@ -13,18 +13,23 @@
 OcnetSynthesiser::OcnetSynthesiser()
 {
     hasEnvelope = false;
-
 }
 
 void OcnetSynthesiser::addWavetableOscillator(int id)
 {
+    if (juce::MessageManager::getInstance()->isThisTheMessageThread()) {
+        DBG("addWavetableOscillatorProcessor : IS THIS THE MESSAGE THREAD?: TRUE");
+    }
+    else {
+        DBG("addWavetableOscillatorProcessor : IS THIS THE MESSAGE THREAD?: FALSE");
+    }
+
     for (int i = 0; i < getNumVoices(); i++) {
         if (auto voice = dynamic_cast<SynthVoice*>(getVoice(i))) {
             voice->addWavetableOscillator(id);
         }
     }
 }
-
 
 void OcnetSynthesiser::addEnvelope(int id)
 {
@@ -33,7 +38,13 @@ void OcnetSynthesiser::addEnvelope(int id)
             voice->addEnvelope(id);
         }
     }
-
     hasEnvelope = true;
+}
 
+void OcnetSynthesiser::connectModulation(int processorModulatorID, Parameter2& parameter) {
+    for (int i = 0; i < getNumVoices(); i++) {
+        if (auto voice = dynamic_cast<SynthVoice*>(getVoice(i))) {
+            voice->connectModulation(processorModulatorID, parameter);
+        }
+    }
 }

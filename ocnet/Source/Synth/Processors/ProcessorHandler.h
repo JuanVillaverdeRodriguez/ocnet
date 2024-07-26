@@ -39,11 +39,15 @@ public:
 
     void updateParameterValues(ParameterHandler parameterHandler);
 
+    void connectModulation(int processorModulatorID, Parameter2& parameter);
+
 private:
     void freeMainEnvelope();
 
     std::list<std::unique_ptr<Processor>> oscillatorsProcessorsList;
-    std::list<std::unique_ptr<Processor>> modulatorProcessorsList;
+    std::list<std::unique_ptr<Modulator>> modulatorProcessorsList;
+    //std::list<std::unique_ptr<Processor>> processorList;
+
 
     bool hasDefaultEnvelope;
 

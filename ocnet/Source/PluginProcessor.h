@@ -65,6 +65,11 @@ public:
     void setStateInformation (const void* data, int sizeInBytes) override;
 
     //==============================================================================
+
+    void processMidi(juce::MidiBuffer& midiMessages);
+    void handleNoteOn(int noteNumber, float velocity);
+    void handleNoteOff(int noteNumber);
+
     float noteOnVel;
 
     juce::AudioProcessorValueTreeState::ParameterLayout
@@ -76,7 +81,6 @@ public:
 
     //juce::AudioProcessorValueTreeState apvts;
 
-    void applyModulators();
 
 private:
     //==============================================================================

@@ -34,14 +34,8 @@ public:
     void releaseResources();
 
     void addWavetableOscillator(int id);
+    void connectModulation(int processorModulatorID, Parameter2& parameter);
     void addEnvelope(int id);
-
-    void updateParameterValues(ParameterHandler& parameterHandler);
-
-
-    juce::AudioSampleBuffer createWaveTable(int tableSize);
-    juce::AudioSampleBuffer createSawWaveTable(int tableSize);
-    juce::AudioSampleBuffer createSineWaveTable(int tableSize);
 
     WavetableStruct makeWaveTable(int tableSize, double* ar, double* ai, double topFreq);
 
@@ -49,9 +43,16 @@ public:
 
     std::vector<WavetableStruct> createSawWaveTables(int tableSize);
 
+    void inline setParameterHandler(ParameterHandler& parameterHandler) { this->parameterHandler = &parameterHandler; }
+
     //juce::AudioSampleBuffer generateSawtoothWavetable(int tableSize);
 private:
     juce::dsp::ProcessSpec spec;
+
+    ParameterHandler* parameterHandler;
+
+    //ParameterHandler parameterHandler;
+
 
     double sampleRate;
     bool isPrepared = false;

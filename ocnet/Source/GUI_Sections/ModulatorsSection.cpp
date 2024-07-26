@@ -49,13 +49,16 @@ void ModulatorsSection::addListener(Listener* listener)
 
 void ModulatorsSection::addEnvelope(int numberOfEnvelopes, ParameterHandler& parameterHandler)
 {
-    std::unique_ptr<EnvelopeSubsection> envelope = std::make_unique<EnvelopeSubsection>();
+    std::unique_ptr<EnvelopeSubsection> envelope = std::make_unique<EnvelopeSubsection>(numberOfEnvelopes);
 
-    envelope->setId(numberOfEnvelopes);
     envelopeSubsections.push_back(std::move(envelope));
     this->addAndMakeVisible(*envelopeSubsections.back());
     resized();
     envelopeSubsections.back()->attachParams(parameterHandler);
+    envelopeSubsections.back()->addListener(this);
+
+
+
     //envelopeSubsections.back()->attachParams(apvts);
 
 

@@ -26,6 +26,7 @@ OcnetAudioProcessor::OcnetAudioProcessor()
     addSound(new SynthSound());
     for (int i = 0; i < numVoices; ++i)
         addVoice(new SynthVoice());
+
 }
 
 OcnetAudioProcessor::~OcnetAudioProcessor()
@@ -102,6 +103,7 @@ void OcnetAudioProcessor::prepareToPlay (double sampleRate, int samplesPerBlock)
     for (int i = 0; i < getNumVoices(); i++) {
         if (auto voice = dynamic_cast<SynthVoice*>(getVoice(i))) {
             voice->prepareToPlay(sampleRate, samplesPerBlock, getTotalNumOutputChannels());
+            voice->setParameterHandler(parameterHandler);
         }
     }
 }
@@ -112,7 +114,6 @@ void OcnetAudioProcessor::releaseResources()
     for (int i = 0; i < getNumVoices(); i++) {
         if (auto voice = dynamic_cast<SynthVoice*>(getVoice(i))) {
             voice->releaseResources();
-
         }
     }
 
@@ -156,10 +157,9 @@ void OcnetAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juce::
     for (auto i = totalNumInputChannels; i < totalNumOutputChannels; ++i)
         buffer.clear(i, 0, buffer.getNumSamples());
 
-    // Rellenar el buffer de modulaciones
-    applyModulators();
-
-    
+    processMidi(midiMessages);
+    //applyModulators(); // Aplicar las modulaciones a los parametros (Actualiza el valor de modulacion de cada parametro)
+    //updateParameters(); // Actualizar los parametros (Actualiza el valor normal del parametro)
     // Procesar el bloque en cada voz
     renderNextBlock(buffer, midiMessages,  0, buffer.getNumSamples());
 }
@@ -177,39 +177,6 @@ std::function<void()> getEditor(OcnetAudioProcessor *processor) {
 
     return lambda;
 
-}
-
-void OcnetAudioProcessor::applyModulators()
-{
-    /*if (getHasEnvelope()) {
-        for (int i = 0; i < getNumVoices(); ++i) {
-            if (auto voice = dynamic_cast<SynthVoice*>(getVoice(i))) { // Si la voz es del tipo juce::SynthesiserVoice...
-
-                /*auto& attack = *apvts.getRawParameterValue("ENVELOPE_ATTACK_0");
-                auto& decay = *apvts.getRawParameterValue("ENVELOPE_DECAY_0");
-                auto& sustain = *apvts.getRawParameterValue("ENVELOPE_SUSTAIN_0");
-                auto& release = *apvts.getRawParameterValue("ENVELOPE_RELEASE_0");
-
-                auto attack = parameterHandler.getParameterValue(juce::String("Envelopes"), juce::String("0"), juce::String("attack"));
-                auto decay = parameterHandler.getParameterValue(juce::String("Envelopes"), juce::String("0"), juce::String("decay"));
-                auto sustain = parameterHandler.getParameterValue(juce::String("Envelopes"), juce::String("0"), juce::String("sustain"));
-                auto release = parameterHandler.getParameterValue(juce::String("Envelopes"), juce::String("0"), juce::String("release"));
-
-
-                voice->updateADSR(attack, decay, sustain, release);
-                // OSC controls
-                // ADSR
-                // LFO
-            }
-        }
-    }*/
-
-    for (int i = 0; i < getNumVoices(); ++i) {
-        if (auto voice = dynamic_cast<SynthVoice*>(getVoice(i))) { // Si la voz es del tipo juce::SynthesiserVoice...
-            voice->updateParameterValues(parameterHandler);
-        }
-    }
-    
 }
 
 //==============================================================================
@@ -236,6 +203,40 @@ void OcnetAudioProcessor::setStateInformation (const void* data, int sizeInBytes
 {
     // You should use this method to restore your parameters from this memory block,
     // whose contents will have been created by the getStateInformation() call.
+}
+
+void OcnetAudioProcessor::processMidi(juce::MidiBuffer& midiMessages)
+{
+    // Iterar sobre los mensajes MIDI
+    for (const auto metadata : midiMessages)
+    {
+        const auto message = metadata.getMessage();
+
+        if (message.isNoteOn())
+        {
+            // Manejar mensaje de Note On
+            auto noteNumber = message.getNoteNumber();
+            auto velocity = message.getVelocity();
+            // Aquí puedes manejar el mensaje de Note On, por ejemplo, activando una voz
+            handleNoteOn(noteNumber, velocity);
+        }
+        else if (message.isNoteOff())
+        {
+            // Manejar mensaje de Note Off
+            auto noteNumber = message.getNoteNumber();
+            // Aquí puedes manejar el mensaje de Note Off, por ejemplo, desactivando una voz
+            handleNoteOff(noteNumber);
+        }
+        // Añade más manejadores para otros tipos de mensajes MIDI según sea necesario
+    }
+}
+
+void OcnetAudioProcessor::handleNoteOn(int noteNumber, float velocity)
+{
+}
+
+void OcnetAudioProcessor::handleNoteOff(int noteNumber)
+{
 }
 
 ChainSettings getChainSettings(juce::AudioProcessorValueTreeState& apvts) {

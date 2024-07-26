@@ -10,15 +10,27 @@
 
 #include "EnvelopeSubsection.h"
 
-EnvelopeSubsection::EnvelopeSubsection()
+EnvelopeSubsection::EnvelopeSubsection(int id)
 {
+    setId(id);
+
+    attackKnob = std::make_unique<Knob1>(ParameterInfo{ juce::String("Envelopes"), juce::String(getId()), juce::String("attack") });
+    decayKnob = std::make_unique<Knob1>(ParameterInfo{ juce::String("Envelopes"), juce::String(getId()), juce::String("decay") });
+    sustainKnob = std::make_unique<Knob1>(ParameterInfo{ juce::String("Envelopes"), juce::String(getId()), juce::String("sustain") });
+    releaseKnob = std::make_unique<Knob1>(ParameterInfo{ juce::String("Envelopes"), juce::String(getId()), juce::String("release") });
+
+    attackKnob->setListener(this);
+    decayKnob->setListener(this);
+    sustainKnob->setListener(this);
+    releaseKnob->setListener(this);
+
     mainEnvelope = false;
 
-    this->addAndMakeVisible(attackKnob);
-    this->addAndMakeVisible(decayKnob);
-    this->addAndMakeVisible(sustainKnob);
-    this->addAndMakeVisible(releaseKnob);
-
+    this->addAndMakeVisible(*attackKnob);
+    this->addAndMakeVisible(*decayKnob);
+    this->addAndMakeVisible(*sustainKnob);
+    this->addAndMakeVisible(*releaseKnob);
+    this->addAndMakeVisible(dragZone);
 }
 
 void EnvelopeSubsection::resized()
@@ -27,35 +39,33 @@ void EnvelopeSubsection::resized()
 
     auto area = getLocalBounds();
 
-    attackKnob.setBounds(0, 0, 50, 50);
-    decayKnob.setBounds(50, 0, 50, 50);
-    sustainKnob.setBounds(100, 0, 50, 50);
-    releaseKnob.setBounds(150, 0, 50, 50);
+    attackKnob->setBounds(0, 0, 50, 50);
+    decayKnob->setBounds(50, 0, 50, 50);
+    sustainKnob->setBounds(100, 0, 50, 50);
+    releaseKnob->setBounds(150, 0, 50, 50);
+    dragZone.setBounds(200, 0, 50, 50);
 
-    attackKnob.setRange(0.0f, 1.0f, 0.01f);
-    decayKnob.setRange(0.0f, 1.0f, 0.01f);
-    sustainKnob.setRange(0.0f, 1.0f, 0.01f);
-    releaseKnob.setRange(0.0f, 1.0f, 0.01f);
+    attackKnob->setRange(0.0f, 1.0f, 0.01f);
+    decayKnob->setRange(0.0f, 1.0f, 0.01f);
+    sustainKnob->setRange(0.0f, 1.0f, 0.01f);
+    releaseKnob->setRange(0.0f, 1.0f, 0.01f);
 
+}
+void EnvelopeSubsection::paint(juce::Graphics& g)
+{
+    // (Our component is opaque, so we must completely fill the background with a solid colour)
+    g.fillAll(juce::Colours::grey);
 }
 
 void EnvelopeSubsection::attachParams(ParameterHandler& parameterHandler) {
-    
-    attackParameter = std::make_unique<Parameter2>(attackKnob);
-    decayParameter = std::make_unique<Parameter2>(decayKnob);
-    sustainParameter = std::make_unique<Parameter2>(sustainKnob);
-    releaseParameter = std::make_unique<Parameter2>(releaseKnob);
-
-    parameterHandler.attachParameter(juce::String("Envelopes"), juce::String(getId()), juce::String("attack"),  attackParameter);
-    parameterHandler.attachParameter(juce::String("Envelopes"), juce::String(getId()), juce::String("decay"),  decayParameter);
-    parameterHandler.attachParameter(juce::String("Envelopes"), juce::String(getId()), juce::String("sustain"),  sustainParameter);
-    parameterHandler.attachParameter(juce::String("Envelopes"), juce::String(getId()), juce::String("release"),  releaseParameter);
+    parameterHandler.attachParameter(attackKnob->getParameter());
+    parameterHandler.attachParameter(decayKnob->getParameter());
+    parameterHandler.attachParameter(sustainKnob->getParameter());
+    parameterHandler.attachParameter(releaseKnob->getParameter());
 
 
+    dragZone.setParentContainerAndComponent(*juce::DragAndDropContainer::findParentDragContainerFor(this), *this);
 
-    //std::unique_ptr<EnvelopeAttachment> envelopeParameters = std::make_unique<EnvelopeAttachment>(std::move(attackParameter), std::move(decayParameter), std::move(sustainParameter), std::move(releaseParameter));
-
-    //parameterHandler.attachParameter(std::move(envelopeParameters));
 }
 
 

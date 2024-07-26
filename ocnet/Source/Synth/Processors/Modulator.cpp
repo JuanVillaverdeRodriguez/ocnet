@@ -1,15 +1,15 @@
 /*
   ==============================================================================
 
-    Subsection.cpp
-    Created: 8 Jul 2024 6:35:23pm
+    Modulator.cpp
+    Created: 23 Jul 2024 2:51:05pm
     Author:  TecNo
 
   ==============================================================================
 */
 
-#include "Subsection.h"
+#include "Modulator.h"
 
-void Subsection::startDraggingUI()
+Modulator::Modulator()
 {
 }

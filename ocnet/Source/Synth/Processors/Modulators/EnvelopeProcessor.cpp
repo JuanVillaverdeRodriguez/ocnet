@@ -22,27 +22,31 @@ EnvelopeProcessor::EnvelopeProcessor(int id)
 
 float EnvelopeProcessor::getNextSample()
 {
-    return adsr.getNextSample();
+    float currentValue = adsr.getNextSample();
+    //DBG("CURRENT ENVELOPE VALUE: " + juce::String(currentValue));
+    setModulationValue(currentValue); // Asignar el valor de la modulacion
+    updateModulationValue(); // Actualizar la modulacion en los parametros asignados
+    return currentValue;
 }
 
 void EnvelopeProcessor::startNote(int midiNoteNumber, float velocity, juce::SynthesiserSound* sound, int currentPitchWheelPosition)
 {
-    DBG("EnvelopeProcessor::startNote(int midiNoteNumber, float velocity, juce::SynthesiserSound* sound, int currentPitchWheelPosition)");
+    //DBG("EnvelopeProcessor::startNote(int midiNoteNumber, float velocity, juce::SynthesiserSound* sound, int currentPitchWheelPosition)");
     adsr.noteOn();
 }
 
 void EnvelopeProcessor::stopNote(float velocity, bool allowTailOff)
 {
-    DBG("EnvelopeProcessor::stopNote(float velocity, bool allowTailOff)");
+    //DBG("EnvelopeProcessor::stopNote(float velocity, bool allowTailOff)");
     adsr.noteOff();
 }
 
 void EnvelopeProcessor::updateParameterValues(ParameterHandler parameterHandler)
 {
-    adsrParams.attack = parameterHandler.getParameterValue(juce::String("Envelopes"), juce::String("0"), juce::String("attack"));
-    adsrParams.decay = parameterHandler.getParameterValue(juce::String("Envelopes"), juce::String("0"), juce::String("decay"));
-    adsrParams.sustain = parameterHandler.getParameterValue(juce::String("Envelopes"), juce::String("0"), juce::String("sustain"));
-    adsrParams.release = parameterHandler.getParameterValue(juce::String("Envelopes"), juce::String("0"), juce::String("release"));
+    adsrParams.attack = parameterHandler.getParameterValue(juce::String("Envelopes"), juce::String(getId()), juce::String("attack"));
+    adsrParams.decay = parameterHandler.getParameterValue(juce::String("Envelopes"), juce::String(getId()), juce::String("decay"));
+    adsrParams.sustain = parameterHandler.getParameterValue(juce::String("Envelopes"), juce::String(getId()), juce::String("sustain"));
+    adsrParams.release = parameterHandler.getParameterValue(juce::String("Envelopes"), juce::String(getId()), juce::String("release"));
 
     //DBG(juce::String(adsrParams.attack));
     //DBG(juce::String(adsrParams.decay));
@@ -62,3 +66,16 @@ bool EnvelopeProcessor::isActive()
 {
     return adsr.isActive();
 }
+
+/*void EnvelopeProcessor::connectModulationTo(Parameter2& parameter)
+{
+    parameter.setModulationListener(this);
+
+    modulationListeners.pushback(parameter);
+}
+
+void onModulationChanged() {
+    for (auto param : modulationListeners) {
+        param->updateModulationValue();
+    }
+}*/

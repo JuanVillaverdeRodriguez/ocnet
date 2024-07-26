@@ -6,6 +6,10 @@
               pluginVSTCategory="kPlugCategSynth" pluginCharacteristicsValue="pluginIsSynth,pluginWantsMidiIn">
   <MAINGROUP id="Fay8LI" name="ocnet">
     <GROUP id="{B897E036-BD65-2195-C049-E6C429F0FF25}" name="Source">
+      <GROUP id="{AC61CD02-1871-C974-9052-E0D68D806941}" name="Utils">
+        <FILE id="tfNesW" name="Utils.cpp" compile="1" resource="0" file="Source/Utils/Utils.cpp"/>
+        <FILE id="d3i0oc" name="Utils.h" compile="0" resource="0" file="Source/Utils/Utils.h"/>
+      </GROUP>
       <GROUP id="{3886D1F5-0388-AA25-2786-5DDC6F87D140}" name="ParameterHandler">
         <FILE id="Xy1vaw" name="Parameter.cpp" compile="1" resource="0" file="Source/ParameterHandler/Parameter.cpp"/>
         <FILE id="tT6DKv" name="Parameter.h" compile="0" resource="0" file="Source/ParameterHandler/Parameter.h"/>
@@ -71,6 +75,8 @@
             file="Source/OcnetGUI_interface.h"/>
       <GROUP id="{F3B0B463-C0DE-0D39-E0FD-236DC0836EDE}" name="Synth">
         <GROUP id="{E55E5413-BAED-13DF-5573-AF7ABCF50AC1}" name="Processors">
+          <FILE id="L04Fxe" name="Modulator.cpp" compile="1" resource="0" file="Source/Synth/Processors/Modulator.cpp"/>
+          <FILE id="OCMYGv" name="Modulator.h" compile="0" resource="0" file="Source/Synth/Processors/Modulator.h"/>
           <FILE id="e7zpmr" name="ProcessorHandler.cpp" compile="1" resource="0"
                 file="Source/Synth/Processors/ProcessorHandler.cpp"/>
           <FILE id="fas4ma" name="ProcessorHandler.h" compile="0" resource="0"
@@ -108,6 +114,8 @@
         <FILE id="SNJRtb" name="SynthVoice.h" compile="0" resource="0" file="Source/Synth/SynthVoice.h"/>
       </GROUP>
       <GROUP id="{E271F7C7-47CA-46E4-1FD4-7F8AD6D9FE83}" name="Knobs">
+        <FILE id="j1vnw2" name="DragZone.cpp" compile="1" resource="0" file="Source/Knobs/DragZone.cpp"/>
+        <FILE id="ptmhY6" name="DragZone.h" compile="0" resource="0" file="Source/Knobs/DragZone.h"/>
         <FILE id="cqEOg6" name="Knob1.cpp" compile="1" resource="0" file="Source/Knobs/Knob1.cpp"/>
         <FILE id="CnyiZ3" name="Knob1.h" compile="0" resource="0" file="Source/Knobs/Knob1.h"/>
       </GROUP>

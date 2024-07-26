@@ -19,6 +19,8 @@ public:
     void addWavetableOscillator(int id);
     void addEnvelope(int id);
 
+    void connectModulation(int processorModulatorID, Parameter2& parameter);
+
     bool getHasEnvelope() { return hasEnvelope; }
 
 private:

@@ -14,7 +14,7 @@
 #include "../LookAndFeel_V4/OcnetLookAndFeel.h"
 #include "../GUI_Subsections/Modulators/EnvelopeSubsection.h"
 
-class ModulatorsSection : public juce::Component, juce::Button::Listener {
+class ModulatorsSection : public juce::Component, juce::Button::Listener, public EnvelopeSubsection::Listener {
 public:
     ModulatorsSection();
 
@@ -22,6 +22,7 @@ public:
     public:
         virtual ~Listener() { }
         virtual void addModulator(int option) = 0;
+        virtual void connectModulation(int processorModulatorID, Parameter2& parameter) = 0;
     };
 
     void resized() override;
@@ -34,12 +35,17 @@ public:
 
     void paint(juce::Graphics& g) override;
 
+    void inline connectModulation(int processorModulatorID, Parameter2& parameter) override {
+        for (auto listener : listeners) {
+            listener->connectModulation(processorModulatorID, parameter);
+        }
+    }
+
 
 
 private:
     std::vector<Listener*> listeners;
     OcnetLookAndFeel lookAndFeel;
-
 
     std::vector<std::unique_ptr<EnvelopeSubsection>> envelopeSubsections;
 

@@ -25,8 +25,7 @@ public:
 
     void addModulator(int option) override;
 
-
-    //void deleteOscillator(int id) override;
+    void connectModulation(int processorModulatorID, Parameter2& parameter) override;
 
     OcnetGUI* getGui() { return gui_.get(); }
 
@@ -36,6 +35,8 @@ private:
 
     int numberOfEnvelopes;
     int numberOfWavetableOscillators;
+
+    int maxCurrentID;
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(OcnetGUI_interface)
 

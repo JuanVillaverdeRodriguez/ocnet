@@ -12,7 +12,8 @@
 #include "Processors/Oscillators/WavetableOscillatorProcessor.h"
 #include "Processors/Modulators/EnvelopeProcessor.h"
 
-SynthVoice::SynthVoice(){
+SynthVoice::SynthVoice() {
+    parameterHandler = nullptr;
     spec = { 44100.0 ,512, 2 };
     sampleRate = 44100.0;
 }
@@ -28,7 +29,6 @@ void SynthVoice::startNote(int midiNoteNumber, float velocity, juce::Synthesiser
 
 void SynthVoice::stopNote(float velocity, bool allowTailOff) {
     processorhHandler.stopNote(velocity, allowTailOff);
-    
 
     if (!allowTailOff || processorhHandler.canClearNote())
         clearCurrentNote();
@@ -53,6 +53,7 @@ void SynthVoice::renderNextBlock(juce::AudioBuffer<float>& outputBuffer, int sta
     synthBuffer.clear();
 
     //updateGraph();
+    processorhHandler.updateParameterValues(*parameterHandler);
     processorhHandler.processBlock(synthBuffer);
 
 
@@ -100,6 +101,12 @@ void SynthVoice::releaseResources()
 
 void SynthVoice::addWavetableOscillator(int id)
 {
+    if (juce::MessageManager::getInstance()->isThisTheMessageThread()) {
+        DBG("SynthVoice::addWavetableOscillator(int id) : IS THIS THE MESSAGE THREAD?: TRUE");
+    }
+    else {
+        DBG("SynthVoice::addWavetableOscillator(int id) : IS THIS THE MESSAGE THREAD?: FALSE");
+    }
     isPrepared = false;
 
     tables = createSawWaveTables(2048);
@@ -127,6 +134,10 @@ void SynthVoice::addWavetableOscillator(int id)
 
 }
 
+void SynthVoice::connectModulation(int processorModulatorID, Parameter2& parameter) {
+    processorhHandler.connectModulation(processorModulatorID, parameter);
+}
+
 void SynthVoice::addEnvelope(int id)
 {
     isPrepared = false;
@@ -143,120 +154,6 @@ void SynthVoice::addEnvelope(int id)
         processorGraph.addConnection({ { lastOscillatorNode->nodeID, channel },{ envelopeNode->nodeID, channel } });
         processorGraph.addConnection({ { envelopeNode->nodeID, channel },{ audioOutputNode->nodeID, channel } });
     }*/
-}
-
-void SynthVoice::updateParameterValues(ParameterHandler& parameterHandler)
-{
-    processorhHandler.updateParameterValues(parameterHandler);
-}
-
-/*juce::AudioSampleBuffer SynthVoice::createWaveTable(int tableSize)
-{
-    juce::AudioSampleBuffer sineTable(1, tableSize);
-
-    auto* samples = sineTable.getWritePointer(0);                                   // [3]
-
-    auto angleDelta = juce::MathConstants<double>::twoPi / (double)(tableSize - 1); // [4]
-    auto currentAngle = 0.0;
-
-    for (unsigned int i = 0; i < tableSize; ++i)
-    {
-        auto sample = std::sin(currentAngle);                                       // [5]
-        samples[i] = (float)sample;
-        currentAngle += angleDelta;
-    }
-
-    return sineTable;
-}*/
-
-juce::AudioSampleBuffer SynthVoice::createWaveTable(int tableSize)
-{
-    juce::AudioSampleBuffer sineTable;
-    sineTable.setSize(1, (int)tableSize + 1);
-    sineTable.clear();
-
-    auto* samples = sineTable.getWritePointer(0);
-
-
-
-    int harmonics[] = { 1, 3, 5, 6, 7, 9, 11, 15 };
-    float harmonicWeights[] = { 0.5f, 0.1f, 0.05f, 0.125f, 0.09f, 0.005f, 0.002f, 0.001f }; // [1]
-
-    jassert(juce::numElementsInArray(harmonics) == juce::numElementsInArray(harmonicWeights));
-
-    for (auto harmonic = 0; harmonic < juce::numElementsInArray(harmonics); ++harmonic)
-    {
-        auto angleDelta = juce::MathConstants<double>::twoPi / (double)(tableSize - 1) * harmonics[harmonic]; // [2]
-        auto currentAngle = 0.0;
-
-        for (unsigned int i = 0; i < tableSize; ++i)
-        {
-            auto sample = std::sin(currentAngle);
-            samples[i] += (float)sample * harmonicWeights[harmonic]; // [3]
-            currentAngle += angleDelta;
-        }
-    }
-
-    samples[tableSize] = samples[0];
-    DBG("NUMERO DE CHANELS: " + sineTable.getNumChannels());
-
-    return sineTable;
-}
-
-juce::AudioSampleBuffer SynthVoice::createSawWaveTable(int tableSize)
-{
-    juce::AudioSampleBuffer sawTable;
-    sawTable.setSize(1, (int)tableSize + 1);
-    sawTable.clear();
-
-    auto* samples = sawTable.getWritePointer(0);
-
-    // Generar onda de sierra
-    for (int i = 0; i < tableSize; ++i)
-    {
-        // Normalizando la posición en el rango [-1, 1)
-        float phase = static_cast<float>(i) / static_cast<float>(tableSize);
-        samples[i] = 2.0f * phase - 1.0f; // Convierte la fase de [0, 1) a [-1, 1)
-    }
-
-    // Hacer la tabla cíclica copiando la primera muestra al final
-    samples[tableSize] = samples[0];
-
-    DBG("NUMERO DE CHANELS: " + sawTable.getNumChannels());
-
-    return sawTable;
-}
-
-juce::AudioSampleBuffer SynthVoice::createSineWaveTable(int tableSize)
-{
-    juce::AudioSampleBuffer sineTable;
-    sineTable.setSize(1, (int)tableSize + 1);
-    sineTable.clear();
-
-    auto* samples = sineTable.getWritePointer(0);
-
-    int harmonics[] = { 1 };
-    float harmonicWeights[] = { 0.5f }; // [1]
-
-    jassert(juce::numElementsInArray(harmonics) == juce::numElementsInArray(harmonicWeights));
-
-    for (auto harmonic = 0; harmonic < juce::numElementsInArray(harmonics); ++harmonic)
-    {
-        auto angleDelta = juce::MathConstants<double>::twoPi / (double)(tableSize - 1) * harmonics[harmonic]; // [2]
-        auto currentAngle = 0.0;
-
-        for (unsigned int i = 0; i < tableSize; ++i)
-        {
-            auto sample = std::sin(currentAngle);
-            samples[i] += (float)sample * harmonicWeights[harmonic]; // [3]
-            currentAngle += angleDelta;
-        }
-    }
-
-    samples[tableSize] = samples[0];
-    DBG("NUMERO DE CHANELS: " + sineTable.getNumChannels());
-
-    return sineTable;
 }
 
 void fft(int N, double* ar, double* ai)
@@ -346,8 +243,22 @@ WavetableStruct SynthVoice::makeWaveTable(int tableSize, double* ar, double* ai,
 
     auto* samples = table.getWritePointer(0);
 
+    double maxAmplitude = 0.0;
+
     for (int idx = 0; idx < tableSize; idx++) {
         samples[idx] = ai[idx];
+
+        // Obtener la amplitud maxima (en valor absoluto) para normalizacion
+        if (fabs(ai[idx]) > maxAmplitude) { 
+            maxAmplitude = fabs(ai[idx]);
+        }
+    }
+
+    // Normalizar los valores para que estén en el rango -1 a 1
+    if (maxAmplitude > 0.0) {
+        for (int idx = 0; idx < tableSize; idx++) {
+            samples[idx] /= maxAmplitude;
+        }
     }
 
     //El ultimo indice (tableSize+1) se usa para hacer mas eficiente el calculo del wraping al final de cada ciclo de onda (Se ahorran comparaciones)

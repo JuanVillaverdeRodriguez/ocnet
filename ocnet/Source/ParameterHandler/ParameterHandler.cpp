@@ -11,7 +11,7 @@
 #include "ParameterHandler.h"
 #include "../Utils/Utils.h"
 
-float ParameterHandler::getParameterValue(juce::String& parameterOwnerType, juce::String& ownerID, juce::String& parameterTag)
+float ParameterHandler::getParameterValue(const juce::String& parameterOwnerType, const juce::String& ownerID, const juce::String& parameterTag) const
 {
 
     juce::ValueTree parameterOwnerTypeNode = rootNode.getChildWithName(parameterOwnerType);
@@ -36,7 +36,7 @@ float ParameterHandler::getParameterValue(juce::String& parameterOwnerType, juce
 
 }
 
-juce::Array<float> ParameterHandler::getParameterModulation(juce::String& parameterOwnerType, juce::String& ownerID, juce::String& parameterTag, int voice)
+juce::Array<float> ParameterHandler::getParameterModulation(const juce::String& parameterOwnerType, const juce::String& ownerID, const juce::String& parameterTag, int voice) const
 {
     juce::ValueTree parameterOwnerTypeNode = rootNode.getChildWithName(parameterOwnerType);
     juce::ValueTree parameterOwnerNode = parameterOwnerTypeNode.getChildWithName(ownerID);

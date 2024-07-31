@@ -126,21 +126,8 @@ void ProcessorHandler::prepareToPlay(juce::dsp::ProcessSpec spec)
 
 }
 
-void ProcessorHandler::updateParameterValues(ParameterHandler parameterHandler)
+void ProcessorHandler::updateParameterValues(const ParameterHandler& parameterHandler)
 {
-    if (juce::Thread::getCurrentThread() != nullptr) {
-        juce::String currentThreadName = juce::Thread::getCurrentThread()->getThreadName();
-        DBG("CURRENT THREAD: " + currentThreadName);
-    }
-
-    if (juce::MessageManager::getInstance()->isThisTheMessageThread()) {
-        //DBG("UPDATE PARAMS : IS THIS THE MESSAGE THREAD?: TRUE");
-    }
-    else {
-        //DBG("UPDATE PARAMS : IS THIS THE MESSAGE THREAD?: FALSE");
-    }
-
-
     for (auto& processor : oscillatorsProcessorsList) {
         processor->updateParameterValues(parameterHandler);
     }

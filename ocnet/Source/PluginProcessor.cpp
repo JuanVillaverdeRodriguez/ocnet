@@ -157,7 +157,7 @@ void OcnetAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juce::
     for (auto i = totalNumInputChannels; i < totalNumOutputChannels; ++i)
         buffer.clear(i, 0, buffer.getNumSamples());
 
-    processMidi(midiMessages);
+    //processMidi(midiMessages);
     //applyModulators(); // Aplicar las modulaciones a los parametros (Actualiza el valor de modulacion de cada parametro)
     //updateParameters(); // Actualizar los parametros (Actualiza el valor normal del parametro)
     // Procesar el bloque en cada voz

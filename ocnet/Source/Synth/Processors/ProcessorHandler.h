@@ -37,7 +37,7 @@ public:
 
     void prepareToPlay(juce::dsp::ProcessSpec spec);
 
-    void updateParameterValues(ParameterHandler parameterHandler);
+    void updateParameterValues(const ParameterHandler& parameterHandler);
 
     void connectModulation(int processorModulatorID, Parameter2& parameter);
 

@@ -46,7 +46,7 @@ void EnvelopeProcessor::stopNote(float velocity, bool allowTailOff)
     adsr.noteOff();
 }
 
-void EnvelopeProcessor::updateParameterValues(ParameterHandler parameterHandler)
+void EnvelopeProcessor::updateParameterValues(const ParameterHandler& parameterHandler)
 {
     adsrParams.attack = parameterHandler.getParameterValue(juce::String("Envelopes"), juce::String(getId()), juce::String("attack"));
     adsrParams.decay = parameterHandler.getParameterValue(juce::String("Envelopes"), juce::String(getId()), juce::String("decay"));

@@ -48,17 +48,15 @@ void SynthVoice::renderNextBlock(juce::AudioBuffer<float>& outputBuffer, int sta
     if (!isVoiceActive()) // Si no hay voces, no devuelve nada
         return;
     
-    jassert(isPrepared); // No deberia ser necesario, JUCE ya lo deberia comprobar, pero por si acaso
+    //jassert(isPrepared); // No deberia ser necesario, JUCE ya lo deberia comprobar, pero por si acaso
 
     // Preparamos un buffer auxiliar para evitar clicks del audio
     synthBuffer.setSize(1, numSamples, false, false, true);
     synthBuffer.clear();
 
-    //updateGraph();
     processorhHandler.applyModulations(synthBuffer);
     processorhHandler.updateParameterValues(*parameterHandler);
     processorhHandler.processBlock(synthBuffer);
-
 
     // Añadir synthBuffer al outputBuffer
     for (int channel = 0; channel < 1; ++channel) {
@@ -68,9 +66,6 @@ void SynthVoice::renderNextBlock(juce::AudioBuffer<float>& outputBuffer, int sta
     // Si la envolvente ADSR ha terminado, limpiar la nota actual
     if (processorhHandler.canClearNote())
         clearCurrentNote();
-
-    /*if (!adsr.isActive())
-        clearCurrentNote();*/
 }
 
 
@@ -87,11 +82,6 @@ void SynthVoice::prepareToPlay(double sampleRate, int samplesPerBlock, int outpu
 
     spec.sampleRate = sampleRate;
 
-    //gain.prepare(spec); 
-
-    //gain.setGainDecibels(-48.0f);
-
-
     processorhHandler.prepareToPlay(spec);
 
     isPrepared = true;
@@ -104,12 +94,6 @@ void SynthVoice::releaseResources()
 
 void SynthVoice::addWavetableOscillator(int id)
 {
-    if (juce::MessageManager::getInstance()->isThisTheMessageThread()) {
-        DBG("SynthVoice::addWavetableOscillator(int id) : IS THIS THE MESSAGE THREAD?: TRUE");
-    }
-    else {
-        DBG("SynthVoice::addWavetableOscillator(int id) : IS THIS THE MESSAGE THREAD?: FALSE");
-    }
     isPrepared = false;
 
     tables = createSawWaveTables(2048);
@@ -118,23 +102,6 @@ void SynthVoice::addWavetableOscillator(int id)
     processorhHandler.prepareToPlay(spec);
 
     isPrepared = true;
-
-
-    //wavetableOscV.push_back(new WavetableOsc(tables));
-
-    //processorGraph.addNode(std::make_unique<WavetableOsc>(tables));
-
-    /*Node::Ptr wavetableOscillatorNode = processorGraph.addNode(std::make_unique<WavetableOscillatorProcessor>(tables));
-
-    for (int channel = 0; channel < 2; ++channel) {
-        processorGraph.removeConnection({ { audioInputNode->nodeID, channel },{ audioOutputNode->nodeID, channel } });
-        processorGraph.addConnection({ { audioInputNode->nodeID, channel },{ wavetableOscillatorNode->nodeID, channel } });
-        processorGraph.addConnection({ { wavetableOscillatorNode->nodeID, channel },{ audioOutputNode->nodeID, channel } });
-    }
-
-    lastOscillatorNode = wavetableOscillatorNode;*/
-    
-
 }
 
 void SynthVoice::connectModulation(int processorModulatorID, Parameter2& parameter) {
@@ -150,13 +117,6 @@ void SynthVoice::addEnvelope(int id)
 
     isPrepared = true;
 
-    //Node::Ptr envelopeNode = processorGraph.addNode(std::make_unique<EnvelopeProcessor>());
-
-    /*for (int channel = 0; channel < 2; ++channel) {
-        processorGraph.removeConnection({ { lastOscillatorNode->nodeID, channel },{ audioOutputNode->nodeID, channel } });
-        processorGraph.addConnection({ { lastOscillatorNode->nodeID, channel },{ envelopeNode->nodeID, channel } });
-        processorGraph.addConnection({ { envelopeNode->nodeID, channel },{ audioOutputNode->nodeID, channel } });
-    }*/
 }
 
 void SynthVoice::setVoiceNumberId(int id)

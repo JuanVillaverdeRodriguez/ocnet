@@ -33,7 +33,7 @@ void LFOProcessor::stopNote(float velocity, bool allowTailOff)
 {
 }
 
-void LFOProcessor::updateParameterValues(ParameterHandler parameterHandler)
+void LFOProcessor::updateParameterValues(const ParameterHandler& parameterHandler)
 {
 }
 

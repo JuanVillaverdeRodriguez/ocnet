@@ -22,7 +22,7 @@ public:
 
     void startNote(int midiNoteNumber, float velocity, juce::SynthesiserSound* sound, int currentPitchWheelPosition) override;
     void stopNote(float velocity, bool allowTailOff) override;
-    void updateParameterValues(ParameterHandler parameterHandler) override;
+    void updateParameterValues(const ParameterHandler& parameterHandler) override;
     void prepareToPlay(juce::dsp::ProcessSpec spec) override;
 
 

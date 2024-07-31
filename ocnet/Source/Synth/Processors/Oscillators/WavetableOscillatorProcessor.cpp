@@ -55,12 +55,6 @@ void WavetableOscillatorProcessor::setFrequency(float frequency, float sampleRat
 
 float WavetableOscillatorProcessor::getNextSample(int sample)
 {
-    cnt++;
-    if (cnt == 100) {
-        //DBG(juce::String(oscGainModulationBuffer[sample]));
-        cnt = 0;
-    }
-
     gain.setGainLinear(oscGain + oscGainModulationBuffer[sample]);
 
     auto index0 = (unsigned int)currentIndex;
@@ -68,8 +62,7 @@ float WavetableOscillatorProcessor::getNextSample(int sample)
 
     auto frac = currentIndex - (float)index0;              // [7]
 
-
-    jassert(wavetable.waveTable.getNumSamples() > 0); // Agrega esto antes de obtener el puntero de lectura
+    //jassert(wavetable.waveTable.getNumSamples() > 0); // Agrega esto antes de obtener el puntero de lectura
     auto* table = wavetable.waveTable.getReadPointer(0);             // [8]
     auto value0 = table[index0];
     auto value1 = table[index1];
@@ -99,7 +92,7 @@ void WavetableOscillatorProcessor::stopNote(float velocity, bool allowTailOff)
 }
 
 
-void WavetableOscillatorProcessor::updateParameterValues(ParameterHandler parameterHandler)
+void WavetableOscillatorProcessor::updateParameterValues(const ParameterHandler& parameterHandler)
 {
     //DBG("WavetableOscillatorProcessor::updateParameterValues(ParameterHandler parameterHandler)");
     //DBG(juce::String(getId()));

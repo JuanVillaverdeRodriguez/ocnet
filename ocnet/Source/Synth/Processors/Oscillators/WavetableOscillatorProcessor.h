@@ -22,10 +22,12 @@ public:
     void stopNote(float velocity, bool allowTailOff) override;
     void updateParameterValues(ParameterHandler parameterHandler) override;
     void prepareToPlay(juce::dsp::ProcessSpec spec) override;
-    float getNextSample() override;
+    float getNextSample(int sample) override;
     void setFrequency(float frequency, float sampleRate);
 
 private:
+    juce::Array<float> oscGainModulationBuffer;
+
     bool isPrepared;
     float sampleRate = 0.0f;
     WavetableStruct& wavetable;
@@ -40,4 +42,6 @@ private:
     float oscGain;
 
     const std::vector<WavetableStruct>& tables;
+
+    int cnt = 0;
 };

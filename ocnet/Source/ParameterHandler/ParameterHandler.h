@@ -26,6 +26,7 @@ public:
     ParameterHandler();
 
     float getParameterValue(juce::String& parameterOwnerType, juce::String& ownerID, juce::String& parameterTag);
+    juce::Array<float> getParameterModulation(juce::String& parameterOwnerType, juce::String& ownerID, juce::String& parameterTag, int voice);
     void attachParameter(std::unique_ptr<Parameter2>& parameter);
 private:
     std::vector<std::unique_ptr<Parameter2>*> parameters;

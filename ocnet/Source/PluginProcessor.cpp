@@ -25,7 +25,7 @@ OcnetAudioProcessor::OcnetAudioProcessor()
 {
     addSound(new SynthSound());
     for (int i = 0; i < numVoices; ++i)
-        addVoice(new SynthVoice());
+        addVoice(new SynthVoice(i));
 
 }
 

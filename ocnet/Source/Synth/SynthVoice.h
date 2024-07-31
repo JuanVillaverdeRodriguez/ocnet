@@ -22,7 +22,7 @@ class SynthVoice : public juce::SynthesiserVoice
 {
 
 public:
-    SynthVoice();
+    SynthVoice(int id);
 
     bool canPlaySound(juce::SynthesiserSound* sound) override;
     void startNote(int midiNoteNumber, float velocity, juce::SynthesiserSound* sound, int currentPitchWheelPosition) override; 
@@ -36,6 +36,8 @@ public:
     void addWavetableOscillator(int id);
     void connectModulation(int processorModulatorID, Parameter2& parameter);
     void addEnvelope(int id);
+
+    void setVoiceNumberId(int id);
 
     WavetableStruct makeWaveTable(int tableSize, double* ar, double* ai, double topFreq);
 
@@ -52,7 +54,7 @@ private:
     ParameterHandler* parameterHandler;
 
     //ParameterHandler parameterHandler;
-
+    int voiceId;
 
     double sampleRate;
     bool isPrepared = false;

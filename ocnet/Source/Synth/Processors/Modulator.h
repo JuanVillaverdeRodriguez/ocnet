@@ -17,8 +17,9 @@ public:
 
     void inline updateModulationValue() { 
         for (auto parameter : parametersModulating) {
-            parameter->updateModulationValue(modulationValue);
+            parameter->updateModulationValue(modulationBuffer, getVoiceNumberId());
         }
+        modulationBuffer.clearQuick();
     }
 
     void inline connectModulation(Parameter2* parameterToModulate) { 
@@ -26,11 +27,16 @@ public:
         DBG("ConnectModulation(Parameter2* parameterToModulate)");
     }
 
-    void inline setModulationValue(float newModulationValue) { modulationValue = newModulationValue; /*DBG("CURRENT ENVELOPE VALUE: " + juce::String(modulationValue));*/ }
-    float inline getModulationValue() { return modulationValue; }
+    void inline addToModulationBuffer(float newModulationValue, int sample) { modulationBuffer.add(newModulationValue); /*DBG("CURRENT ENVELOPE VALUE: " + juce::String(modulationValue));*/ }
 
+    //float** getModulationBuffer() { return modulationBuffer; }
+
+    
     //disconectParameter
 private:
+
     std::vector<Parameter2*> parametersModulating;
-    float modulationValue;
+    //float modulationBuffer[8][8192];
+
+    juce::Array<juce::var> modulationBuffer;
 };

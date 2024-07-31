@@ -16,6 +16,7 @@ WavetableOscillatorProcessor::WavetableOscillatorProcessor(std::vector<Wavetable
     tableSize(tables[0].waveTable.getNumSamples() - 1),
     tables(tables)
 {
+    cnt = 0;
     setId(id);
     //jassert(wavetable.waveTable.getNumChannels() == 1); // Asegúrate de que la wavetable sea mono
     oscGain = 1.0f;
@@ -52,8 +53,16 @@ void WavetableOscillatorProcessor::setFrequency(float frequency, float sampleRat
     wavetable = tables[waveTableIdx];
 }
 
-float WavetableOscillatorProcessor::getNextSample()
+float WavetableOscillatorProcessor::getNextSample(int sample)
 {
+    cnt++;
+    if (cnt == 100) {
+        //DBG(juce::String(oscGainModulationBuffer[sample]));
+        cnt = 0;
+    }
+
+    gain.setGainLinear(oscGain + oscGainModulationBuffer[sample]);
+
     auto index0 = (unsigned int)currentIndex;
     auto index1 = index0 + 1;
 
@@ -96,6 +105,8 @@ void WavetableOscillatorProcessor::updateParameterValues(ParameterHandler parame
     //DBG(juce::String(getId()));
 
     oscGain = parameterHandler.getParameterValue(juce::String("Oscillators"), juce::String(getId()), juce::String("volume"));
+    oscGainModulationBuffer = parameterHandler.getParameterModulation(juce::String("Oscillators"), juce::String(getId()), juce::String("volume"), getVoiceNumberId());
+    
     gain.setGainLinear(oscGain);
 
     //oscGain = Utils::linearToDecibels(oscGain);

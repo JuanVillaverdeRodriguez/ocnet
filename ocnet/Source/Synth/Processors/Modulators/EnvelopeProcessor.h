@@ -17,7 +17,7 @@ class EnvelopeProcessor : public Modulator {
 public:
     EnvelopeProcessor(int id);
 
-    float getNextSample() override;
+    float getNextSample(int sample) override;
 
     void updateParameterValues(ParameterHandler parameterHandler) override;
     void startNote(int midiNoteNumber, float velocity, juce::SynthesiserSound* sound, int currentPitchWheelPosition) override;
@@ -26,6 +26,11 @@ public:
     bool isActive();
 
 private:
+    juce::Array<float> attackModulationBuffer;
+    juce::Array<float> decayModulationBuffer;
+    juce::Array<float> sustainModulationBuffer;
+    juce::Array<float> releaseModulationBuffer;
+
     juce::ADSR adsr;
     juce::ADSR::Parameters adsrParams;
 };

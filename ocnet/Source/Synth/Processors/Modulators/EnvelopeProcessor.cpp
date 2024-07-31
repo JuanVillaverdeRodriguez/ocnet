@@ -9,6 +9,7 @@
 */
 
 #include "EnvelopeProcessor.h"
+#include "../../../Utils/Utils.h"
 
 EnvelopeProcessor::EnvelopeProcessor(int id)
 {
@@ -20,11 +21,16 @@ EnvelopeProcessor::EnvelopeProcessor(int id)
     adsrParams.release = 0.0f;
 }
 
-float EnvelopeProcessor::getNextSample()
+float EnvelopeProcessor::getNextSample(int sample)
 {
+    //adsrParams.attack += attackModulationBuffer[sample];
+    //adsrParams.decay += attackModulationBuffer[sample];
+    //adsrParams.sustain += attackModulationBuffer[sample];
+    //adsrParams.release += attackModulationBuffer[sample];
+
     float currentValue = adsr.getNextSample();
     //DBG("CURRENT ENVELOPE VALUE: " + juce::String(currentValue));
-    setModulationValue(currentValue); // Asignar el valor de la modulacion
+    addToModulationBuffer(currentValue, sample); // Asignar el valor de la modulacion
     return currentValue;
 }
 
@@ -46,6 +52,12 @@ void EnvelopeProcessor::updateParameterValues(ParameterHandler parameterHandler)
     adsrParams.decay = parameterHandler.getParameterValue(juce::String("Envelopes"), juce::String(getId()), juce::String("decay"));
     adsrParams.sustain = parameterHandler.getParameterValue(juce::String("Envelopes"), juce::String(getId()), juce::String("sustain"));
     adsrParams.release = parameterHandler.getParameterValue(juce::String("Envelopes"), juce::String(getId()), juce::String("release"));
+
+    //Utils::copyArray(parameterHandler.getParameterModulation(juce::String("Envelopes"), juce::String(getId()), juce::String("attack"), getVoiceNumberId()), attackModulationBuffer, 8192);
+    attackModulationBuffer = parameterHandler.getParameterModulation(juce::String("Envelopes"), juce::String(getId()), juce::String("attack"), getVoiceNumberId());
+    decayModulationBuffer = parameterHandler.getParameterModulation(juce::String("Envelopes"), juce::String(getId()), juce::String("decay"), getVoiceNumberId());
+    sustainModulationBuffer = parameterHandler.getParameterModulation(juce::String("Envelopes"), juce::String(getId()), juce::String("sustain"), getVoiceNumberId());
+    releaseModulationBuffer = parameterHandler.getParameterModulation(juce::String("Envelopes"), juce::String(getId()), juce::String("release"), getVoiceNumberId());
 
     //DBG(juce::String(adsrParams.attack));
     //DBG(juce::String(adsrParams.decay));

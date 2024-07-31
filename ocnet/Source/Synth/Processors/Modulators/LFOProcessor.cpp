@@ -16,7 +16,7 @@ LFOProcessor::LFOProcessor(int id)
     setId(id);
 }
 
-float LFOProcessor::getNextSample()
+float LFOProcessor::getNextSample(int sample)
 {
     float value = std::sin(phase);
     phase += phaseIncrement;

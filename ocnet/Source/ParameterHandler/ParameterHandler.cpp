@@ -9,6 +9,7 @@
 */
 
 #include "ParameterHandler.h"
+#include "../Utils/Utils.h"
 
 float ParameterHandler::getParameterValue(juce::String& parameterOwnerType, juce::String& ownerID, juce::String& parameterTag)
 {
@@ -35,6 +36,30 @@ float ParameterHandler::getParameterValue(juce::String& parameterOwnerType, juce
 
 }
 
+juce::Array<float> ParameterHandler::getParameterModulation(juce::String& parameterOwnerType, juce::String& ownerID, juce::String& parameterTag, int voice)
+{
+    juce::ValueTree parameterOwnerTypeNode = rootNode.getChildWithName(parameterOwnerType);
+    juce::ValueTree parameterOwnerNode = parameterOwnerTypeNode.getChildWithName(ownerID);
+
+    const juce::var& propertyModulationArray= parameterOwnerNode.getProperty(parameterTag + juce::String("_modulations") + juce::String(voice));
+
+    juce::Array<float> modulationArray;
+
+    //DBG("LLEGA AQUI");
+
+    if (auto* arrayPtr = propertyModulationArray.getArray()) {
+        //DBG("LLEGA AQUI TMBIEN");
+        modulationArray.ensureStorageAllocated(arrayPtr->size());
+
+        for (auto& v : *arrayPtr) {
+            modulationArray.add(static_cast<float>(v));
+        }
+    }
+
+    return modulationArray;
+
+}
+
 
 ParameterHandler::ParameterHandler()
 {
@@ -51,7 +76,6 @@ ParameterHandler::ParameterHandler()
 
     rootNode.addChild(envelopesNode, -1, nullptr);
     rootNode.addChild(wavetableOscillatorsNode, -1, nullptr);
-
 }
 
 // El codigo de esta funcion es super feo y repetitivo porque no acabo de entender bien los juce::ValueTree.
@@ -63,9 +87,11 @@ void ParameterHandler::attachParameter(std::unique_ptr<Parameter2>& parameter)
     ParameterInfo parameterInfo = parameter->getParameterInfo();
 
     juce::Identifier nodeIdentifier(parameterInfo.nodeIndentifierName); // Envelopes, LFOs, OSCs...
+
     juce::ValueTree nodeTree = rootNode.getChildWithName(nodeIdentifier);
     
     juce::Identifier propertyNameIdentifier(parameterInfo.propertyName); // Attack, decay, volume...
+    juce::Identifier propertyNameIdentifierModulation(parameterInfo.propertyName + juce::String("_modulations")); // Attack, decay, volume...
 
     juce::ValueTree newNode = nodeTree.getChildWithName(parameterInfo.nodeId); // 0, 1, 2....
     if (newNode.isValid()) { // Si ya existe el nodo este (NodeID), usar el que ya existe (Añadir propiedades directamente)

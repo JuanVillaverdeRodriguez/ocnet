@@ -18,7 +18,7 @@ class LFOProcessor : public Modulator {
 public:
     LFOProcessor(int id);
 
-    float getNextSample() override;
+    float getNextSample(int sample) override;
 
     void startNote(int midiNoteNumber, float velocity, juce::SynthesiserSound* sound, int currentPitchWheelPosition) override;
     void stopNote(float velocity, bool allowTailOff) override;

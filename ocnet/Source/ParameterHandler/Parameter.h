@@ -44,16 +44,24 @@ public:
     inline void setParameterInfo(ParameterInfo parameterInfo) { this->parameterInfo = parameterInfo; }
     inline ParameterInfo getParameterInfo() { return parameterInfo; }
     
-    void updateModulationValue(float newModulationValue);
+    void updateModulationValue(juce::Array<juce::var> modulationArray, int voice);
+
+    void setNumVoices(float numVoices) { this->numVoices = numVoices; }
 
 private:
     //int id;
     float value; //Valor guardado
     float modulation;
-    float totalValue;
+
+    int numVoices;
+
+    juce::Array<juce::var> modulations[8];
 
     ParameterInfo parameterInfo;
     juce::ValueTree valueTree;
     juce::Identifier propertyIdentifier;
+
+    juce::Identifier propertyNameModulationIdentifiers[8];
+
 };
 

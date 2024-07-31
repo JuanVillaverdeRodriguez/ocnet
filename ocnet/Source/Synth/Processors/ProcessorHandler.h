@@ -41,7 +41,13 @@ public:
 
     void connectModulation(int processorModulatorID, Parameter2& parameter);
 
+    void setVoiceNumberId(int id);
+
+    void applyModulations(juce::AudioBuffer<float>& outputBuffer);
+
+
 private:
+    int voiceId;
     void freeMainEnvelope();
 
     std::list<std::unique_ptr<Processor>> oscillatorsProcessorsList;

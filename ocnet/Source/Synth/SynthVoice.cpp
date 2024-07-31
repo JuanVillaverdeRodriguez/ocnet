@@ -12,7 +12,8 @@
 #include "Processors/Oscillators/WavetableOscillatorProcessor.h"
 #include "Processors/Modulators/EnvelopeProcessor.h"
 
-SynthVoice::SynthVoice() {
+SynthVoice::SynthVoice(int id) {
+    setVoiceNumberId(id);
     parameterHandler = nullptr;
     spec = { 44100.0 ,512, 2 };
     sampleRate = 44100.0;
@@ -22,9 +23,10 @@ bool SynthVoice::canPlaySound(juce::SynthesiserSound* sound) {
     return dynamic_cast<juce::SynthesiserSound*>(sound) != nullptr;
 }
 
+
+
 void SynthVoice::startNote(int midiNoteNumber, float velocity, juce::SynthesiserSound* sound, int currentPitchWheelPosition) {
     processorhHandler.startNote(midiNoteNumber, velocity, sound, currentPitchWheelPosition);
-
 }
 
 void SynthVoice::stopNote(float velocity, bool allowTailOff) {
@@ -53,6 +55,7 @@ void SynthVoice::renderNextBlock(juce::AudioBuffer<float>& outputBuffer, int sta
     synthBuffer.clear();
 
     //updateGraph();
+    processorhHandler.applyModulations(synthBuffer);
     processorhHandler.updateParameterValues(*parameterHandler);
     processorhHandler.processBlock(synthBuffer);
 
@@ -154,6 +157,12 @@ void SynthVoice::addEnvelope(int id)
         processorGraph.addConnection({ { lastOscillatorNode->nodeID, channel },{ envelopeNode->nodeID, channel } });
         processorGraph.addConnection({ { envelopeNode->nodeID, channel },{ audioOutputNode->nodeID, channel } });
     }*/
+}
+
+void SynthVoice::setVoiceNumberId(int id)
+{
+    voiceId = id;
+    processorhHandler.setVoiceNumberId(id);
 }
 
 void fft(int N, double* ar, double* ai)

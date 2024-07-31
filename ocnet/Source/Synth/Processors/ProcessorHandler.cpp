@@ -51,6 +51,7 @@ void ProcessorHandler::addWavetableOscillator(std::vector<WavetableStruct>& tabl
     }
 
     oscillatorsProcessorsList.push_back(std::make_unique<WavetableOscillatorProcessor>(tables, id));
+    oscillatorsProcessorsList.back()->setVoiceNumberId(voiceId);
 }
 
 void ProcessorHandler::addEnvelope(int id)
@@ -61,6 +62,7 @@ void ProcessorHandler::addEnvelope(int id)
     if (hasDefaultEnvelope) {
         freeMainEnvelope();
         mainEnvelope = dynamic_cast<EnvelopeProcessor*>(modulatorProcessorsList.back().get());
+        mainEnvelope->setVoiceNumberId(voiceId);
         hasDefaultEnvelope = false;
     }
 }
@@ -68,41 +70,13 @@ void ProcessorHandler::addEnvelope(int id)
 void ProcessorHandler::processBlock(juce::AudioBuffer<float>& outputBuffer)
 {
     int numSamples = outputBuffer.getNumSamples();
-    if (juce::Thread::getCurrentThread() != nullptr) {
-        juce::String currentThreadName = juce::Thread::getCurrentThread()->getThreadName().getCharPointer();
-        DBG("CURRENT THREAD (PROCESS BLOCK): " + currentThreadName);
-    }
-
-    if (juce::MessageManager::getInstance()->isThisTheMessageThread()) {
-        //DBG("PROCESSS BLOCK : IS THIS THE MESSAGE THREAD?: TRUE");
-    }
-    else {
-        //DBG("PROCESSS BLOCK : IS THIS THE MESSAGE THREAD?: FALSE");
-    }
 
     for (int channel = 0; channel < 1; ++channel) {
         auto* buffer = outputBuffer.getWritePointer(channel);
 
         for (int sample = 0; sample < numSamples; ++sample) {
-            for (auto& processor : modulatorProcessorsList) {
-                processor->getNextSample();
-            }
-
-            // *********************************************************c
-            // Aplicar las modulaciones a los parametros cada 100 samples
-            if (numSamplesProcessed >= maxSamplesForNextModulationUpdate) {
-                for (auto& processor : modulatorProcessorsList) {
-                    processor->updateModulationValue(); // Actualizar la modulacion en los parametros asignados
-                }
-                numSamplesProcessed = 0;
-            }
-            else {
-                numSamplesProcessed++;
-            }
-            // *********************************************************c
-
             for (auto& processor : oscillatorsProcessorsList) {
-                buffer[sample] = processor->getNextSample();
+                buffer[sample] = processor->getNextSample(sample);
             }
 
             //buffer[sample] *= mainEnvelope->getNextSample();
@@ -188,6 +162,34 @@ void ProcessorHandler::connectModulation(int processorModulatorID, Parameter2& p
             DBG("SE ENCONTRO EL PROCESSOR CON ID: " + juce::String(processor->getId()));
             processor->connectModulation(&parameter); //setModulationListener
         }
+    }
+}
+
+void ProcessorHandler::setVoiceNumberId(int id)
+{
+    voiceId = id;
+
+    for (auto& modulator : modulatorProcessorsList) {
+        modulator->setVoiceNumberId(id);
+    }
+
+    for (auto& processor : oscillatorsProcessorsList) {
+        processor->setVoiceNumberId(id);
+    }
+}
+
+void ProcessorHandler::applyModulations(juce::AudioBuffer<float>& outputBuffer)
+{
+    int numSamples = outputBuffer.getNumSamples();
+
+    for (int sample = 0; sample < numSamples; ++sample) {
+        for (auto& processor : modulatorProcessorsList) {
+            processor->getNextSample(sample);
+        }
+    }
+
+    for (auto& processor : modulatorProcessorsList) {
+        processor->updateModulationValue(); // Actualizar la modulacion en los parametros asignados
     }
 }
 

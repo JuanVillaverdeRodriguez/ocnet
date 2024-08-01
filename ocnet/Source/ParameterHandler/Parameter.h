@@ -39,12 +39,12 @@ public:
         const juce::Identifier& property) override;
 
     inline void setModulationValue(float value) { modulation = value; }
-    inline float getModulationValue() { return modulation; }
+    inline juce::Array<float> getModulationBuffer(int voice) { return modulations[voice]; }
 
     inline void setParameterInfo(ParameterInfo parameterInfo) { this->parameterInfo = parameterInfo; }
     inline ParameterInfo getParameterInfo() { return parameterInfo; }
     
-    void updateModulationValue(juce::Array<juce::var> modulationArray, int voice);
+    void updateModulationValue(juce::Array<float> modulationArray, int voice);
 
     void setNumVoices(float numVoices) { this->numVoices = numVoices; }
 
@@ -55,13 +55,10 @@ private:
 
     int numVoices;
 
-    juce::Array<juce::var> modulations[8];
+    juce::Array<float> modulations[8];
 
     ParameterInfo parameterInfo;
     juce::ValueTree valueTree;
     juce::Identifier propertyIdentifier;
-
-    juce::Identifier propertyNameModulationIdentifiers[8];
-
 };
 

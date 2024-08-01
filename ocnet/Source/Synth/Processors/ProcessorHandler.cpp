@@ -41,28 +41,26 @@ ProcessorHandler::ProcessorHandler()
     hasDefaultEnvelope = true;
 }
 
-void ProcessorHandler::addWavetableOscillator(std::vector<WavetableStruct>& tables, int id)
+void ProcessorHandler::addWavetableOscillator(std::vector<WavetableStruct>& tables, int id, const ParameterHandler& parameterHandler)
 {
-    if (juce::MessageManager::getInstance()->isThisTheMessageThread()) {
-        DBG("ProcessorHandler::addWavetableOscillator(std::vector<WavetableStruct>& tables, int id) : IS THIS THE MESSAGE THREAD?: TRUE");
-    }
-    else {
-        DBG("ProcessorHandler::addWavetableOscillator(std::vector<WavetableStruct>& tables, int id) : IS THIS THE MESSAGE THREAD?: FALSE");
-    }
-
     oscillatorsProcessorsList.push_back(std::make_unique<WavetableOscillatorProcessor>(tables, id));
     oscillatorsProcessorsList.back()->setVoiceNumberId(voiceId);
+    oscillatorsProcessorsList.back()->syncParams(parameterHandler);
 }
 
-void ProcessorHandler::addEnvelope(int id)
+void ProcessorHandler::addEnvelope(int id, const ParameterHandler& parameterHandler)
 {
-    std::unique_ptr<EnvelopeProcessor> newEnvelopeProcessor = std::make_unique<EnvelopeProcessor>(id);
-    modulatorProcessorsList.push_back(std::move(newEnvelopeProcessor));
+    modulatorProcessorsList.push_back(std::make_unique<EnvelopeProcessor>(id));
+    modulatorProcessorsList.back()->setVoiceNumberId(voiceId);
+    modulatorProcessorsList.back()->syncParams(parameterHandler);
 
     if (hasDefaultEnvelope) {
         freeMainEnvelope();
+
         mainEnvelope = dynamic_cast<EnvelopeProcessor*>(modulatorProcessorsList.back().get());
         mainEnvelope->setVoiceNumberId(voiceId);
+        mainEnvelope->syncParams(parameterHandler);
+
         hasDefaultEnvelope = false;
     }
 }
@@ -126,14 +124,14 @@ void ProcessorHandler::prepareToPlay(juce::dsp::ProcessSpec spec)
 
 }
 
-void ProcessorHandler::updateParameterValues(const ParameterHandler& parameterHandler)
+void ProcessorHandler::updateParameterValues()
 {
     for (auto& processor : oscillatorsProcessorsList) {
-        processor->updateParameterValues(parameterHandler);
+        processor->updateParameterValues();
     }
 
     for (auto& processor : modulatorProcessorsList) {
-        processor->updateParameterValues(parameterHandler);
+        processor->updateParameterValues();
     }
 }
 // Pasarle int sourceID, e int destinationID?

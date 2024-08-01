@@ -68,7 +68,6 @@ void OcnetGUI_interface::addModulator(int option)
         if (option == 1) {
             gui_->getModulatorsSection()->addEnvelope(maxCurrentID, processor.parameterHandler);
             processor.addEnvelope(maxCurrentID);
-
         }
     }
     DBG("OcnetGUI_interface::addModulator(int option)");

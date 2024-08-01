@@ -55,7 +55,7 @@ void SynthVoice::renderNextBlock(juce::AudioBuffer<float>& outputBuffer, int sta
     synthBuffer.clear();
 
     processorhHandler.applyModulations(synthBuffer);
-    processorhHandler.updateParameterValues(*parameterHandler);
+    processorhHandler.updateParameterValues();
     processorhHandler.processBlock(synthBuffer);
 
     // Añadir synthBuffer al outputBuffer
@@ -98,7 +98,7 @@ void SynthVoice::addWavetableOscillator(int id)
 
     tables = createSawWaveTables(2048);
 
-    processorhHandler.addWavetableOscillator(tables, id);
+    processorhHandler.addWavetableOscillator(tables, id, *parameterHandler);
     processorhHandler.prepareToPlay(spec);
 
     isPrepared = true;
@@ -112,7 +112,7 @@ void SynthVoice::addEnvelope(int id)
 {
     isPrepared = false;
 
-    processorhHandler.addEnvelope(id);
+    processorhHandler.addEnvelope(id, *parameterHandler);
     processorhHandler.prepareToPlay(spec);
 
     isPrepared = true;

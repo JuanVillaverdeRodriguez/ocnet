@@ -19,8 +19,10 @@ public:
     virtual void prepareToPlay(juce::dsp::ProcessSpec spec) = 0 {};
     virtual void startNote(int midiNoteNumber, float velocity, juce::SynthesiserSound* sound, int currentPitchWheelPosition) = 0 {};
     virtual void stopNote(float velocity, bool allowTailOff) = 0 {};
-    virtual void updateParameterValues(const ParameterHandler& parameterHandler) = 0 {};
+    virtual void updateParameterValues() = 0 {};
     virtual float getNextSample(int sample) = 0 {};
+    virtual void syncParams(const ParameterHandler& parameterHandler) = 0 {};
+
 
     void setVoiceNumberId(int id) { voiceId = id; }
     int getVoiceNumberId() { return voiceId; }

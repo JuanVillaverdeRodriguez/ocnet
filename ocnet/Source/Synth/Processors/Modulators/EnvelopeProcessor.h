@@ -19,17 +19,23 @@ public:
 
     float getNextSample(int sample) override;
 
-    void updateParameterValues(const ParameterHandler& parameterHandler) override;
+    void updateParameterValues() override;
     void startNote(int midiNoteNumber, float velocity, juce::SynthesiserSound* sound, int currentPitchWheelPosition) override;
     void stopNote(float velocity, bool allowTailOff) override;
     void prepareToPlay(juce::dsp::ProcessSpec spec) override;
     bool isActive();
+    void syncParams(const ParameterHandler& parameterHandler) override;
 
 private:
     juce::Array<float> attackModulationBuffer;
     juce::Array<float> decayModulationBuffer;
     juce::Array<float> sustainModulationBuffer;
     juce::Array<float> releaseModulationBuffer;
+
+    Parameter2* attackParameter;
+    Parameter2* decayParameter;
+    Parameter2* sustainParameter;
+    Parameter2* releaseParameter;
 
     juce::ADSR adsr;
     juce::ADSR::Parameters adsrParams;

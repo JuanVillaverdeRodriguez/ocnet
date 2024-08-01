@@ -33,7 +33,7 @@ void LFOProcessor::stopNote(float velocity, bool allowTailOff)
 {
 }
 
-void LFOProcessor::updateParameterValues(const ParameterHandler& parameterHandler)
+void LFOProcessor::updateParameterValues()
 {
 }
 
@@ -41,6 +41,10 @@ void LFOProcessor::prepareToPlay(juce::dsp::ProcessSpec spec)
 {
     sampleRate = spec.sampleRate;
     setFrequency();
+}
+
+void LFOProcessor::syncParams(const ParameterHandler& parameterHandler)
+{
 }
 
 inline void LFOProcessor::setFrequency() {

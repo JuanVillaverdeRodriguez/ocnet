@@ -36,17 +36,12 @@ void Parameter2::setTreeListener(juce::ValueTree tree)
 
     juce::Identifier propertyNameIdentifier(parameterInfo.propertyName); // Attack, decay, volume...
 
-    for (int i = 0; i < 8; ++i)
-    {
-        propertyNameModulationIdentifiers[i] = juce::Identifier(parameterInfo.propertyName + juce::String("_modulations") + juce::String(i));
-    }
-
     this->propertyIdentifier = propertyNameIdentifier;
 
     valueTree.addListener(this);
 }
 
-void Parameter2::updateModulationValue(juce::Array<juce::var> modulationArray, int voice) {
+void Parameter2::updateModulationValue(juce::Array<float> modulationArray, int voice) {
     //DBG("AAAAAAAAAAAAAAAAAAA");
     //DBG(juce::String(static_cast<float>(modulations[voice][0])));
 
@@ -56,7 +51,6 @@ void Parameter2::updateModulationValue(juce::Array<juce::var> modulationArray, i
     //if (modulation > 1.0f)
         //modulation = 1.0f;
 
-    valueTree.setProperty(propertyNameModulationIdentifiers[voice], modulations[voice], nullptr);
 }
 
 void Parameter2::valueTreePropertyChanged(juce::ValueTree& treeWhosePropertyHasChanged, const juce::Identifier& property)

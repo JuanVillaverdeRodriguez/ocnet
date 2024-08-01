@@ -38,5 +38,5 @@ private:
     std::vector<Parameter2*> parametersModulating;
     //float modulationBuffer[8][8192];
 
-    juce::Array<juce::var> modulationBuffer;
+    juce::Array<float> modulationBuffer;
 };

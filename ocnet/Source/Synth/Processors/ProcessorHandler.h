@@ -21,10 +21,8 @@ class ProcessorHandler {
 public:
     ProcessorHandler();
 
-    void addWavetableOscillator(std::vector<WavetableStruct>& tables, int id);
-
-
-    void addEnvelope(int id);
+    void addWavetableOscillator(std::vector<WavetableStruct>& tables, int id, const ParameterHandler& parameterHandler);
+    void addEnvelope(int id, const ParameterHandler& parameterHandler);
 
     void releaseResources();
 
@@ -37,7 +35,7 @@ public:
 
     void prepareToPlay(juce::dsp::ProcessSpec spec);
 
-    void updateParameterValues(const ParameterHandler& parameterHandler);
+    void updateParameterValues();
 
     void connectModulation(int processorModulatorID, Parameter2& parameter);
 

@@ -27,7 +27,7 @@ public:
 
 private:
 	std::vector<Listener*> listeners;
-	std::unique_ptr<Parameter2> parameter;	
+	std::unique_ptr<Parameter2> parameter;
 
 	double value = 0.0;
 };

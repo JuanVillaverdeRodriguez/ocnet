@@ -11,56 +11,6 @@
 #include "ParameterHandler.h"
 #include "../Utils/Utils.h"
 
-float ParameterHandler::getParameterValue(const juce::String& parameterOwnerType, const juce::String& ownerID, const juce::String& parameterTag) const
-{
-
-    juce::ValueTree parameterOwnerTypeNode = rootNode.getChildWithName(parameterOwnerType);
-    juce::ValueTree parameterOwnerNode = parameterOwnerTypeNode.getChildWithName(ownerID);
-
-    const juce::var& propertyValue = parameterOwnerNode.getProperty(parameterTag);
-
-    if (parameterOwnerTypeNode.isValid()) {
-        //DBG("AAAAAAAAAAAAAAAA");
-        if (parameterOwnerNode.isValid()) {
-            //DBG("BBBBBBBBBBBBBBBBBBB");
-        }
-        //DBG(juce::String(parameterOwnerTypeNode.toXmlString()));
-    }
-
-
-    //if (propertyValue.isVoid()) {
-        //jassert(false);
-    //}
-
-    return propertyValue.toString().getFloatValue();
-
-}
-
-juce::Array<float> ParameterHandler::getParameterModulation(const juce::String& parameterOwnerType, const juce::String& ownerID, const juce::String& parameterTag, int voice) const
-{
-    juce::ValueTree parameterOwnerTypeNode = rootNode.getChildWithName(parameterOwnerType);
-    juce::ValueTree parameterOwnerNode = parameterOwnerTypeNode.getChildWithName(ownerID);
-
-    const juce::var& propertyModulationArray= parameterOwnerNode.getProperty(parameterTag + juce::String("_modulations") + juce::String(voice));
-
-    juce::Array<float> modulationArray;
-
-    //DBG("LLEGA AQUI");
-
-    if (auto* arrayPtr = propertyModulationArray.getArray()) {
-        //DBG("LLEGA AQUI TMBIEN");
-        modulationArray.ensureStorageAllocated(arrayPtr->size());
-
-        for (auto& v : *arrayPtr) {
-            modulationArray.add(static_cast<float>(v));
-        }
-    }
-
-    return modulationArray;
-
-}
-
-
 ParameterHandler::ParameterHandler()
 {
     static juce::Identifier rootIdentifier("Parameters");
@@ -82,7 +32,7 @@ ParameterHandler::ParameterHandler()
 ///TODO: Reorganizarlo un poco
 void ParameterHandler::attachParameter(std::unique_ptr<Parameter2>& parameter)
 {
-    //parameters.push_back(&parameter);
+    parameters.push_back(&parameter);
 
     ParameterInfo parameterInfo = parameter->getParameterInfo();
 
@@ -91,7 +41,6 @@ void ParameterHandler::attachParameter(std::unique_ptr<Parameter2>& parameter)
     juce::ValueTree nodeTree = rootNode.getChildWithName(nodeIdentifier);
     
     juce::Identifier propertyNameIdentifier(parameterInfo.propertyName); // Attack, decay, volume...
-    juce::Identifier propertyNameIdentifierModulation(parameterInfo.propertyName + juce::String("_modulations")); // Attack, decay, volume...
 
     juce::ValueTree newNode = nodeTree.getChildWithName(parameterInfo.nodeId); // 0, 1, 2....
     if (newNode.isValid()) { // Si ya existe el nodo este (NodeID), usar el que ya existe (Añadir propiedades directamente)
@@ -112,3 +61,14 @@ void ParameterHandler::attachParameter(std::unique_ptr<Parameter2>& parameter)
 
 }
 
+void ParameterHandler::syncWithParam(const juce::String& parameterOwnerType, const juce::String& ownerID, const juce::String& parameterTag, Parameter2** parameter) const
+{
+    ParameterInfo parameterInfo{ parameterOwnerType, ownerID, parameterTag };
+
+    for (auto& param : parameters) {
+        if (param->get()->getParameterInfo() == parameterInfo) {
+            *parameter = param->get();
+            break;
+        }
+    }
+}

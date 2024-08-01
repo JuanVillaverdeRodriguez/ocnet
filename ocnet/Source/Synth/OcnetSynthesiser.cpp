@@ -41,6 +41,16 @@ void OcnetSynthesiser::addEnvelope(int id)
     hasEnvelope = true;
 }
 
+void OcnetSynthesiser::addDistortion(int id)
+{
+    for (int i = 0; i < getNumVoices(); i++) {
+        if (auto voice = dynamic_cast<SynthVoice*>(getVoice(i))) {
+            voice->addDistortion(id);
+        }
+    }
+    hasEnvelope = true;
+}
+
 void OcnetSynthesiser::connectModulation(int processorModulatorID, Parameter2& parameter) {
     for (int i = 0; i < getNumVoices(); i++) {
         if (auto voice = dynamic_cast<SynthVoice*>(getVoice(i))) {

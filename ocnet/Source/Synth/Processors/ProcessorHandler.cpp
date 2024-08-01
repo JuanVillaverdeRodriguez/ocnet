@@ -9,6 +9,7 @@
 */
 
 #include "ProcessorHandler.h"
+#include "Effects/DistortionProcessor.h"
 
 // Porque usar lista en vez de vector:
 
@@ -48,6 +49,13 @@ void ProcessorHandler::addWavetableOscillator(std::vector<WavetableStruct>& tabl
     oscillatorsProcessorsList.back()->syncParams(parameterHandler);
 }
 
+void ProcessorHandler::addDistortion(int id, const ParameterHandler& parameterHandler)
+{
+    effectsProcessorsList.push_back(std::make_unique<DistortionProcessor>(id));
+    effectsProcessorsList.back()->setVoiceNumberId(voiceId);
+    effectsProcessorsList.back()->syncParams(parameterHandler);
+}
+
 void ProcessorHandler::addEnvelope(int id, const ParameterHandler& parameterHandler)
 {
     modulatorProcessorsList.push_back(std::make_unique<EnvelopeProcessor>(id));
@@ -77,6 +85,9 @@ void ProcessorHandler::processBlock(juce::AudioBuffer<float>& outputBuffer)
                 buffer[sample] = processor->getNextSample(sample);
             }
 
+            for (auto& processor : effectsProcessorsList) {
+                buffer[sample] = processor->getNextSample(buffer[sample]);
+            }
             //buffer[sample] *= mainEnvelope->getNextSample();
         }
     }
@@ -93,6 +104,10 @@ void ProcessorHandler::startNote(int midiNoteNumber, float velocity, juce::Synth
         processor->startNote(midiNoteNumber, velocity, sound, currentPitchWheelPosition);
     }
 
+    for (auto& processor : effectsProcessorsList) {
+        processor->startNote(midiNoteNumber, velocity, sound, currentPitchWheelPosition);
+    }
+
 }
 
 void ProcessorHandler::stopNote(float velocity, bool allowTailOff)
@@ -102,6 +117,10 @@ void ProcessorHandler::stopNote(float velocity, bool allowTailOff)
     }
 
     for (auto& processor : modulatorProcessorsList) {
+        processor->stopNote(velocity, allowTailOff);
+    }
+
+    for (auto& processor : effectsProcessorsList) {
         processor->stopNote(velocity, allowTailOff);
     }
 
@@ -122,6 +141,10 @@ void ProcessorHandler::prepareToPlay(juce::dsp::ProcessSpec spec)
         processor->prepareToPlay(spec);
     }
 
+    for (auto& processor : effectsProcessorsList) {
+        processor->prepareToPlay(spec);
+    }
+
 }
 
 void ProcessorHandler::updateParameterValues()
@@ -133,18 +156,14 @@ void ProcessorHandler::updateParameterValues()
     for (auto& processor : modulatorProcessorsList) {
         processor->updateParameterValues();
     }
-}
-// Pasarle int sourceID, e int destinationID?
-void ProcessorHandler::connectModulation(int processorModulatorID, Parameter2& parameter) {
-    DBG("ProcessorHandler::connectModulation(int processorModulatorID, Parameter2& parameter)");
-    if (juce::Thread::getCurrentThread() != nullptr) {
-        juce::String currentThreadName = juce::Thread::getCurrentThread()->getThreadName().getCharPointer();
-        DBG("CURRENT THREAD (ConnectModulation): " + currentThreadName);
-    }
 
+    for (auto& processor : effectsProcessorsList) {
+        processor->updateParameterValues();
+    }
+}
+void ProcessorHandler::connectModulation(int processorModulatorID, Parameter2& parameter) {
     for (auto& processor : modulatorProcessorsList) {
         if (processor->getId() == processorModulatorID) {
-            DBG("SE ENCONTRO EL PROCESSOR CON ID: " + juce::String(processor->getId()));
             processor->connectModulation(&parameter); //setModulationListener
         }
     }
@@ -159,6 +178,10 @@ void ProcessorHandler::setVoiceNumberId(int id)
     }
 
     for (auto& processor : oscillatorsProcessorsList) {
+        processor->setVoiceNumberId(id);
+    }
+
+    for (auto& processor : effectsProcessorsList) {
         processor->setVoiceNumberId(id);
     }
 }

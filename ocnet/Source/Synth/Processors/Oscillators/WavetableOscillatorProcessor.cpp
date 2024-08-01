@@ -18,7 +18,7 @@ WavetableOscillatorProcessor::WavetableOscillatorProcessor(std::vector<Wavetable
 {
     cnt = 0;
     setId(id);
-    //jassert(wavetable.waveTable.getNumChannels() == 1); // Asegúrate de que la wavetable sea mono
+    //jassert(wavetable.waveTable.getNumChannels() == 1); // AsegÃºrate de que la wavetable sea mono
     oscGain = 1.0f;
 
     isPrepared = false;

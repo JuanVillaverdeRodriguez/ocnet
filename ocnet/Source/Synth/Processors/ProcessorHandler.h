@@ -16,12 +16,14 @@
 #include "../../ParameterHandler/ParameterHandler.h"
 #include "../Oscillator/WavetableTypes.h"
 #include "Oscillators/WavetableOscillatorProcessor.h"
+#include "Effects/DistortionProcessor.h"
 
 class ProcessorHandler {
 public:
     ProcessorHandler();
 
     void addWavetableOscillator(std::vector<WavetableStruct>& tables, int id, const ParameterHandler& parameterHandler);
+    void addDistortion(int id, const ParameterHandler& parameterHandler);
     void addEnvelope(int id, const ParameterHandler& parameterHandler);
 
     void releaseResources();
@@ -50,6 +52,8 @@ private:
 
     std::list<std::unique_ptr<Processor>> oscillatorsProcessorsList;
     std::list<std::unique_ptr<Modulator>> modulatorProcessorsList;
+    std::list<std::unique_ptr<Effector>> effectsProcessorsList;;
+
     //std::list<std::unique_ptr<Processor>> processorList;
 
     int numSamplesProcessed = 0;

@@ -23,9 +23,10 @@ public:
     void updateParameterValues() override;
     void prepareToPlay(juce::dsp::ProcessSpec spec) override;
     float getNextSample(int sample) override;
+    void syncParams(const ParameterHandler& parameterHandler) override;
+
     void setFrequency(float frequency, float sampleRate);
 
-    void syncParams(const ParameterHandler& parameterHandler) override;
 
 private:
     juce::Array<float> oscGainModulationBuffer;

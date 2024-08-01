@@ -155,9 +155,11 @@
     <ClCompile Include="..\..\Source\GUI_Sections\OscillatorsSection.cpp"/>
     <ClCompile Include="..\..\Source\OcnetGUI.cpp"/>
     <ClCompile Include="..\..\Source\OcnetGUI_interface.cpp"/>
+    <ClCompile Include="..\..\Source\Synth\Processors\Effector.cpp"/>
     <ClCompile Include="..\..\Source\Synth\Processors\Modulator.cpp"/>
     <ClCompile Include="..\..\Source\Synth\Processors\ProcessorHandler.cpp"/>
     <ClCompile Include="..\..\Source\Synth\Processors\Oscillators\WavetableOscillatorProcessor.cpp"/>
+    <ClCompile Include="..\..\Source\Synth\Processors\Effects\DistortionProcessor.cpp"/>
     <ClCompile Include="..\..\Source\Synth\Processors\Modulators\EnvelopeProcessor.cpp"/>
     <ClCompile Include="..\..\Source\Synth\Processors\Modulators\LFOProcessor.cpp"/>
     <ClCompile Include="..\..\Source\Synth\Processors\Processor.cpp"/>
@@ -2894,9 +2896,11 @@
     <ClInclude Include="..\..\Source\GUI_Sections\OscillatorsSection.h"/>
     <ClInclude Include="..\..\Source\OcnetGUI.h"/>
     <ClInclude Include="..\..\Source\OcnetGUI_interface.h"/>
+    <ClInclude Include="..\..\Source\Synth\Processors\Effector.h"/>
     <ClInclude Include="..\..\Source\Synth\Processors\Modulator.h"/>
     <ClInclude Include="..\..\Source\Synth\Processors\ProcessorHandler.h"/>
     <ClInclude Include="..\..\Source\Synth\Processors\Oscillators\WavetableOscillatorProcessor.h"/>
+    <ClInclude Include="..\..\Source\Synth\Processors\Effects\DistortionProcessor.h"/>
     <ClInclude Include="..\..\Source\Synth\Processors\Modulators\EnvelopeProcessor.h"/>
     <ClInclude Include="..\..\Source\Synth\Processors\Modulators\LFOProcessor.h"/>
     <ClInclude Include="..\..\Source\Synth\Processors\Processor.h"/>

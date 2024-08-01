@@ -80,6 +80,8 @@
             file="Source/OcnetGUI_interface.h"/>
       <GROUP id="{F3B0B463-C0DE-0D39-E0FD-236DC0836EDE}" name="Synth">
         <GROUP id="{E55E5413-BAED-13DF-5573-AF7ABCF50AC1}" name="Processors">
+          <FILE id="Byhm0i" name="Effector.cpp" compile="1" resource="0" file="Source/Synth/Processors/Effector.cpp"/>
+          <FILE id="HCxoze" name="Effector.h" compile="0" resource="0" file="Source/Synth/Processors/Effector.h"/>
           <FILE id="L04Fxe" name="Modulator.cpp" compile="1" resource="0" file="Source/Synth/Processors/Modulator.cpp"/>
           <FILE id="OCMYGv" name="Modulator.h" compile="0" resource="0" file="Source/Synth/Processors/Modulator.h"/>
           <FILE id="e7zpmr" name="ProcessorHandler.cpp" compile="1" resource="0"
@@ -93,7 +95,12 @@
                   resource="0" file="Source/Synth/Processors/Oscillators/WavetableOscillatorProcessor.h"/>
           </GROUP>
           <GROUP id="{A0D7E883-2E8B-DAB9-94D8-C766BB592BE4}" name="EffectsChains"/>
-          <GROUP id="{E9BC3EE7-B3EF-6C8B-FB4D-C92AA9B0031D}" name="Effects"/>
+          <GROUP id="{E9BC3EE7-B3EF-6C8B-FB4D-C92AA9B0031D}" name="Effects">
+            <FILE id="GAoXMY" name="DistortionProcessor.cpp" compile="1" resource="0"
+                  file="Source/Synth/Processors/Effects/DistortionProcessor.cpp"/>
+            <FILE id="LRD7wb" name="DistortionProcessor.h" compile="0" resource="0"
+                  file="Source/Synth/Processors/Effects/DistortionProcessor.h"/>
+          </GROUP>
           <GROUP id="{56F0D0BF-3FB3-CBB3-8460-81F27FB410F7}" name="Modulators">
             <FILE id="a06LBG" name="EnvelopeProcessor.cpp" compile="1" resource="0"
                   file="Source/Synth/Processors/Modulators/EnvelopeProcessor.cpp"/>

@@ -119,6 +119,17 @@ void SynthVoice::addEnvelope(int id)
 
 }
 
+void SynthVoice::addDistortion(int id)
+{
+    isPrepared = false;
+
+    processorhHandler.addDistortion(id, *parameterHandler);
+    processorhHandler.prepareToPlay(spec);
+
+    isPrepared = true;
+
+}
+
 void SynthVoice::setVoiceNumberId(int id)
 {
     voiceId = id;

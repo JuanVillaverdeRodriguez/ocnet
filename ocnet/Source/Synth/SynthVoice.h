@@ -37,6 +37,8 @@ public:
     void connectModulation(int processorModulatorID, Parameter2& parameter);
     void addEnvelope(int id);
 
+    void addDistortion(int id);
+
     void setVoiceNumberId(int id);
 
     WavetableStruct makeWaveTable(int tableSize, double* ar, double* ai, double topFreq);

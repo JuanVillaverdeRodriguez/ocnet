@@ -46,6 +46,7 @@ void OcnetGUI_interface::addOscillator(int option)
         if (option == 1) {
             gui_->getOscillatorsSection()->addWavetableOscillator(maxCurrentID, processor.parameterHandler);
             processor.addWavetableOscillator(maxCurrentID);
+            maxCurrentID++;
         }
         else if (option == 2) {
             //processor.addSampler();
@@ -61,6 +62,9 @@ void OcnetGUI_interface::addEffect(int option)
     if (option > 0) {
         if (option == 1) {
             gui_->getEffectsSection()->addDistortion(maxCurrentID, processor.parameterHandler);
+            processor.addDistortion(maxCurrentID);
+            maxCurrentID++;
+
         }
     }
 }
@@ -71,6 +75,8 @@ void OcnetGUI_interface::addModulator(int option)
         if (option == 1) {
             gui_->getModulatorsSection()->addEnvelope(maxCurrentID, processor.parameterHandler);
             processor.addEnvelope(maxCurrentID);
+            maxCurrentID++;
+
         }
     }
     DBG("OcnetGUI_interface::addModulator(int option)");

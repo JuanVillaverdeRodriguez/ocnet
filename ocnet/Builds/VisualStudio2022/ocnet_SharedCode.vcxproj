@@ -142,6 +142,7 @@
     <ClCompile Include="..\..\Source\Utils\Utils.cpp"/>
     <ClCompile Include="..\..\Source\ParameterHandler\Parameter.cpp"/>
     <ClCompile Include="..\..\Source\ParameterHandler\ParameterHandler.cpp"/>
+    <ClCompile Include="..\..\Source\GUI_Subsections\Effects\DistortionSubsection.cpp"/>
     <ClCompile Include="..\..\Source\GUI_Subsections\Modulators\EnvelopeSubsection.cpp"/>
     <ClCompile Include="..\..\Source\GUI_Subsections\Modulators\LFOSubsection.cpp"/>
     <ClCompile Include="..\..\Source\GUI_Subsections\Oscillators\WavetableOscillatorSubsection.cpp"/>
@@ -2879,6 +2880,7 @@
     <ClInclude Include="..\..\Source\Utils\Utils.h"/>
     <ClInclude Include="..\..\Source\ParameterHandler\Parameter.h"/>
     <ClInclude Include="..\..\Source\ParameterHandler\ParameterHandler.h"/>
+    <ClInclude Include="..\..\Source\GUI_Subsections\Effects\DistortionSubsection.h"/>
     <ClInclude Include="..\..\Source\GUI_Subsections\Modulators\EnvelopeSubsection.h"/>
     <ClInclude Include="..\..\Source\GUI_Subsections\Modulators\LFOSubsection.h"/>
     <ClInclude Include="..\..\Source\GUI_Subsections\Oscillators\WavetableOscillatorSubsection.h"/>

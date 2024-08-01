@@ -46,13 +46,6 @@ void OscillatorsSection::addListener(Listener *listener)
 
 void OscillatorsSection::addWavetableOscillator(int numberOfWavetableOscillators, ParameterHandler& parameterHandler)
 {
-    if (juce::MessageManager::getInstance()->isThisTheMessageThread()) {
-        DBG("addWavetableOscillator : IS THIS THE MESSAGE THREAD?: TRUE");
-    }
-    else {
-        DBG("addWavetableOscillator : IS THIS THE MESSAGE THREAD?: FALSE");
-    }
-
     std::unique_ptr<WavetableOscillatorSubsection> wavetableOscillator = std::make_unique<WavetableOscillatorSubsection>(numberOfWavetableOscillators);
 
     wavetableOscillatorSubsection.push_back(std::move(wavetableOscillator));

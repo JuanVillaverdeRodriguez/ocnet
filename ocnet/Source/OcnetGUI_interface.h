@@ -21,7 +21,7 @@ public:
 
     void addOscillator(int option) override;
 
-    void addEffectsChain() override;
+    void addEffect(int option) override;
 
     void addModulator(int option) override;
 

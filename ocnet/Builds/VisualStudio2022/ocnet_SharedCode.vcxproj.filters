@@ -8,6 +8,9 @@
     <Filter Include="ocnet\Source\ParameterHandler">
       <UniqueIdentifier>{1448AEC1-050E-FCAA-19B9-8523D8F7AE9B}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ocnet\Source\GUI_Subsections\Effects">
+      <UniqueIdentifier>{77BD22E6-9D29-E507-D44C-6BAA0A417B0C}</UniqueIdentifier>
+    </Filter>
     <Filter Include="ocnet\Source\GUI_Subsections\Modulators">
       <UniqueIdentifier>{C9A44F08-A6B9-6423-DF4D-0F909B1EA85A}</UniqueIdentifier>
     </Filter>
@@ -750,6 +753,9 @@
     </ClCompile>
     <ClCompile Include="..\..\Source\ParameterHandler\ParameterHandler.cpp">
       <Filter>ocnet\Source\ParameterHandler</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\GUI_Subsections\Effects\DistortionSubsection.cpp">
+      <Filter>ocnet\Source\GUI_Subsections\Effects</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\GUI_Subsections\Modulators\EnvelopeSubsection.cpp">
       <Filter>ocnet\Source\GUI_Subsections\Modulators</Filter>
@@ -3716,6 +3722,9 @@
     </ClInclude>
     <ClInclude Include="..\..\Source\ParameterHandler\ParameterHandler.h">
       <Filter>ocnet\Source\ParameterHandler</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\GUI_Subsections\Effects\DistortionSubsection.h">
+      <Filter>ocnet\Source\GUI_Subsections\Effects</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\GUI_Subsections\Modulators\EnvelopeSubsection.h">
       <Filter>ocnet\Source\GUI_Subsections\Modulators</Filter>

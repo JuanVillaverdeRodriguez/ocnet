@@ -56,10 +56,13 @@ void OcnetGUI_interface::addOscillator(int option)
     }
 }
 
-
-void OcnetGUI_interface::addEffectsChain()
+void OcnetGUI_interface::addEffect(int option)
 {
-    DBG("OcnetGUI_interface::addEffectsChain()");
+    if (option > 0) {
+        if (option == 1) {
+            gui_->getEffectsSection()->addDistortion(maxCurrentID, processor.parameterHandler);
+        }
+    }
 }
 
 void OcnetGUI_interface::addModulator(int option)

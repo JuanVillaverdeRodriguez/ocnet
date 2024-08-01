@@ -24,8 +24,13 @@ ParameterHandler::ParameterHandler()
     static juce::Identifier wavetableOscillatorsIdentifier("Oscillators");
     juce::ValueTree wavetableOscillatorsNode(wavetableOscillatorsIdentifier);
 
+    static juce::Identifier effectsIdentifier("Effects");
+    juce::ValueTree effectsNode(effectsIdentifier);
+
     rootNode.addChild(envelopesNode, -1, nullptr);
     rootNode.addChild(wavetableOscillatorsNode, -1, nullptr);
+    rootNode.addChild(effectsNode, -1, nullptr);
+
 }
 
 // El codigo de esta funcion es super feo y repetitivo porque no acabo de entender bien los juce::ValueTree.

@@ -12,11 +12,15 @@
 #include "Processors/Oscillators/WavetableOscillatorProcessor.h"
 #include "Processors/Modulators/EnvelopeProcessor.h"
 
-SynthVoice::SynthVoice(int id) {
+SynthVoice::SynthVoice(int id, ParameterHandler& parameterHandler) : processorhHandler(parameterHandler) {
     setVoiceNumberId(id);
-    parameterHandler = nullptr;
+    this->parameterHandler = &parameterHandler;
     spec = { 44100.0 ,512, 2 };
     sampleRate = 44100.0;
+}
+
+SynthVoice::~SynthVoice()
+{
 }
 
 bool SynthVoice::canPlaySound(juce::SynthesiserSound* sound) {
@@ -104,7 +108,7 @@ void SynthVoice::addWavetableOscillator(int id)
     isPrepared = true;
 }
 
-void SynthVoice::connectModulation(int processorModulatorID, Parameter2& parameter) {
+void SynthVoice::connectModulation(int processorModulatorID, std::shared_ptr<Parameter2> parameter) {
     processorhHandler.connectModulation(processorModulatorID, parameter);
 }
 

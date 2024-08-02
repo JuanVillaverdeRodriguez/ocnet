@@ -14,7 +14,7 @@
 
 class Processor {
 public:
-    Processor() = default;
+    Processor();
     virtual ~Processor() = default;
 
     virtual void prepareToPlay(juce::dsp::ProcessSpec spec) = 0 {};

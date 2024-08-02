@@ -21,6 +21,10 @@ EnvelopeProcessor::EnvelopeProcessor(int id)
     adsrParams.release = 0.0f;
 }
 
+EnvelopeProcessor::~EnvelopeProcessor()
+{
+}
+
 float EnvelopeProcessor::getNextSample(int sample)
 {
     //adsrParams.attack += attackModulationBuffer[sample];
@@ -79,10 +83,10 @@ bool EnvelopeProcessor::isActive()
 
 void EnvelopeProcessor::syncParams(const ParameterHandler& parameterHandler)
 {
-    parameterHandler.syncWithParam(juce::String("Envelopes"), juce::String(getId()), juce::String("attack"), &attackParameter);
-    parameterHandler.syncWithParam(juce::String("Envelopes"), juce::String(getId()), juce::String("decay"), &decayParameter);
-    parameterHandler.syncWithParam(juce::String("Envelopes"), juce::String(getId()), juce::String("sustain"), &sustainParameter);
-    parameterHandler.syncWithParam(juce::String("Envelopes"), juce::String(getId()), juce::String("release"), &releaseParameter);
+    attackParameter = parameterHandler.syncWithParam(juce::String("Envelopes"), juce::String(getId()), juce::String("attack"));
+    decayParameter = parameterHandler.syncWithParam(juce::String("Envelopes"), juce::String(getId()), juce::String("decay"));
+    sustainParameter = parameterHandler.syncWithParam(juce::String("Envelopes"), juce::String(getId()), juce::String("sustain"));
+    releaseParameter = parameterHandler.syncWithParam(juce::String("Envelopes"), juce::String(getId()), juce::String("release"));
 }
 
 /*void EnvelopeProcessor::connectModulationTo(Parameter2& parameter)

@@ -14,29 +14,22 @@
 class Modulator : public Processor {
 public:
     Modulator();
+    //~Modulator() = default;
     virtual ~Modulator() = default;
 
-    void inline updateModulationValue() { 
-        for (auto parameter : parametersModulating) {
-            parameter->updateModulationValue(modulationBuffer, getVoiceNumberId());
-        }
-        modulationBuffer.clearQuick();
-    }
+    void updateModulationValue();
 
-    void inline connectModulation(Parameter2* parameterToModulate) { 
-        parametersModulating.push_back(parameterToModulate); 
-        DBG("ConnectModulation(Parameter2* parameterToModulate)");
-    }
+    void connectModulation(std::shared_ptr<Parameter2> parameterToModulate);
 
-    void inline addToModulationBuffer(float newModulationValue, int sample) { modulationBuffer.add(newModulationValue); /*DBG("CURRENT ENVELOPE VALUE: " + juce::String(modulationValue));*/ }
+    void addToModulationBuffer(float newModulationValue, int sample);
 
     //float** getModulationBuffer() { return modulationBuffer; }
 
     
     //disconectParameter
 private:
+    std::vector<std::shared_ptr<Parameter2>> parametersModulating;
 
-    std::vector<Parameter2*> parametersModulating;
     //float modulationBuffer[8][8192];
 
     juce::Array<float> modulationBuffer;

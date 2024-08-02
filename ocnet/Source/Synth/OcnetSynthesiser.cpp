@@ -15,6 +15,10 @@ OcnetSynthesiser::OcnetSynthesiser()
     hasEnvelope = false;
 }
 
+OcnetSynthesiser::~OcnetSynthesiser()
+{
+}
+
 void OcnetSynthesiser::addWavetableOscillator(int id)
 {
     if (juce::MessageManager::getInstance()->isThisTheMessageThread()) {
@@ -51,7 +55,7 @@ void OcnetSynthesiser::addDistortion(int id)
     hasEnvelope = true;
 }
 
-void OcnetSynthesiser::connectModulation(int processorModulatorID, Parameter2& parameter) {
+void OcnetSynthesiser::connectModulation(int processorModulatorID, std::shared_ptr<Parameter2> parameter) {
     for (int i = 0; i < getNumVoices(); i++) {
         if (auto voice = dynamic_cast<SynthVoice*>(getVoice(i))) {
             voice->connectModulation(processorModulatorID, parameter);

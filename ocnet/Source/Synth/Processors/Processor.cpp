@@ -9,3 +9,9 @@
 */
 
 #include "Processor.h"
+
+Processor::Processor()
+{
+    id = 0;
+    voiceId = 0;
+}

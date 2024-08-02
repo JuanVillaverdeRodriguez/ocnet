@@ -35,9 +35,9 @@ ParameterHandler::ParameterHandler()
 
 // El codigo de esta funcion es super feo y repetitivo porque no acabo de entender bien los juce::ValueTree.
 ///TODO: Reorganizarlo un poco
-void ParameterHandler::attachParameter(std::unique_ptr<Parameter2>& parameter)
+void ParameterHandler::attachParameter(std::shared_ptr<Parameter2> parameter)
 {
-    parameters.push_back(&parameter);
+    parameters.push_back(parameter);
 
     ParameterInfo parameterInfo = parameter->getParameterInfo();
 
@@ -66,14 +66,14 @@ void ParameterHandler::attachParameter(std::unique_ptr<Parameter2>& parameter)
 
 }
 
-void ParameterHandler::syncWithParam(const juce::String& parameterOwnerType, const juce::String& ownerID, const juce::String& parameterTag, Parameter2** parameter) const
+
+std::shared_ptr<Parameter2> ParameterHandler::syncWithParam(const juce::String& parameterOwnerType, const juce::String& ownerID, const juce::String& parameterTag) const
 {
     ParameterInfo parameterInfo{ parameterOwnerType, ownerID, parameterTag };
 
-    for (auto& param : parameters) {
-        if (param->get()->getParameterInfo() == parameterInfo) {
-            *parameter = param->get();
-            break;
+    for (auto param : parameters) {
+        if (param->getParameterInfo() == parameterInfo) {
+            return param;
         }
     }
 }

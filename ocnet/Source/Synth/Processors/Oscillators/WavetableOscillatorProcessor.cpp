@@ -48,7 +48,7 @@ void WavetableOscillatorProcessor::setFrequency(float frequency, float sampleRat
 
 void WavetableOscillatorProcessor::syncParams(const ParameterHandler& parameterHandler)
 {
-    parameterHandler.syncWithParam(juce::String("Oscillators"), juce::String(getId()), juce::String("volume"), &gainParameter);
+    gainParameter = parameterHandler.syncWithParam(juce::String("Oscillators"), juce::String(getId()), juce::String("volume"));
 }
 
 float WavetableOscillatorProcessor::getNextSample(int sample)

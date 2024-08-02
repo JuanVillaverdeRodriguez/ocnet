@@ -16,6 +16,7 @@
 class EnvelopeProcessor : public Modulator {
 public:
     EnvelopeProcessor(int id);
+    ~EnvelopeProcessor() override;
 
     float getNextSample(int sample) override;
 
@@ -33,10 +34,16 @@ private:
     juce::Array<float> sustainModulationBuffer;
     juce::Array<float> releaseModulationBuffer;
 
-    Parameter2* attackParameter;
-    Parameter2* decayParameter;
-    Parameter2* sustainParameter;
-    Parameter2* releaseParameter;
+    //Parameter2* attackParameter;
+    //Parameter2* decayParameter;
+    //Parameter2* sustainParameter;
+    //Parameter2* releaseParameter;
+
+    std::shared_ptr<Parameter2> attackParameter;
+    std::shared_ptr<Parameter2> decayParameter;
+    std::shared_ptr<Parameter2> sustainParameter;
+    std::shared_ptr<Parameter2> releaseParameter;
+
 
     juce::ADSR adsr;
     juce::ADSR::Parameters adsrParams;

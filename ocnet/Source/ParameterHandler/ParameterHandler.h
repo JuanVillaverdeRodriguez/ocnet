@@ -17,10 +17,10 @@ class ParameterHandler {
 public:
     ParameterHandler();
 
-    void attachParameter(std::unique_ptr<Parameter2>& parameter);
-    void syncWithParam(const juce::String& parameterOwnerType, const juce::String& ownerID, const juce::String& parameterTag, Parameter2** parameter) const;
+    void attachParameter(std::shared_ptr<Parameter2> parameter);
+    std::shared_ptr<Parameter2> syncWithParam(const juce::String& parameterOwnerType, const juce::String& ownerID, const juce::String& parameterTag) const;
 
 private:
-    std::vector<std::unique_ptr<Parameter2>*> parameters;
+    std::vector<std::shared_ptr<Parameter2>> parameters;
     juce::ValueTree rootNode;
 };

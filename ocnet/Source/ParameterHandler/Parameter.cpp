@@ -21,6 +21,10 @@ Parameter2::Parameter2(ParameterInfo parameterInfo)
     this->parameterInfo.propertyName = parameterInfo.propertyName;
 }
 
+Parameter2::~Parameter2()
+{
+}
+
 void Parameter2::updateValue(float newValue)
 {
     DBG("Parameter2::valueChanged(int newValue)");

@@ -23,7 +23,7 @@ public:
     class Listener {
     public:
         virtual ~Listener() { }
-        virtual void connectModulation(int processorModulatorID, Parameter2& parameter) = 0;
+        virtual void connectModulation(int processorModulatorID, std::shared_ptr<Parameter2> parameter) = 0;
     };
 
     void resized() override;
@@ -33,8 +33,8 @@ public:
         listeners.push_back(listener);
     }
 
-    void inline connectModulation(int processorModulatorID, Parameter2& parameter) {
-        DBG("connectModulation(int processorModulatorID, Parameter2& parameter) ");
+    void inline connectModulation(int processorModulatorID, std::shared_ptr<Parameter2> parameter) {
+        DBG("connectModulation(int processorModulatorID, std::unique_ptr<Parameter2>& parameter) ");
         for (auto listener : listeners) {
             listener->connectModulation(processorModulatorID, parameter);
         }

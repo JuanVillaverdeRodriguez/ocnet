@@ -15,13 +15,14 @@
 class OcnetSynthesiser : public juce::Synthesiser {
 public:
     OcnetSynthesiser();
+    ~OcnetSynthesiser() override;
 
     void addWavetableOscillator(int id);
     void addEnvelope(int id);
 
     void addDistortion(int id);
 
-    void connectModulation(int processorModulatorID, Parameter2& parameter);
+    void connectModulation(int processorModulatorID, std::shared_ptr<Parameter2> parameter);
 
     bool getHasEnvelope() { return hasEnvelope; }
 

@@ -16,7 +16,7 @@ void Knob1::itemDropped(const SourceDetails& dragSourceDetails)
 	DBG("Envelope sincronizado con el parámetro");
 		if (auto* a = dynamic_cast<EnvelopeSubsection*>(dragSourceDetails.sourceComponent.get())) {
 			DBG("CONECTADO AHORA DEBERIA DE ESTAR");
-			a->connectModulation(a->getId(), *parameter);
+			a->connectModulation(a->getId(), parameter);
 		}
 }
 

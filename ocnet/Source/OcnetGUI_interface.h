@@ -25,7 +25,7 @@ public:
 
     void addModulator(int option) override;
 
-    void connectModulation(int processorModulatorID, Parameter2& parameter) override;
+    void connectModulation(int processorModulatorID, std::shared_ptr<Parameter2> parameter) override;
 
     OcnetGUI* getGui() { return gui_.get(); }
 

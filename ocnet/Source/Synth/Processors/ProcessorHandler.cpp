@@ -34,11 +34,12 @@
 // Porque es mas rapido obtener los parametros (se hace todo el rato)
 // Problema: Complica el ProcessorHandler
 
-ProcessorHandler::ProcessorHandler()
+ProcessorHandler::ProcessorHandler(const ParameterHandler& parameterHandler)
 {
-    numSamplesProcessed = 0;
-    maxSamplesForNextModulationUpdate = 100;
-    hasDefaultEnvelope = true;
+    voiceId = 0;
+
+    mainEnvelope = std::make_unique<EnvelopeProcessor>(0);
+
 }
 
 void ProcessorHandler::addWavetableOscillator(std::vector<WavetableStruct>& tables, int id, const ParameterHandler& parameterHandler)
@@ -57,16 +58,14 @@ void ProcessorHandler::addDistortion(int id, const ParameterHandler& parameterHa
 
 void ProcessorHandler::addEnvelope(int id, const ParameterHandler& parameterHandler)
 {
-    modulatorProcessorsList.push_back(std::make_unique<EnvelopeProcessor>(id));
-    modulatorProcessorsList.back()->setVoiceNumberId(voiceId);
-    modulatorProcessorsList.back()->syncParams(parameterHandler);
-
-    if (hasDefaultEnvelope) {
-        mainEnvelope.reset(dynamic_cast<EnvelopeProcessor*>(modulatorProcessorsList.back().get()));
-        mainEnvelope->setVoiceNumberId(voiceId);
+    if (id == 0) {
         mainEnvelope->syncParams(parameterHandler);
-
-        hasDefaultEnvelope = false;
+        mainEnvelope->setVoiceNumberId(voiceId);
+    }
+    else {
+        modulatorProcessorsList.push_back(std::make_unique<EnvelopeProcessor>(id));
+        modulatorProcessorsList.back()->setVoiceNumberId(voiceId);
+        modulatorProcessorsList.back()->syncParams(parameterHandler);
     }
 }
 
@@ -94,6 +93,7 @@ void ProcessorHandler::processBlock(juce::AudioBuffer<float>& outputBuffer)
 
 void ProcessorHandler::startNote(int midiNoteNumber, float velocity, juce::SynthesiserSound* sound, int currentPitchWheelPosition)
 {
+    mainEnvelope->startNote(midiNoteNumber, velocity, sound, currentPitchWheelPosition);
 
     for (auto& processor : oscillatorsProcessorsList) {
         processor->startNote(midiNoteNumber, velocity, sound, currentPitchWheelPosition);
@@ -111,6 +111,8 @@ void ProcessorHandler::startNote(int midiNoteNumber, float velocity, juce::Synth
 
 void ProcessorHandler::stopNote(float velocity, bool allowTailOff)
 {
+    mainEnvelope->stopNote(velocity, allowTailOff);
+
     for (auto& processor : oscillatorsProcessorsList) {
         processor->stopNote(velocity, allowTailOff);
     }
@@ -132,6 +134,8 @@ bool ProcessorHandler::canClearNote()
 
 void ProcessorHandler::prepareToPlay(juce::dsp::ProcessSpec spec)
 {
+    mainEnvelope->prepareToPlay(spec);
+
     for (auto& processor : oscillatorsProcessorsList) {
         processor->prepareToPlay(spec);
     }
@@ -148,6 +152,8 @@ void ProcessorHandler::prepareToPlay(juce::dsp::ProcessSpec spec)
 
 void ProcessorHandler::updateParameterValues()
 {
+    mainEnvelope->updateParameterValues();
+
     for (auto& processor : oscillatorsProcessorsList) {
         processor->updateParameterValues();
     }
@@ -160,10 +166,16 @@ void ProcessorHandler::updateParameterValues()
         processor->updateParameterValues();
     }
 }
-void ProcessorHandler::connectModulation(int processorModulatorID, Parameter2& parameter) {
-    for (auto& processor : modulatorProcessorsList) {
-        if (processor->getId() == processorModulatorID) {
-            processor->connectModulation(&parameter); //setModulationListener
+void ProcessorHandler::connectModulation(int processorModulatorID, std::shared_ptr<Parameter2> parameter) {
+    DBG("ProcessorHandler::connectModulation(int processorModulatorID, std::shared_ptr<Parameter2> parameter)");
+    if (processorModulatorID == 0) {
+        mainEnvelope->connectModulation(parameter);
+    }
+    else {
+        for (auto& processor : modulatorProcessorsList) {
+            if (processor->getId() == processorModulatorID) {
+                processor->connectModulation(parameter); //setModulationListener
+            }
         }
     }
 }
@@ -171,6 +183,8 @@ void ProcessorHandler::connectModulation(int processorModulatorID, Parameter2& p
 void ProcessorHandler::setVoiceNumberId(int id)
 {
     voiceId = id;
+
+    mainEnvelope->setVoiceNumberId(id);
 
     for (auto& modulator : modulatorProcessorsList) {
         modulator->setVoiceNumberId(id);
@@ -193,19 +207,19 @@ void ProcessorHandler::applyModulations(juce::AudioBuffer<float>& outputBuffer)
         for (auto& processor : modulatorProcessorsList) {
             processor->getNextSample(sample);
         }
+        mainEnvelope->getNextSample(sample);
     }
+
 
     for (auto& processor : modulatorProcessorsList) {
         processor->updateModulationValue(); // Actualizar la modulacion en los parametros asignados
     }
+
+    mainEnvelope->updateModulationValue();
+
 }
 
 void ProcessorHandler::releaseResources()
 {
-    //freeMainEnvelope();
 }
 
-
-void ProcessorHandler::freeMainEnvelope() {
-
-}

@@ -11,7 +11,7 @@ public:
 	class Listener {
 	public:
 		virtual ~Listener() { }
-		virtual void connectModulation(int processorModulatorID, Parameter2& parameter) = 0;
+		virtual void connectModulation(int processorModulatorID, std::shared_ptr<Parameter2> parameter) = 0;
 	};
 
 	void itemDropped(const SourceDetails& dragSourceDetails) override;
@@ -19,7 +19,7 @@ public:
 
 	void sliderValueChanged(Slider *slider) override;
 
-	inline std::unique_ptr<Parameter2>& getParameter() { return parameter; }
+	inline std::shared_ptr<Parameter2> getParameter() { return parameter; }
 
 	void inline setListener(Listener* listener) {
 		listeners.push_back(listener);
@@ -27,7 +27,7 @@ public:
 
 private:
 	std::vector<Listener*> listeners;
-	std::unique_ptr<Parameter2> parameter;
+	std::shared_ptr<Parameter2> parameter;
 
 	double value = 0.0;
 };

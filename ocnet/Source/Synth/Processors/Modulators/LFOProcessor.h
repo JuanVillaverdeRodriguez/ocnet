@@ -17,6 +17,7 @@
 class LFOProcessor : public Modulator {
 public:
     LFOProcessor(int id);
+    ~LFOProcessor() override;
 
     float getNextSample(int sample) override;
 

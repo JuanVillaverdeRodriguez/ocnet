@@ -83,7 +83,7 @@ void OcnetGUI_interface::addModulator(int option)
 
 }
 
-void OcnetGUI_interface::connectModulation(int processorModulatorID, Parameter2& parameter)
+void OcnetGUI_interface::connectModulation(int processorModulatorID, std::shared_ptr<Parameter2> parameter)
 {
     processor.connectModulation(processorModulatorID, parameter);
 

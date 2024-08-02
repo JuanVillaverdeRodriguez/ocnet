@@ -48,5 +48,5 @@ private:
 
     int cnt = 0;
 
-    Parameter2* gainParameter;
+    std::shared_ptr<Parameter2> gainParameter;
 };

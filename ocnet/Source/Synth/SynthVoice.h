@@ -22,7 +22,8 @@ class SynthVoice : public juce::SynthesiserVoice
 {
 
 public:
-    SynthVoice(int id);
+    SynthVoice(int id, ParameterHandler& parameterHandler);
+    ~SynthVoice() override;
 
     bool canPlaySound(juce::SynthesiserSound* sound) override;
     void startNote(int midiNoteNumber, float velocity, juce::SynthesiserSound* sound, int currentPitchWheelPosition) override; 
@@ -34,7 +35,7 @@ public:
     void releaseResources();
 
     void addWavetableOscillator(int id);
-    void connectModulation(int processorModulatorID, Parameter2& parameter);
+    void connectModulation(int processorModulatorID, std::shared_ptr<Parameter2> parameter);
     void addEnvelope(int id);
 
     void addDistortion(int id);

@@ -20,10 +20,11 @@
 
 class ProcessorHandler {
 public:
-    ProcessorHandler();
+    ProcessorHandler(const ParameterHandler& parameterHandler);
 
     void addWavetableOscillator(std::vector<WavetableStruct>& tables, int id, const ParameterHandler& parameterHandler);
     void addDistortion(int id, const ParameterHandler& parameterHandler);
+
     void addEnvelope(int id, const ParameterHandler& parameterHandler);
 
     void releaseResources();
@@ -39,7 +40,7 @@ public:
 
     void updateParameterValues();
 
-    void connectModulation(int processorModulatorID, Parameter2& parameter);
+    void connectModulation(int processorModulatorID, std::shared_ptr<Parameter2> parameter);
 
     void setVoiceNumberId(int id);
 
@@ -48,22 +49,13 @@ public:
 
 private:
     int voiceId;
-    void freeMainEnvelope();
 
     std::list<std::unique_ptr<Processor>> oscillatorsProcessorsList;
     std::list<std::unique_ptr<Modulator>> modulatorProcessorsList;
     std::list<std::unique_ptr<Effector>> effectsProcessorsList;;
 
-    //std::list<std::unique_ptr<Processor>> processorList;
-
-    int numSamplesProcessed = 0;
-    int maxSamplesForNextModulationUpdate = 0;
-
-    bool hasDefaultEnvelope;
 
     std::unique_ptr<EnvelopeProcessor> mainEnvelope;
-
-
 
     //====================================================================================0
     std::vector<WavetableStruct> tables;

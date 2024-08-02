@@ -22,7 +22,7 @@ public:
     public:
         virtual ~Listener() { }
         virtual void addModulator(int option) = 0;
-        virtual void connectModulation(int processorModulatorID, Parameter2& parameter) = 0;
+        virtual void connectModulation(int processorModulatorID, std::shared_ptr<Parameter2> parameter) = 0;
     };
 
     void resized() override;
@@ -35,7 +35,7 @@ public:
 
     void paint(juce::Graphics& g) override;
 
-    void inline connectModulation(int processorModulatorID, Parameter2& parameter) override {
+    void inline connectModulation(int processorModulatorID, std::shared_ptr<Parameter2> parameter) override {
         for (auto listener : listeners) {
             listener->connectModulation(processorModulatorID, parameter);
         }

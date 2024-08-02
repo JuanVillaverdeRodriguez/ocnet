@@ -16,14 +16,6 @@
 #include "ParameterHandler/ParameterHandler.h"
 
 
-struct ChainSettings {
-    float volume{ 0 };
-    float panning{ 0 };
-
-};
-
-ChainSettings getChainSettings(juce::AudioProcessorValueTreeState& apvts);
-
 class OcnetAudioProcessor  : public juce::AudioProcessor, public OcnetSynthesiser
 {
 public:
@@ -66,12 +58,6 @@ public:
 
     //==============================================================================
 
-    void processMidi(juce::MidiBuffer& midiMessages);
-    void handleNoteOn(int noteNumber, float velocity);
-    void handleNoteOff(int noteNumber);
-
-    float noteOnVel;
-
     juce::AudioProcessorValueTreeState::ParameterLayout
         createParameterLayout();
 
@@ -84,8 +70,6 @@ public:
 
 private:
     //==============================================================================
-    juce::AudioProcessorValueTreeState::ParameterLayout layout;
-
     int numVoices = 8;
 
     

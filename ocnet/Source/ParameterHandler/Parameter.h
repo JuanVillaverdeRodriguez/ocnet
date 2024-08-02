@@ -27,6 +27,7 @@ struct ParameterInfo {
 class Parameter2 :juce::ValueTree::Listener {
 public:
     Parameter2(ParameterInfo parameterInfo);
+    ~Parameter2() override;
 
     inline void setValue(int value) { this->value = value; }
     inline float getValue() { return value; }

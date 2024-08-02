@@ -15,6 +15,10 @@ DistortionProcessor::DistortionProcessor(int id) : oversampler(1, 3, juce::dsp::
     setId(id);
 }
 
+DistortionProcessor::~DistortionProcessor()
+{
+}
+
 void DistortionProcessor::startNote(int midiNoteNumber, float velocity, juce::SynthesiserSound* sound, int currentPitchWheelPosition)
 {
 }

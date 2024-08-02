@@ -38,7 +38,6 @@ ProcessorHandler::ProcessorHandler()
 {
     numSamplesProcessed = 0;
     maxSamplesForNextModulationUpdate = 100;
-    mainEnvelope = new EnvelopeProcessor(0);
     hasDefaultEnvelope = true;
 }
 
@@ -63,9 +62,7 @@ void ProcessorHandler::addEnvelope(int id, const ParameterHandler& parameterHand
     modulatorProcessorsList.back()->syncParams(parameterHandler);
 
     if (hasDefaultEnvelope) {
-        freeMainEnvelope();
-
-        mainEnvelope = dynamic_cast<EnvelopeProcessor*>(modulatorProcessorsList.back().get());
+        mainEnvelope.reset(dynamic_cast<EnvelopeProcessor*>(modulatorProcessorsList.back().get()));
         mainEnvelope->setVoiceNumberId(voiceId);
         mainEnvelope->syncParams(parameterHandler);
 
@@ -210,6 +207,5 @@ void ProcessorHandler::releaseResources()
 
 
 void ProcessorHandler::freeMainEnvelope() {
-    delete mainEnvelope;
-    mainEnvelope = nullptr;
+
 }

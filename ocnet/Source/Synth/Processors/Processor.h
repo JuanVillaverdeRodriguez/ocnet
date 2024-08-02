@@ -15,6 +15,7 @@
 class Processor {
 public:
     Processor() = default;
+    virtual ~Processor() = default;
 
     virtual void prepareToPlay(juce::dsp::ProcessSpec spec) = 0 {};
     virtual void startNote(int midiNoteNumber, float velocity, juce::SynthesiserSound* sound, int currentPitchWheelPosition) = 0 {};

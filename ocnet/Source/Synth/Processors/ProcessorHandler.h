@@ -61,7 +61,9 @@ private:
 
     bool hasDefaultEnvelope;
 
-    EnvelopeProcessor* mainEnvelope;
+    std::unique_ptr<EnvelopeProcessor> mainEnvelope;
+
+
 
     //====================================================================================0
     std::vector<WavetableStruct> tables;

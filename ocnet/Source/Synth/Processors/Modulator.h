@@ -14,6 +14,7 @@
 class Modulator : public Processor {
 public:
     Modulator();
+    virtual ~Modulator() = default;
 
     void inline updateModulationValue() { 
         for (auto parameter : parametersModulating) {

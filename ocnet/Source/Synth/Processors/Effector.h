@@ -16,6 +16,7 @@
 class Effector : public Processor {
 public:
     Effector();
+    virtual ~Effector() = default;
     
     virtual float getNextSample(float currentSampleValue) = 0 {};
     virtual void processBlock(juce::AudioBuffer<float>& buffer) = 0 {};

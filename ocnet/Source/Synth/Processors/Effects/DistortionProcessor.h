@@ -24,6 +24,8 @@ public:
     float getNextSample(int sample) override;
     float getNextSample(float currentSampleValue) override;
 
+    void processBlock(juce::AudioBuffer<float>& buffer) override;
+
     void syncParams(const ParameterHandler& parameterHandler) override;
 
 private:
@@ -32,6 +34,9 @@ private:
     float softClip(float x, float drive) { return signum(x) * (1 - std::exp(-std::fabs(x*drive))); }
 
     Parameter2* driveParameter;
+
+    juce::dsp::Oversampling<float> oversampler;
+
 
     juce::Array<float> driveModulationBuffer;
     float driveValue;

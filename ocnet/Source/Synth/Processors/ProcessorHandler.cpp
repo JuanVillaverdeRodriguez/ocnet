@@ -77,6 +77,7 @@ void ProcessorHandler::processBlock(juce::AudioBuffer<float>& outputBuffer)
 {
     int numSamples = outputBuffer.getNumSamples();
 
+
     for (int channel = 0; channel < 1; ++channel) {
         auto* buffer = outputBuffer.getWritePointer(channel);
 
@@ -85,11 +86,12 @@ void ProcessorHandler::processBlock(juce::AudioBuffer<float>& outputBuffer)
                 buffer[sample] = processor->getNextSample(sample);
             }
 
-            for (auto& processor : effectsProcessorsList) {
-                buffer[sample] = processor->getNextSample(buffer[sample]);
-            }
             //buffer[sample] *= mainEnvelope->getNextSample();
         }
+    }
+
+    for (auto& processor : effectsProcessorsList) {
+        processor->processBlock(outputBuffer);
     }
 }
 

@@ -18,6 +18,8 @@ public:
     Effector();
     
     virtual float getNextSample(float currentSampleValue) = 0 {};
+    virtual void processBlock(juce::AudioBuffer<float>& buffer) = 0 {};
+
 private:
 
 };

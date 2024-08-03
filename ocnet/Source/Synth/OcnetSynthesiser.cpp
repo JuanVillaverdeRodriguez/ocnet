@@ -21,12 +21,6 @@ OcnetSynthesiser::~OcnetSynthesiser()
 
 void OcnetSynthesiser::addWavetableOscillator(int id)
 {
-    if (juce::MessageManager::getInstance()->isThisTheMessageThread()) {
-        DBG("addWavetableOscillatorProcessor : IS THIS THE MESSAGE THREAD?: TRUE");
-    }
-    else {
-        DBG("addWavetableOscillatorProcessor : IS THIS THE MESSAGE THREAD?: FALSE");
-    }
 
     for (int i = 0; i < getNumVoices(); i++) {
         if (auto voice = dynamic_cast<SynthVoice*>(getVoice(i))) {

@@ -42,9 +42,9 @@ public:
 
     void setVoiceNumberId(int id);
 
-    WavetableStruct makeWaveTable(int tableSize, double* ar, double* ai, double topFreq);
+    WavetableStruct makeWaveTable(int tableSize, std::unique_ptr<double[]>& ar, std::unique_ptr<double[]>& ai, double topFreq);
 
-    std::vector<WavetableStruct> fillWavetables(double* freqWaveRe, double* freqWaveIm, int tableSize);
+    std::vector<WavetableStruct> fillWavetables(std::unique_ptr<double[]>& freqWaveRe, std::unique_ptr<double[]>& freqWaveIm, int tableSize);
 
     std::vector<WavetableStruct> createSawWaveTables(int tableSize);
 

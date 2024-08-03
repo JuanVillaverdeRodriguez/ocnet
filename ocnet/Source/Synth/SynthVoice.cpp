@@ -140,7 +140,7 @@ void SynthVoice::setVoiceNumberId(int id)
     processorhHandler.setVoiceNumberId(id);
 }
 
-void fft(int N, double* ar, double* ai)
+void fft(int N, std::unique_ptr<double[]>& ar, std::unique_ptr<double[]>& ai)
 /*
  in-place complex fft
 
@@ -218,7 +218,8 @@ void fft(int N, double* ar, double* ai)
 // if scale is 0, auto-scales
 // returns scaling factor (0.0 if failure), and wavetable in ai array
 //
-WavetableStruct SynthVoice::makeWaveTable(int tableSize, double* ar, double* ai, double topFreq) {
+
+WavetableStruct SynthVoice::makeWaveTable(int tableSize, std::unique_ptr<double[]>& ar, std::unique_ptr<double[]>& ai, double topFreq) {
     fft(tableSize, ar, ai);
 
     juce::AudioSampleBuffer table;
@@ -255,7 +256,7 @@ WavetableStruct SynthVoice::makeWaveTable(int tableSize, double* ar, double* ai,
     return wavetableStruct;
 }
 
-std::vector<WavetableStruct> SynthVoice::fillWavetables(double *freqWaveRe, double *freqWaveIm, int tableSize) {
+std::vector<WavetableStruct> SynthVoice::fillWavetables(std::unique_ptr<double[]>& freqWaveRe, std::unique_ptr<double[]>& freqWaveIm, int tableSize) {
     std::vector<WavetableStruct> wavetablesStructs;
 
     int idx;
@@ -283,16 +284,16 @@ std::vector<WavetableStruct> SynthVoice::fillWavetables(double *freqWaveRe, doub
 
 
     // for subsquent tables, double topFreq and remove upper half of harmonics
-    double* ar = new double[tableSize];
-    double* ai = new double[tableSize];
+    auto ar = std::make_unique<double[]>(tableSize);
+    auto ai = std::make_unique<double[]>(tableSize);
+
+    // Ensure arrays are initialized
+    std::fill(ar.get(), ar.get() + tableSize, 0.0);
+    std::fill(ai.get(), ai.get() + tableSize, 0.0);
+
     //double scale = 0.0; Se podria optimizar el espacio que usa si cada wavetable tuviera una numero de samples variable
     //Tablas para freuencias altas no necesitan tantos samples
     //Frecuencias bajas necesitan mas
-
-    // Ensure arrays are initialized
-    std::fill(ar, ar + tableSize, 0.0);
-    std::fill(ai, ai + tableSize, 0.0);
-
 
     // Mientras maxHarmonic sea > 0
     while (maxHarmonic) {
@@ -322,7 +323,7 @@ std::vector<WavetableStruct> SynthVoice::fillWavetables(double *freqWaveRe, doub
     return wavetablesStructs;
 }
 
-inline void saw(double *freqWaveRe, int tableSize) {
+inline void saw(std::unique_ptr<double[]>& freqWaveRe, int tableSize) {
     freqWaveRe[0] = freqWaveRe[tableSize >> 1] = 0.0;
     for (int idx = 1; idx < (tableSize >> 1); idx++) {
         freqWaveRe[idx] = 1.0 / idx;                    // sawtooth spectrum
@@ -347,8 +348,8 @@ inline void square(double* freqWaveRe, int tableSize) {
 std::vector<WavetableStruct> SynthVoice::createSawWaveTables(int tableSize) {
     std::vector<WavetableStruct> wavetablesStructs;
 
-    double* freqWaveRe = new double[tableSize];
-    double* freqWaveIm = new double[tableSize];
+    auto freqWaveRe = std::make_unique<double[]>(tableSize);
+    auto freqWaveIm = std::make_unique<double[]>(tableSize);
 
     // Crear parte imaginaria
     for (int idx = 0; idx < tableSize; idx++) {

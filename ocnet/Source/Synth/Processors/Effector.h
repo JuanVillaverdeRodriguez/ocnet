@@ -22,6 +22,6 @@ public:
     virtual void processBlock(juce::AudioBuffer<float>& buffer) = 0 {};
 
 private:
-    //JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(Effector)
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(Effector)
 
 };

@@ -36,7 +36,7 @@ private:
     juce::TextButton oscillatorsButton;
     juce::TextButton effectsButton;
 
-    //JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(HeaderSection)
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(HeaderSection)
 
 
 };

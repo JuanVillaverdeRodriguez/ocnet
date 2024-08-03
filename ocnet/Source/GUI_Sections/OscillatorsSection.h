@@ -44,7 +44,7 @@ private:
 
     juce::TextButton addOscillatorButton;
 
-    //JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(OscillatorsSection)
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(OscillatorsSection)
 
 
 };

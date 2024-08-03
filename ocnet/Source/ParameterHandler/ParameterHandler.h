@@ -24,6 +24,6 @@ private:
     std::vector<std::shared_ptr<Parameter2>> parameters;
     juce::ValueTree rootNode;
 
-    //JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(ParameterHandler)
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(ParameterHandler)
 
 };

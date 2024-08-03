@@ -41,7 +41,7 @@ private:
     juce::Slider slider;
 
 
-    //JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(FooterSection)
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(FooterSection)
 
 
 };

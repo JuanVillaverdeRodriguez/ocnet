@@ -50,6 +50,6 @@ private:
 
     std::shared_ptr<Parameter2> gainParameter;
 
-    //JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(WavetableOscillatorProcessor)
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(WavetableOscillatorProcessor)
 
 };

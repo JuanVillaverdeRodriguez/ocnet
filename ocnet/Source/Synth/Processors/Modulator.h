@@ -34,6 +34,6 @@ private:
 
     juce::Array<float> modulationBuffer;
 
-    //JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(Modulator)
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(Modulator)
 
 };

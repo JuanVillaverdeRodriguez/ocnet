@@ -42,11 +42,10 @@ private:
 
     std::vector<std::unique_ptr<DistortionSubsection>> distortionSubsections;
 
-
     //std::vector<std::unique_ptr<EffectsChainSection>> wavetableOscillatorsSections;
 
     juce::TextButton addEffectButton;
 
-    //JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(EffectsSection)
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(EffectsSection)
 
 };

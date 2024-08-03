@@ -51,7 +51,7 @@ private:
 
     juce::TextButton addModulatorButton;
 
-    //JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(ModulatorsSection)
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(ModulatorsSection)
 
 
 };

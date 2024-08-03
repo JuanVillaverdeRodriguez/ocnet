@@ -21,6 +21,7 @@
 class ProcessorHandler {
 public:
     ProcessorHandler(const ParameterHandler& parameterHandler);
+    ~ProcessorHandler();
 
     void addWavetableOscillator(std::vector<WavetableStruct>& tables, int id, const ParameterHandler& parameterHandler);
     void addDistortion(int id, const ParameterHandler& parameterHandler);
@@ -54,11 +55,12 @@ private:
     std::list<std::unique_ptr<Modulator>> modulatorProcessorsList;
     std::list<std::unique_ptr<Effector>> effectsProcessorsList;;
 
-
     std::unique_ptr<EnvelopeProcessor> mainEnvelope;
 
     //====================================================================================0
     std::vector<WavetableStruct> tables;
+
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(ProcessorHandler)
 
 
 };

@@ -42,4 +42,7 @@ private:
     juce::Array<float> driveModulationBuffer;
     float driveValue;
 
+    //JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(DistortionProcessor)
+
+
 };

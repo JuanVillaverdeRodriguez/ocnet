@@ -26,4 +26,7 @@ private:
     juce::DragAndDropContainer* parentContainer;
     Subsection* parentComponent;
 
+    //JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(DragZone)
+
+
 };

@@ -70,4 +70,6 @@ private:
 
     //juce::dsp::Gain<float> gain;
 
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(SynthVoice)
+
 };

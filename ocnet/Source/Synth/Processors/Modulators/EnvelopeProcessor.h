@@ -47,4 +47,7 @@ private:
 
     juce::ADSR adsr;
     juce::ADSR::Parameters adsrParams;
+
+    //JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(EnvelopeProcessor)
+
 };

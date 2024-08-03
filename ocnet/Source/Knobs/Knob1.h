@@ -30,5 +30,8 @@ private:
 	std::shared_ptr<Parameter2> parameter;
 
 	double value = 0.0;
+
+	//JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(Knob1)
+
 };
 

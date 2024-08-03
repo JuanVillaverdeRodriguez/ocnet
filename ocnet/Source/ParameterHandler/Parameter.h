@@ -61,5 +61,8 @@ private:
     ParameterInfo parameterInfo;
     juce::ValueTree valueTree;
     juce::Identifier propertyIdentifier;
+
+    //JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(Parameter2)
+
 };
 

@@ -33,4 +33,7 @@ private:
     //float modulationBuffer[8][8192];
 
     juce::Array<float> modulationBuffer;
+
+    //JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(Modulator)
+
 };

@@ -23,6 +23,7 @@ public:
     //static void copyArray(const SourceType& source, DestinationType& destination, int size);
 
 private:
+    //JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(Utils)
 
 
 };

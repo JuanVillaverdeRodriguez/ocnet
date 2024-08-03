@@ -22,4 +22,7 @@ public:
     void attachParams(ParameterHandler& parameterHandler) override;
 private:
     std::unique_ptr<Knob1> driveKnob;
+
+    //JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(DistortionSubsection)
+
 };

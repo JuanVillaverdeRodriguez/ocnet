@@ -42,6 +42,10 @@ ProcessorHandler::ProcessorHandler(const ParameterHandler& parameterHandler)
 
 }
 
+ProcessorHandler::~ProcessorHandler()
+{
+}
+
 void ProcessorHandler::addWavetableOscillator(std::vector<WavetableStruct>& tables, int id, const ParameterHandler& parameterHandler)
 {
     oscillatorsProcessorsList.push_back(std::make_unique<WavetableOscillatorProcessor>(tables, id));

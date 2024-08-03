@@ -14,7 +14,7 @@
 #include "../LookAndFeel_V4/OcnetLookAndFeel.h"
 #include "../GUI_Subsections/Modulators/EnvelopeSubsection.h"
 
-class ModulatorsSection : public juce::Component, juce::Button::Listener, public EnvelopeSubsection::Listener {
+class ModulatorsSection : public juce::Component, juce::Button::Listener, public ModulatorsSubsection::Listener {
 public:
     ModulatorsSection();
 

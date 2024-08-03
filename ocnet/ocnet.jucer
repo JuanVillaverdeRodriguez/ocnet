@@ -19,12 +19,15 @@
               file="Source/ParameterHandler/ParameterHandler.h"/>
       </GROUP>
       <GROUP id="{B172D91C-232C-204D-990B-B098D55147A4}" name="GUI_Subsections">
-        <GROUP id="{51DD87FF-BFF9-2549-083C-9ADEB615EB13}" name="EffectChains"/>
         <GROUP id="{92FB6D28-4C7B-1793-4DBB-E52D07FBB922}" name="Effects">
           <FILE id="gS8vmO" name="DistortionSubsection.cpp" compile="1" resource="0"
                 file="Source/GUI_Subsections/Effects/DistortionSubsection.cpp"/>
           <FILE id="ED1sDC" name="DistortionSubsection.h" compile="0" resource="0"
                 file="Source/GUI_Subsections/Effects/DistortionSubsection.h"/>
+          <FILE id="X0GpDU" name="EffectsSubsection.cpp" compile="1" resource="0"
+                file="Source/GUI_Subsections/Effects/EffectsSubsection.cpp"/>
+          <FILE id="FqjLKo" name="EffectsSubsection.h" compile="0" resource="0"
+                file="Source/GUI_Subsections/Effects/EffectsSubsection.h"/>
         </GROUP>
         <GROUP id="{52A041BF-AD4F-4C01-D669-48DDF46103E9}" name="Modulators">
           <FILE id="BIptSF" name="EnvelopeSubsection.cpp" compile="1" resource="0"
@@ -34,8 +37,16 @@
           <FILE id="pX3vrp" name="LFOSubsection.cpp" compile="1" resource="0"
                 file="Source/GUI_Subsections/Modulators/LFOSubsection.cpp"/>
           <FILE id="HmQUst" name="LFOSubsection.h" compile="0" resource="0" file="Source/GUI_Subsections/Modulators/LFOSubsection.h"/>
+          <FILE id="wO6sBV" name="ModulatorsSubsection.cpp" compile="1" resource="0"
+                file="Source/GUI_Subsections/Modulators/ModulatorsSubsection.cpp"/>
+          <FILE id="PqTeAe" name="ModulatorsSubsection.h" compile="0" resource="0"
+                file="Source/GUI_Subsections/Modulators/ModulatorsSubsection.h"/>
         </GROUP>
         <GROUP id="{3C75C2FB-65E8-33DF-3A3A-FDCFFB6A5E76}" name="Oscillators">
+          <FILE id="cPYAIf" name="OscillatorsSubsection.cpp" compile="1" resource="0"
+                file="Source/GUI_Subsections/Oscillators/OscillatorsSubsection.cpp"/>
+          <FILE id="xagz08" name="OscillatorsSubsection.h" compile="0" resource="0"
+                file="Source/GUI_Subsections/Oscillators/OscillatorsSubsection.h"/>
           <FILE id="tA03u8" name="WavetableOscillatorSubsection.cpp" compile="1"
                 resource="0" file="Source/GUI_Subsections/Oscillators/WavetableOscillatorSubsection.cpp"/>
           <FILE id="uSBclJ" name="WavetableOscillatorSubsection.h" compile="0"

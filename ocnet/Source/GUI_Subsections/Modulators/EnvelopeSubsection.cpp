@@ -24,8 +24,6 @@ EnvelopeSubsection::EnvelopeSubsection(int id)
     sustainKnob->setListener(this);
     releaseKnob->setListener(this);
 
-    mainEnvelope = false;
-
     this->addAndMakeVisible(*attackKnob);
     this->addAndMakeVisible(*decayKnob);
     this->addAndMakeVisible(*sustainKnob);
@@ -51,11 +49,7 @@ void EnvelopeSubsection::resized()
     releaseKnob->setRange(0.0f, 1.0f, 0.01f);
 
 }
-void EnvelopeSubsection::paint(juce::Graphics& g)
-{
-    // (Our component is opaque, so we must completely fill the background with a solid colour)
-    g.fillAll(juce::Colours::grey);
-}
+
 
 void EnvelopeSubsection::attachParams(ParameterHandler& parameterHandler) {
     parameterHandler.attachParameter(attackKnob->getParameter());
@@ -63,9 +57,7 @@ void EnvelopeSubsection::attachParams(ParameterHandler& parameterHandler) {
     parameterHandler.attachParameter(sustainKnob->getParameter());
     parameterHandler.attachParameter(releaseKnob->getParameter());
 
-
     dragZone.setParentContainerAndComponent(*juce::DragAndDropContainer::findParentDragContainerFor(this), *this);
-
 }
 
 

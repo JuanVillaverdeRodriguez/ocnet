@@ -57,8 +57,6 @@ void ModulatorsSection::addEnvelope(int numberOfEnvelopes, ParameterHandler& par
     envelopeSubsections.back()->attachParams(parameterHandler);
     envelopeSubsections.back()->addListener(this);
 
-
-
     //envelopeSubsections.back()->attachParams(apvts);
 
 

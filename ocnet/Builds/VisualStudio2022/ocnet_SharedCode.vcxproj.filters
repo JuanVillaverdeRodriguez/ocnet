@@ -760,11 +760,20 @@
     <ClCompile Include="..\..\Source\GUI_Subsections\Effects\DistortionSubsection.cpp">
       <Filter>ocnet\Source\GUI_Subsections\Effects</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Source\GUI_Subsections\Effects\EffectsSubsection.cpp">
+      <Filter>ocnet\Source\GUI_Subsections\Effects</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\Source\GUI_Subsections\Modulators\EnvelopeSubsection.cpp">
       <Filter>ocnet\Source\GUI_Subsections\Modulators</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\GUI_Subsections\Modulators\LFOSubsection.cpp">
       <Filter>ocnet\Source\GUI_Subsections\Modulators</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\GUI_Subsections\Modulators\ModulatorsSubsection.cpp">
+      <Filter>ocnet\Source\GUI_Subsections\Modulators</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\GUI_Subsections\Oscillators\OscillatorsSubsection.cpp">
+      <Filter>ocnet\Source\GUI_Subsections\Oscillators</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\GUI_Subsections\Oscillators\WavetableOscillatorSubsection.cpp">
       <Filter>ocnet\Source\GUI_Subsections\Oscillators</Filter>
@@ -3735,11 +3744,20 @@
     <ClInclude Include="..\..\Source\GUI_Subsections\Effects\DistortionSubsection.h">
       <Filter>ocnet\Source\GUI_Subsections\Effects</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Source\GUI_Subsections\Effects\EffectsSubsection.h">
+      <Filter>ocnet\Source\GUI_Subsections\Effects</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\Source\GUI_Subsections\Modulators\EnvelopeSubsection.h">
       <Filter>ocnet\Source\GUI_Subsections\Modulators</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\GUI_Subsections\Modulators\LFOSubsection.h">
       <Filter>ocnet\Source\GUI_Subsections\Modulators</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\GUI_Subsections\Modulators\ModulatorsSubsection.h">
+      <Filter>ocnet\Source\GUI_Subsections\Modulators</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\GUI_Subsections\Oscillators\OscillatorsSubsection.h">
+      <Filter>ocnet\Source\GUI_Subsections\Oscillators</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\GUI_Subsections\Oscillators\WavetableOscillatorSubsection.h">
       <Filter>ocnet\Source\GUI_Subsections\Oscillators</Filter>

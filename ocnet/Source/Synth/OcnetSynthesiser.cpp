@@ -56,3 +56,30 @@ void OcnetSynthesiser::connectModulation(int processorModulatorID, std::shared_p
         }
     }
 }
+
+void OcnetSynthesiser::deleteModulator(int modulatorID)
+{
+    for (int i = 0; i < getNumVoices(); i++) {
+        if (auto voice = dynamic_cast<SynthVoice*>(getVoice(i))) {
+            voice->deleteModulator(modulatorID);
+        }
+    }
+}
+
+void OcnetSynthesiser::deleteOscillator(int oscillatorID)
+{
+    for (int i = 0; i < getNumVoices(); i++) {
+        if (auto voice = dynamic_cast<SynthVoice*>(getVoice(i))) {
+            voice->deleteOscillator(oscillatorID);
+        }
+    }
+}
+
+void OcnetSynthesiser::deleteEffect(int effectID)
+{
+    for (int i = 0; i < getNumVoices(); i++) {
+        if (auto voice = dynamic_cast<SynthVoice*>(getVoice(i))) {
+            voice->deleteEffect(effectID);
+        }
+    }
+}

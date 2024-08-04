@@ -368,3 +368,18 @@ std::vector<WavetableStruct> SynthVoice::createSawWaveTables(int tableSize) {
     return wavetablesStructs;
 
 }
+
+void SynthVoice::deleteModulator(int modulatorID)
+{
+    processorhHandler.deleteModulator(modulatorID);
+}
+
+void SynthVoice::deleteOscillator(int oscillatorID)
+{
+    processorhHandler.deleteOscillator(oscillatorID);
+}
+
+void SynthVoice::deleteEffect(int effectID)
+{
+    processorhHandler.deleteEffect(effectID);
+}

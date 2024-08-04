@@ -50,6 +50,12 @@ public:
 
     void inline setParameterHandler(ParameterHandler& parameterHandler) { this->parameterHandler = &parameterHandler; }
 
+    void deleteModulator(int modulatorID);
+
+    void deleteOscillator(int oscillatorID);
+
+    void deleteEffect(int effectID);
+
     //juce::AudioSampleBuffer generateSawtoothWavetable(int tableSize);
 private:
     juce::dsp::ProcessSpec spec;

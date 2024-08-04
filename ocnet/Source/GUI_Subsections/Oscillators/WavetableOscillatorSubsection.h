@@ -17,6 +17,7 @@
 class WavetableOscillatorSubsection : public Subsection {
 public:
     WavetableOscillatorSubsection(int id);
+
     void paint(juce::Graphics& g) override;
 
     void resized() override;

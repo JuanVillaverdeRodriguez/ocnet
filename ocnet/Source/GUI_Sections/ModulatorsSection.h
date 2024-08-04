@@ -14,13 +14,14 @@
 #include "../LookAndFeel_V4/OcnetLookAndFeel.h"
 #include "../GUI_Subsections/Modulators/EnvelopeSubsection.h"
 
-class ModulatorsSection : public juce::Component, juce::Button::Listener, public ModulatorsSubsection::Listener {
+class ModulatorsSection : public juce::Component, public juce::Button::Listener, public ModulatorsSubsection::Listener {
 public:
     ModulatorsSection();
 
     class Listener {
     public:
         virtual ~Listener() { }
+        virtual void deleteModulator(int modulatorID) = 0;
         virtual void addModulator(int option) = 0;
         virtual void connectModulation(int processorModulatorID, std::shared_ptr<Parameter2> parameter) = 0;
     };
@@ -41,6 +42,8 @@ public:
         }
     }
 
+    void deleteModulator(int id) override;
+
 
 
 private:
@@ -53,5 +56,6 @@ private:
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(ModulatorsSection)
 
+    
 
 };

@@ -223,6 +223,33 @@ void ProcessorHandler::applyModulations(juce::AudioBuffer<float>& outputBuffer)
 
 }
 
+void ProcessorHandler::deleteModulator(int modulatorID)
+{
+    for (auto& processor : modulatorProcessorsList) {
+        if (processor->getId() == modulatorID) {
+            modulatorProcessorsList.remove(processor);
+        }
+    }
+}
+
+void ProcessorHandler::deleteOscillator(int oscillatorID)
+{
+    for (auto& processor : oscillatorsProcessorsList) {
+        if (processor->getId() == oscillatorID) {
+            oscillatorsProcessorsList.remove(processor);
+        }
+    }
+}
+
+void ProcessorHandler::deleteEffect(int effectID)
+{
+    for (auto& processor : effectsProcessorsList) {
+        if (processor->getId() == effectID) {
+            effectsProcessorsList.remove(processor);
+        }
+    }
+}
+
 void ProcessorHandler::releaseResources()
 {
 }

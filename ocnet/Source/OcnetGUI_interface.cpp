@@ -36,16 +36,9 @@ void OcnetGUI_interface::addOscillator(int option)
             addModulator(1);
         }
 
-        if (juce::MessageManager::getInstance()->isThisTheMessageThread()) {
-            DBG("addOscillator : IS THIS THE MESSAGE THREAD?: TRUE");
-        }
-        else {
-            DBG("addOscillator : IS THIS THE MESSAGE THREAD?: FALSE");
-        }
-
         if (option == 1) {
-            gui_->getOscillatorsSection()->addWavetableOscillator(maxCurrentID, processor.parameterHandler);
-            processor.addWavetableOscillator(maxCurrentID);
+            //gui_->getOscillatorsSection()->addWavetableOscillator(maxCurrentID, processor.parameterHandler);
+            //processor.addWavetableOscillator(maxCurrentID);
             maxCurrentID++;
         }
         else if (option == 2) {
@@ -74,17 +67,33 @@ void OcnetGUI_interface::addModulator(int option)
     if (option > 0) {
         if (option == 1) {
             gui_->getModulatorsSection()->addEnvelope(maxCurrentID, processor.parameterHandler);
-            processor.addEnvelope(maxCurrentID);
+            //processor.addEnvelope(maxCurrentID);
             maxCurrentID++;
-
         }
     }
     DBG("OcnetGUI_interface::addModulator(int option)");
-
 }
 
 void OcnetGUI_interface::connectModulation(int processorModulatorID, std::shared_ptr<Parameter2> parameter)
 {
     processor.connectModulation(processorModulatorID, parameter);
+}
 
+void OcnetGUI_interface::deleteModulator(int modulatorID)
+{
+    processor.deleteModulator(modulatorID);
+    processor.parameterHandler.deleteAttachedParameters(juce::String("Modulators"), juce::String(modulatorID));
+}
+
+/*void OcnetGUI_interface::deleteOscillator(int oscillatorID)
+{
+}
+
+void OcnetGUI_interface::deleteEffect(int effectID)
+{
+}*/
+
+
+OcnetGUI* OcnetGUI_interface::getGui() {
+    return gui_.get(); 
 }

@@ -26,6 +26,10 @@ public:
 
     bool getHasEnvelope() { return hasEnvelope; }
 
+    void deleteModulator(int modulatorID);
+    void deleteOscillator(int oscillatorID);
+    void deleteEffect(int effectID);
+
 private:
     bool hasEnvelope = false;
 

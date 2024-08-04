@@ -12,12 +12,15 @@
 #include "../Subsection.h"
 #include "../../Knobs/Knob1.h"
 
-class ModulatorsSubsection : public Subsection, public Knob1::Listener {
+class ModulatorsSubsection : public Subsection, public Knob1::Listener, juce::Button::Listener {
 public:
+    ModulatorsSubsection();
+
     class Listener {
     public:
         virtual ~Listener() { }
         virtual void connectModulation(int processorModulatorID, std::shared_ptr<Parameter2> parameter) = 0;
+        virtual void deleteModulator(int id) = 0;
     };
 
     void inline addListener(Listener* listener) {
@@ -25,11 +28,12 @@ public:
     }
 
     void inline connectModulation(int processorModulatorID, std::shared_ptr<Parameter2> parameter) {
-        DBG("connectModulation(int processorModulatorID, std::unique_ptr<Parameter2>& parameter) ");
         for (auto listener : listeners) {
             listener->connectModulation(processorModulatorID, parameter);
         }
     }
+
+    void buttonClicked(juce::Button* clickedButton) override;
 
 private:
     std::vector<Listener*> listeners;

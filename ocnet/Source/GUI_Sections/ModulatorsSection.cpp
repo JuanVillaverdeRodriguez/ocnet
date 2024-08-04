@@ -25,6 +25,12 @@ void ModulatorsSection::paint(juce::Graphics& g)
     g.fillAll(juce::Colours::darkcyan);
 }
 
+void ModulatorsSection::deleteModulator(int id)
+{
+    envelopeSubsections.erase(envelopeSubsections.begin() + id);
+    listeners[0]->deleteModulator(id);
+}
+
 void ModulatorsSection::resized()
 {
     auto area = getLocalBounds();
@@ -45,8 +51,6 @@ void ModulatorsSection::addListener(Listener* listener)
     listeners.push_back(listener);
 }
 
-
-
 void ModulatorsSection::addEnvelope(int numberOfEnvelopes, ParameterHandler& parameterHandler)
 {
     std::unique_ptr<EnvelopeSubsection> envelope = std::make_unique<EnvelopeSubsection>(numberOfEnvelopes);
@@ -56,10 +60,6 @@ void ModulatorsSection::addEnvelope(int numberOfEnvelopes, ParameterHandler& par
     resized();
     envelopeSubsections.back()->attachParams(parameterHandler);
     envelopeSubsections.back()->addListener(this);
-
-    //envelopeSubsections.back()->attachParams(apvts);
-
-
 }
 
 

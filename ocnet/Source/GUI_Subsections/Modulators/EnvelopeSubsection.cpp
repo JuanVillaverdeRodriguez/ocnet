@@ -14,7 +14,7 @@ EnvelopeSubsection::EnvelopeSubsection(int id)
 {
     setId(id);
 
-    attackKnob = std::make_unique<Knob1>(ParameterInfo{ juce::String("Envelopes"), juce::String(getId()), juce::String("attack") });
+    attackKnob = std::make_unique<Knob1>(ParameterInfo{juce::String("Envelopes"), juce::String(getId()), juce::String("attack")});
     decayKnob = std::make_unique<Knob1>(ParameterInfo{ juce::String("Envelopes"), juce::String(getId()), juce::String("decay") });
     sustainKnob = std::make_unique<Knob1>(ParameterInfo{ juce::String("Envelopes"), juce::String(getId()), juce::String("sustain") });
     releaseKnob = std::make_unique<Knob1>(ParameterInfo{ juce::String("Envelopes"), juce::String(getId()), juce::String("release") });
@@ -47,6 +47,8 @@ void EnvelopeSubsection::resized()
     decayKnob->setRange(0.0f, 1.0f, 0.01f);
     sustainKnob->setRange(0.0f, 1.0f, 0.01f);
     releaseKnob->setRange(0.0f, 1.0f, 0.01f);
+
+    removeButton.setBounds(250, 0, 50, 50);
 
 }
 

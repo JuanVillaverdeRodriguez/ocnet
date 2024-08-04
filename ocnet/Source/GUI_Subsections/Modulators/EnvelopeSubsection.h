@@ -17,7 +17,8 @@
 #include "../../Knobs/DragZone.h"
 #include "ModulatorsSubsection.h"
 
-class EnvelopeSubsection : public ModulatorsSubsection {
+class EnvelopeSubsection : public ModulatorsSubsection 
+{
 public:
     EnvelopeSubsection(int id);
 

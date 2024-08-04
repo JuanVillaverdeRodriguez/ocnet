@@ -18,6 +18,7 @@
 class OcnetGUI_interface : EffectsSection::Listener, ModulatorsSection::Listener, OscillatorsSection::Listener {
 public:
     OcnetGUI_interface(OcnetAudioProcessor *processor);
+    ~OcnetGUI_interface() = default;
 
     void addOscillator(int option) override;
 
@@ -27,7 +28,13 @@ public:
 
     void connectModulation(int processorModulatorID, std::shared_ptr<Parameter2> parameter) override;
 
-    OcnetGUI* getGui() { return gui_.get(); }
+    // Heredado vía Listener
+    void deleteModulator(int modulatorID) override;
+    //void deleteOscillator(int oscillatorID) override;
+    //void deleteEffect(int effectID) override;
+
+
+    OcnetGUI* getGui();
 
 private:
     std::unique_ptr<OcnetGUI> gui_; //Vista
@@ -39,5 +46,8 @@ private:
     int maxCurrentID;
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(OcnetGUI_interface)
+
+
+        
 
 };

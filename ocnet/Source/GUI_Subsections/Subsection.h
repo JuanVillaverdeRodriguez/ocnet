@@ -32,5 +32,4 @@ private:
 protected:
     juce::TextButton removeButton;
 
-
 };

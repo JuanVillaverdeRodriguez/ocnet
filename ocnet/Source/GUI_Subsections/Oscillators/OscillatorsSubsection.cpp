@@ -9,3 +9,15 @@
 */
 
 #include "OscillatorsSubsection.h"
+
+OscillatorsSubsection::OscillatorsSubsection(GUI_EventHandler& eventHandler) : eventHandler(eventHandler)
+{
+    removeButton.addListener(this);
+}
+
+void OscillatorsSubsection::buttonClicked(juce::Button* clickedButton)
+{
+    if (clickedButton == &removeButton) {
+        eventHandler.onDeleteOscillator(getId());
+    }
+}

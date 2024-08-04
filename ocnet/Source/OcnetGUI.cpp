@@ -1,14 +1,13 @@
 
 #include "OcnetGUI.h"
-#include "OcnetGUI_interface.h"
 
-OcnetGUI::OcnetGUI()
+OcnetGUI::OcnetGUI(GUI_EventHandler& eventHandler) : eventHandler(eventHandler)
 {
     headerSection = std::make_unique<HeaderSection>();
     footerSection = std::make_unique<FooterSection>();
-    oscillatorsSection = std::make_unique<OscillatorsSection>();
-    modulatorsSection = std::make_unique<ModulatorsSection>();
-    effectsSection = std::make_unique<EffectsSection>();
+    oscillatorsSection = std::make_unique<OscillatorsSection>(eventHandler);
+    modulatorsSection = std::make_unique<ModulatorsSection>(eventHandler);
+    effectsSection = std::make_unique<EffectsSection>(eventHandler);
 
     headerSection->addListener(this);
 

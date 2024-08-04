@@ -3,16 +3,11 @@
 #include <JuceHeader.h>
 #include <../Source/GUI_Subsections/Subsection.h>
 #include <../Source/ParameterHandler/Parameter.h>
+#include "../GUI_EventHandler.h"
 
 class Knob1 : public juce::Slider, public juce::DragAndDropTarget, juce::Slider::Listener {
 public:
-	Knob1(ParameterInfo parameterInfo);
-
-	class Listener {
-	public:
-		virtual ~Listener() { }
-		virtual void connectModulation(int processorModulatorID, std::shared_ptr<Parameter2> parameter) = 0;
-	};
+	Knob1(ParameterInfo parameterInfo, GUI_EventHandler &eventHandler);
 
 	void itemDropped(const SourceDetails& dragSourceDetails) override;
 	bool isInterestedInDragSource(const SourceDetails& dragSourceDetails) override;
@@ -21,12 +16,9 @@ public:
 
 	inline std::shared_ptr<Parameter2> getParameter() { return parameter; }
 
-	void inline setListener(Listener* listener) {
-		listeners.push_back(listener);
-	}
-
 private:
-	std::vector<Listener*> listeners;
+	GUI_EventHandler& eventHandler;
+
 	std::shared_ptr<Parameter2> parameter;
 
 	double value = 0.0;

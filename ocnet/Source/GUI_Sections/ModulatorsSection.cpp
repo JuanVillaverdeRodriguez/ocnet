@@ -11,7 +11,7 @@
 #include "ModulatorsSection.h"
 #include "../ParameterHandler/ParameterHandler.h"
 
-ModulatorsSection::ModulatorsSection()
+ModulatorsSection::ModulatorsSection(GUI_EventHandler& eventHandler) : eventHandler(eventHandler)
 {
     this->addAndMakeVisible(addModulatorButton);
     addModulatorButton.setButtonText("+");
@@ -27,8 +27,11 @@ void ModulatorsSection::paint(juce::Graphics& g)
 
 void ModulatorsSection::deleteModulator(int id)
 {
-    envelopeSubsections.erase(envelopeSubsections.begin() + id);
-    listeners[0]->deleteModulator(id);
+    modulatorsSubsectionList.remove_if([&id](const std::unique_ptr<ModulatorsSubsection>& modulator) {
+        return modulator->getId() == id;
+    });
+
+    resized();
 }
 
 void ModulatorsSection::resized()
@@ -37,29 +40,23 @@ void ModulatorsSection::resized()
 
     int lastModulatorPositionY = 0;
 
-    for (auto& envelope : envelopeSubsections) {
+    for (auto& envelope : modulatorsSubsectionList) {
         envelope->setBounds(5, lastModulatorPositionY + 5, area.getWidth(), 50);
         lastModulatorPositionY += 50;
     }
-    
 
     addModulatorButton.setBounds(area.getWidth() / 2 - 25, lastModulatorPositionY + 5, 50, 50);
 }
 
-void ModulatorsSection::addListener(Listener* listener)
-{
-    listeners.push_back(listener);
-}
 
 void ModulatorsSection::addEnvelope(int numberOfEnvelopes, ParameterHandler& parameterHandler)
 {
-    std::unique_ptr<EnvelopeSubsection> envelope = std::make_unique<EnvelopeSubsection>(numberOfEnvelopes);
+    std::unique_ptr<EnvelopeSubsection> envelope = std::make_unique<EnvelopeSubsection>(numberOfEnvelopes, eventHandler);
 
-    envelopeSubsections.push_back(std::move(envelope));
-    this->addAndMakeVisible(*envelopeSubsections.back());
+    modulatorsSubsectionList.push_back(std::move(envelope));
+    this->addAndMakeVisible(*modulatorsSubsectionList.back());
     resized();
-    envelopeSubsections.back()->attachParams(parameterHandler);
-    envelopeSubsections.back()->addListener(this);
+    modulatorsSubsectionList.back()->attachParams(parameterHandler);
 }
 
 
@@ -74,9 +71,8 @@ void ModulatorsSection::buttonClicked(juce::Button* clickedButton)
         menu.showMenuAsync(juce::PopupMenu::Options().withTargetComponent(addModulatorButton),
             [this](int result)
             {
-                listeners[0]->addModulator(result);
+                eventHandler.onAddModulator(result);
             });
     }
 
-    // Lo mismo con efectos, cadena de efectos y moduladores
 }

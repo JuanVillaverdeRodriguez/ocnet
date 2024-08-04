@@ -15,12 +15,14 @@
 
 #include <JuceHeader.h>
 #include "../../Knobs/DragZone.h"
+#include "../../GUI_EventHandler.h"
 #include "ModulatorsSubsection.h"
 
 class EnvelopeSubsection : public ModulatorsSubsection 
 {
 public:
-    EnvelopeSubsection(int id);
+    EnvelopeSubsection(int id, GUI_EventHandler& eventHandler);
+    ~EnvelopeSubsection() = default;
 
     void resized() override;
 

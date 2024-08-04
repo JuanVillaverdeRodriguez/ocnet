@@ -10,7 +10,7 @@
 
 #include "ModulatorsSubsection.h"
 
-ModulatorsSubsection::ModulatorsSubsection()
+ModulatorsSubsection::ModulatorsSubsection(GUI_EventHandler& eventHandler) : eventHandler(eventHandler)
 {
     removeButton.addListener(this);
 }
@@ -18,8 +18,6 @@ ModulatorsSubsection::ModulatorsSubsection()
 void ModulatorsSubsection::buttonClicked(juce::Button* clickedButton)
 {
     if (clickedButton == &removeButton) {
-        for (auto listener : listeners) {
-            listener->deleteModulator(getId());
-        }
+        eventHandler.onDeleteModulator(getId());
     }
 }

@@ -748,6 +748,9 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\Source\GUI_EventHandler.cpp">
+      <Filter>ocnet\Source</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\Source\Utils\Utils.cpp">
       <Filter>ocnet\Source\Utils</Filter>
     </ClCompile>
@@ -3732,6 +3735,9 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\Source\GUI_EventHandler.h">
+      <Filter>ocnet\Source</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\Source\Utils\Utils.h">
       <Filter>ocnet\Source\Utils</Filter>
     </ClInclude>

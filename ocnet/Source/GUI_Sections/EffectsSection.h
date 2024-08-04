@@ -14,37 +14,30 @@
 #include "../LookAndFeel_V4/OcnetLookAndFeel.h"
 #include "../ParameterHandler/ParameterHandler.h"
 #include "../GUI_Subsections/Effects/DistortionSubsection.h"
+#include "../GUI_EventHandler.h"
 
 class EffectsSection : public juce::Component, juce::Button::Listener {
 public:
-    EffectsSection();
-
-    class Listener {
-    public:
-        virtual ~Listener() { }
-        virtual void addEffect(int option) = 0;
-    };
-
-    void resized() override;
-
-    void addListener(Listener* listener);
+    EffectsSection(GUI_EventHandler& eventHandler);
 
     void addDistortion(int id, ParameterHandler& parameterHandler);
 
-    void buttonClicked(juce::Button* clickedButton) override;
+    void deleteEffect(int id);
 
+    void buttonClicked(juce::Button* clickedButton) override;
     void paint(juce::Graphics& g) override;
+    void resized() override;
 
 
 private:
-    std::vector<Listener*> listeners;
-    OcnetLookAndFeel lookAndFeel;
-
-    std::vector<std::unique_ptr<DistortionSubsection>> distortionSubsections;
-
-    //std::vector<std::unique_ptr<EffectsChainSection>> wavetableOscillatorsSections;
+    GUI_EventHandler& eventHandler;
 
     juce::TextButton addEffectButton;
+
+    OcnetLookAndFeel lookAndFeel;
+
+    std::list<std::unique_ptr<EffectsSubsection>> effectsSubsectionList;
+
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(EffectsSection)
 

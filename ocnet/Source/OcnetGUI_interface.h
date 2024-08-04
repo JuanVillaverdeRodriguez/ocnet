@@ -14,24 +14,24 @@
 #include "JuceHeader.h"
 #include "PluginProcessor.h"
 #include "GUI_Sections/EffectsSection.h"
+#include "GUI_EventHandler.h"
 
-class OcnetGUI_interface : EffectsSection::Listener, ModulatorsSection::Listener, OscillatorsSection::Listener {
+class OcnetGUI_interface : public GUI_EventHandler {
 public:
     OcnetGUI_interface(OcnetAudioProcessor *processor);
     ~OcnetGUI_interface() = default;
 
-    void addOscillator(int option) override;
+    void onAddOscillator(int option) override;
 
-    void addEffect(int option) override;
+    void onAddEffect(int option) override;
 
-    void addModulator(int option) override;
+    void onAddModulator(int option) override;
 
-    void connectModulation(int processorModulatorID, std::shared_ptr<Parameter2> parameter) override;
+    void onConnectModulation(int processorModulatorID, std::shared_ptr<Parameter2> parameter) override;
 
-    // Heredado vía Listener
-    void deleteModulator(int modulatorID) override;
-    //void deleteOscillator(int oscillatorID) override;
-    //void deleteEffect(int effectID) override;
+    void onDeleteModulator(int processorID) override;
+    void onDeleteEffect(int processorID) override;
+    void onDeleteOscillator(int processorID) override;
 
 
     OcnetGUI* getGui();
@@ -39,6 +39,9 @@ public:
 private:
     std::unique_ptr<OcnetGUI> gui_; //Vista
     OcnetAudioProcessor& processor; //Modelo
+
+    //std::list<std::unique_ptr<OscillatorsSubsection>> oscillatorsSubsectionList;
+    //std::list<std::unique_ptr<EffectsSubsection>> effectsSubsectionList;
 
     int numberOfEnvelopes;
     int numberOfWavetableOscillators;

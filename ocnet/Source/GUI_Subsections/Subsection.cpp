@@ -15,7 +15,6 @@ Subsection::Subsection()
     id = 0;
     this->addAndMakeVisible(removeButton);
     removeButton.setButtonText("X");
-
 }
 
 void Subsection::paint(juce::Graphics& g)
@@ -27,3 +26,5 @@ void Subsection::paint(juce::Graphics& g)
 void Subsection::startDraggingUI()
 {
 }
+
+

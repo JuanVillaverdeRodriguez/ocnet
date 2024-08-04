@@ -10,27 +10,26 @@
 
 #include "DistortionSubsection.h"
 
-DistortionSubsection::DistortionSubsection(int id)
+DistortionSubsection::DistortionSubsection(int id, GUI_EventHandler& eventHandler) : EffectsSubsection(eventHandler)
 {
     setId(id);
 
-    driveKnob = std::make_unique<Knob1>(ParameterInfo{ juce::String("Effects"), juce::String(getId()), juce::String("drive") });
+    driveKnob = std::make_unique<Knob1>(ParameterInfo{ juce::String("Effects"), juce::String(getId()), juce::String("drive") }, eventHandler);
 
     this->addAndMakeVisible(*driveKnob);
 
     driveKnob->setRange(0.0f, 10.0f, 0.01f); // Quizas mejor seria volumeKnob.setRange(0, 1, 0.01f)?;
-
 }
 
-void DistortionSubsection::paint(juce::Graphics& g)
-{
-    g.fillAll(juce::Colours::grey);
-}
 
 void DistortionSubsection::resized()
 {
     driveKnob->setBounds(0, 0, 50, 50);
+
+    removeButton.setBounds(50, 0, 50, 50);
 }
+
+
 
 void DistortionSubsection::attachParams(ParameterHandler& parameterHandler)
 {

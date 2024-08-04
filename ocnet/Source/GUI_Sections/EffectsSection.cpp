@@ -10,7 +10,7 @@
 
 #include "EffectsSection.h"
 
-EffectsSection::EffectsSection()
+EffectsSection::EffectsSection(GUI_EventHandler& eventHandler) : eventHandler(eventHandler)
 {
     this->addAndMakeVisible(addEffectButton);
     addEffectButton.setButtonText("+");
@@ -30,7 +30,7 @@ void EffectsSection::resized()
 
     int lastEffectPosition = 0;
 
-    for (auto& distortion : distortionSubsections) {
+    for (auto& distortion : effectsSubsectionList) {
         distortion->setBounds(5, lastEffectPosition + 5, area.getWidth(), 50);
         lastEffectPosition += 50;
     }
@@ -39,19 +39,24 @@ void EffectsSection::resized()
     addEffectButton.setBounds(area.getWidth() / 2 - 25, lastEffectPosition + 5, 50, 50);
 }
 
-void EffectsSection::addListener(Listener* listener)
-{
-    listeners.push_back(listener);
-}
 
 void EffectsSection::addDistortion(int id, ParameterHandler& parameterHandler)
 {
-    std::unique_ptr<DistortionSubsection> distortion = std::make_unique<DistortionSubsection>(id);
+    std::unique_ptr<DistortionSubsection> distortion = std::make_unique<DistortionSubsection>(id, eventHandler);
 
-    distortionSubsections.push_back(std::move(distortion));
-    this->addAndMakeVisible(*distortionSubsections.back());
+    effectsSubsectionList.push_back(std::move(distortion));
+    this->addAndMakeVisible(*effectsSubsectionList.back());
     resized();
-    distortionSubsections.back()->attachParams(parameterHandler);
+    effectsSubsectionList.back()->attachParams(parameterHandler);
+}
+
+void EffectsSection::deleteEffect(int id)
+{
+    effectsSubsectionList.remove_if([&id](const std::unique_ptr<EffectsSubsection>& effect) {
+        return effect->getId() == id;
+        });
+
+    resized();
 }
 
 void EffectsSection::buttonClicked(juce::Button* clickedButton)
@@ -65,7 +70,7 @@ void EffectsSection::buttonClicked(juce::Button* clickedButton)
         menu.showMenuAsync(juce::PopupMenu::Options().withTargetComponent(addEffectButton),
             [this](int result)
             {
-                listeners[0]->addEffect(result);
+                eventHandler.onAddEffect(result);
             });
     }
 

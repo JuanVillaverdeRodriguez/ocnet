@@ -10,7 +10,7 @@
 
 #include "OscillatorsSection.h"
 
-OscillatorsSection::OscillatorsSection()
+OscillatorsSection::OscillatorsSection(GUI_EventHandler& eventHandler) : eventHandler(eventHandler)
 {
     this->addAndMakeVisible(addOscillatorButton);
     addOscillatorButton.setButtonText("+");
@@ -30,29 +30,31 @@ void OscillatorsSection::resized()
 
     int lastOscillatorPosition = 0;
 
-    for (auto& wavetableOscillator : wavetableOscillatorSubsection) {
+    for (auto& wavetableOscillator : oscillatorsSubsectionList) {
         wavetableOscillator->setBounds(5, lastOscillatorPosition + 5, area.getWidth(), 50);
         lastOscillatorPosition += 50;
     }
 
-
     addOscillatorButton.setBounds(area.getWidth() / 2 - 25, lastOscillatorPosition + 5, 50, 50);
 }
 
-void OscillatorsSection::addListener(Listener *listener)
+void OscillatorsSection::deleteOscillator(int id)
 {
-    listeners.push_back(listener);
+    oscillatorsSubsectionList.remove_if([&id](const std::unique_ptr<OscillatorsSubsection>& oscillator) {
+        return oscillator->getId() == id;
+        });
+
+    resized();
 }
 
 void OscillatorsSection::addWavetableOscillator(int numberOfWavetableOscillators, ParameterHandler& parameterHandler)
 {
-    std::unique_ptr<WavetableOscillatorSubsection> wavetableOscillator = std::make_unique<WavetableOscillatorSubsection>(numberOfWavetableOscillators);
+    std::unique_ptr<WavetableOscillatorSubsection> wavetableOscillator = std::make_unique<WavetableOscillatorSubsection>(numberOfWavetableOscillators, eventHandler);
 
-    wavetableOscillatorSubsection.push_back(std::move(wavetableOscillator));
-    this->addAndMakeVisible(*wavetableOscillatorSubsection.back());
+    oscillatorsSubsectionList.push_back(std::move(wavetableOscillator));
+    this->addAndMakeVisible(*oscillatorsSubsectionList.back());
     resized();
-    wavetableOscillatorSubsection.back()->attachParams(parameterHandler);
-    //envelopeSubsections.back()->attachParams(apvts);
+    oscillatorsSubsectionList.back()->attachParams(parameterHandler);
 }
 
 void OscillatorsSection::buttonClicked(juce::Button* clickedButton)
@@ -66,9 +68,8 @@ void OscillatorsSection::buttonClicked(juce::Button* clickedButton)
         menu.showMenuAsync(juce::PopupMenu::Options().withTargetComponent(addOscillatorButton),
             [this](int result)
             {
-                listeners[0]->addOscillator(result);
+                eventHandler.onAddOscillator(result);
             });
     }
 
-    // Lo mismo con efectos, cadena de efectos y moduladores
 }

@@ -139,6 +139,7 @@
     </Bscmake>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\Source\GUI_EventHandler.cpp"/>
     <ClCompile Include="..\..\Source\Utils\Utils.cpp"/>
     <ClCompile Include="..\..\Source\ParameterHandler\Parameter.cpp"/>
     <ClCompile Include="..\..\Source\ParameterHandler\ParameterHandler.cpp"/>
@@ -2882,6 +2883,7 @@
     <ClCompile Include="..\..\JuceLibraryCode\include_juce_osc.cpp"/>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\Source\GUI_EventHandler.h"/>
     <ClInclude Include="..\..\Source\Utils\Utils.h"/>
     <ClInclude Include="..\..\Source\ParameterHandler\Parameter.h"/>
     <ClInclude Include="..\..\Source\ParameterHandler\ParameterHandler.h"/>

@@ -28,8 +28,6 @@ public:
 
     void addEnvelope(int id, const ParameterHandler& parameterHandler);
 
-    void deleteEffect(int effectID);
-
     void releaseResources();
 
     void processBlock(juce::AudioBuffer<float>& audio);
@@ -49,9 +47,7 @@ public:
 
     void applyModulations(juce::AudioBuffer<float>& outputBuffer);
 
-    void deleteModulator(int modulatorID);
-
-    void deleteOscillator(int oscillatorID);
+    void deleteProcessor(int processorID);
 
 
 private:

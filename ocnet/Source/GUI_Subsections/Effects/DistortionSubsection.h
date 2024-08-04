@@ -12,15 +12,18 @@
 
 #include "../Subsection.h"
 #include "../../Knobs/Knob1.h"
+#include "EffectsSubsection.h"
 
-class DistortionSubsection : public Subsection {
+class DistortionSubsection : public EffectsSubsection {
 public:
-    DistortionSubsection(int id);
+    DistortionSubsection(int id, GUI_EventHandler& eventHandler);
+    ~DistortionSubsection() = default;
 
-    void paint(juce::Graphics& g) override;
     void resized() override;
+
     void attachParams(ParameterHandler& parameterHandler) override;
 private:
+
     std::unique_ptr<Knob1> driveKnob;
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(DistortionSubsection)

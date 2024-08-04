@@ -3,7 +3,7 @@
 #include <windows.h>
 #include "../GUI_Subsections/Modulators/EnvelopeSubsection.h"
 
-Knob1::Knob1(ParameterInfo parameterInfo) {
+Knob1::Knob1(ParameterInfo parameterInfo, GUI_EventHandler& eventHandler) : eventHandler(eventHandler) {
 	this->setSliderStyle(RotaryHorizontalVerticalDrag);
 	this->setTextBoxStyle(juce::Slider::TextBoxBelow, true, 90, 0);
 	this->addListener(this);
@@ -14,10 +14,10 @@ Knob1::Knob1(ParameterInfo parameterInfo) {
 void Knob1::itemDropped(const SourceDetails& dragSourceDetails)
 {
 	DBG("Envelope sincronizado con el parámetro");
-		if (auto* a = dynamic_cast<ModulatorsSubsection*>(dragSourceDetails.sourceComponent.get())) {
-			DBG("CONECTADO AHORA DEBERIA DE ESTAR");
-			a->connectModulation(a->getId(), parameter);
-		}
+	if (auto* a = dynamic_cast<ModulatorsSubsection*>(dragSourceDetails.sourceComponent.get())) {
+		DBG("CONECTADO AHORA DEBERIA DE ESTAR");
+		eventHandler.onConnectModulation(a -> getId(), parameter);
+	}
 }
 
 bool Knob1::isInterestedInDragSource(const SourceDetails& dragSourceDetails)

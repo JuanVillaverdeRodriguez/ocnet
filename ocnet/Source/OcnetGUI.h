@@ -7,11 +7,12 @@
 #include "GUI_Sections/OscillatorsSection.h"
 #include "GUI_Sections/ModulatorsSection.h"
 #include "GUI_Sections/EffectsSection.h"
+#include "GUI_EventHandler.h"
 
 class OcnetGUI : public juce::Component, HeaderSection::Listener, public juce::DragAndDropContainer
 {
 public:
-    OcnetGUI();
+    OcnetGUI(GUI_EventHandler& eventHandler);
     ~OcnetGUI() override;
 
     //HeaderSectionListener
@@ -34,6 +35,8 @@ public:
 
 protected:
     int currentView = 0;
+
+    GUI_EventHandler& eventHandler;
 
     std::unique_ptr<HeaderSection> headerSection;
     std::unique_ptr<FooterSection> footerSection;

@@ -24,11 +24,10 @@ public:
 
     void connectModulation(int processorModulatorID, std::shared_ptr<Parameter2> parameter);
 
+
     bool getHasEnvelope() { return hasEnvelope; }
 
-    void deleteModulator(int modulatorID);
-    void deleteOscillator(int oscillatorID);
-    void deleteEffect(int effectID);
+    void deleteProcessor(int processorID);
 
 private:
     bool hasEnvelope = false;

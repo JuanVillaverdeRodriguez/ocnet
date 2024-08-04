@@ -10,19 +10,14 @@
 
 #include "EnvelopeSubsection.h"
 
-EnvelopeSubsection::EnvelopeSubsection(int id)
+EnvelopeSubsection::EnvelopeSubsection(int id, GUI_EventHandler& eventHandler) : ModulatorsSubsection(eventHandler)
 {
     setId(id);
 
-    attackKnob = std::make_unique<Knob1>(ParameterInfo{juce::String("Envelopes"), juce::String(getId()), juce::String("attack")});
-    decayKnob = std::make_unique<Knob1>(ParameterInfo{ juce::String("Envelopes"), juce::String(getId()), juce::String("decay") });
-    sustainKnob = std::make_unique<Knob1>(ParameterInfo{ juce::String("Envelopes"), juce::String(getId()), juce::String("sustain") });
-    releaseKnob = std::make_unique<Knob1>(ParameterInfo{ juce::String("Envelopes"), juce::String(getId()), juce::String("release") });
-
-    attackKnob->setListener(this);
-    decayKnob->setListener(this);
-    sustainKnob->setListener(this);
-    releaseKnob->setListener(this);
+    attackKnob = std::make_unique<Knob1>(ParameterInfo{ juce::String("Envelopes"), juce::String(getId()), juce::String("attack")}, eventHandler);
+    decayKnob = std::make_unique<Knob1>(ParameterInfo{ juce::String("Envelopes"), juce::String(getId()), juce::String("decay") }, eventHandler);
+    sustainKnob = std::make_unique<Knob1>(ParameterInfo{ juce::String("Envelopes"), juce::String(getId()), juce::String("sustain") }, eventHandler);
+    releaseKnob = std::make_unique<Knob1>(ParameterInfo{ juce::String("Envelopes"), juce::String(getId()), juce::String("release") }, eventHandler);
 
     this->addAndMakeVisible(*attackKnob);
     this->addAndMakeVisible(*decayKnob);
@@ -49,9 +44,7 @@ void EnvelopeSubsection::resized()
     releaseKnob->setRange(0.0f, 1.0f, 0.01f);
 
     removeButton.setBounds(250, 0, 50, 50);
-
 }
-
 
 void EnvelopeSubsection::attachParams(ParameterHandler& parameterHandler) {
     parameterHandler.attachParameter(attackKnob->getParameter());

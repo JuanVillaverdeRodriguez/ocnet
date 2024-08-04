@@ -9,16 +9,14 @@
 */
 
 #pragma once
+#include <JuceHeader.h>
 #include "../../Knobs/Knob1.h"
 #include "../Subsection.h"
+#include "OscillatorsSubsection.h"
 
-#include <JuceHeader.h>
-
-class WavetableOscillatorSubsection : public Subsection {
+class WavetableOscillatorSubsection : public OscillatorsSubsection {
 public:
-    WavetableOscillatorSubsection(int id);
-
-    void paint(juce::Graphics& g) override;
+    WavetableOscillatorSubsection(int id, GUI_EventHandler& eventHandler);
 
     void resized() override;
 
@@ -29,5 +27,4 @@ private:
     std::unique_ptr<Knob1> panningKnob;
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(WavetableOscillatorSubsection)
-
 };

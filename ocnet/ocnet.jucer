@@ -6,6 +6,10 @@
               pluginVSTCategory="kPlugCategSynth" pluginCharacteristicsValue="pluginIsSynth,pluginWantsMidiIn">
   <MAINGROUP id="Fay8LI" name="ocnet">
     <GROUP id="{B897E036-BD65-2195-C049-E6C429F0FF25}" name="Source">
+      <FILE id="iKKaEz" name="GUI_EventHandler.cpp" compile="1" resource="0"
+            file="Source/GUI_EventHandler.cpp"/>
+      <FILE id="HqJyAK" name="GUI_EventHandler.h" compile="0" resource="0"
+            file="Source/GUI_EventHandler.h"/>
       <GROUP id="{AC61CD02-1871-C974-9052-E0D68D806941}" name="Utils">
         <FILE id="tfNesW" name="Utils.cpp" compile="1" resource="0" file="Source/Utils/Utils.cpp"/>
         <FILE id="d3i0oc" name="Utils.h" compile="0" resource="0" file="Source/Utils/Utils.h"/>

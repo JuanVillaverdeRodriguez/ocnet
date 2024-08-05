@@ -33,14 +33,21 @@ void Section::moveSubsection(int id, int positions)
         initIndex++;
     }
 
+    // Si positions es negativo, mover arriba (Izquierda en la lista)
+
     if (positions < 0) {
+        if (initIndex == 0) //El primer elemento no se puede mover mas para atras
+            return;
+
         positions = -positions;
         // Mientras no se haya movido posiciones veces, o no haya llegado al inicio de la lista...
-        for (int i = 0; i < positions || (positions - i) == 1; i++) {
-            std::rotate(subsectionsVector.begin() + (initIndex - i), subsectionsVector.begin() + ((initIndex - i) + 1), subsectionsVector.begin() + (positions - i));
+        for (int i = initIndex; i < positions + initIndex || (i - 1) == -1; i++) {
+            std::iter_swap(subsectionsVector.begin() + (i), subsectionsVector.begin() + (i - 1));
         }
     }
     else {
+        if (initIndex == subsectionsVector.size()-1) //El ultimo elemento no se puede mover mas para adelante
+            return;
         std::rotate(subsectionsVector.begin() + (initIndex), subsectionsVector.begin() + (initIndex + 1), subsectionsVector.begin() + ((initIndex + 1) + positions));
     }
 

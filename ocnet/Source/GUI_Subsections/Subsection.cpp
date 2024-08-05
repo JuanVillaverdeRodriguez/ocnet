@@ -10,13 +10,14 @@
 
 #include "Subsection.h"
 
-Subsection::Subsection(GUI_EventHandler& eventHandler) : eventHandler(eventHandler)
+Subsection::Subsection(GUI_EventHandler& eventHandler) : eventHandler(eventHandler), defaultKnobSize(35)
 {
     id = 0;
 
     this->addAndMakeVisible(removeButton);
     this->addAndMakeVisible(moveUpButton);
     this->addAndMakeVisible(moveDownButton);
+    this->addAndMakeVisible(subsectionName);
 
     removeButton.setButtonText("X");
     moveUpButton.setButtonText("<");
@@ -25,6 +26,7 @@ Subsection::Subsection(GUI_EventHandler& eventHandler) : eventHandler(eventHandl
     removeButton.addListener(this);
     moveUpButton.addListener(this);
     moveDownButton.addListener(this);
+
 }
 
 void Subsection::buttonClicked(juce::Button* clickedButton)
@@ -33,10 +35,10 @@ void Subsection::buttonClicked(juce::Button* clickedButton)
         eventHandler.onDeleteSubsection(*this);
     }
     if (clickedButton == &moveUpButton) {
-        eventHandler.onMoveSubsection(*this, 1);
+        eventHandler.onMoveSubsection(*this, -1);
     }
     if (clickedButton == &moveDownButton) {
-        eventHandler.onMoveSubsection(*this, -1);
+        eventHandler.onMoveSubsection(*this, 1);
     }
 }
 
@@ -58,7 +60,9 @@ void Subsection::sectionResized()
 {
     auto area = getLocalBounds();
 
-    removeButton.setBounds(area.getWidth()-25, 0, 25, 25);
-    moveDownButton.setBounds(area.getWidth()-50, 0, 25, 25);
-    moveUpButton.setBounds(area.getWidth()-75, 0, 25, 25);
+    removeButton.setBounds(area.getWidth()-25, 0, 20, 20);
+    moveDownButton.setBounds(area.getWidth()-50, 0, 20, 20);
+    moveUpButton.setBounds(area.getWidth()-75, 0, 20, 20);
+
+    subsectionName.setBounds(0, 0, 20, 20);
 }

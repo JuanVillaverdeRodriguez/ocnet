@@ -22,16 +22,21 @@ WavetableOscillatorSubsection::WavetableOscillatorSubsection(int id, GUI_EventHa
 
     volumeKnob->setRange(0.0f, 1.0f, 0.01f); // Quizas mejor seria volumeKnob.setRange(0, 1, 0.01f)?;
     panningKnob->setRange(0.0f, 1.0f, 0.01f); // Quizas mejor seria volumeKnob.setRange(0, 1, 0.01f)?;
+
+    subsectionName.setText(juce::String("Oscillator ") + juce::String(getId()));
+
 }
 
 void WavetableOscillatorSubsection::resized()
 {
     DBG("WavetableOscillatorSubsection::resized()");
 
+    auto area = getLocalBounds();
+
     sectionResized();
 
-    volumeKnob->setBounds(0, 0, 50, 50);
-    panningKnob->setBounds(50, 0, 50, 50);
+    volumeKnob->setBounds(0, area.getHeight() - defaultKnobSize, defaultKnobSize, defaultKnobSize);
+    panningKnob->setBounds(defaultKnobSize, area.getHeight() - defaultKnobSize, defaultKnobSize, defaultKnobSize);
 
 }
 

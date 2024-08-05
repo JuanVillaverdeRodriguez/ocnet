@@ -43,4 +43,9 @@ protected:
     juce::TextButton moveUpButton;
     juce::TextButton moveDownButton;
 
+    juce::DrawableText subsectionName;
+
+    int defaultKnobSize;
+
+
 };

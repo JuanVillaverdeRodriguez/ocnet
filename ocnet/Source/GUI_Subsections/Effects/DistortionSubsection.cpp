@@ -19,14 +19,19 @@ DistortionSubsection::DistortionSubsection(int id, GUI_EventHandler& eventHandle
     this->addAndMakeVisible(*driveKnob);
 
     driveKnob->setRange(0.0f, 10.0f, 0.01f); // Quizas mejor seria volumeKnob.setRange(0, 1, 0.01f)?;
+
+    subsectionName.setText(juce::String("Distortion ") + juce::String(getId()));
+
 }
 
 
 void DistortionSubsection::resized()
 {
+    auto area = getLocalBounds();
+
     sectionResized();
 
-    driveKnob->setBounds(0, 0, 50, 50);
+    driveKnob->setBounds(0, area.getHeight() - defaultKnobSize, defaultKnobSize, defaultKnobSize);
 }
 
 

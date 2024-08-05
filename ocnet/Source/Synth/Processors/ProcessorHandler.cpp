@@ -10,6 +10,7 @@
 
 #include "ProcessorHandler.h"
 #include "Effects/DistortionProcessor.h"
+#include "../../Utils/Utils.h"
 
 // Porque usar lista en vez de vector:
 
@@ -76,7 +77,6 @@ void ProcessorHandler::addEnvelope(int id, const ParameterHandler& parameterHand
 void ProcessorHandler::processBlock(juce::AudioBuffer<float>& outputBuffer)
 {
     int numSamples = outputBuffer.getNumSamples();
-
 
     for (int channel = 0; channel < 1; ++channel) {
         auto* buffer = outputBuffer.getWritePointer(channel);
@@ -241,15 +241,24 @@ void ProcessorHandler::deleteProcessor(int processorID)
         }
     }
 
-    // Buscar el processor dentro de la lista de efectos
-    for (auto& processor : effectsProcessorsList) {
-        if (processor->getId() == processorID) {
-            effectsProcessorsList.remove(processor);
-            return;
-        }
-    }
+    effectsProcessorsList.erase(
+        std::remove_if(effectsProcessorsList.begin(), effectsProcessorsList.end(),
+            [&processorID](const std::unique_ptr<Effector>& effector) {
+                return effector->getId() == processorID;
+            }
+        ),
+        effectsProcessorsList.end()
+    );
 }
 
+void ProcessorHandler::moveProcessor(int processorID, int positions)
+{
+    // Encontrar la posicion en la lista
+    int initIndex = Utils::findElementPositionByID(effectsProcessorsList, processorID);
+
+    // Mueve el elemento
+    Utils::moveElement(effectsProcessorsList, initIndex, positions);
+}
 
 void ProcessorHandler::releaseResources()
 {

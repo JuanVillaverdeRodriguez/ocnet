@@ -65,3 +65,12 @@ void OcnetSynthesiser::deleteProcessor(int processorID)
         }
     }
 }
+
+void OcnetSynthesiser::moveProcessor(int id, int positions)
+{
+    for (int i = 0; i < getNumVoices(); i++) {
+        if (auto voice = dynamic_cast<SynthVoice*>(getVoice(i))) {
+            voice->moveProcessor(id, positions);
+        }
+    }
+}

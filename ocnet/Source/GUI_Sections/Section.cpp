@@ -9,6 +9,7 @@
 */
 
 #include "Section.h"
+#include "../Utils/Utils.h"
 
 std::vector<std::unique_ptr<Subsection>>* Section::getListOfSubsections()
 {
@@ -18,39 +19,16 @@ std::vector<std::unique_ptr<Subsection>>* Section::getListOfSubsections()
 
 void Section::moveSubsection(int id, int positions)
 {
+    // Obten la lista de subsecciones
     auto& subsectionsVector = *getListOfSubsections();
 
-    if (subsectionsVector.empty())
-        return;
+    // Encontrar la posicion en la lista
+    int initIndex = Utils::findElementPositionByID(subsectionsVector, id);
 
-    int initIndex = 0;
+    // Mueve el elemento
+    Utils::moveElement(subsectionsVector, initIndex, positions);
 
-    // Encuentra el elemento a mover
-    for (auto& modulator : subsectionsVector) {
-        if (modulator->getId() == id) {
-            break;
-        }
-        initIndex++;
-    }
-
-    // Si positions es negativo, mover arriba (Izquierda en la lista)
-
-    if (positions < 0) {
-        if (initIndex == 0) //El primer elemento no se puede mover mas para atras
-            return;
-
-        positions = -positions;
-        // Mientras no se haya movido posiciones veces, o no haya llegado al inicio de la lista...
-        for (int i = initIndex; i < positions + initIndex || (i - 1) == -1; i++) {
-            std::iter_swap(subsectionsVector.begin() + (i), subsectionsVector.begin() + (i - 1));
-        }
-    }
-    else {
-        if (initIndex == subsectionsVector.size()-1) //El ultimo elemento no se puede mover mas para adelante
-            return;
-        std::rotate(subsectionsVector.begin() + (initIndex), subsectionsVector.begin() + (initIndex + 1), subsectionsVector.begin() + ((initIndex + 1) + positions));
-    }
-
+    // Actualiza la section
     resized();
 }
 

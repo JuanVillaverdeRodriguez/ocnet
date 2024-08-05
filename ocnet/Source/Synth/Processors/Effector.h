@@ -15,13 +15,15 @@
 
 class Effector : public Processor {
 public:
-    Effector();
+    Effector(int order);
     virtual ~Effector() = default;
     
     virtual float getNextSample(float currentSampleValue) = 0 {};
     virtual void processBlock(juce::AudioBuffer<float>& buffer) = 0 {};
 
 private:
+    int order;
+
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(Effector)
 
 };

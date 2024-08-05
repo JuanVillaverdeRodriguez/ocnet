@@ -29,6 +29,8 @@ public:
 
     void deleteProcessor(int processorID);
 
+    void moveProcessor(int id, int positions);
+
 private:
     bool hasEnvelope = false;
 

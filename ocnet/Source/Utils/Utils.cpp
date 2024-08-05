@@ -16,10 +16,3 @@ Utils::Utils()
 {
 }
 
-float Utils::linearToDecibels(float linearGain)
-{
-    if (linearGain <= 0.0f)
-        return -std::numeric_limits<float>::infinity();
-    else
-        return 20.0f * std::log10(linearGain);
-}

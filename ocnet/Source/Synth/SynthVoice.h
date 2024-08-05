@@ -52,6 +52,8 @@ public:
 
     void deleteProcessor(int processorID);
 
+    void moveProcessor(int id, int positions);
+
     //juce::AudioSampleBuffer generateSawtoothWavetable(int tableSize);
 private:
     juce::dsp::ProcessSpec spec;

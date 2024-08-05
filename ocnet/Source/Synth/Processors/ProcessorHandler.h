@@ -49,13 +49,14 @@ public:
 
     void deleteProcessor(int processorID);
 
+    void moveProcessor(int id, int position);
 
 private:
     int voiceId;
 
     std::list<std::unique_ptr<Processor>> oscillatorsProcessorsList;
     std::list<std::unique_ptr<Modulator>> modulatorProcessorsList;
-    std::list<std::unique_ptr<Effector>> effectsProcessorsList;;
+    std::vector<std::unique_ptr<Effector>> effectsProcessorsList;;
 
     std::unique_ptr<EnvelopeProcessor> mainEnvelope;
 

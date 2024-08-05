@@ -374,3 +374,9 @@ void SynthVoice::deleteProcessor(int processorID)
 {
     processorhHandler.deleteProcessor(processorID);
 }
+
+void SynthVoice::moveProcessor(int id, int positions)
+{
+    processorhHandler.moveProcessor(id, positions);
+
+}

@@ -64,7 +64,6 @@ void OcnetGUI_interface::onAddModulator(int option)
             maxCurrentID++;
         }
     }
-    DBG("OcnetGUI_interface::addModulator(int option)");
 }
 
 void OcnetGUI_interface::onConnectModulation(int processorModulatorID, std::shared_ptr<Parameter2> parameter)
@@ -82,12 +81,11 @@ void OcnetGUI_interface::onDeleteSubsection(Subsection& subsection)
     processor.parameterHandler.deleteAttachedParameters(type, juce::String(id));
 }
 
-
 void OcnetGUI_interface::onMoveSubsection(Subsection& subsection, int positions)
 {
     gui_->getSection(subsection.getType())->moveSubsection(subsection.getId(), positions);
+    processor.moveProcessor(subsection.getId(), positions);
 }
-
 
 OcnetGUI* OcnetGUI_interface::getGui() {
     return gui_.get(); 

@@ -10,8 +10,16 @@
 
 #include "Section.h"
 
+std::vector<std::unique_ptr<Subsection>>* Section::getListOfSubsections()
+{
+    static std::vector<std::unique_ptr<Subsection>> emptyList;
+    return &emptyList; // Devuelve un puntero a un vector estático vacío
+}
+
 void Section::moveSubsection(int id, int positions)
 {
+    auto& subsectionsVector = *getListOfSubsections();
+
     if (subsectionsVector.empty())
         return;
 
@@ -41,6 +49,8 @@ void Section::moveSubsection(int id, int positions)
 
 void Section::deleteSubsection(int id)
 {
+    auto& subsectionsVector = *getListOfSubsections();
+
     if (subsectionsVector.empty())
         return;
 
@@ -58,6 +68,8 @@ void Section::deleteSubsection(int id)
 
 int Section::sectionResized()
 {
+    auto& subsectionsVector = *getListOfSubsections();
+
     auto area = getLocalBounds();
 
     int lastSubsectionPosition = 0;

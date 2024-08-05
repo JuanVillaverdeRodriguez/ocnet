@@ -33,6 +33,10 @@ void EffectsSection::resized()
     addEffectButton.setBounds(area.getWidth() / 2 - 25, lastSubsection + 5, 50, 50);
 }
 
+std::vector<std::unique_ptr<Subsection>>* EffectsSection::getListOfSubsections()
+{
+    return &subsectionsVector;
+}
 
 void EffectsSection::addDistortion(int id, ParameterHandler& parameterHandler)
 {

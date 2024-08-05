@@ -21,6 +21,7 @@ public:
     ModulatorsSection(GUI_EventHandler& eventHandler);
 
     void addEnvelope(int numberOfEnvelopes, ParameterHandler& apvts);
+    std::vector<std::unique_ptr<Subsection>>* getListOfSubsections() override;
 
     void buttonClicked(juce::Button* clickedButton) override;
 
@@ -33,6 +34,7 @@ private:
     OcnetLookAndFeel lookAndFeel;
 
     //std::vector<std::unique_ptr<EnvelopeSubsection>> envelopeSubsections;
+    std::vector<std::unique_ptr<Subsection>> subsectionsVector;
 
     juce::TextButton addModulatorButton;
 

@@ -26,6 +26,7 @@ public:
     void buttonClicked(juce::Button* clickedButton) override;
     void paint(juce::Graphics& g) override;
     void resized() override;
+    std::vector<std::unique_ptr<Subsection>>* getListOfSubsections() override;
 
 
 private:
@@ -35,6 +36,7 @@ private:
 
     OcnetLookAndFeel lookAndFeel;
 
+    std::vector<std::unique_ptr<Subsection>> subsectionsVector;
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(EffectsSection)
 

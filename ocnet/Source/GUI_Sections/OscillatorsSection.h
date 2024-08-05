@@ -22,6 +22,8 @@ public:
 
     void addWavetableOscillator(int numberOfWavetableOscillators, ParameterHandler& parameterHandler);
 
+    std::vector<std::unique_ptr<Subsection>>* getListOfSubsections() override;
+
 
     void buttonClicked(juce::Button* clickedButton) override;
     void paint(juce::Graphics& g) override;
@@ -30,6 +32,7 @@ public:
 private:
     OcnetLookAndFeel lookAndFeel;
 
+    std::vector<std::unique_ptr<Subsection>> subsectionsVector;
 
     juce::TextButton addOscillatorButton;
 

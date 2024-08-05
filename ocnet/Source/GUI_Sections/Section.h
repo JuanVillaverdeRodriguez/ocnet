@@ -19,13 +19,12 @@ public:
     //virtual bool move(int id, const juce::String& direction) = 0 {}
     //virtual bool deleteProcessor(int id) = 0 {}
 
-    //virtual std::vector<std::unique_ptr<Subsection>>* getListOfSubsections();
+    virtual std::vector<std::unique_ptr<Subsection>>* getListOfSubsections();
     void moveSubsection(int id, int positions);
     void deleteSubsection(int id);
     int sectionResized();
 
 
 protected:
-    std::vector<std::unique_ptr<Subsection>> subsectionsVector;
 
 };

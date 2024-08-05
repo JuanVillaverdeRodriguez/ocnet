@@ -45,6 +45,11 @@ void OscillatorsSection::addWavetableOscillator(int numberOfWavetableOscillators
     subsectionsVector.back()->attachParams(parameterHandler);
 }
 
+std::vector<std::unique_ptr<Subsection>>* OscillatorsSection::getListOfSubsections()
+{
+    return &subsectionsVector;
+}
+
 void OscillatorsSection::buttonClicked(juce::Button* clickedButton)
 {
     if (clickedButton == &addOscillatorButton) {

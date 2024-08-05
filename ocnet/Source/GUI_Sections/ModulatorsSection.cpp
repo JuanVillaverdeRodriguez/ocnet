@@ -25,6 +25,10 @@ void ModulatorsSection::paint(juce::Graphics& g)
     g.fillAll(juce::Colours::darkcyan);
 }
 
+std::vector<std::unique_ptr<Subsection>>* ModulatorsSection::getListOfSubsections()
+{
+    return &subsectionsVector;
+}
 
 void ModulatorsSection::resized()
 {

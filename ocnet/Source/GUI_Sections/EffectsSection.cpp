@@ -48,6 +48,16 @@ void EffectsSection::addDistortion(int id, ParameterHandler& parameterHandler)
     subsectionsVector.back()->attachParams(parameterHandler);
 }
 
+void EffectsSection::addFilter(int id, ParameterHandler& parameterHandler)
+{
+    std::unique_ptr<FilterSubsection> subsection = std::make_unique<FilterSubsection>(id, eventHandler);
+
+    subsectionsVector.push_back(std::move(subsection));
+    this->addAndMakeVisible(*subsectionsVector.back());
+    resized();
+    subsectionsVector.back()->attachParams(parameterHandler);
+}
+
 
 void EffectsSection::buttonClicked(juce::Button* clickedButton)
 {

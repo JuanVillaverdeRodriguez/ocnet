@@ -32,6 +32,10 @@
                 file="Source/GUI_Subsections/Effects/EffectsSubsection.cpp"/>
           <FILE id="FqjLKo" name="EffectsSubsection.h" compile="0" resource="0"
                 file="Source/GUI_Subsections/Effects/EffectsSubsection.h"/>
+          <FILE id="w7Jqsp" name="FilterSubsection.cpp" compile="1" resource="0"
+                file="Source/GUI_Subsections/Effects/FilterSubsection.cpp"/>
+          <FILE id="ePaVjz" name="FilterSubsection.h" compile="0" resource="0"
+                file="Source/GUI_Subsections/Effects/FilterSubsection.h"/>
         </GROUP>
         <GROUP id="{52A041BF-AD4F-4C01-D669-48DDF46103E9}" name="Modulators">
           <FILE id="BIptSF" name="EnvelopeSubsection.cpp" compile="1" resource="0"
@@ -117,6 +121,10 @@
                   file="Source/Synth/Processors/Effects/DistortionProcessor.cpp"/>
             <FILE id="LRD7wb" name="DistortionProcessor.h" compile="0" resource="0"
                   file="Source/Synth/Processors/Effects/DistortionProcessor.h"/>
+            <FILE id="q2c56E" name="FilterProcessor.cpp" compile="1" resource="0"
+                  file="Source/Synth/Processors/Effects/FilterProcessor.cpp"/>
+            <FILE id="xjstr3" name="FilterProcessor.h" compile="0" resource="0"
+                  file="Source/Synth/Processors/Effects/FilterProcessor.h"/>
           </GROUP>
           <GROUP id="{56F0D0BF-3FB3-CBB3-8460-81F27FB410F7}" name="Modulators">
             <FILE id="a06LBG" name="EnvelopeProcessor.cpp" compile="1" resource="0"

@@ -45,6 +45,8 @@ private:
     std::shared_ptr<Parameter2> releaseParameter;
 
 
+
+
     juce::ADSR adsr;
     juce::ADSR::Parameters adsrParams;
 

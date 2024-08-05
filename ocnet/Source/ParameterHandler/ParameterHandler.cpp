@@ -30,12 +30,16 @@ ParameterHandler::ParameterHandler()
     static juce::Identifier envelopesIdentifier("Envelopes");
     juce::ValueTree envelopesNode(envelopesIdentifier);
 
+    static juce::Identifier filtersIndentifier("Filters");
+    juce::ValueTree filtersNode(filtersIndentifier);
+
 
     rootNode.addChild(modulatorsNode, -1, nullptr);
     rootNode.addChild(wavetableOscillatorsNode, -1, nullptr);
     rootNode.addChild(effectsNode, -1, nullptr);
 
     modulatorsNode.addChild(envelopesNode, -1, nullptr);
+    effectsNode.addChild(filtersNode, -1, nullptr);
 
 }
 

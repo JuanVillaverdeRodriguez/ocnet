@@ -380,3 +380,24 @@ void SynthVoice::moveProcessor(int id, int positions)
     processorhHandler.moveProcessor(id, positions);
 
 }
+
+void SynthVoice::addEffect(const juce::String& type, int id)
+{
+    processorhHandler.addEffect(type, id, *parameterHandler);
+    processorhHandler.prepareToPlay(spec);
+
+}
+
+void SynthVoice::addOscillator(const juce::String& type, int id)
+{
+    processorhHandler.addOscillator(type, id, *parameterHandler);
+    processorhHandler.prepareToPlay(spec);
+
+}
+
+void SynthVoice::addModulator(const juce::String& type, int id)
+{
+    processorhHandler.addModulator(type, id, *parameterHandler);
+    processorhHandler.prepareToPlay(spec);
+
+}

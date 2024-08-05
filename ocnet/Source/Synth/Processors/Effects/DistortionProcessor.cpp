@@ -10,7 +10,7 @@
 
 #include "DistortionProcessor.h"
 
-DistortionProcessor::DistortionProcessor(int id) : oversampler(1, 3, juce::dsp::Oversampling<float>::FilterType::filterHalfBandFIREquiripple, true), Effector(0)
+DistortionProcessor::DistortionProcessor(int id) : oversampler(1, 3, juce::dsp::Oversampling<float>::FilterType::filterHalfBandFIREquiripple, true)
 {
     setId(id);
 }

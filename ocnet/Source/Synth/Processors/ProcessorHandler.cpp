@@ -11,6 +11,7 @@
 #include "ProcessorHandler.h"
 #include "Effects/DistortionProcessor.h"
 #include "../../Utils/Utils.h"
+#include "Effects/FilterProcessor.h"
 
 // Porque usar lista en vez de vector:
 
@@ -258,6 +259,24 @@ void ProcessorHandler::moveProcessor(int processorID, int positions)
 
     // Mueve el elemento
     Utils::moveElement(effectsProcessorsList, initIndex, positions);
+}
+
+void ProcessorHandler::addEffect(const juce::String& type, int id, const ParameterHandler& parameterHandler)
+{
+    if (type == "Filter")
+        effectsProcessorsList.push_back(std::make_unique<FilterProcessor>(id));
+
+
+    effectsProcessorsList.back()->setVoiceNumberId(voiceId);
+    effectsProcessorsList.back()->syncParams(parameterHandler);
+}
+
+void ProcessorHandler::addOscillator(const juce::String& type, int id, const ParameterHandler& parameterHandler)
+{
+}
+
+void ProcessorHandler::addModulator(const juce::String& type, int id, const ParameterHandler& parameterHandler)
+{
 }
 
 void ProcessorHandler::releaseResources()

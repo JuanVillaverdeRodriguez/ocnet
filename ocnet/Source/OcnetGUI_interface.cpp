@@ -52,6 +52,12 @@ void OcnetGUI_interface::onAddEffect(int option)
             maxCurrentID++;
 
         }
+        else if (option == 2) {
+            gui_->getEffectsSection()->addFilter(maxCurrentID, processor.parameterHandler);
+            processor.addEffect(juce::String("Filter"), maxCurrentID);
+            maxCurrentID++;
+
+        }
     }
 }
 

@@ -31,6 +31,11 @@ public:
 
     void moveProcessor(int id, int positions);
 
+    void addEffect(const juce::String& type, int id);
+    void addOscillator(const juce::String& type, int id);
+    void addModulator(const juce::String& type, int id);
+
+
 private:
     bool hasEnvelope = false;
 

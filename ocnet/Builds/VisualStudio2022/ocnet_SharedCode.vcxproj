@@ -145,6 +145,7 @@
     <ClCompile Include="..\..\Source\ParameterHandler\ParameterHandler.cpp"/>
     <ClCompile Include="..\..\Source\GUI_Subsections\Effects\DistortionSubsection.cpp"/>
     <ClCompile Include="..\..\Source\GUI_Subsections\Effects\EffectsSubsection.cpp"/>
+    <ClCompile Include="..\..\Source\GUI_Subsections\Effects\FilterSubsection.cpp"/>
     <ClCompile Include="..\..\Source\GUI_Subsections\Modulators\EnvelopeSubsection.cpp"/>
     <ClCompile Include="..\..\Source\GUI_Subsections\Modulators\LFOSubsection.cpp"/>
     <ClCompile Include="..\..\Source\GUI_Subsections\Modulators\ModulatorsSubsection.cpp"/>
@@ -165,6 +166,7 @@
     <ClCompile Include="..\..\Source\Synth\Processors\ProcessorHandler.cpp"/>
     <ClCompile Include="..\..\Source\Synth\Processors\Oscillators\WavetableOscillatorProcessor.cpp"/>
     <ClCompile Include="..\..\Source\Synth\Processors\Effects\DistortionProcessor.cpp"/>
+    <ClCompile Include="..\..\Source\Synth\Processors\Effects\FilterProcessor.cpp"/>
     <ClCompile Include="..\..\Source\Synth\Processors\Modulators\EnvelopeProcessor.cpp"/>
     <ClCompile Include="..\..\Source\Synth\Processors\Modulators\LFOProcessor.cpp"/>
     <ClCompile Include="..\..\Source\Synth\Processors\Processor.cpp"/>
@@ -2890,6 +2892,7 @@
     <ClInclude Include="..\..\Source\ParameterHandler\ParameterHandler.h"/>
     <ClInclude Include="..\..\Source\GUI_Subsections\Effects\DistortionSubsection.h"/>
     <ClInclude Include="..\..\Source\GUI_Subsections\Effects\EffectsSubsection.h"/>
+    <ClInclude Include="..\..\Source\GUI_Subsections\Effects\FilterSubsection.h"/>
     <ClInclude Include="..\..\Source\GUI_Subsections\Modulators\EnvelopeSubsection.h"/>
     <ClInclude Include="..\..\Source\GUI_Subsections\Modulators\LFOSubsection.h"/>
     <ClInclude Include="..\..\Source\GUI_Subsections\Modulators\ModulatorsSubsection.h"/>
@@ -2911,6 +2914,7 @@
     <ClInclude Include="..\..\Source\Synth\Processors\ProcessorHandler.h"/>
     <ClInclude Include="..\..\Source\Synth\Processors\Oscillators\WavetableOscillatorProcessor.h"/>
     <ClInclude Include="..\..\Source\Synth\Processors\Effects\DistortionProcessor.h"/>
+    <ClInclude Include="..\..\Source\Synth\Processors\Effects\FilterProcessor.h"/>
     <ClInclude Include="..\..\Source\Synth\Processors\Modulators\EnvelopeProcessor.h"/>
     <ClInclude Include="..\..\Source\Synth\Processors\Modulators\LFOProcessor.h"/>
     <ClInclude Include="..\..\Source\Synth\Processors\Processor.h"/>

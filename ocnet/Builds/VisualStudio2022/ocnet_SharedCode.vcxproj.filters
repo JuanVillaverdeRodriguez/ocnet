@@ -766,6 +766,9 @@
     <ClCompile Include="..\..\Source\GUI_Subsections\Effects\EffectsSubsection.cpp">
       <Filter>ocnet\Source\GUI_Subsections\Effects</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Source\GUI_Subsections\Effects\FilterSubsection.cpp">
+      <Filter>ocnet\Source\GUI_Subsections\Effects</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\Source\GUI_Subsections\Modulators\EnvelopeSubsection.cpp">
       <Filter>ocnet\Source\GUI_Subsections\Modulators</Filter>
     </ClCompile>
@@ -824,6 +827,9 @@
       <Filter>ocnet\Source\Synth\Processors\Oscillators</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\Synth\Processors\Effects\DistortionProcessor.cpp">
+      <Filter>ocnet\Source\Synth\Processors\Effects</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Synth\Processors\Effects\FilterProcessor.cpp">
       <Filter>ocnet\Source\Synth\Processors\Effects</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\Synth\Processors\Modulators\EnvelopeProcessor.cpp">
@@ -3756,6 +3762,9 @@
     <ClInclude Include="..\..\Source\GUI_Subsections\Effects\EffectsSubsection.h">
       <Filter>ocnet\Source\GUI_Subsections\Effects</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Source\GUI_Subsections\Effects\FilterSubsection.h">
+      <Filter>ocnet\Source\GUI_Subsections\Effects</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\Source\GUI_Subsections\Modulators\EnvelopeSubsection.h">
       <Filter>ocnet\Source\GUI_Subsections\Modulators</Filter>
     </ClInclude>
@@ -3817,6 +3826,9 @@
       <Filter>ocnet\Source\Synth\Processors\Oscillators</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\Synth\Processors\Effects\DistortionProcessor.h">
+      <Filter>ocnet\Source\Synth\Processors\Effects</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Synth\Processors\Effects\FilterProcessor.h">
       <Filter>ocnet\Source\Synth\Processors\Effects</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\Synth\Processors\Modulators\EnvelopeProcessor.h">

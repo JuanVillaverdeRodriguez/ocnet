@@ -10,6 +10,6 @@
 
 #include "Effector.h"
 
-Effector::Effector(int order) : order(order)
+Effector::Effector()
 {
 }

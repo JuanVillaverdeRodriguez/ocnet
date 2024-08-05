@@ -51,6 +51,10 @@ public:
 
     void moveProcessor(int id, int position);
 
+    void addEffect(const juce::String& type, int id, const ParameterHandler& parameterHandler);
+    void addOscillator(const juce::String& type, int id, const ParameterHandler& parameterHandler);
+    void addModulator(const juce::String& type, int id, const ParameterHandler& parameterHandler);
+
 private:
     int voiceId;
 

@@ -15,14 +15,13 @@
 #include "../ParameterHandler/ParameterHandler.h"
 #include "../GUI_Subsections/Effects/DistortionSubsection.h"
 #include "../GUI_EventHandler.h"
+#include "Section.h"
 
-class EffectsSection : public juce::Component, juce::Button::Listener {
+class EffectsSection : public Section, juce::Button::Listener {
 public:
     EffectsSection(GUI_EventHandler& eventHandler);
 
     void addDistortion(int id, ParameterHandler& parameterHandler);
-
-    void deleteEffect(int id);
 
     void buttonClicked(juce::Button* clickedButton) override;
     void paint(juce::Graphics& g) override;
@@ -36,9 +35,10 @@ private:
 
     OcnetLookAndFeel lookAndFeel;
 
-    std::list<std::unique_ptr<EffectsSubsection>> effectsSubsectionList;
-
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(EffectsSection)
+
+
+        
 
 };

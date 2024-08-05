@@ -10,14 +10,12 @@
 
 #include "EffectsSubsection.h"
 
-EffectsSubsection::EffectsSubsection(GUI_EventHandler& eventHandler) : eventHandler(eventHandler)
+EffectsSubsection::EffectsSubsection(GUI_EventHandler& eventHandler) : Subsection(eventHandler)
 {
-    removeButton.addListener(this);
 }
 
-void EffectsSubsection::buttonClicked(juce::Button* clickedButton)
+
+juce::String EffectsSubsection::getType()
 {
-    if (clickedButton == &removeButton) {
-        eventHandler.onDeleteEffect(getId());
-    }
+    return juce::String("Effects");
 }

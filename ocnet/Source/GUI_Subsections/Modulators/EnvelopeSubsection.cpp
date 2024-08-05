@@ -32,6 +32,8 @@ void EnvelopeSubsection::resized()
 
     auto area = getLocalBounds();
 
+    sectionResized();
+
     attackKnob->setBounds(0, 0, 50, 50);
     decayKnob->setBounds(50, 0, 50, 50);
     sustainKnob->setBounds(100, 0, 50, 50);
@@ -42,8 +44,6 @@ void EnvelopeSubsection::resized()
     decayKnob->setRange(0.0f, 1.0f, 0.01f);
     sustainKnob->setRange(0.0f, 1.0f, 0.01f);
     releaseKnob->setRange(0.0f, 1.0f, 0.01f);
-
-    removeButton.setBounds(250, 0, 50, 50);
 }
 
 void EnvelopeSubsection::attachParams(ParameterHandler& parameterHandler) {

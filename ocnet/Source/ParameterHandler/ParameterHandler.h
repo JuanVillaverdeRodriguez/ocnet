@@ -31,6 +31,7 @@ private:
     //Realiza una busqueda recursiva para buscar un nodo concreto en el arbol
     juce::ValueTree findNodeByName(const juce::ValueTree& tree, const juce::Identifier& name);
 
+    // Imprime el arbol con indentacion y todo
     void printValueTree(const juce::ValueTree& tree, int indentLevel);
 
 

@@ -12,24 +12,35 @@
 
 #include <JuceHeader.h>
 #include "../ParameterHandler/ParameterHandler.h"
+#include "../GUI_EventHandler.h"
 
-class Subsection : public juce::Component {
+class Subsection : public juce::Component, juce::Button::Listener {
 public:
-    Subsection();
+    Subsection(GUI_EventHandler& eventHandler);
+    virtual ~Subsection() = default;
 
     void inline setId(int id) { this->id = id; }
-    int inline getId() { return id; }
+    int inline getId() const { return id; }
 
     void paint(juce::Graphics& g) override;
 
-    virtual void attachParams(ParameterHandler& parameterHandler) = 0;
+    void buttonClicked(juce::Button* clickedButton) override;
 
-    void startDraggingUI();
+
+    virtual void attachParams(ParameterHandler& parameterHandler) {};
+
+    void sectionResized();
+
+    virtual juce::String getType() { return juce::String(""); };
 
 private:
     int id;
+    GUI_EventHandler& eventHandler;
+
 
 protected:
     juce::TextButton removeButton;
+    juce::TextButton moveUpButton;
+    juce::TextButton moveDownButton;
 
 };

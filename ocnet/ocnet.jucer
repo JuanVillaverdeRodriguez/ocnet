@@ -64,6 +64,8 @@
               file="Source/LookAndFeel_V4/OcnetLookAndFeel.h"/>
       </GROUP>
       <GROUP id="{0CFAC4A2-8953-FE87-2F35-5E3903C2974E}" name="GUI_Sections">
+        <FILE id="f56ft7" name="Section.cpp" compile="1" resource="0" file="Source/GUI_Sections/Section.cpp"/>
+        <FILE id="RiU5wy" name="Section.h" compile="0" resource="0" file="Source/GUI_Sections/Section.h"/>
         <FILE id="vRk8If" name="ModulatorsSection.cpp" compile="1" resource="0"
               file="Source/GUI_Sections/ModulatorsSection.cpp"/>
         <FILE id="FMEYsp" name="ModulatorsSection.h" compile="0" resource="0"

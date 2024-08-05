@@ -28,15 +28,9 @@ void EffectsSection::resized()
 {
     auto area = getLocalBounds();
 
-    int lastEffectPosition = 0;
+    int lastSubsection = sectionResized();
 
-    for (auto& distortion : effectsSubsectionList) {
-        distortion->setBounds(5, lastEffectPosition + 5, area.getWidth(), 50);
-        lastEffectPosition += 50;
-    }
-
-
-    addEffectButton.setBounds(area.getWidth() / 2 - 25, lastEffectPosition + 5, 50, 50);
+    addEffectButton.setBounds(area.getWidth() / 2 - 25, lastSubsection + 5, 50, 50);
 }
 
 
@@ -44,20 +38,12 @@ void EffectsSection::addDistortion(int id, ParameterHandler& parameterHandler)
 {
     std::unique_ptr<DistortionSubsection> distortion = std::make_unique<DistortionSubsection>(id, eventHandler);
 
-    effectsSubsectionList.push_back(std::move(distortion));
-    this->addAndMakeVisible(*effectsSubsectionList.back());
+    subsectionsVector.push_back(std::move(distortion));
+    this->addAndMakeVisible(*subsectionsVector.back());
     resized();
-    effectsSubsectionList.back()->attachParams(parameterHandler);
+    subsectionsVector.back()->attachParams(parameterHandler);
 }
 
-void EffectsSection::deleteEffect(int id)
-{
-    effectsSubsectionList.remove_if([&id](const std::unique_ptr<EffectsSubsection>& effect) {
-        return effect->getId() == id;
-        });
-
-    resized();
-}
 
 void EffectsSection::buttonClicked(juce::Button* clickedButton)
 {

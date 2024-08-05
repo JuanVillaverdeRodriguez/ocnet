@@ -10,14 +10,12 @@
 
 #include "OscillatorsSubsection.h"
 
-OscillatorsSubsection::OscillatorsSubsection(GUI_EventHandler& eventHandler) : eventHandler(eventHandler)
+OscillatorsSubsection::OscillatorsSubsection(GUI_EventHandler& eventHandler) : Subsection(eventHandler)
 {
-    removeButton.addListener(this);
 }
 
-void OscillatorsSubsection::buttonClicked(juce::Button* clickedButton)
+
+juce::String OscillatorsSubsection::getType()
 {
-    if (clickedButton == &removeButton) {
-        eventHandler.onDeleteOscillator(getId());
-    }
+    return juce::String("Oscillators");
 }

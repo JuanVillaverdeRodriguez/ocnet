@@ -10,14 +10,12 @@
 
 #include "ModulatorsSubsection.h"
 
-ModulatorsSubsection::ModulatorsSubsection(GUI_EventHandler& eventHandler) : eventHandler(eventHandler)
+ModulatorsSubsection::ModulatorsSubsection(GUI_EventHandler& eventHandler) : Subsection(eventHandler)
 {
-    removeButton.addListener(this);
 }
 
-void ModulatorsSubsection::buttonClicked(juce::Button* clickedButton)
+
+juce::String ModulatorsSubsection::getType()
 {
-    if (clickedButton == &removeButton) {
-        eventHandler.onDeleteModulator(getId());
-    }
+    return juce::String("Modulators");
 }

@@ -784,6 +784,9 @@
     <ClCompile Include="..\..\Source\GUI_Subsections\Subsection.cpp">
       <Filter>ocnet\Source\GUI_Subsections</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Source\GUI_Sections\Section.cpp">
+      <Filter>ocnet\Source\GUI_Sections</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\Source\GUI_Sections\ModulatorsSection.cpp">
       <Filter>ocnet\Source\GUI_Sections</Filter>
     </ClCompile>
@@ -3773,6 +3776,9 @@
     </ClInclude>
     <ClInclude Include="..\..\Source\LookAndFeel_V4\OcnetLookAndFeel.h">
       <Filter>ocnet\Source\LookAndFeel_V4</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\GUI_Sections\Section.h">
+      <Filter>ocnet\Source\GUI_Sections</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\GUI_Sections\ModulatorsSection.h">
       <Filter>ocnet\Source\GUI_Sections</Filter>

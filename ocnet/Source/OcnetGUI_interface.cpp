@@ -72,25 +72,20 @@ void OcnetGUI_interface::onConnectModulation(int processorModulatorID, std::shar
     processor.connectModulation(processorModulatorID, parameter);
 }
 
-void OcnetGUI_interface::onDeleteModulator(int processorID)
+void OcnetGUI_interface::onDeleteSubsection(Subsection& subsection)
 {
-    gui_->getModulatorsSection()->deleteModulator(processorID);
-    processor.deleteProcessor(processorID);
-    processor.parameterHandler.deleteAttachedParameters(juce::String("Modulators"), juce::String(processorID));
+    int id = subsection.getId();
+    juce::String type = subsection.getType();
+
+    gui_->getSection(subsection.getType())->deleteSubsection(id);
+    processor.deleteProcessor(id);
+    processor.parameterHandler.deleteAttachedParameters(type, juce::String(id));
 }
 
-void OcnetGUI_interface::onDeleteEffect(int processorID)
-{
-    gui_->getEffectsSection()->deleteEffect(processorID);
-    processor.deleteProcessor(processorID);
-    processor.parameterHandler.deleteAttachedParameters(juce::String("Effects"), juce::String(processorID));
-}
 
-void OcnetGUI_interface::onDeleteOscillator(int processorID)
+void OcnetGUI_interface::onMoveSubsection(Subsection& subsection, int positions)
 {
-    gui_->getOscillatorsSection()->deleteOscillator(processorID);
-    processor.deleteProcessor(processorID);
-    processor.parameterHandler.deleteAttachedParameters(juce::String("Oscillators"), juce::String(processorID));
+    gui_->getSection(subsection.getType())->moveSubsection(subsection.getId(), positions);
 }
 
 

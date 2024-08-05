@@ -28,13 +28,12 @@ void WavetableOscillatorSubsection::resized()
 {
     DBG("WavetableOscillatorSubsection::resized()");
 
+    sectionResized();
+
     volumeKnob->setBounds(0, 0, 50, 50);
     panningKnob->setBounds(50, 0, 50, 50);
 
-    removeButton.setBounds(100, 0, 50, 50);
 }
-
-
 
 void WavetableOscillatorSubsection::attachParams(ParameterHandler& parameterHandler)
 {

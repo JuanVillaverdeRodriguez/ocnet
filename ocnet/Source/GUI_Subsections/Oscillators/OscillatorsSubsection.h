@@ -12,12 +12,12 @@
 #include "../Subsection.h"
 #include "../../Knobs/Knob1.h"
 
-class OscillatorsSubsection : public Subsection, public juce::Button::Listener {
+class OscillatorsSubsection : public Subsection {
 public:
     OscillatorsSubsection(GUI_EventHandler& eventHandler);
+    virtual ~OscillatorsSubsection() = default;
 
-    void buttonClicked(juce::Button* clickedButton) override;
+    juce::String getType() override;
 
 private:
-    GUI_EventHandler& eventHandler;
 };

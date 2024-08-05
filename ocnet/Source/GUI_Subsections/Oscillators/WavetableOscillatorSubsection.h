@@ -22,6 +22,7 @@ public:
 
     void attachParams(ParameterHandler& parameterHandler) override;
 
+
 private:
     std::unique_ptr<Knob1> volumeKnob;
     std::unique_ptr<Knob1> panningKnob;

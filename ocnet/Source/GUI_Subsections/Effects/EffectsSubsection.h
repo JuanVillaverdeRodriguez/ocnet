@@ -13,13 +13,12 @@
 #include "../Subsection.h"
 #include "../../Knobs/Knob1.h"
 
-class EffectsSubsection : public Subsection, public juce::Button::Listener {
+class EffectsSubsection : public Subsection {
 public:
     EffectsSubsection(GUI_EventHandler& eventHandler);
     virtual ~EffectsSubsection() = default;
 
-    void buttonClicked(juce::Button* clickedButton) override;
+    juce::String getType() override;
 
 private:
-    GUI_EventHandler& eventHandler;
 };

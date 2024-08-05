@@ -28,33 +28,21 @@ void OscillatorsSection::resized()
 {
     auto area = getLocalBounds();
 
-    int lastOscillatorPosition = 0;
+    int lastSubsection = sectionResized();
 
-    for (auto& wavetableOscillator : oscillatorsSubsectionList) {
-        wavetableOscillator->setBounds(5, lastOscillatorPosition + 5, area.getWidth(), 50);
-        lastOscillatorPosition += 50;
-    }
-
-    addOscillatorButton.setBounds(area.getWidth() / 2 - 25, lastOscillatorPosition + 5, 50, 50);
+    addOscillatorButton.setBounds(area.getWidth() / 2 - 25, lastSubsection + 5, 50, 50);
 }
 
-void OscillatorsSection::deleteOscillator(int id)
-{
-    oscillatorsSubsectionList.remove_if([&id](const std::unique_ptr<OscillatorsSubsection>& oscillator) {
-        return oscillator->getId() == id;
-        });
 
-    resized();
-}
 
 void OscillatorsSection::addWavetableOscillator(int numberOfWavetableOscillators, ParameterHandler& parameterHandler)
 {
     std::unique_ptr<WavetableOscillatorSubsection> wavetableOscillator = std::make_unique<WavetableOscillatorSubsection>(numberOfWavetableOscillators, eventHandler);
 
-    oscillatorsSubsectionList.push_back(std::move(wavetableOscillator));
-    this->addAndMakeVisible(*oscillatorsSubsectionList.back());
+    subsectionsVector.push_back(std::move(wavetableOscillator));
+    this->addAndMakeVisible(*subsectionsVector.back());
     resized();
-    oscillatorsSubsectionList.back()->attachParams(parameterHandler);
+    subsectionsVector.back()->attachParams(parameterHandler);
 }
 
 void OscillatorsSection::buttonClicked(juce::Button* clickedButton)

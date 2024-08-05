@@ -27,6 +27,8 @@ public:
 
     void resized() override;
 
+    Section* getSection(const juce::String& type);
+
     HeaderSection* getHeaderSection() { return headerSection.get(); }
     FooterSection* getFooterSection() { return footerSection.get(); }
     OscillatorsSection* getOscillatorsSection() { return oscillatorsSection.get(); }

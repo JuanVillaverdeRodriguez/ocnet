@@ -24,9 +24,9 @@ DistortionSubsection::DistortionSubsection(int id, GUI_EventHandler& eventHandle
 
 void DistortionSubsection::resized()
 {
-    driveKnob->setBounds(0, 0, 50, 50);
+    sectionResized();
 
-    removeButton.setBounds(50, 0, 50, 50);
+    driveKnob->setBounds(0, 0, 50, 50);
 }
 
 

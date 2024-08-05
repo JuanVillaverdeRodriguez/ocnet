@@ -29,9 +29,9 @@ public:
 
     void onConnectModulation(int processorModulatorID, std::shared_ptr<Parameter2> parameter) override;
 
-    void onDeleteModulator(int processorID) override;
-    void onDeleteEffect(int processorID) override;
-    void onDeleteOscillator(int processorID) override;
+    void onDeleteSubsection(Subsection& subsection) override;
+
+    void onMoveSubsection(Subsection& subsection, int positions) override;
 
 
     OcnetGUI* getGui();

@@ -88,3 +88,13 @@ void OcnetGUI::resized()
     effectsSection.get()->setBounds(effectsSectionBounds);
 
 }
+
+Section* OcnetGUI::getSection(const juce::String& type)
+{
+    if (type == "Modulators")
+        return getModulatorsSection();
+    else if (type == "Effects")
+        return getEffectsSection();
+    else if (type == "Oscillators")
+        return getOscillatorsSection();
+}

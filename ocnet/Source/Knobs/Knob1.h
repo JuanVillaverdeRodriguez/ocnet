@@ -14,7 +14,7 @@ public:
 
 	void sliderValueChanged(Slider *slider) override;
 
-	inline std::shared_ptr<Parameter2> getParameter() { return parameter; }
+	inline std::shared_ptr<Parameter2> getParameter() { parameter->setRange(this->getRange().getStart(), this->getRange().getEnd(), this->getInterval()); return parameter; }
 
 private:
 	GUI_EventHandler& eventHandler;

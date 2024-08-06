@@ -29,6 +29,7 @@ public:
     //disconectParameter
 private:
     std::vector<std::shared_ptr<Parameter2>> parametersModulating;
+    //std::vector<std::shared_ptr<Modulation>> modulations;
 
     //float modulationBuffer[8][8192];
 

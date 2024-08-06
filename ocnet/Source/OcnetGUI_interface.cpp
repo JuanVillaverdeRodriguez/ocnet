@@ -75,6 +75,7 @@ void OcnetGUI_interface::onAddModulator(int option)
 void OcnetGUI_interface::onConnectModulation(int processorModulatorID, std::shared_ptr<Parameter2> parameter)
 {
     processor.connectModulation(processorModulatorID, parameter);
+    //processor.connectModulation(parameter);
 }
 
 void OcnetGUI_interface::onDeleteSubsection(Subsection& subsection)

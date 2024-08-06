@@ -25,6 +25,7 @@ EnvelopeSubsection::EnvelopeSubsection(int id, GUI_EventHandler& eventHandler) :
     this->addAndMakeVisible(*releaseKnob);
     this->addAndMakeVisible(dragZone);
 
+
     subsectionName.setText(juce::String("Envelope ") + juce::String(getId()));
 }
 
@@ -48,11 +49,14 @@ void EnvelopeSubsection::resized()
     posX += defaultKnobSize;
 
     dragZone.setBounds(posX, area.getHeight() - defaultKnobSize, defaultKnobSize, defaultKnobSize);
+    posX += defaultKnobSize;
 
     attackKnob->setRange(0.0f, 1.0f, 0.01f);
     decayKnob->setRange(0.0f, 1.0f, 0.01f);
     sustainKnob->setRange(0.0f, 1.0f, 0.01f);
     releaseKnob->setRange(0.0f, 1.0f, 0.01f);
+
+    modulationBubble.setBounds(posX, area.getHeight() - defaultKnobSize, defaultKnobSize, defaultKnobSize);
 }
 
 void EnvelopeSubsection::attachParams(ParameterHandler& parameterHandler) {
@@ -60,6 +64,9 @@ void EnvelopeSubsection::attachParams(ParameterHandler& parameterHandler) {
     parameterHandler.attachParameter(decayKnob->getParameter());
     parameterHandler.attachParameter(sustainKnob->getParameter());
     parameterHandler.attachParameter(releaseKnob->getParameter());
+
+    //this->getParentComponent()->getParentComponent()->addAndMakeVisible(modulationBubble);
+
 
     dragZone.setParentContainerAndComponent(*juce::DragAndDropContainer::findParentDragContainerFor(this), *this);
 }

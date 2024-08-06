@@ -143,6 +143,18 @@ void ParameterHandler::deleteAttachedParameters(const juce::String& parameterOwn
 
 }
 
+void ParameterHandler::connectModulation(std::shared_ptr<Parameter2> parameter)
+{
+    int numberOfConnectedModulations = parameter->getNumberOfConnectedModulations();
+
+    juce::Identifier parameterOwner(parameter->getParameterInfo().nodeId);
+    juce::ValueTree nodeTree = findNodeByName(rootNode, parameterOwner);
+
+    juce::Identifier propertyNameIdentifier(juce::String("modulation_") + juce::String(numberOfConnectedModulations) + juce::String("amount"));
+
+    nodeTree.setProperty(propertyNameIdentifier, -1, nullptr);
+}
+
 
 juce::ValueTree ParameterHandler::findNodeByName(const juce::ValueTree& tree, const juce::Identifier& name)
 {

@@ -15,6 +15,11 @@ Parameter2::Parameter2(ParameterInfo parameterInfo)
     value = 0.0f;
     modulation = 0.0f;
     numVoices = 0;
+    numberOfConnectedModulations = 0;
+
+    start = 0.0f;
+    end = 1.0f;
+    inc = 0.01f;
 
     this->parameterInfo.nodeId = parameterInfo.nodeId;
     this->parameterInfo.nodeIndentifierName = parameterInfo.nodeIndentifierName;
@@ -51,10 +56,30 @@ void Parameter2::updateModulationValue(juce::Array<float> modulationArray, int v
 
     modulations[voice] = modulationArray;
 
+    /*modulations[voice].clearQuick();
+
+    for (float value : modulationArray) {
+        modulations[voice].add(value * end);
+    }*/
+
     //DBG("MODULACION: " + juce::String(modulations[voice][0]));
     //if (modulation > 1.0f)
         //modulation = 1.0f;
 
+}
+
+int Parameter2::getNumberOfConnectedModulations()
+{
+    return modulations->size();
+}
+
+void Parameter2::connectModulation()
+{
+    //modulations(std::make_unique<Modulation>())
+}
+
+void Parameter2::setRange(float start, float end, float inc)
+{
 }
 
 void Parameter2::valueTreePropertyChanged(juce::ValueTree& treeWhosePropertyHasChanged, const juce::Identifier& property)

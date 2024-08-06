@@ -23,6 +23,8 @@ public:
     // Elimina del arbol de parametros y del vector de parametros los parametros para un modulo.
     void deleteAttachedParameters(const juce::String& parameterOwnerType, const juce::String& ownerID);
 
+    void connectModulation(std::shared_ptr<Parameter2> parameter);
+
 
 private:
     std::vector<std::shared_ptr<Parameter2>> parameters;

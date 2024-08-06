@@ -12,6 +12,7 @@
 
 ModulatorsSubsection::ModulatorsSubsection(GUI_EventHandler& eventHandler) : Subsection(eventHandler)
 {
+    this->addAndMakeVisible(modulationBubble);
 }
 
 

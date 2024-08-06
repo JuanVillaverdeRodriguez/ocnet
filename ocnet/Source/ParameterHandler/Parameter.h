@@ -10,6 +10,7 @@
 
 #pragma once
 #include "JuceHeader.h"
+#include "Modulation.h"
 
 struct ParameterInfo {
     juce::String nodeIndentifierName;
@@ -49,12 +50,25 @@ public:
 
     void setNumVoices(float numVoices) { this->numVoices = numVoices; }
 
+    int getNumberOfConnectedModulations();
+
+    void connectModulation();
+
+    void setRange(float start, float end, float inc);
+
 private:
     //int id;
     float value; //Valor guardado
     float modulation;
 
+    float start;
+    float end;
+    float inc;
+    //std::vector<std::shared_ptr<Modulation>> modulations;
+
     int numVoices;
+
+    int numberOfConnectedModulations;
 
     juce::Array<float> modulations[8];
 

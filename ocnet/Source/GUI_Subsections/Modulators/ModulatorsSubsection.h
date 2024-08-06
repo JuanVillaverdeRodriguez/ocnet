@@ -11,6 +11,7 @@
 #pragma once
 #include "../Subsection.h"
 #include "../../Knobs/Knob1.h"
+#include "../../GUI_Others/ModulationBubble.h"
 
 class ModulatorsSubsection : public Subsection {
 public:
@@ -18,7 +19,9 @@ public:
     virtual ~ModulatorsSubsection() = default;
 
     juce::String getType() override;
-private:
+protected:
+    //std::vector<ModulationBubble> modulationBubblesVector;
+    ModulationBubble modulationBubble;
 
     
 };

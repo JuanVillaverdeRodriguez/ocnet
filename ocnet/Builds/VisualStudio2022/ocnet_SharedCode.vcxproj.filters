@@ -2,6 +2,9 @@
 
 <Project ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
+    <Filter Include="ocnet\Source\GUI_Others">
+      <UniqueIdentifier>{ECA39C60-32A0-51A3-7D12-0D563E30C188}</UniqueIdentifier>
+    </Filter>
     <Filter Include="ocnet\Source\Utils">
       <UniqueIdentifier>{49F13C8E-AC01-BB31-93E4-10188FD27542}</UniqueIdentifier>
     </Filter>
@@ -748,11 +751,17 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\Source\GUI_Others\ModulationBubble.cpp">
+      <Filter>ocnet\Source\GUI_Others</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\Source\GUI_EventHandler.cpp">
       <Filter>ocnet\Source</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\Utils\Utils.cpp">
       <Filter>ocnet\Source\Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\ParameterHandler\Modulation.cpp">
+      <Filter>ocnet\Source\ParameterHandler</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\ParameterHandler\Parameter.cpp">
       <Filter>ocnet\Source\ParameterHandler</Filter>
@@ -3744,11 +3753,17 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\Source\GUI_Others\ModulationBubble.h">
+      <Filter>ocnet\Source\GUI_Others</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\Source\GUI_EventHandler.h">
       <Filter>ocnet\Source</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\Utils\Utils.h">
       <Filter>ocnet\Source\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\ParameterHandler\Modulation.h">
+      <Filter>ocnet\Source\ParameterHandler</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\ParameterHandler\Parameter.h">
       <Filter>ocnet\Source\ParameterHandler</Filter>

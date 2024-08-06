@@ -8,7 +8,10 @@ Knob1::Knob1(ParameterInfo parameterInfo, GUI_EventHandler& eventHandler) : even
 	this->setTextBoxStyle(juce::Slider::TextBoxBelow, true, 90, 0);
 	this->addListener(this);
 
+
 	parameter = std::make_unique<Parameter2>(parameterInfo);
+
+	
 }
 
 void Knob1::itemDropped(const SourceDetails& dragSourceDetails)

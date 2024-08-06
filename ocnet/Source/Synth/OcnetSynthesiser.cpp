@@ -101,3 +101,12 @@ void OcnetSynthesiser::addModulator(const juce::String& type, int id)
         }
     }
 }
+
+void OcnetSynthesiser::setBypassed(int id, bool bypassed)
+{
+    for (int i = 0; i < getNumVoices(); i++) {
+        if (auto voice = dynamic_cast<SynthVoice*>(getVoice(i))) {
+            voice->setBypassed(id, bypassed);
+        }
+    }
+}

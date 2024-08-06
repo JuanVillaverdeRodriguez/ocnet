@@ -26,6 +26,8 @@ public:
 
     virtual void onMoveSubsection(Subsection& subsection, int positions) {};
 
+    virtual void onBypassChanged(Subsection& subsection, bool toggled) {};
+
 private:
 
 };

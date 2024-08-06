@@ -84,7 +84,9 @@ void ProcessorHandler::processBlock(juce::AudioBuffer<float>& outputBuffer)
 
         for (int sample = 0; sample < numSamples; ++sample) {
             for (auto& processor : oscillatorsProcessorsList) {
-                buffer[sample] = processor->getNextSample(sample);
+                if (!processor->isBypassed()) {
+                    buffer[sample] = processor->getNextSample(sample);
+                }
             }
 
             //buffer[sample] *= mainEnvelope->getNextSample();
@@ -92,7 +94,9 @@ void ProcessorHandler::processBlock(juce::AudioBuffer<float>& outputBuffer)
     }
 
     for (auto& processor : effectsProcessorsList) {
-        processor->processBlock(outputBuffer);
+        if (!processor->isBypassed()) {
+            processor->processBlock(outputBuffer);
+        }
     }
 }
 
@@ -210,14 +214,18 @@ void ProcessorHandler::applyModulations(juce::AudioBuffer<float>& outputBuffer)
 
     for (int sample = 0; sample < numSamples; ++sample) {
         for (auto& processor : modulatorProcessorsList) {
-            processor->getNextSample(sample);
+            if (!processor->isBypassed()) {
+                processor->getNextSample(sample);
+
+            }
         }
         mainEnvelope->getNextSample(sample);
     }
 
-
     for (auto& processor : modulatorProcessorsList) {
-        processor->updateModulationValue(); // Actualizar la modulacion en los parametros asignados
+        if (!processor->isBypassed()) {
+            processor->updateModulationValue(); // Actualizar la modulacion en los parametros asignados
+        }
     }
 
     mainEnvelope->updateModulationValue();
@@ -226,22 +234,27 @@ void ProcessorHandler::applyModulations(juce::AudioBuffer<float>& outputBuffer)
 
 void ProcessorHandler::deleteProcessor(int processorID)
 {
-    // Buscar el processor dentro de la lista de moduladores
-    for (auto& processor : modulatorProcessorsList) {
-        if (processor->getId() == processorID) {
-            modulatorProcessorsList.remove(processor);
-            return;
-        }
-    }
+    // Buscar el processor dentro del vector de moduladores
+    modulatorProcessorsList.erase(
+        std::remove_if(modulatorProcessorsList.begin(), modulatorProcessorsList.end(),
+            [&processorID](const std::unique_ptr<Modulator>& modulator) {
+                return modulator->getId() == processorID;
+            }
+        ),
+        modulatorProcessorsList.end()
+    );
 
-    // Buscar el processor dentro de la lista de osciladores
-    for (auto& processor : oscillatorsProcessorsList) {
-        if (processor->getId() == processorID) {
-            oscillatorsProcessorsList.remove(processor);
-            return;
-        }
-    }
+    // Buscar el processor dentro del vector de osciladores
+    oscillatorsProcessorsList.erase(
+        std::remove_if(oscillatorsProcessorsList.begin(), oscillatorsProcessorsList.end(),
+            [&processorID](const std::unique_ptr<Processor>& oscillator) {
+                return oscillator->getId() == processorID;
+            }
+        ),
+        oscillatorsProcessorsList.end()
+    );
 
+    // Buscar el processor dentro del vector de efectos
     effectsProcessorsList.erase(
         std::remove_if(effectsProcessorsList.begin(), effectsProcessorsList.end(),
             [&processorID](const std::unique_ptr<Effector>& effector) {
@@ -277,6 +290,32 @@ void ProcessorHandler::addOscillator(const juce::String& type, int id, const Par
 
 void ProcessorHandler::addModulator(const juce::String& type, int id, const ParameterHandler& parameterHandler)
 {
+}
+
+void ProcessorHandler::setBypassed(int id, bool bypassed)
+{
+    std::unique_ptr<Processor>* oscillator;
+    std::unique_ptr<Effector>* effector;
+    std::unique_ptr<Modulator>* modulator;
+
+    effector = Utils::findElementByID(effectsProcessorsList, id);
+    if (effector) {
+        effector->get()->setBypassed(bypassed);
+        return;
+    }
+
+    oscillator = Utils::findElementByID(oscillatorsProcessorsList, id);
+    if (oscillator) {
+        oscillator->get()->setBypassed(bypassed);
+        return;
+    }
+
+    modulator = Utils::findElementByID(modulatorProcessorsList, id);
+    if (modulator) {
+        modulator->get()->setBypassed(bypassed);
+        return;
+    }
+
 }
 
 void ProcessorHandler::releaseResources()

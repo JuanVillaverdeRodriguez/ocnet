@@ -31,9 +31,13 @@ public:
     void inline setId(int id) { this->id = id; }
     int inline getId() { return id; }
 
+    void setBypassed(bool bypassed);
+    bool isBypassed();
+
 private:
     int voiceId;
     int id;
+    bool bypassed;
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(Processor)
 };

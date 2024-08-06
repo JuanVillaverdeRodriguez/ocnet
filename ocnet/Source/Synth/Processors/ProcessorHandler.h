@@ -55,11 +55,13 @@ public:
     void addOscillator(const juce::String& type, int id, const ParameterHandler& parameterHandler);
     void addModulator(const juce::String& type, int id, const ParameterHandler& parameterHandler);
 
+    void setBypassed(int id, bool bypassed);
+
 private:
     int voiceId;
 
-    std::list<std::unique_ptr<Processor>> oscillatorsProcessorsList;
-    std::list<std::unique_ptr<Modulator>> modulatorProcessorsList;
+    std::vector<std::unique_ptr<Processor>> oscillatorsProcessorsList;
+    std::vector<std::unique_ptr<Modulator>> modulatorProcessorsList;
     std::vector<std::unique_ptr<Effector>> effectsProcessorsList;;
 
     std::unique_ptr<EnvelopeProcessor> mainEnvelope;

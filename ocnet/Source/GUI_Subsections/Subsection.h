@@ -33,15 +33,22 @@ public:
 
     virtual juce::String getType() { return juce::String(""); };
 
+
+    void setBypassed(bool bypassed);
+
 private:
     int id;
     GUI_EventHandler& eventHandler;
+
+    bool bypassed;
 
 
 protected:
     juce::TextButton removeButton;
     juce::TextButton moveUpButton;
     juce::TextButton moveDownButton;
+    juce::TextButton bypassButton;
+
 
     juce::DrawableText subsectionName;
 

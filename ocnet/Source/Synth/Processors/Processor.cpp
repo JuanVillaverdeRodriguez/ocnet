@@ -14,4 +14,15 @@ Processor::Processor()
 {
     id = 0;
     voiceId = 0;
+    bypassed = false;
+}
+
+void Processor::setBypassed(bool bypassed)
+{
+    this->bypassed = bypassed;
+}
+
+bool Processor::isBypassed()
+{
+    return bypassed;
 }

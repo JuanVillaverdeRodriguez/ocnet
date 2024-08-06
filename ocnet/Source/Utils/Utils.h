@@ -74,10 +74,10 @@ public:
     * Devuelve el elemento encontrado.
     */
     template<typename T>
-    static T findElementByID(const std::vector<T>& elementsVector, int id) {
+    static T* findElementByID(std::vector<T>& elementsVector, int id) {
         for (auto& element : elementsVector) {
             if (element->getId() == id) {
-                return element;
+                return &element;
             }
         }
     }

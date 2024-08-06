@@ -33,6 +33,7 @@ public:
 
     void onMoveSubsection(Subsection& subsection, int positions) override;
 
+    void onBypassChanged(Subsection& subsection, bool toggled) override;
 
     OcnetGUI* getGui();
 

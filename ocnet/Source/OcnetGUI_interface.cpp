@@ -94,6 +94,13 @@ void OcnetGUI_interface::onMoveSubsection(Subsection& subsection, int positions)
     processor.moveProcessor(subsection.getId(), positions);
 }
 
+void OcnetGUI_interface::onBypassChanged(Subsection& subsection, bool toggled)
+{
+    subsection.setBypassed(toggled);
+    processor.setBypassed(subsection.getId(), toggled);
+    //processor.parameterHandler.setBypassed(subsection.getId(), toggled);
+}
+
 OcnetGUI* OcnetGUI_interface::getGui() {
     return gui_.get(); 
 }

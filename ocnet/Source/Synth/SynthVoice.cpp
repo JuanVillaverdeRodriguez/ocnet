@@ -401,3 +401,9 @@ void SynthVoice::addModulator(const juce::String& type, int id)
     processorhHandler.prepareToPlay(spec);
 
 }
+
+void SynthVoice::setBypassed(int id, bool bypassed)
+{
+    processorhHandler.setBypassed(id, bypassed);
+
+}

@@ -35,6 +35,8 @@ public:
     void addOscillator(const juce::String& type, int id);
     void addModulator(const juce::String& type, int id);
 
+    void setBypassed(int id, bool bypassed);
+
 
 private:
     bool hasEnvelope = false;

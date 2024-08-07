@@ -23,7 +23,7 @@ public:
     ProcessorHandler(const ParameterHandler& parameterHandler);
     ~ProcessorHandler();
 
-    void addWavetableOscillator(std::vector<WavetableStruct>& tables, int id, const ParameterHandler& parameterHandler);
+    void addWavetableOscillator(int id, const ParameterHandler& parameterHandler);
     void addDistortion(int id, const ParameterHandler& parameterHandler);
 
     void addEnvelope(int id, const ParameterHandler& parameterHandler);

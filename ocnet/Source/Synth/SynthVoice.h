@@ -16,7 +16,6 @@
 #include "Processors/ProcessorHandler.h"
 #include "../ParameterHandler/ParameterHandler.h"
 
-#define M_PI 3.14159265358979323846
 
 class SynthVoice : public juce::SynthesiserVoice
 {
@@ -42,11 +41,7 @@ public:
 
     void setVoiceNumberId(int id);
 
-    WavetableStruct makeWaveTable(int tableSize, std::unique_ptr<double[]>& ar, std::unique_ptr<double[]>& ai, double topFreq);
-
-    std::vector<WavetableStruct> fillWavetables(std::unique_ptr<double[]>& freqWaveRe, std::unique_ptr<double[]>& freqWaveIm, int tableSize);
-
-    std::vector<WavetableStruct> createSawWaveTables(int tableSize);
+    
 
     void inline setParameterHandler(ParameterHandler& parameterHandler) { this->parameterHandler = &parameterHandler; }
 
@@ -59,15 +54,11 @@ public:
     void addModulator(const juce::String& type, int id);
 
     void setBypassed(int id, bool bypassed);
-
-
-    //juce::AudioSampleBuffer generateSawtoothWavetable(int tableSize);
 private:
     juce::dsp::ProcessSpec spec;
 
     ParameterHandler* parameterHandler;
 
-    //ParameterHandler parameterHandler;
     int voiceId;
 
     double sampleRate;
@@ -75,7 +66,6 @@ private:
 
     ProcessorHandler processorhHandler;
 
-    std::vector<WavetableStruct> tables;
 
     juce::AudioBuffer<float> synthBuffer;
 

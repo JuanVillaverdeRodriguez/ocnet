@@ -29,8 +29,8 @@ WavetableOscillatorSubsection::WavetableOscillatorSubsection(int id, GUI_EventHa
 
     // Configuración del ComboBox
     waveTypeComboBox.addItem("Saw", 1);
-    waveTypeComboBox.addItem("Sine", 2);
-    waveTypeComboBox.addItem("Square", 3);
+    waveTypeComboBox.addItem("Square", 2);
+    waveTypeComboBox.addItem("Sine", 3);
     waveTypeComboBox.setSelectedId(1); // Selecciona "Saw" por defecto
     addAndMakeVisible(waveTypeComboBox);
 
@@ -59,6 +59,6 @@ void WavetableOscillatorSubsection::attachParams(ParameterHandler& parameterHand
     parameterHandler.attachParameter(volumeKnob->getParameter());
     parameterHandler.attachParameter(panningKnob->getParameter());
 
-    parameterHandler.addComboBoxParameter(baseParameterID + juce::String("waveType"), std::make_unique<ComboBoxParameter>("waveType", juce::StringArray{"Saw", "Sine", "Square"}, 0));
+    parameterHandler.addComboBoxParameter(baseParameterID + juce::String("waveType"), std::make_unique<ComboBoxParameter>("waveType", juce::StringArray{"Saw", "Square", "Sine"}, 0));
     waveTypeParameterAttachment = std::make_unique<OcnetComboBoxAttachment>(waveTypeComboBox, *parameterHandler.getComboBoxParameter(baseParameterID + juce::String("waveType"))->get());
 }

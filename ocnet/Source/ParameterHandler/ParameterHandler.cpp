@@ -91,6 +91,14 @@ std::shared_ptr<Parameter2> ParameterHandler::syncWithParam(const juce::String& 
     }
 }
 
+std::shared_ptr<ComboBoxParameter> ParameterHandler::syncWithComboBoxParam(const juce::String& parameterID) const
+{
+    auto it = comboBoxParametersMap.find(parameterID);
+    if (it != comboBoxParametersMap.end())
+        return it->second;
+    return nullptr;
+}
+
 void ParameterHandler::deleteAttachedParameters(const juce::String& parameterOwnerType, const juce::String& ownerID)
 {
     // Crear identificadores para el tipo de propietario y el ID del propietario
@@ -155,6 +163,51 @@ void ParameterHandler::connectModulation(std::shared_ptr<Parameter2> parameter)
     nodeTree.setProperty(propertyNameIdentifier, -1, nullptr);
 }
 
+std::shared_ptr<ComboBoxParameter>* ParameterHandler::getComboBoxParameter(const juce::String& parameterID)
+{
+    auto it = comboBoxParametersMap.find(parameterID);
+    if (it != comboBoxParametersMap.end())
+        return &it->second;
+    return nullptr;
+}
+
+void ParameterHandler::addComboBoxParameter(const juce::String& parameterID, std::unique_ptr<ComboBoxParameter> parameter)
+{
+    auto [type, ownerID, parameterTag] = splitParameterID(parameterID);
+
+    comboBoxParametersMap.emplace(parameterID, std::move(parameter));
+
+    juce::Identifier nodeType(type); // Envelopes, LFOs, OSCs...
+    juce::ValueTree nodeTree = findNodeByName(rootNode, nodeType);
+
+    if (nodeTree.isValid()) {
+        juce::Identifier propertyNameIdentifier(parameterTag); // Attack, decay, volume...
+
+        juce::ValueTree newNode = nodeTree.getChildWithName(ownerID); // 0, 1, 2....
+
+        if (newNode.isValid()) { // Si ya existe el nodo este (NodeID), usar el que ya existe (Añadir propiedades directamente)
+            newNode.setProperty(propertyNameIdentifier, 0.0f, nullptr);
+
+            newNode.addListener(this);
+
+        }
+        else { // Si no, crear uno nuevo
+            juce::Identifier newNode2Identifier(ownerID);
+            juce::ValueTree newNode2(newNode2Identifier);
+
+            nodeTree.addChild(newNode2, -1, nullptr);
+
+            newNode2.setProperty(propertyNameIdentifier, 0.0f, nullptr);
+
+            newNode2.addListener(this);
+        }
+    }
+}
+
+void ParameterHandler::valueTreePropertyChanged(juce::ValueTree& treeWhosePropertyHasChanged, const juce::Identifier& property)
+{
+}
+
 
 juce::ValueTree ParameterHandler::findNodeByName(const juce::ValueTree& tree, const juce::Identifier& name)
 {
@@ -200,4 +253,21 @@ void ParameterHandler::printValueTree(const juce::ValueTree& tree, int indentLev
     {
         printValueTree(tree.getChild(i), indentLevel + 1);
     }
+}
+
+std::tuple<juce::String, juce::String, juce::String> ParameterHandler::splitParameterID(const juce::String& input)
+{
+    // Encontrar la primera parte de la cadena
+    juce::String part1 = input.upToFirstOccurrenceOf("_", false, false);
+
+    // Eliminar la primera parte y el guion bajo del input
+    juce::String remainder = input.fromFirstOccurrenceOf("_", false, false);
+
+    // Encontrar la segunda parte
+    juce::String part2 = remainder.upToFirstOccurrenceOf("_", false, false);
+
+    // Eliminar la segunda parte y el guion bajo del resto
+    juce::String part3 = remainder.fromFirstOccurrenceOf("_", false, false);
+
+    return std::make_tuple(part1, part2, part3);
 }

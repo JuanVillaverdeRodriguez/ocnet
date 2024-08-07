@@ -19,5 +19,7 @@ public:
 
     juce::String getType() override;
 
-private:
+protected:
+    juce::String baseParameterID;
+
 };

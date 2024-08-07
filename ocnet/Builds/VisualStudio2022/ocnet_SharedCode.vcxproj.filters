@@ -760,13 +760,28 @@
     <ClCompile Include="..\..\Source\Utils\Utils.cpp">
       <Filter>ocnet\Source\Utils</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Source\ParameterHandler\ComboBoxParameter.cpp">
+      <Filter>ocnet\Source\ParameterHandler</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\Source\ParameterHandler\Modulation.cpp">
+      <Filter>ocnet\Source\ParameterHandler</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\ParameterHandler\OcnetComboBoxAttachment.cpp">
+      <Filter>ocnet\Source\ParameterHandler</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\ParameterHandler\OcnetParameter.cpp">
+      <Filter>ocnet\Source\ParameterHandler</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\ParameterHandler\OcnetSliderAttachment.cpp">
       <Filter>ocnet\Source\ParameterHandler</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\ParameterHandler\Parameter.cpp">
       <Filter>ocnet\Source\ParameterHandler</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\ParameterHandler\ParameterHandler.cpp">
+      <Filter>ocnet\Source\ParameterHandler</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\ParameterHandler\SliderParameter.cpp">
       <Filter>ocnet\Source\ParameterHandler</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\GUI_Subsections\Effects\DistortionSubsection.cpp">
@@ -860,6 +875,9 @@
       <Filter>ocnet\Source\Knobs</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\Knobs\Knob1.cpp">
+      <Filter>ocnet\Source\Knobs</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Knobs\OcnetComboBox.cpp">
       <Filter>ocnet\Source\Knobs</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\PluginProcessor.cpp">
@@ -3762,13 +3780,28 @@
     <ClInclude Include="..\..\Source\Utils\Utils.h">
       <Filter>ocnet\Source\Utils</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Source\ParameterHandler\ComboBoxParameter.h">
+      <Filter>ocnet\Source\ParameterHandler</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\Source\ParameterHandler\Modulation.h">
+      <Filter>ocnet\Source\ParameterHandler</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\ParameterHandler\OcnetComboBoxAttachment.h">
+      <Filter>ocnet\Source\ParameterHandler</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\ParameterHandler\OcnetParameter.h">
+      <Filter>ocnet\Source\ParameterHandler</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\ParameterHandler\OcnetSliderAttachment.h">
       <Filter>ocnet\Source\ParameterHandler</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\ParameterHandler\Parameter.h">
       <Filter>ocnet\Source\ParameterHandler</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\ParameterHandler\ParameterHandler.h">
+      <Filter>ocnet\Source\ParameterHandler</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\ParameterHandler\SliderParameter.h">
       <Filter>ocnet\Source\ParameterHandler</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\GUI_Subsections\Effects\DistortionSubsection.h">
@@ -3871,6 +3904,9 @@
       <Filter>ocnet\Source\Knobs</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\Knobs\Knob1.h">
+      <Filter>ocnet\Source\Knobs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Knobs\OcnetComboBox.h">
       <Filter>ocnet\Source\Knobs</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\PluginProcessor.h">

@@ -16,6 +16,8 @@ WavetableOscillatorProcessor::WavetableOscillatorProcessor(std::vector<Wavetable
     tableSize(tables[0].waveTable.getNumSamples() - 1),
     tables(tables)
 {
+    waveTypeIndexChoice = 0;
+
     cnt = 0;
     setId(id);
     //jassert(wavetable.waveTable.getNumChannels() == 1); // Asegúrate de que la wavetable sea mono
@@ -49,6 +51,7 @@ void WavetableOscillatorProcessor::setFrequency(float frequency, float sampleRat
 void WavetableOscillatorProcessor::syncParams(const ParameterHandler& parameterHandler)
 {
     gainParameter = parameterHandler.syncWithParam(juce::String("Oscillators"), juce::String(getId()), juce::String("volume"));
+    waveTypeParameter = parameterHandler.syncWithComboBoxParam(juce::String("Oscillators_") + juce::String(getId()) + juce::String("_waveType"));
 }
 
 float WavetableOscillatorProcessor::getNextSample(int sample)
@@ -89,6 +92,8 @@ void WavetableOscillatorProcessor::updateParameterValues()
 {
     oscGain = gainParameter->getValue();
     oscGainModulationBuffer = gainParameter->getModulationBuffer(getVoiceNumberId());
+    waveTypeIndexChoice = waveTypeParameter->getCurrentIndex();
+    DBG(juce::String("TIPO DE ONDA SELECIONADA: ") + juce::String(waveTypeIndexChoice));
 }
 
 void WavetableOscillatorProcessor::prepareToPlay(juce::dsp::ProcessSpec spec)
@@ -96,5 +101,4 @@ void WavetableOscillatorProcessor::prepareToPlay(juce::dsp::ProcessSpec spec)
     sampleRate = spec.sampleRate;
     gain.prepare(spec);
     DBG(juce::String(spec.sampleRate));
-
 }

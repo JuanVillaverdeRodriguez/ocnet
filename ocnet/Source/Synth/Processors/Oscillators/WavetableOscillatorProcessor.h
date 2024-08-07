@@ -31,6 +31,9 @@ public:
 private:
     juce::Array<float> oscGainModulationBuffer;
 
+    std::shared_ptr<ComboBoxParameter> waveTypeParameter;
+    int waveTypeIndexChoice;
+
     bool isPrepared;
     float sampleRate = 0.0f;
     WavetableStruct& wavetable;

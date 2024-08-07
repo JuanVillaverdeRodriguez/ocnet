@@ -142,9 +142,14 @@
     <ClCompile Include="..\..\Source\GUI_Others\ModulationBubble.cpp"/>
     <ClCompile Include="..\..\Source\GUI_EventHandler.cpp"/>
     <ClCompile Include="..\..\Source\Utils\Utils.cpp"/>
+    <ClCompile Include="..\..\Source\ParameterHandler\ComboBoxParameter.cpp"/>
     <ClCompile Include="..\..\Source\ParameterHandler\Modulation.cpp"/>
+    <ClCompile Include="..\..\Source\ParameterHandler\OcnetComboBoxAttachment.cpp"/>
+    <ClCompile Include="..\..\Source\ParameterHandler\OcnetParameter.cpp"/>
+    <ClCompile Include="..\..\Source\ParameterHandler\OcnetSliderAttachment.cpp"/>
     <ClCompile Include="..\..\Source\ParameterHandler\Parameter.cpp"/>
     <ClCompile Include="..\..\Source\ParameterHandler\ParameterHandler.cpp"/>
+    <ClCompile Include="..\..\Source\ParameterHandler\SliderParameter.cpp"/>
     <ClCompile Include="..\..\Source\GUI_Subsections\Effects\DistortionSubsection.cpp"/>
     <ClCompile Include="..\..\Source\GUI_Subsections\Effects\EffectsSubsection.cpp"/>
     <ClCompile Include="..\..\Source\GUI_Subsections\Effects\FilterSubsection.cpp"/>
@@ -176,6 +181,7 @@
     <ClCompile Include="..\..\Source\Synth\SynthVoice.cpp"/>
     <ClCompile Include="..\..\Source\Knobs\DragZone.cpp"/>
     <ClCompile Include="..\..\Source\Knobs\Knob1.cpp"/>
+    <ClCompile Include="..\..\Source\Knobs\OcnetComboBox.cpp"/>
     <ClCompile Include="..\..\Source\PluginProcessor.cpp"/>
     <ClCompile Include="..\..\Source\PluginEditor.cpp"/>
     <ClCompile Include="..\..\JuceLibraryCode\modules\juce_audio_basics\audio_play_head\juce_AudioPlayHead.cpp">
@@ -2891,9 +2897,14 @@
     <ClInclude Include="..\..\Source\GUI_Others\ModulationBubble.h"/>
     <ClInclude Include="..\..\Source\GUI_EventHandler.h"/>
     <ClInclude Include="..\..\Source\Utils\Utils.h"/>
+    <ClInclude Include="..\..\Source\ParameterHandler\ComboBoxParameter.h"/>
     <ClInclude Include="..\..\Source\ParameterHandler\Modulation.h"/>
+    <ClInclude Include="..\..\Source\ParameterHandler\OcnetComboBoxAttachment.h"/>
+    <ClInclude Include="..\..\Source\ParameterHandler\OcnetParameter.h"/>
+    <ClInclude Include="..\..\Source\ParameterHandler\OcnetSliderAttachment.h"/>
     <ClInclude Include="..\..\Source\ParameterHandler\Parameter.h"/>
     <ClInclude Include="..\..\Source\ParameterHandler\ParameterHandler.h"/>
+    <ClInclude Include="..\..\Source\ParameterHandler\SliderParameter.h"/>
     <ClInclude Include="..\..\Source\GUI_Subsections\Effects\DistortionSubsection.h"/>
     <ClInclude Include="..\..\Source\GUI_Subsections\Effects\EffectsSubsection.h"/>
     <ClInclude Include="..\..\Source\GUI_Subsections\Effects\FilterSubsection.h"/>
@@ -2928,6 +2939,7 @@
     <ClInclude Include="..\..\Source\Synth\SynthVoice.h"/>
     <ClInclude Include="..\..\Source\Knobs\DragZone.h"/>
     <ClInclude Include="..\..\Source\Knobs\Knob1.h"/>
+    <ClInclude Include="..\..\Source\Knobs\OcnetComboBox.h"/>
     <ClInclude Include="..\..\Source\PluginProcessor.h"/>
     <ClInclude Include="..\..\Source\PluginEditor.h"/>
     <ClInclude Include="..\..\JuceLibraryCode\modules\juce_audio_basics\audio_play_head\juce_AudioPlayHead.h"/>

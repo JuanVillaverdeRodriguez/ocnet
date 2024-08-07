@@ -21,14 +21,34 @@
         <FILE id="d3i0oc" name="Utils.h" compile="0" resource="0" file="Source/Utils/Utils.h"/>
       </GROUP>
       <GROUP id="{3886D1F5-0388-AA25-2786-5DDC6F87D140}" name="ParameterHandler">
+        <FILE id="cHO19z" name="ComboBoxParameter.cpp" compile="1" resource="0"
+              file="Source/ParameterHandler/ComboBoxParameter.cpp"/>
+        <FILE id="itv5y7" name="ComboBoxParameter.h" compile="0" resource="0"
+              file="Source/ParameterHandler/ComboBoxParameter.h"/>
         <FILE id="t35nWS" name="Modulation.cpp" compile="1" resource="0" file="Source/ParameterHandler/Modulation.cpp"/>
         <FILE id="Tkg4D3" name="Modulation.h" compile="0" resource="0" file="Source/ParameterHandler/Modulation.h"/>
+        <FILE id="B3Vyrw" name="OcnetComboBoxAttachment.cpp" compile="1" resource="0"
+              file="Source/ParameterHandler/OcnetComboBoxAttachment.cpp"/>
+        <FILE id="gBhCn4" name="OcnetComboBoxAttachment.h" compile="0" resource="0"
+              file="Source/ParameterHandler/OcnetComboBoxAttachment.h"/>
+        <FILE id="olE2Ss" name="OcnetParameter.cpp" compile="1" resource="0"
+              file="Source/ParameterHandler/OcnetParameter.cpp"/>
+        <FILE id="hkO8RO" name="OcnetParameter.h" compile="0" resource="0"
+              file="Source/ParameterHandler/OcnetParameter.h"/>
+        <FILE id="Cqe1Zd" name="OcnetSliderAttachment.cpp" compile="1" resource="0"
+              file="Source/ParameterHandler/OcnetSliderAttachment.cpp"/>
+        <FILE id="z1qTkN" name="OcnetSliderAttachment.h" compile="0" resource="0"
+              file="Source/ParameterHandler/OcnetSliderAttachment.h"/>
         <FILE id="Xy1vaw" name="Parameter.cpp" compile="1" resource="0" file="Source/ParameterHandler/Parameter.cpp"/>
         <FILE id="tT6DKv" name="Parameter.h" compile="0" resource="0" file="Source/ParameterHandler/Parameter.h"/>
         <FILE id="ULBX8J" name="ParameterHandler.cpp" compile="1" resource="0"
               file="Source/ParameterHandler/ParameterHandler.cpp"/>
         <FILE id="O9uNYn" name="ParameterHandler.h" compile="0" resource="0"
               file="Source/ParameterHandler/ParameterHandler.h"/>
+        <FILE id="mblaid" name="SliderParameter.cpp" compile="1" resource="0"
+              file="Source/ParameterHandler/SliderParameter.cpp"/>
+        <FILE id="p6hWc4" name="SliderParameter.h" compile="0" resource="0"
+              file="Source/ParameterHandler/SliderParameter.h"/>
       </GROUP>
       <GROUP id="{B172D91C-232C-204D-990B-B098D55147A4}" name="GUI_Subsections">
         <GROUP id="{92FB6D28-4C7B-1793-4DBB-E52D07FBB922}" name="Effects">
@@ -163,6 +183,9 @@
         <FILE id="ptmhY6" name="DragZone.h" compile="0" resource="0" file="Source/Knobs/DragZone.h"/>
         <FILE id="cqEOg6" name="Knob1.cpp" compile="1" resource="0" file="Source/Knobs/Knob1.cpp"/>
         <FILE id="CnyiZ3" name="Knob1.h" compile="0" resource="0" file="Source/Knobs/Knob1.h"/>
+        <FILE id="Yd7K7R" name="OcnetComboBox.cpp" compile="1" resource="0"
+              file="Source/Knobs/OcnetComboBox.cpp"/>
+        <FILE id="PPuc6m" name="OcnetComboBox.h" compile="0" resource="0" file="Source/Knobs/OcnetComboBox.h"/>
       </GROUP>
       <FILE id="yGLvQj" name="PluginProcessor.cpp" compile="1" resource="0"
             file="Source/PluginProcessor.cpp"/>

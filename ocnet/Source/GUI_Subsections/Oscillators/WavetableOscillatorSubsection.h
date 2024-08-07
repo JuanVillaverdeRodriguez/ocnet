@@ -13,6 +13,8 @@
 #include "../../Knobs/Knob1.h"
 #include "../Subsection.h"
 #include "OscillatorsSubsection.h"
+#include "../../ParameterHandler/ComboBoxParameter.h"
+#include "../../ParameterHandler/OcnetComboBoxAttachment.h"
 
 class WavetableOscillatorSubsection : public OscillatorsSubsection {
 public:
@@ -22,10 +24,13 @@ public:
 
     void attachParams(ParameterHandler& parameterHandler) override;
 
-
 private:
     std::unique_ptr<Knob1> volumeKnob;
     std::unique_ptr<Knob1> panningKnob;
+
+    juce::ComboBox waveTypeComboBox;
+
+    std::unique_ptr<OcnetComboBoxAttachment> waveTypeParameterAttachment;
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(WavetableOscillatorSubsection)
 };

@@ -26,7 +26,6 @@ public:
 
     void buttonClicked(juce::Button* clickedButton) override;
 
-
     virtual void attachParams(ParameterHandler& parameterHandler) {};
 
     void sectionResized();

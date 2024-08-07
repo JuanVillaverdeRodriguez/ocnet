@@ -25,7 +25,7 @@ struct ParameterInfo {
     }
 };
 
-class Parameter2 :juce::ValueTree::Listener {
+class Parameter2 : juce::ValueTree::Listener {
 public:
     Parameter2(ParameterInfo parameterInfo);
     ~Parameter2() override;

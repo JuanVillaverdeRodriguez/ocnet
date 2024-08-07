@@ -72,5 +72,6 @@ void DistortionProcessor::processBlock(juce::AudioBuffer<float>& buffer)
 
 void DistortionProcessor::syncParams(const ParameterHandler& parameterHandler)
 {
-    driveParameter = parameterHandler.syncWithParam(juce::String("Effects"), juce::String(getId()), juce::String("drive"));
+    driveParameter = parameterHandler.syncWithSliderParam(juce::String("Distortion_") + juce::String(getId()) + juce::String("_drive"));
+
 }

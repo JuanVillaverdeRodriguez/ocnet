@@ -32,6 +32,7 @@ public:
 
     virtual juce::String getType() { return juce::String(""); };
 
+    juce::String createParameterID(const juce::String& type, int id, const juce::String& parameterName);
 
     void setBypassed(bool bypassed);
 

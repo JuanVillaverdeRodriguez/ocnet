@@ -14,17 +14,16 @@ EnvelopeSubsection::EnvelopeSubsection(int id, GUI_EventHandler& eventHandler) :
 {
     setId(id);
 
-    attackKnob = std::make_unique<Knob1>(ParameterInfo{ juce::String("Envelopes"), juce::String(getId()), juce::String("attack")}, eventHandler);
-    decayKnob = std::make_unique<Knob1>(ParameterInfo{ juce::String("Envelopes"), juce::String(getId()), juce::String("decay") }, eventHandler);
-    sustainKnob = std::make_unique<Knob1>(ParameterInfo{ juce::String("Envelopes"), juce::String(getId()), juce::String("sustain") }, eventHandler);
-    releaseKnob = std::make_unique<Knob1>(ParameterInfo{ juce::String("Envelopes"), juce::String(getId()), juce::String("release") }, eventHandler);
+    attackKnob = std::make_unique<Knob1>(createParameterID("Envelope", getId(), "attack"), eventHandler);
+    decayKnob = std::make_unique<Knob1>(createParameterID("Envelope", getId(), "decay"), eventHandler);
+    sustainKnob = std::make_unique<Knob1>(createParameterID("Envelope", getId(), "sustain"), eventHandler);
+    releaseKnob = std::make_unique<Knob1>(createParameterID("Envelope", getId(), "release"), eventHandler);
 
     this->addAndMakeVisible(*attackKnob);
     this->addAndMakeVisible(*decayKnob);
     this->addAndMakeVisible(*sustainKnob);
     this->addAndMakeVisible(*releaseKnob);
     this->addAndMakeVisible(dragZone);
-
 
     subsectionName.setText(juce::String("Envelope ") + juce::String(getId()));
 }
@@ -60,13 +59,17 @@ void EnvelopeSubsection::resized()
 }
 
 void EnvelopeSubsection::attachParams(ParameterHandler& parameterHandler) {
-    parameterHandler.attachParameter(attackKnob->getParameter());
-    parameterHandler.attachParameter(decayKnob->getParameter());
-    parameterHandler.attachParameter(sustainKnob->getParameter());
-    parameterHandler.attachParameter(releaseKnob->getParameter());
+    parameterHandler.addSliderParameter(createParameterID("Envelope", getId(), "attack"), std::make_shared<SliderParameter>("attack"));
+    attackParameterAttachment = std::make_unique<OcnetSliderAttachment>(*attackKnob, *parameterHandler.getSliderParameter(createParameterID("Envelope", getId(), "attack"))->get());
 
-    //this->getParentComponent()->getParentComponent()->addAndMakeVisible(modulationBubble);
+    parameterHandler.addSliderParameter(createParameterID("Envelope", getId(), "decay"), std::make_shared<SliderParameter>("decay"));
+    decayParameterAttachment = std::make_unique<OcnetSliderAttachment>(*decayKnob, *parameterHandler.getSliderParameter(createParameterID("Envelope", getId(), "decay"))->get());
 
+    parameterHandler.addSliderParameter(createParameterID("Envelope", getId(), "sustain"), std::make_shared<SliderParameter>("sustain"));
+    sustainParameterAttachment = std::make_unique<OcnetSliderAttachment>(*sustainKnob, *parameterHandler.getSliderParameter(createParameterID("Envelope", getId(), "sustain"))->get());
+
+    parameterHandler.addSliderParameter(createParameterID("Envelope", getId(), "release"), std::make_shared<SliderParameter>("release"));
+    releaseParameterAttachment = std::make_unique<OcnetSliderAttachment>(*releaseKnob, *parameterHandler.getSliderParameter(createParameterID("Envelope", getId(), "release"))->get());
 
     dragZone.setParentContainerAndComponent(*juce::DragAndDropContainer::findParentDragContainerFor(this), *this);
 }

@@ -13,6 +13,7 @@
 #include "../Subsection.h"
 #include "../../Knobs/Knob1.h"
 #include "EffectsSubsection.h"
+#include "../../ParameterHandler/OcnetSliderAttachment.h"
 
 class DistortionSubsection : public EffectsSubsection {
 public:
@@ -25,6 +26,7 @@ public:
 private:
 
     std::unique_ptr<Knob1> driveKnob;
+    std::unique_ptr<OcnetSliderAttachment> driveParameterAttachment;
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(DistortionSubsection)
 

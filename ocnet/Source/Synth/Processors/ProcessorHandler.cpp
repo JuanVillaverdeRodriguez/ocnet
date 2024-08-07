@@ -39,40 +39,11 @@
 ProcessorHandler::ProcessorHandler(const ParameterHandler& parameterHandler)
 {
     voiceId = 0;
-
     mainEnvelope = std::make_unique<EnvelopeProcessor>(0);
-
 }
 
 ProcessorHandler::~ProcessorHandler()
 {
-}
-
-void ProcessorHandler::addWavetableOscillator(int id, const ParameterHandler& parameterHandler)
-{
-    oscillatorsProcessorsList.push_back(std::make_unique<WavetableOscillatorProcessor>(id));
-    oscillatorsProcessorsList.back()->setVoiceNumberId(voiceId);
-    oscillatorsProcessorsList.back()->syncParams(parameterHandler);
-}
-
-void ProcessorHandler::addDistortion(int id, const ParameterHandler& parameterHandler)
-{
-    effectsProcessorsList.push_back(std::make_unique<DistortionProcessor>(id));
-    effectsProcessorsList.back()->setVoiceNumberId(voiceId);
-    effectsProcessorsList.back()->syncParams(parameterHandler);
-}
-
-void ProcessorHandler::addEnvelope(int id, const ParameterHandler& parameterHandler)
-{
-    if (id == 0) {
-        mainEnvelope->syncParams(parameterHandler);
-        mainEnvelope->setVoiceNumberId(voiceId);
-    }
-    else {
-        modulatorProcessorsList.push_back(std::make_unique<EnvelopeProcessor>(id));
-        modulatorProcessorsList.back()->setVoiceNumberId(voiceId);
-        modulatorProcessorsList.back()->syncParams(parameterHandler);
-    }
 }
 
 void ProcessorHandler::processBlock(juce::AudioBuffer<float>& outputBuffer)
@@ -278,7 +249,8 @@ void ProcessorHandler::addEffect(const juce::String& type, int id, const Paramet
 {
     if (type == "Filter")
         effectsProcessorsList.push_back(std::make_unique<FilterProcessor>(id));
-
+    else if (type == "Distortion")
+        effectsProcessorsList.push_back(std::make_unique<DistortionProcessor>(id));
 
     effectsProcessorsList.back()->setVoiceNumberId(voiceId);
     effectsProcessorsList.back()->syncParams(parameterHandler);
@@ -286,10 +258,28 @@ void ProcessorHandler::addEffect(const juce::String& type, int id, const Paramet
 
 void ProcessorHandler::addOscillator(const juce::String& type, int id, const ParameterHandler& parameterHandler)
 {
+    if (type == "WavetableOscillator")
+        oscillatorsProcessorsList.push_back(std::make_unique<WavetableOscillatorProcessor>(id));
+
+    oscillatorsProcessorsList.back()->setVoiceNumberId(voiceId);
+    oscillatorsProcessorsList.back()->syncParams(parameterHandler);
 }
 
 void ProcessorHandler::addModulator(const juce::String& type, int id, const ParameterHandler& parameterHandler)
 {
+    if (type == "Envelope") {
+        if (id == 0) {
+            mainEnvelope->syncParams(parameterHandler);
+            mainEnvelope->setVoiceNumberId(voiceId);
+            return;
+        }
+        else {
+            modulatorProcessorsList.push_back(std::make_unique<EnvelopeProcessor>(id));
+        }
+    }
+
+    modulatorProcessorsList.back()->setVoiceNumberId(voiceId);
+    modulatorProcessorsList.back()->syncParams(parameterHandler);
 }
 
 void ProcessorHandler::setBypassed(int id, bool bypassed)

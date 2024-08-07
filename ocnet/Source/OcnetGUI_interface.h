@@ -21,19 +21,19 @@ public:
     OcnetGUI_interface(OcnetAudioProcessor *processor);
     ~OcnetGUI_interface() = default;
 
-    void onAddOscillator(int option) override;
+    void onAddOscillator(const juce::String& type) override;
+    void onAddEffect(const juce::String& type) override;
+    void onAddModulator(const juce::String& typen) override;
 
-    void onAddEffect(int option) override;
-
-    void onAddModulator(int option) override;
-
-    void onConnectModulation(int processorModulatorID, std::shared_ptr<Parameter2> parameter) override;
+    void onConnectModulation(int processorModulatorID, const juce::String& parameterID) override;
 
     void onDeleteSubsection(Subsection& subsection) override;
 
     void onMoveSubsection(Subsection& subsection, int positions) override;
 
     void onBypassChanged(Subsection& subsection, bool toggled) override;
+
+    void initialiseGUIFromTree(juce::ValueTree tree);
 
     OcnetGUI* getGui();
 

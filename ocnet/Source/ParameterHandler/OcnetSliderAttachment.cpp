@@ -12,6 +12,7 @@
 
 OcnetSliderAttachment::OcnetSliderAttachment(juce::Slider& slider, SliderParameter& sliderParameter) : slider(slider), sliderParameter(sliderParameter)
 {
+    slider.addListener(this);
 }
 
 void OcnetSliderAttachment::sliderValueChanged(juce::Slider* sliderThatHasChanged)

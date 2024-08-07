@@ -22,8 +22,7 @@ class EffectsSection : public Section, juce::Button::Listener {
 public:
     EffectsSection(GUI_EventHandler& eventHandler);
 
-    void addDistortion(int id, ParameterHandler& parameterHandler);
-    void addFilter(int id, ParameterHandler& parameterHandler);
+    void addEffect(const juce::String& type, int id, ParameterHandler& parameterHandler);
 
     void buttonClicked(juce::Button* clickedButton) override;
     void paint(juce::Graphics& g) override;

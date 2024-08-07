@@ -18,77 +18,49 @@ ParameterHandler::ParameterHandler()
 
     this->rootNode = rootNode;
     
+
     static juce::Identifier modulatorsIndentifier("Modulators");
     juce::ValueTree modulatorsNode(modulatorsIndentifier);
 
-    static juce::Identifier wavetableOscillatorsIdentifier("Oscillators");
-    juce::ValueTree wavetableOscillatorsNode(wavetableOscillatorsIdentifier);
+    static juce::Identifier oscillatorsIdentifier("Oscillators");
+    juce::ValueTree oscillatorsNode(oscillatorsIdentifier);
 
     static juce::Identifier effectsIdentifier("Effects");
     juce::ValueTree effectsNode(effectsIdentifier);
 
-    static juce::Identifier envelopesIdentifier("Envelopes");
+
+    static juce::Identifier envelopesIdentifier("Envelope");
     juce::ValueTree envelopesNode(envelopesIdentifier);
 
-    static juce::Identifier filtersIndentifier("Filters");
+    static juce::Identifier distortionsIdentifier("Distortion");
+    juce::ValueTree distortionsNode(distortionsIdentifier);
+
+    static juce::Identifier filtersIndentifier("Filter");
     juce::ValueTree filtersNode(filtersIndentifier);
+
+    static juce::Identifier wavetableOscillatorsIndentifier("WavetableOscillator");
+    juce::ValueTree wavetableOscillatorsNode(wavetableOscillatorsIndentifier);
 
 
     rootNode.addChild(modulatorsNode, -1, nullptr);
-    rootNode.addChild(wavetableOscillatorsNode, -1, nullptr);
+    rootNode.addChild(oscillatorsNode, -1, nullptr);
     rootNode.addChild(effectsNode, -1, nullptr);
 
     modulatorsNode.addChild(envelopesNode, -1, nullptr);
     effectsNode.addChild(filtersNode, -1, nullptr);
+    effectsNode.addChild(distortionsNode, -1, nullptr);
+    oscillatorsNode.addChild(wavetableOscillatorsNode, -1, nullptr);
+
+
 
 }
 
-// El codigo de esta funcion es super feo y repetitivo porque no acabo de entender bien los juce::ValueTree.
-///TODO: Reorganizarlo un poco
-void ParameterHandler::attachParameter(std::shared_ptr<Parameter2> parameter)
+std::shared_ptr<SliderParameter> ParameterHandler::syncWithSliderParam(const juce::String& parameterID) const
 {
-    parameters.push_back(parameter);
-
-    ParameterInfo parameterInfo = parameter->getParameterInfo();
-
-    juce::Identifier nodeIdentifier(parameterInfo.nodeIndentifierName); // Envelopes, LFOs, OSCs...
-    juce::ValueTree nodeTree = findNodeByName(rootNode, nodeIdentifier);
-    
-    if (nodeTree.isValid()) {
-        juce::Identifier propertyNameIdentifier(parameterInfo.propertyName); // Attack, decay, volume...
-
-        juce::ValueTree newNode = nodeTree.getChildWithName(parameterInfo.nodeId); // 0, 1, 2....
-
-        if (newNode.isValid()) { // Si ya existe el nodo este (NodeID), usar el que ya existe (Añadir propiedades directamente)
-            newNode.setProperty(propertyNameIdentifier, 0.0f, nullptr);
-
-            parameter->setTreeListener(newNode);
-        }
-        else { // Si no, crear uno nuevo
-            juce::Identifier newNode2Identifier(parameterInfo.nodeId);
-            juce::ValueTree newNode2(newNode2Identifier);
-
-            nodeTree.addChild(newNode2, -1, nullptr);
-
-            newNode2.setProperty(propertyNameIdentifier, 0.0f, nullptr);
-
-            parameter->setTreeListener(newNode2);
-        }
-    }
-    
-
-}
-
-
-std::shared_ptr<Parameter2> ParameterHandler::syncWithParam(const juce::String& parameterOwnerType, const juce::String& ownerID, const juce::String& parameterTag) const
-{
-    ParameterInfo parameterInfo{ parameterOwnerType, ownerID, parameterTag };
-
-    for (auto param : parameters) {
-        if (param->getParameterInfo() == parameterInfo) {
-            return param;
-        }
-    }
+    auto it = sliderParametersMap.find(parameterID);
+    if (it != sliderParametersMap.end())
+        return it->second;
+    return nullptr;
 }
 
 std::shared_ptr<ComboBoxParameter> ParameterHandler::syncWithComboBoxParam(const juce::String& parameterID) const
@@ -107,8 +79,8 @@ void ParameterHandler::deleteAttachedParameters(const juce::String& parameterOwn
 
 
     DBG("ANTES DE BORRAR: ");
-    for (auto param : parameters) {
-        DBG(param->getParameterInfo().propertyName);
+    for (const auto& param : sliderParametersMap) {
+        DBG(param.second->getParameterID());
     }
 
     printValueTree(rootNode, 1);
@@ -122,29 +94,26 @@ void ParameterHandler::deleteAttachedParameters(const juce::String& parameterOwn
 
         if (ownerIDNode.isValid()) // 0, 1, 2, 3...
         {
-            // Eliminar el nodo del ValueTree
             juce::ValueTree parentNode = ownerIDNode.getParent();
-            juce::String deletedNodeParentName = parentNode.getType().toString();
-            parentNode.removeChild(ownerIDNode, nullptr);
+            juce::String ownerIDNodeParentName = parentNode.getType().toString();
 
             // Eliminar los parámetros asociados en el vector de parámetros
-            parameters.erase(
-                std::remove_if(parameters.begin(), parameters.end(),
-                    [&](const std::shared_ptr<Parameter2>& param) {
-                        return param->getParameterInfo().nodeId == ownerID &&
-                            param->getParameterInfo().nodeIndentifierName == deletedNodeParentName;
-                    }
-                ),
-                parameters.end()
-            );
+            for (int k = 0; k < ownerIDNode.getNumProperties(); k++) {
+                auto propertyIdentifier = ownerIDNode.getPropertyName(k);
+                sliderParametersMap.erase(ownerIDNodeParentName + juce::String("_") + ownerID + juce::String("_") + propertyIdentifier.toString());
+                comboBoxParametersMap.erase(ownerIDNodeParentName + juce::String("_") + ownerID + juce::String("_") + propertyIdentifier.toString());
+            }
+
+            // Eliminar el nodo del ValueTree
+            parentNode.removeChild(ownerIDNode, nullptr);
         }
     }
     
 
     DBG("DESPUES DE BORRAR: ");
 
-    for (auto param : parameters) {
-        DBG(param->getParameterInfo().propertyName);
+    for (const auto& param : sliderParametersMap) {
+        DBG(param.second->getParameterID());
     }
 
     printValueTree(rootNode, 1);
@@ -171,7 +140,15 @@ std::shared_ptr<ComboBoxParameter>* ParameterHandler::getComboBoxParameter(const
     return nullptr;
 }
 
-void ParameterHandler::addComboBoxParameter(const juce::String& parameterID, std::unique_ptr<ComboBoxParameter> parameter)
+std::shared_ptr<SliderParameter>* ParameterHandler::getSliderParameter(const juce::String& parameterID)
+{
+    auto it = sliderParametersMap.find(parameterID);
+    if (it != sliderParametersMap.end())
+        return &it->second;
+    return nullptr;
+}
+
+void ParameterHandler::addComboBoxParameter(const juce::String& parameterID, std::shared_ptr<ComboBoxParameter> parameter)
 {
     auto [type, ownerID, parameterTag] = splitParameterID(parameterID);
 
@@ -188,8 +165,6 @@ void ParameterHandler::addComboBoxParameter(const juce::String& parameterID, std
         if (newNode.isValid()) { // Si ya existe el nodo este (NodeID), usar el que ya existe (Añadir propiedades directamente)
             newNode.setProperty(propertyNameIdentifier, 0.0f, nullptr);
 
-            newNode.addListener(this);
-
         }
         else { // Si no, crear uno nuevo
             juce::Identifier newNode2Identifier(ownerID);
@@ -199,13 +174,45 @@ void ParameterHandler::addComboBoxParameter(const juce::String& parameterID, std
 
             newNode2.setProperty(propertyNameIdentifier, 0.0f, nullptr);
 
-            newNode2.addListener(this);
         }
     }
 }
 
-void ParameterHandler::valueTreePropertyChanged(juce::ValueTree& treeWhosePropertyHasChanged, const juce::Identifier& property)
+void ParameterHandler::addSliderParameter(const juce::String& parameterID, std::shared_ptr<SliderParameter> parameter)
 {
+    auto [type, ownerID, parameterTag] = splitParameterID(parameterID);
+
+    sliderParametersMap.emplace(parameterID, parameter);
+
+    juce::Identifier nodeType(type); // Envelopes, LFOs, OSCs...
+    juce::ValueTree nodeTree = findNodeByName(rootNode, nodeType);
+
+    if (nodeTree.isValid()) {
+        juce::Identifier propertyNameIdentifier(parameterTag); // Attack, decay, volume...
+
+        juce::ValueTree newNode = nodeTree.getChildWithName(ownerID); // 0, 1, 2....
+
+        if (newNode.isValid()) { // Si ya existe el nodo este (NodeID), usar el que ya existe (Añadir propiedades directamente)
+            newNode.setProperty(propertyNameIdentifier, 0.0f, nullptr);
+            parameter->addTreeListener(newNode);
+        }
+        else { // Si no, crear uno nuevo
+            juce::Identifier newNode2Identifier(ownerID);
+            juce::ValueTree newNode2(newNode2Identifier);
+
+            nodeTree.addChild(newNode2, -1, nullptr);
+
+            newNode2.setProperty(propertyNameIdentifier, 0.0f, nullptr);
+            parameter->addTreeListener(newNode2);
+        }
+    }
+}
+
+
+
+juce::ValueTree ParameterHandler::getRootTree()
+{
+    return rootNode;
 }
 
 

@@ -16,13 +16,13 @@ class Subsection;
 
 class GUI_EventHandler {
 public:
-    virtual void onAddEffect(int effectID) {};
-    virtual void onAddOscillator(int option) {};
-    virtual void onAddModulator(int option) {};
+    virtual void onAddEffect(const juce::String& type) {};
+    virtual void onAddOscillator(const juce::String& type) {};
+    virtual void onAddModulator(const juce::String& type) {};
 
     virtual void onDeleteSubsection(Subsection& subsection) {};
 
-    virtual void onConnectModulation(int processorModulatorID, std::shared_ptr<Parameter2> parameter) {};
+    virtual void onConnectModulation(int processorModulatorID, const juce::String& parameterID) {};
 
     virtual void onMoveSubsection(Subsection& subsection, int positions) {};
 

@@ -47,7 +47,8 @@ float FilterProcessor::getNextSample(int sample)
 
 void FilterProcessor::syncParams(const ParameterHandler& parameterHandler)
 {
-    freqCutParameter = parameterHandler.syncWithParam(juce::String("Effects"), juce::String(getId()), juce::String("freqCut"));
+    freqCutParameter = parameterHandler.syncWithSliderParam(juce::String("Filter_") + juce::String(getId()) + juce::String("_freqCut"));
+
 }
 
 float FilterProcessor::getNextSample(float currentSampleValue)

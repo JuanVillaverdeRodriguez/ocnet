@@ -38,21 +38,13 @@ std::vector<std::unique_ptr<Subsection>>* EffectsSection::getListOfSubsections()
     return &subsectionsVector;
 }
 
-void EffectsSection::addDistortion(int id, ParameterHandler& parameterHandler)
+void EffectsSection::addEffect(const juce::String& type, int id, ParameterHandler& parameterHandler)
 {
-    std::unique_ptr<DistortionSubsection> distortion = std::make_unique<DistortionSubsection>(id, eventHandler);
+    if (type == "Filter")
+        subsectionsVector.push_back(std::make_unique<FilterSubsection>(id, eventHandler));
+    else if (type == "Distortion")
+        subsectionsVector.push_back(std::make_unique<DistortionSubsection>(id, eventHandler));
 
-    subsectionsVector.push_back(std::move(distortion));
-    this->addAndMakeVisible(*subsectionsVector.back());
-    resized();
-    subsectionsVector.back()->attachParams(parameterHandler);
-}
-
-void EffectsSection::addFilter(int id, ParameterHandler& parameterHandler)
-{
-    std::unique_ptr<FilterSubsection> subsection = std::make_unique<FilterSubsection>(id, eventHandler);
-
-    subsectionsVector.push_back(std::move(subsection));
     this->addAndMakeVisible(*subsectionsVector.back());
     resized();
     subsectionsVector.back()->attachParams(parameterHandler);
@@ -70,7 +62,12 @@ void EffectsSection::buttonClicked(juce::Button* clickedButton)
         menu.showMenuAsync(juce::PopupMenu::Options().withTargetComponent(addEffectButton),
             [this](int result)
             {
-                eventHandler.onAddEffect(result);
+                if (result == 1)
+                    eventHandler.onAddEffect(juce::String("Distortion"));
+                else if (result == 2)
+                    eventHandler.onAddEffect(juce::String("Reverb"));
+                else if (result == 3)
+                    eventHandler.onAddEffect(juce::String("Filter"));
             });
     }
 

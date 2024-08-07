@@ -16,7 +16,7 @@ FilterSubsection::FilterSubsection(int id, GUI_EventHandler& eventHandler) : Eff
     
     subsectionName.setText(juce::String("Filter ") + juce::String(getId()));
 
-    freqCutKnob = std::make_unique<Knob1>(ParameterInfo{ juce::String("Effects"), juce::String(getId()), juce::String("freqCut")}, eventHandler);
+    freqCutKnob = std::make_unique<Knob1>(createParameterID("Filter", getId(), "freqCut"), eventHandler);
 
     this->addAndMakeVisible(*freqCutKnob);
 
@@ -36,5 +36,6 @@ void FilterSubsection::resized()
 
 void FilterSubsection::attachParams(ParameterHandler& parameterHandler)
 {
-    parameterHandler.attachParameter(freqCutKnob->getParameter());
+    parameterHandler.addSliderParameter(createParameterID("Filter", getId(), "freqCut"), std::make_shared<SliderParameter>("freqCut"));
+    freqCutParameterAttachment = std::make_unique<OcnetSliderAttachment>(*freqCutKnob, *parameterHandler.getSliderParameter(createParameterID("Filter", getId(), "freqCut"))->get());
 }

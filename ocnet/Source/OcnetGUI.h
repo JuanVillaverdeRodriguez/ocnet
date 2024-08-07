@@ -21,8 +21,6 @@ public:
 
     void clear();
 
-    void initializeGUI();
-
     void attachParams(juce::AudioProcessorValueTreeState& apvts);
 
     void resized() override;

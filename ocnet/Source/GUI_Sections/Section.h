@@ -24,7 +24,6 @@ public:
     void deleteSubsection(int id);
     int sectionResized();
 
-
 protected:
 
 };

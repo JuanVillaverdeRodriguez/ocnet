@@ -34,7 +34,7 @@ private:
     // Soft clipping: f(x) = sgn(x) * (1 - exp(-|x|))
     float softClip(float x, float drive) { return signum(x) * (1 - std::exp(-std::fabs(x*drive))); }
 
-    std::shared_ptr<Parameter2> driveParameter;
+    std::shared_ptr<SliderParameter> driveParameter;
 
     juce::dsp::Oversampling<float> oversampler;
 

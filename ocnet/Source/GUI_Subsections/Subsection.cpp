@@ -99,6 +99,11 @@ void Subsection::sectionResized()
     subsectionName.setBounds(20, 0, 20, 20);
 }
 
+juce::String Subsection::createParameterID(const juce::String& type, int id, const juce::String& parameterName)
+{
+    return type + juce::String("_") + juce::String(id) + juce::String("_") + parameterName;
+}
+
 void Subsection::setBypassed(bool bypassed)
 {
     this->bypassed = bypassed;

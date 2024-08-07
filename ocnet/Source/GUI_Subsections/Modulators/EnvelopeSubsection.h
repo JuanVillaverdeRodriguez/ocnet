@@ -17,6 +17,7 @@
 #include "../../Knobs/DragZone.h"
 #include "../../GUI_EventHandler.h"
 #include "ModulatorsSubsection.h"
+#include "../../ParameterHandler/OcnetSliderAttachment.h"
 
 class EnvelopeSubsection : public ModulatorsSubsection 
 {
@@ -30,9 +31,16 @@ public:
 
 private:
     std::unique_ptr<Knob1> attackKnob;
+    std::unique_ptr<OcnetSliderAttachment> attackParameterAttachment;
+
     std::unique_ptr<Knob1> decayKnob;
+    std::unique_ptr<OcnetSliderAttachment> decayParameterAttachment;
+
     std::unique_ptr<Knob1> sustainKnob;
+    std::unique_ptr<OcnetSliderAttachment> sustainParameterAttachment;
+
     std::unique_ptr<Knob1> releaseKnob;
+    std::unique_ptr<OcnetSliderAttachment> releaseParameterAttachment;
 
     DragZone dragZone;
 

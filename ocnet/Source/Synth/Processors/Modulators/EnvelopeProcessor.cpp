@@ -83,10 +83,11 @@ bool EnvelopeProcessor::isActive()
 
 void EnvelopeProcessor::syncParams(const ParameterHandler& parameterHandler)
 {
-    attackParameter = parameterHandler.syncWithParam(juce::String("Envelopes"), juce::String(getId()), juce::String("attack"));
-    decayParameter = parameterHandler.syncWithParam(juce::String("Envelopes"), juce::String(getId()), juce::String("decay"));
-    sustainParameter = parameterHandler.syncWithParam(juce::String("Envelopes"), juce::String(getId()), juce::String("sustain"));
-    releaseParameter = parameterHandler.syncWithParam(juce::String("Envelopes"), juce::String(getId()), juce::String("release"));
+    attackParameter = parameterHandler.syncWithSliderParam(juce::String("Envelope_") + juce::String(getId()) + juce::String("_attack"));
+    decayParameter = parameterHandler.syncWithSliderParam(juce::String("Envelope_") + juce::String(getId()) + juce::String("_decay"));
+    sustainParameter = parameterHandler.syncWithSliderParam(juce::String("Envelope_") + juce::String(getId()) + juce::String("_sustain"));
+    releaseParameter = parameterHandler.syncWithSliderParam(juce::String("Envelope_") + juce::String(getId()) + juce::String("_release"));
+
 }
 
 /*void EnvelopeProcessor::connectModulationTo(Parameter2& parameter)

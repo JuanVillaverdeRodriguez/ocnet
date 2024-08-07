@@ -14,7 +14,7 @@ DistortionSubsection::DistortionSubsection(int id, GUI_EventHandler& eventHandle
 {
     setId(id);
 
-    driveKnob = std::make_unique<Knob1>(ParameterInfo{ juce::String("Effects"), juce::String(getId()), juce::String("drive") }, eventHandler);
+    driveKnob = std::make_unique<Knob1>(createParameterID("Distortion", getId(), "drive"), eventHandler);
 
     this->addAndMakeVisible(*driveKnob);
 
@@ -38,5 +38,6 @@ void DistortionSubsection::resized()
 
 void DistortionSubsection::attachParams(ParameterHandler& parameterHandler)
 {
-    parameterHandler.attachParameter(driveKnob->getParameter());
+    parameterHandler.addSliderParameter(createParameterID("Distortion", getId(), "drive"), std::make_shared<SliderParameter>("drive"));
+    driveParameterAttachment = std::make_unique<OcnetSliderAttachment>(*driveKnob, *parameterHandler.getSliderParameter(createParameterID("Distortion", getId(), "drive"))->get());
 }

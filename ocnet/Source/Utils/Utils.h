@@ -82,8 +82,10 @@ public:
         }
     }
 
+    static std::tuple<juce::String, juce::String, juce::String> splitParameterID(const juce::String& input);
 private:
     Utils();
+
 
     //JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(Utils)
 

@@ -29,7 +29,6 @@ WavetableOscillatorProcessor::WavetableOscillatorProcessor(int id)
     //tables = createWaveTables(2048, juce::String("Square"));
     //tables = createWaveTables(2048, juce::String("Sine"));
 
-
     cnt = 0;
     //jassert(wavetable.waveTable.getNumChannels() == 1); // Asegúrate de que la wavetable sea mono
     oscGain = 1.0f;
@@ -61,8 +60,8 @@ void WavetableOscillatorProcessor::setFrequency(float frequency, float sampleRat
 
 void WavetableOscillatorProcessor::syncParams(const ParameterHandler& parameterHandler)
 {
-    gainParameter = parameterHandler.syncWithParam(juce::String("Oscillators"), juce::String(getId()), juce::String("volume"));
-    waveTypeParameter = parameterHandler.syncWithComboBoxParam(juce::String("Oscillators_") + juce::String(getId()) + juce::String("_waveType"));
+    gainParameter = parameterHandler.syncWithSliderParam(juce::String("WavetableOscillator_") + juce::String(getId()) + juce::String("_volume"));
+    waveTypeParameter = parameterHandler.syncWithComboBoxParam(juce::String("WavetableOscillator_") + juce::String(getId()) + juce::String("_waveType"));
 }
 
 float WavetableOscillatorProcessor::getNextSample(int sample)

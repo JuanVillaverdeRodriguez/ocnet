@@ -11,8 +11,13 @@ OcnetGUI::OcnetGUI(GUI_EventHandler& eventHandler) : eventHandler(eventHandler)
 
     headerSection->addListener(this);
 
-    initializeGUI();
+    this->addAndMakeVisible(headerSection.get());
+    this->addAndMakeVisible(footerSection.get());
+    this->addAndMakeVisible(oscillatorsSection.get());
+    this->addAndMakeVisible(modulatorsSection.get());
+    this->addAndMakeVisible(effectsSection.get());
 
+    
 }
 
 OcnetGUI::~OcnetGUI()
@@ -22,18 +27,6 @@ OcnetGUI::~OcnetGUI()
 void OcnetGUI::attachParams(juce::AudioProcessorValueTreeState& apvts) {
 
     //getModulatorsSection()->attachParams(apvts);
-}
-
-
-void OcnetGUI::initializeGUI()
-{
-    DBG("OcnetGUI::initializeGUI()");
-
-    this->addAndMakeVisible(headerSection.get());
-    this->addAndMakeVisible(footerSection.get());
-    this->addAndMakeVisible(oscillatorsSection.get());
-    this->addAndMakeVisible(modulatorsSection.get());
-    this->addAndMakeVisible(effectsSection.get());
 }
 
 void OcnetGUI::clear() {

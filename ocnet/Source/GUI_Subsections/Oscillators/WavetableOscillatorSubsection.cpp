@@ -14,10 +14,8 @@ WavetableOscillatorSubsection::WavetableOscillatorSubsection(int id, GUI_EventHa
 {
     setId(id);
 
-    baseParameterID = juce::String("Oscillators_") + juce::String(getId()) + juce::String("_");
-
-    volumeKnob = std::make_unique<Knob1>(ParameterInfo{ juce::String("Oscillators"), juce::String(getId()), juce::String("volume") }, eventHandler);
-    panningKnob = std::make_unique<Knob1>(ParameterInfo{ juce::String("Oscillators"), juce::String(getId()), juce::String("panning") }, eventHandler);
+    volumeKnob = std::make_unique<Knob1>(createParameterID("WavetableOscillator", getId(), "volume"), eventHandler);
+    panningKnob = std::make_unique<Knob1>(createParameterID("WavetableOscillator", getId(), "panning"), eventHandler);
 
     this->addAndMakeVisible(*volumeKnob);
     this->addAndMakeVisible(*panningKnob);
@@ -56,9 +54,12 @@ void WavetableOscillatorSubsection::attachParams(ParameterHandler& parameterHand
     DBG("WavetableOscillatorSubsection::attachParams(ParameterHandler& parameterHandler)");
     DBG(juce::String(getId()));
 
-    parameterHandler.attachParameter(volumeKnob->getParameter());
-    parameterHandler.attachParameter(panningKnob->getParameter());
+    parameterHandler.addSliderParameter(createParameterID("WavetableOscillator", getId(), "volume"), std::make_shared<SliderParameter>("volume"));
+    volumeParameterAttachment = std::make_unique<OcnetSliderAttachment>(*volumeKnob, *parameterHandler.getSliderParameter(createParameterID("WavetableOscillator", getId(), "volume"))->get());
 
-    parameterHandler.addComboBoxParameter(baseParameterID + juce::String("waveType"), std::make_unique<ComboBoxParameter>("waveType", juce::StringArray{"Saw", "Square", "Sine"}, 0));
-    waveTypeParameterAttachment = std::make_unique<OcnetComboBoxAttachment>(waveTypeComboBox, *parameterHandler.getComboBoxParameter(baseParameterID + juce::String("waveType"))->get());
+    parameterHandler.addSliderParameter(createParameterID("WavetableOscillator", getId(), "panning"), std::make_shared<SliderParameter>("panning"));
+    panningParameterAttachment = std::make_unique<OcnetSliderAttachment>(*panningKnob, *parameterHandler.getSliderParameter(createParameterID("WavetableOscillator", getId(), "panning"))->get());
+
+    parameterHandler.addComboBoxParameter(createParameterID("WavetableOscillator", getId(), "waveType"), std::make_shared<ComboBoxParameter>("waveType", juce::StringArray{"Saw", "Square", "Sine"}, 0));
+    waveTypeParameterAttachment = std::make_unique<OcnetComboBoxAttachment>(waveTypeComboBox, *parameterHandler.getComboBoxParameter(createParameterID("WavetableOscillator", getId(), "waveType"))->get());
 }

@@ -34,7 +34,7 @@ public:
 
     void processBlock(juce::AudioBuffer<float>& buffer) override;
 private:
-    std::shared_ptr<Parameter2> freqCutParameter;
+    std::shared_ptr<SliderParameter> freqCutParameter;
 
     juce::Array<float> freqCutModulationBuffer;
     float freqCutValue;

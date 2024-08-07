@@ -11,6 +11,7 @@
 #pragma once
 
 #include "EffectsSubsection.h"
+#include "../../ParameterHandler/OcnetSliderAttachment.h"
 
 class FilterSubsection : public EffectsSubsection {
 public:
@@ -23,6 +24,5 @@ public:
 
 private:
     std::unique_ptr<Knob1> freqCutKnob;
-
-
+    std::unique_ptr<OcnetSliderAttachment> freqCutParameterAttachment;
 };

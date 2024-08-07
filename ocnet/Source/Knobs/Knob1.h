@@ -5,22 +5,16 @@
 #include <../Source/ParameterHandler/Parameter.h>
 #include "../GUI_EventHandler.h"
 
-class Knob1 : public juce::Slider, public juce::DragAndDropTarget, juce::Slider::Listener {
+class Knob1 : public juce::Slider, public juce::DragAndDropTarget {
 public:
-	Knob1(ParameterInfo parameterInfo, GUI_EventHandler &eventHandler);
+	Knob1(const juce::String& parameterID, GUI_EventHandler &eventHandler);
 
 	void itemDropped(const SourceDetails& dragSourceDetails) override;
 	bool isInterestedInDragSource(const SourceDetails& dragSourceDetails) override;
 
-	void sliderValueChanged(Slider *slider) override;
-
-	inline std::shared_ptr<Parameter2> getParameter() { parameter->setRange(this->getRange().getStart(), this->getRange().getEnd(), this->getInterval()); return parameter; }
-
-
 private:
 	GUI_EventHandler& eventHandler;
-
-	std::shared_ptr<Parameter2> parameter;
+	juce::String parameterID;
 
 	double value = 0.0;
 

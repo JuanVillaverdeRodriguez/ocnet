@@ -19,6 +19,16 @@ ModulatorsSection::ModulatorsSection(GUI_EventHandler& eventHandler) : eventHand
     addModulatorButton.addListener(this);
 }
 
+void ModulatorsSection::addModulator(const juce::String& type, int numberOfEnvelopes, ParameterHandler& parameterHandler)
+{
+    if (type == "Envelope")
+        subsectionsVector.push_back(std::make_unique<EnvelopeSubsection>(numberOfEnvelopes, eventHandler));
+
+    this->addAndMakeVisible(*subsectionsVector.back());
+    resized();
+    subsectionsVector.back()->attachParams(parameterHandler);
+}
+
 void ModulatorsSection::paint(juce::Graphics& g)
 {
     // (Our component is opaque, so we must completely fill the background with a solid colour)
@@ -39,18 +49,6 @@ void ModulatorsSection::resized()
     addModulatorButton.setBounds(area.getWidth() / 2 - 25, lastSubsection + 5, 50, 50);
 }
 
-
-void ModulatorsSection::addEnvelope(int numberOfEnvelopes, ParameterHandler& parameterHandler)
-{
-    std::unique_ptr<EnvelopeSubsection> envelope = std::make_unique<EnvelopeSubsection>(numberOfEnvelopes, eventHandler);
-
-    subsectionsVector.push_back(std::move(envelope));
-    this->addAndMakeVisible(*subsectionsVector.back());
-    resized();
-    subsectionsVector.back()->attachParams(parameterHandler);
-}
-
-
 void ModulatorsSection::buttonClicked(juce::Button* clickedButton)
 {
     if (clickedButton == &addModulatorButton) {
@@ -62,7 +60,12 @@ void ModulatorsSection::buttonClicked(juce::Button* clickedButton)
         menu.showMenuAsync(juce::PopupMenu::Options().withTargetComponent(addModulatorButton),
             [this](int result)
             {
-                eventHandler.onAddModulator(result);
+                if (result == 1)
+                    eventHandler.onAddOscillator("Envelope");
+                else if (result == 2)
+                    eventHandler.onAddOscillator("LFO");
+                else if (result == 3)
+                    eventHandler.onAddOscillator("Macro");
             });
     }
 

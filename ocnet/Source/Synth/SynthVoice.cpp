@@ -96,40 +96,8 @@ void SynthVoice::releaseResources()
     processorhHandler.releaseResources();
 }
 
-void SynthVoice::addWavetableOscillator(int id)
-{
-    isPrepared = false;
-
-    processorhHandler.addWavetableOscillator(id, *parameterHandler);
-    processorhHandler.prepareToPlay(spec);
-
-    isPrepared = true;
-}
-
 void SynthVoice::connectModulation(int processorModulatorID, std::shared_ptr<Parameter2> parameter) {
     processorhHandler.connectModulation(processorModulatorID, parameter);
-}
-
-void SynthVoice::addEnvelope(int id)
-{
-    isPrepared = false;
-
-    processorhHandler.addEnvelope(id, *parameterHandler);
-    processorhHandler.prepareToPlay(spec);
-
-    isPrepared = true;
-
-}
-
-void SynthVoice::addDistortion(int id)
-{
-    isPrepared = false;
-
-    processorhHandler.addDistortion(id, *parameterHandler);
-    processorhHandler.prepareToPlay(spec);
-
-    isPrepared = true;
-
 }
 
 void SynthVoice::setVoiceNumberId(int id)

@@ -15,6 +15,7 @@
 #include "OscillatorsSubsection.h"
 #include "../../ParameterHandler/ComboBoxParameter.h"
 #include "../../ParameterHandler/OcnetComboBoxAttachment.h"
+#include "../../ParameterHandler/OcnetSliderAttachment.h"
 
 class WavetableOscillatorSubsection : public OscillatorsSubsection {
 public:
@@ -26,10 +27,12 @@ public:
 
 private:
     std::unique_ptr<Knob1> volumeKnob;
+    std::unique_ptr<OcnetSliderAttachment> volumeParameterAttachment;
+
     std::unique_ptr<Knob1> panningKnob;
+    std::unique_ptr<OcnetSliderAttachment> panningParameterAttachment;
 
     juce::ComboBox waveTypeComboBox;
-
     std::unique_ptr<OcnetComboBoxAttachment> waveTypeParameterAttachment;
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(WavetableOscillatorSubsection)

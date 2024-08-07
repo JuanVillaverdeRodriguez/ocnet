@@ -39,13 +39,10 @@ private:
     //Parameter2* sustainParameter;
     //Parameter2* releaseParameter;
 
-    std::shared_ptr<Parameter2> attackParameter;
-    std::shared_ptr<Parameter2> decayParameter;
-    std::shared_ptr<Parameter2> sustainParameter;
-    std::shared_ptr<Parameter2> releaseParameter;
-
-
-
+    std::shared_ptr<SliderParameter> attackParameter;
+    std::shared_ptr<SliderParameter> decayParameter;
+    std::shared_ptr<SliderParameter> sustainParameter;
+    std::shared_ptr<SliderParameter> releaseParameter;
 
     juce::ADSR adsr;
     juce::ADSR::Parameters adsrParams;

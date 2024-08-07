@@ -34,12 +34,11 @@ void OscillatorsSection::resized()
 }
 
 
-
-void OscillatorsSection::addWavetableOscillator(int numberOfWavetableOscillators, ParameterHandler& parameterHandler)
+void OscillatorsSection::addOscillator(const juce::String& type, int numberOfWavetableOscillators, ParameterHandler& parameterHandler)
 {
-    std::unique_ptr<WavetableOscillatorSubsection> wavetableOscillator = std::make_unique<WavetableOscillatorSubsection>(numberOfWavetableOscillators, eventHandler);
+    if (type == "WavetableOscillator")
+        subsectionsVector.push_back(std::make_unique<WavetableOscillatorSubsection>(numberOfWavetableOscillators, eventHandler));
 
-    subsectionsVector.push_back(std::move(wavetableOscillator));
     this->addAndMakeVisible(*subsectionsVector.back());
     resized();
     subsectionsVector.back()->attachParams(parameterHandler);
@@ -61,7 +60,13 @@ void OscillatorsSection::buttonClicked(juce::Button* clickedButton)
         menu.showMenuAsync(juce::PopupMenu::Options().withTargetComponent(addOscillatorButton),
             [this](int result)
             {
-                eventHandler.onAddOscillator(result);
+                if (result == 1)
+                    eventHandler.onAddOscillator("WavetableOscillator");
+                else if (result == 2)
+                    eventHandler.onAddOscillator("Sampler");
+                else if (result == 3)
+                    eventHandler.onAddOscillator("Opcion 3");
+
             });
     }
 

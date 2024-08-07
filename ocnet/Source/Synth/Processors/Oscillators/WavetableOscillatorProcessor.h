@@ -60,7 +60,7 @@ private:
 
     int cnt = 0;
 
-    std::shared_ptr<Parameter2> gainParameter;
+    std::shared_ptr<SliderParameter> gainParameter;
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(WavetableOscillatorProcessor)
 

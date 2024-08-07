@@ -23,11 +23,6 @@ public:
     ProcessorHandler(const ParameterHandler& parameterHandler);
     ~ProcessorHandler();
 
-    void addWavetableOscillator(int id, const ParameterHandler& parameterHandler);
-    void addDistortion(int id, const ParameterHandler& parameterHandler);
-
-    void addEnvelope(int id, const ParameterHandler& parameterHandler);
-
     void releaseResources();
 
     void processBlock(juce::AudioBuffer<float>& audio);

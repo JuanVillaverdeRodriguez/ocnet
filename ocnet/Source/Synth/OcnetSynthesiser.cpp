@@ -19,10 +19,10 @@ OcnetSynthesiser::~OcnetSynthesiser()
 {
 }
 
-void OcnetSynthesiser::connectModulation(int processorModulatorID, std::shared_ptr<Parameter2> parameter) {
+void OcnetSynthesiser::connectModulation(int processorModulatorID, std::shared_ptr<SliderParameter> parameter, const juce::String& parameterID) {
     for (int i = 0; i < getNumVoices(); i++) {
         if (auto voice = dynamic_cast<SynthVoice*>(getVoice(i))) {
-            voice->connectModulation(processorModulatorID, parameter);
+            voice->connectModulation(processorModulatorID, parameter, parameterID);
         }
     }
 }

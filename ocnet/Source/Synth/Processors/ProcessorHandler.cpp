@@ -146,15 +146,15 @@ void ProcessorHandler::updateParameterValues()
         processor->updateParameterValues();
     }
 }
-void ProcessorHandler::connectModulation(int processorModulatorID, std::shared_ptr<Parameter2> parameter) {
+void ProcessorHandler::connectModulation(const ParameterHandler& parameterHandler, int processorModulatorID, std::shared_ptr<SliderParameter> parameter, const juce::String& parameterID) {
     DBG("ProcessorHandler::connectModulation(int processorModulatorID, std::shared_ptr<Parameter2> parameter)");
     if (processorModulatorID == 0) {
-        mainEnvelope->connectModulation(parameter);
+        mainEnvelope->connectModulation(parameterHandler, parameter, parameterID);
     }
     else {
         for (auto& processor : modulatorProcessorsList) {
             if (processor->getId() == processorModulatorID) {
-                processor->connectModulation(parameter); //setModulationListener
+                processor->connectModulation(parameterHandler, parameter, parameterID); //setModulationListener
             }
         }
     }

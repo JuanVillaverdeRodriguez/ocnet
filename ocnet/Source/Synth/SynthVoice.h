@@ -33,11 +33,7 @@ public:
     void prepareToPlay(double sampleRate, int samplesPerBlock, int outputChannels);
     void releaseResources();
 
-    void addWavetableOscillator(int id);
-    void connectModulation(int processorModulatorID, std::shared_ptr<Parameter2> parameter);
-    void addEnvelope(int id);
-
-    void addDistortion(int id);
+    void connectModulation(int processorModulatorID, std::shared_ptr<SliderParameter> parameter, const juce::String& parameterID);
 
     void setVoiceNumberId(int id);
 

@@ -36,7 +36,7 @@ public:
 
     void updateParameterValues();
 
-    void connectModulation(int processorModulatorID, std::shared_ptr<Parameter2> parameter);
+    void connectModulation(const ParameterHandler& parameterHandler, int processorModulatorID, std::shared_ptr<SliderParameter> parameter, const juce::String& parameterID);
 
     void setVoiceNumberId(int id);
 

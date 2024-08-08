@@ -9,9 +9,10 @@
 */
 
 #pragma once
-#include "ParameterHandler/Parameter.h"
 
 // Declaración adelantada de Subsection
+#include "JuceHeader.h"
+
 class Subsection;
 
 class GUI_EventHandler {
@@ -22,7 +23,7 @@ public:
 
     virtual void onDeleteSubsection(Subsection& subsection) {};
 
-    virtual void onConnectModulation(int processorModulatorID, const juce::String& parameterID) {};
+    virtual void onConnectModulation(Subsection& modulator, const juce::String& parameterID) {};
 
     virtual void onMoveSubsection(Subsection& subsection, int positions) {};
 

@@ -27,11 +27,19 @@ public:
 
     void resized() override;
 
+    juce::String getSubType() override;
+
     void setParameterValue(const juce::String& propertyName, const juce::String& propertyValue) override;
     void attachParams(ParameterHandler& parameterHandler);
     void addParametersToParameterHandler(ParameterHandler& parameterHandler) override;
+    std::unique_ptr<ModulationBubble>* createModulationBubble(ParameterHandler& parameterHandler, const juce::String& parameterID) override;
 
 private:
+    juce::String attackParameterID;
+    juce::String decayParameterID;
+    juce::String sustainParameterID;
+    juce::String releaseParameterID;
+
     std::unique_ptr<Knob1> attackKnob;
     std::unique_ptr<OcnetSliderAttachment> attackParameterAttachment;
 
@@ -44,8 +52,7 @@ private:
     std::unique_ptr<Knob1> releaseKnob;
     std::unique_ptr<OcnetSliderAttachment> releaseParameterAttachment;
 
-    DragZone dragZone;
-
+    std::vector<std::unique_ptr<OcnetSliderAttachment>> modulationParameterAttachmentsVector;
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(EnvelopeSubsection)
 };

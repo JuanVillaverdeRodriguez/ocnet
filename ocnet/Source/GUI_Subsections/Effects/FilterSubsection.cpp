@@ -14,9 +14,11 @@ FilterSubsection::FilterSubsection(int id, GUI_EventHandler& eventHandler) : Eff
 {
     setId(id);
     
+    freqParameterID = createParameterID("Filter", getId(), "freqCut");
+
     subsectionName.setText(juce::String("Filter ") + juce::String(getId()));
 
-    freqCutKnob = std::make_unique<Knob1>(createParameterID("Filter", getId(), "freqCut"), eventHandler);
+    freqCutKnob = std::make_unique<Knob1>(freqParameterID, eventHandler);
 
     this->addAndMakeVisible(*freqCutKnob);
 
@@ -36,12 +38,12 @@ void FilterSubsection::resized()
 
 void FilterSubsection::attachParams(ParameterHandler& parameterHandler)
 {
-    freqCutParameterAttachment = std::make_unique<OcnetSliderAttachment>(*freqCutKnob, *parameterHandler.getSliderParameter(createParameterID("Filter", getId(), "freqCut"))->get());
+    freqCutParameterAttachment = std::make_unique<OcnetSliderAttachment>(*freqCutKnob, *parameterHandler.getSliderParameter(freqParameterID)->get());
 }
 
 void FilterSubsection::addParametersToParameterHandler(ParameterHandler& parameterHandler)
 {
-    parameterHandler.addSliderParameter(createParameterID("Filter", getId(), "freqCut"), std::make_shared<SliderParameter>("freqCut"));
+    parameterHandler.addSliderParameter(freqParameterID, std::make_shared<SliderParameter>("freqCut"));
 }
 
 void FilterSubsection::setParameterValue(const juce::String& propertyName, const juce::String& propertyValue)

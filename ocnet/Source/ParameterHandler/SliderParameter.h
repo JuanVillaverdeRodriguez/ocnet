@@ -23,8 +23,8 @@ public:
     void setValue(float value);
     float getValue();
 
-    void setModulationBuffer(float modulationBuffer, int voice);
     juce::Array<float> getModulationBuffer(int voice);
+    void setModulationBuffer(juce::Array<float> newModulationBuffer, int voice);
 
     void addTreeListener(juce::ValueTree tree);
     void valueTreePropertyChanged(juce::ValueTree& treeWhosePropertyHasChanged, const juce::Identifier& property) override;

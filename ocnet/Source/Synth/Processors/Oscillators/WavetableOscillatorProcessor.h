@@ -13,6 +13,7 @@
 #include <JuceHeader.h>
 #include "../Processor.h"
 #include "../../Oscillator/WavetableTypes.h"
+#include "../../../ParameterHandler/SliderParameter.h"
 
 #define M_PI 3.14159265358979323846
 

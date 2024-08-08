@@ -25,7 +25,7 @@ public:
     void onAddEffect(const juce::String& type) override;
     void onAddModulator(const juce::String& typen) override;
 
-    void onConnectModulation(int processorModulatorID, const juce::String& parameterID) override;
+    void onConnectModulation(Subsection& modulator, const juce::String& parameterID) override;
 
     void onDeleteSubsection(Subsection& subsection) override;
 

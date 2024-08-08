@@ -66,7 +66,12 @@ void WavetableOscillatorProcessor::syncParams(const ParameterHandler& parameterH
 
 float WavetableOscillatorProcessor::getNextSample(int sample)
 {
-    gain.setGainLinear(oscGain + oscGainModulationBuffer[sample]);
+    float newGainValue = oscGain + oscGainModulationBuffer[sample];
+
+    if (newGainValue < 0.0f)
+        newGainValue = 0.0f;
+
+    gain.setGainLinear(newGainValue);
 
     auto index0 = (unsigned int)currentIndex;
     auto index1 = index0 + 1;
@@ -110,7 +115,7 @@ void WavetableOscillatorProcessor::updateParameterValues()
     else if (waveTypeIndexChoice == 2)
         tables = &sineWaveTables;
 
-    DBG(juce::String("TIPO DE ONDA SELECIONADA: ") + juce::String(waveTypeIndexChoice));
+    //DBG(juce::String("TIPO DE ONDA SELECIONADA: ") + juce::String(waveTypeIndexChoice));
 }
 
 void WavetableOscillatorProcessor::prepareToPlay(juce::dsp::ProcessSpec spec)

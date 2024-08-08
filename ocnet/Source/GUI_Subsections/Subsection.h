@@ -32,6 +32,8 @@ public:
     void sectionResized();
 
     virtual juce::String getType() { return juce::String(""); };
+    virtual juce::String getSubType() { return juce::String(""); };
+
 
     juce::String createParameterID(const juce::String& type, int id, const juce::String& parameterName);
 

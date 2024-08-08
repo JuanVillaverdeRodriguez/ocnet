@@ -26,6 +26,8 @@ public:
     void setParameterValue(const juce::String& propertyName, const juce::String& propertyValue);
 
 private:
+    juce::String freqParameterID;
+
     std::unique_ptr<Knob1> freqCutKnob;
     std::unique_ptr<OcnetSliderAttachment> freqCutParameterAttachment;
 };

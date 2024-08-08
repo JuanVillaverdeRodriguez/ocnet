@@ -57,8 +57,14 @@ void OcnetGUI_interface::onAddModulator(const juce::String& type)
     maxCurrentID++;
 }
 
-void OcnetGUI_interface::onConnectModulation(int processorModulatorID, const juce::String& parameterID)
+void OcnetGUI_interface::onConnectModulation(Subsection& modulator, const juce::String& parameterID)
 {
+    auto modulatorCasted = dynamic_cast<ModulatorsSubsection*>(&modulator);
+    std::unique_ptr<ModulationBubble>* modulationBubble = modulatorCasted->createModulationBubble(processor.parameterHandler, parameterID);
+    std::shared_ptr<SliderParameter>* parameterToModulate = processor.parameterHandler.getSliderParameter(parameterID);
+
+    juce::String modulationParameterID = modulatorCasted->getSubType() + juce::String("_") + juce::String(modulatorCasted->getId()) + juce::String("_modulationAmount_") + parameterID;
+    processor.connectModulation(modulator.getId(), *parameterToModulate, modulationParameterID);
     //processor.connectModulation(processorModulatorID, parameter);
     //processor.connectModulation(parameter);
 }
@@ -160,10 +166,8 @@ void OcnetGUI_interface::initialiseGUIFromTree(juce::ValueTree tree)
 
             for (int k = 0; k < numProperties; k++) {
                 juce::Identifier propertyIdentifier = subTree.getChild(j).getPropertyName(k);
-                //juce::var propertyValue = subTree.getChild(j).getProperty(propertyIdentifier);
                 const juce::var& propertyValue = subTree.getChild(j).getProperty(propertyIdentifier);
                 subsection->get()->setParameterValue(propertyIdentifier.toString(), propertyValue.toString());
-                //processor.parameterHandler.setParameterValues(type + juce::String("_") + id + juce::String("_") + propertyIdentifier.toString(), propertyValue.toString());
             }
             j++;
         }

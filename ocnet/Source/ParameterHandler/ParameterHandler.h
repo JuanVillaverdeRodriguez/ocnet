@@ -11,7 +11,6 @@
 #pragma once
 
 #include "JuceHeader.h"
-#include "Parameter.h"
 #include "ComboBoxParameter.h"
 #include "SliderParameter.h"
 
@@ -34,9 +33,8 @@ public:
     // Elimina del arbol de parametros y del vector de parametros los parametros para un modulo.
     void deleteAttachedParameters(const juce::String& parameterOwnerType, const juce::String& ownerID);
 
-    void connectModulation(std::shared_ptr<Parameter2> parameter);
+    //void connectModulation(std::shared_ptr<Parameter2> parameter);
    
-    void setParameterValues(const juce::String& parameterID, const juce::String& propertyValue);
 
     juce::ValueTree getRootTree();
 

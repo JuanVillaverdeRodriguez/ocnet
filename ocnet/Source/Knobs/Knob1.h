@@ -7,13 +7,15 @@
 
 class Knob1 : public juce::Slider, public juce::DragAndDropTarget {
 public:
-	Knob1(const juce::String& propertyName, GUI_EventHandler &eventHandler);
+	Knob1(const juce::String& parameterID, GUI_EventHandler &eventHandler);
 
 	void itemDropped(const SourceDetails& dragSourceDetails) override;
 	bool isInterestedInDragSource(const SourceDetails& dragSourceDetails) override;
 
 private:
 	GUI_EventHandler& eventHandler;
+	juce::String parameterID;
+
 	juce::String propertyName;
 
 	double value = 0.0;

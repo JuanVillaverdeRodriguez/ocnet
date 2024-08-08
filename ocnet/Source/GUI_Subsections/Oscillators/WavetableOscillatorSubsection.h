@@ -28,6 +28,10 @@ public:
     void addParametersToParameterHandler(ParameterHandler& parameterHandler) override;
 
 private:
+    juce::String volumeParameterID;
+    juce::String panningParameterID;
+    juce::String waveTypeParameterID;
+
     std::unique_ptr<Knob1> volumeKnob;
     std::unique_ptr<OcnetSliderAttachment> volumeParameterAttachment;
 

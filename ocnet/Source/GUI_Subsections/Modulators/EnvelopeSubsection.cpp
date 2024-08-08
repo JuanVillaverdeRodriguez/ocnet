@@ -14,10 +14,15 @@ EnvelopeSubsection::EnvelopeSubsection(int id, GUI_EventHandler& eventHandler) :
 {
     setId(id);
 
-    attackKnob = std::make_unique<Knob1>(createParameterID("Envelope", getId(), "attack"), eventHandler);
-    decayKnob = std::make_unique<Knob1>(createParameterID("Envelope", getId(), "decay"), eventHandler);
-    sustainKnob = std::make_unique<Knob1>(createParameterID("Envelope", getId(), "sustain"), eventHandler);
-    releaseKnob = std::make_unique<Knob1>(createParameterID("Envelope", getId(), "release"), eventHandler);
+    attackParameterID = createParameterID("Envelope", getId(), "attack");
+    decayParameterID = createParameterID("Envelope", getId(), "decay");
+    sustainParameterID = createParameterID("Envelope", getId(), "sustain");
+    releaseParameterID = createParameterID("Envelope", getId(), "release");
+
+    attackKnob = std::make_unique<Knob1>(attackParameterID, eventHandler);
+    decayKnob = std::make_unique<Knob1>(decayParameterID, eventHandler);
+    sustainKnob = std::make_unique<Knob1>(sustainParameterID, eventHandler);
+    releaseKnob = std::make_unique<Knob1>(releaseParameterID, eventHandler);
 
     this->addAndMakeVisible(*attackKnob);
     this->addAndMakeVisible(*decayKnob);
@@ -55,7 +60,19 @@ void EnvelopeSubsection::resized()
     sustainKnob->setRange(0.0f, 1.0f, 0.01f);
     releaseKnob->setRange(0.0f, 1.0f, 0.01f);
 
-    modulationBubble.setBounds(posX, area.getHeight() - defaultKnobSize, defaultKnobSize, defaultKnobSize);
+    int lastX = 0;
+    for (auto& modulationBubble : modulationBubblesVector) {
+        juce::Rectangle<int> globalBounds = this->getParentComponent()->getParentComponent()->getLocalArea(this, dragZone.getBounds());
+
+        modulationBubble->setBounds(globalBounds.getX() + lastX, globalBounds.getY(), defaultKnobSize - 25, defaultKnobSize - 25);
+        lastX += modulationBubble->getBounds().getWidth() + 3;
+    }
+
+}
+
+juce::String EnvelopeSubsection::getSubType()
+{
+    return juce::String("Envelope");
 }
 
 void EnvelopeSubsection::setParameterValue(const juce::String& propertyName, const juce::String& propertyValue)
@@ -71,10 +88,10 @@ void EnvelopeSubsection::setParameterValue(const juce::String& propertyName, con
 }
 
 void EnvelopeSubsection::attachParams(ParameterHandler& parameterHandler) {
-    attackParameterAttachment = std::make_unique<OcnetSliderAttachment>(*attackKnob, *parameterHandler.getSliderParameter(createParameterID("Envelope", getId(), "attack"))->get());
-    decayParameterAttachment = std::make_unique<OcnetSliderAttachment>(*decayKnob, *parameterHandler.getSliderParameter(createParameterID("Envelope", getId(), "decay"))->get());
-    sustainParameterAttachment = std::make_unique<OcnetSliderAttachment>(*sustainKnob, *parameterHandler.getSliderParameter(createParameterID("Envelope", getId(), "sustain"))->get());
-    releaseParameterAttachment = std::make_unique<OcnetSliderAttachment>(*releaseKnob, *parameterHandler.getSliderParameter(createParameterID("Envelope", getId(), "release"))->get());
+    attackParameterAttachment = std::make_unique<OcnetSliderAttachment>(*attackKnob, *parameterHandler.getSliderParameter(attackParameterID)->get());
+    decayParameterAttachment = std::make_unique<OcnetSliderAttachment>(*decayKnob, *parameterHandler.getSliderParameter(decayParameterID)->get());
+    sustainParameterAttachment = std::make_unique<OcnetSliderAttachment>(*sustainKnob, *parameterHandler.getSliderParameter(sustainParameterID)->get());
+    releaseParameterAttachment = std::make_unique<OcnetSliderAttachment>(*releaseKnob, *parameterHandler.getSliderParameter(releaseParameterID)->get());
 
     dragZone.setParentContainerAndComponent(*juce::DragAndDropContainer::findParentDragContainerFor(this), *this);
 }
@@ -82,8 +99,25 @@ void EnvelopeSubsection::attachParams(ParameterHandler& parameterHandler) {
 // Mover a audioProcessor
 void EnvelopeSubsection::addParametersToParameterHandler(ParameterHandler& parameterHandler)
 {
-    parameterHandler.addSliderParameter(createParameterID("Envelope", getId(), "attack"), std::make_shared<SliderParameter>("attack"));
-    parameterHandler.addSliderParameter(createParameterID("Envelope", getId(), "decay"), std::make_shared<SliderParameter>("decay"));
-    parameterHandler.addSliderParameter(createParameterID("Envelope", getId(), "sustain"), std::make_shared<SliderParameter>("sustain"));
-    parameterHandler.addSliderParameter(createParameterID("Envelope", getId(), "release"), std::make_shared<SliderParameter>("release"));
+    parameterHandler.addSliderParameter(attackParameterID, std::make_shared<SliderParameter>("attack"));
+    parameterHandler.addSliderParameter(decayParameterID, std::make_shared<SliderParameter>("decay"));
+    parameterHandler.addSliderParameter(sustainParameterID, std::make_shared<SliderParameter>("sustain"));
+    parameterHandler.addSliderParameter(releaseParameterID, std::make_shared<SliderParameter>("release"));
+}
+
+std::unique_ptr<ModulationBubble>* EnvelopeSubsection::createModulationBubble(ParameterHandler& parameterHandler, const juce::String& parameterID)
+{
+    juce::String newModulationParameterID = createParameterID("Envelope", getId(), "modulationAmount_" + parameterID);
+
+
+    modulationBubblesVector.push_back(std::make_unique<ModulationBubble>(parameterID));
+    this->getParentComponent()->getParentComponent()->addAndMakeVisible(*modulationBubblesVector.back());
+        
+    parameterHandler.addSliderParameter(newModulationParameterID, std::make_shared<SliderParameter>("modulationAmount_" + parameterID));
+    modulationParameterAttachmentsVector.push_back(std::make_unique<OcnetSliderAttachment>(*modulationBubblesVector.back(), *parameterHandler.getSliderParameter(newModulationParameterID)->get()));
+
+    resized();
+
+    return &modulationBubblesVector.back();
+
 }

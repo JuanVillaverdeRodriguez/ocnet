@@ -11,11 +11,21 @@
 #pragma once
 
 #include "JuceHeader.h"
+#include "ParameterHandler.h"
+#include "SliderParameter.h"
 
 class Modulation {
 public:
-    Modulation();
+    Modulation(std::shared_ptr<SliderParameter> sliderParameter);
     ~Modulation() = default;
 
+    void updateModulationBuffer(juce::Array<float> modulationArray, int voice);
+    juce::Array<float> getModulationBuffer();
+    void syncParams(const ParameterHandler& parameterHandler, const juce::String& parameterID);
+
 private:
+    juce::Array<float> modulation;
+    std::shared_ptr<SliderParameter> modulationAmount;
+    std::shared_ptr<SliderParameter> sliderToModulate;
+
 };

@@ -91,3 +91,4 @@ Section* OcnetGUI::getSection(const juce::String& type)
     else if (type == "Oscillators")
         return getOscillatorsSection();
 }
+

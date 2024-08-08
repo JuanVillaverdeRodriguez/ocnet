@@ -10,7 +10,8 @@
 
 #pragma once
 #include "Processor.h"
-
+#include "../../ParameterHandler/SliderParameter.h"
+#include "../../ParameterHandler/Modulation.h"
 class Modulator : public Processor {
 public:
     Modulator();
@@ -19,7 +20,7 @@ public:
 
     void updateModulationValue();
 
-    void connectModulation(std::shared_ptr<Parameter2> parameterToModulate);
+    void connectModulation(const ParameterHandler& parameterHandler, std::shared_ptr<SliderParameter> parameterToModulate, const juce::String& parameterID);
 
     void addToModulationBuffer(float newModulationValue, int sample);
 
@@ -28,10 +29,7 @@ public:
     
     //disconectParameter
 private:
-    std::vector<std::shared_ptr<Parameter2>> parametersModulating;
-    //std::vector<std::shared_ptr<Modulation>> modulations;
-
-    //float modulationBuffer[8][8192];
+    std::vector<std::shared_ptr<Modulation>> modulationsVector;
 
     juce::Array<float> modulationBuffer;
 

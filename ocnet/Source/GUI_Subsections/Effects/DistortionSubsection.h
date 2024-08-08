@@ -27,6 +27,7 @@ public:
     void setParameterValue(const juce::String& propertyName, const juce::String& propertyValue);
 
 private:
+    juce::String driveParameterID;
 
     std::unique_ptr<Knob1> driveKnob;
     std::unique_ptr<OcnetSliderAttachment> driveParameterAttachment;

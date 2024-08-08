@@ -11,6 +11,7 @@
 #pragma once
 
 #include "../Effector.h"
+#include "../../../ParameterHandler/SliderParameter.h"
 
 class DistortionProcessor : public Effector {
 public:

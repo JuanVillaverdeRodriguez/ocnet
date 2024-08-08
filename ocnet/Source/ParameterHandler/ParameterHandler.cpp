@@ -119,7 +119,7 @@ void ParameterHandler::deleteAttachedParameters(const juce::String& parameterOwn
     printValueTree(rootNode, 1);
 
 }
-
+/*
 void ParameterHandler::connectModulation(std::shared_ptr<Parameter2> parameter)
 {
     int numberOfConnectedModulations = parameter->getNumberOfConnectedModulations();
@@ -130,22 +130,7 @@ void ParameterHandler::connectModulation(std::shared_ptr<Parameter2> parameter)
     juce::Identifier propertyNameIdentifier(juce::String("modulation_") + juce::String(numberOfConnectedModulations) + juce::String("amount"));
 
     nodeTree.setProperty(propertyNameIdentifier, -1, nullptr);
-}
-
-void ParameterHandler::setParameterValues(const juce::String& parameterID, const juce::String& propertyValue)
-{
-    auto it = comboBoxParametersMap.find(parameterID);
-    if (it != comboBoxParametersMap.end()) {
-        it->second->setCurrentIndex(propertyValue.getIntValue());
-        return;
-    }
-
-    auto it2 = sliderParametersMap.find(parameterID);
-    if (it2 != sliderParametersMap.end()) {
-        it2->second->setValue(propertyValue.getFloatValue());
-        return;
-    }
-}
+}*/
 
 std::shared_ptr<ComboBoxParameter>* ParameterHandler::getComboBoxParameter(const juce::String& parameterID)
 {

@@ -12,6 +12,7 @@
 
 #include <JuceHeader.h>
 #include "../Modulator.h"
+#include "../../../ParameterHandler/SliderParameter.h"
 
 class EnvelopeProcessor : public Modulator {
 public:

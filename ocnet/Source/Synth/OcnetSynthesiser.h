@@ -17,7 +17,7 @@ public:
     OcnetSynthesiser();
     ~OcnetSynthesiser() override;
 
-    void connectModulation(int processorModulatorID, std::shared_ptr<Parameter2> parameter);
+    void connectModulation(int processorModulatorID, std::shared_ptr<SliderParameter> parameter, const juce::String& parameterID);
 
 
     bool getHasEnvelope() { return hasEnvelope; }

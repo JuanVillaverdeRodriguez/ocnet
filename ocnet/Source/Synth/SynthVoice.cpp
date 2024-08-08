@@ -96,8 +96,8 @@ void SynthVoice::releaseResources()
     processorhHandler.releaseResources();
 }
 
-void SynthVoice::connectModulation(int processorModulatorID, std::shared_ptr<Parameter2> parameter) {
-    processorhHandler.connectModulation(processorModulatorID, parameter);
+void SynthVoice::connectModulation(int processorModulatorID, std::shared_ptr<SliderParameter> parameter, const juce::String& parameterID) {
+    processorhHandler.connectModulation(*parameterHandler, processorModulatorID, parameter, parameterID);
 }
 
 void SynthVoice::setVoiceNumberId(int id)

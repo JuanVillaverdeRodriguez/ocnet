@@ -27,7 +27,9 @@ public:
 
     void resized() override;
 
+    void setParameterValue(const juce::String& propertyName, const juce::String& propertyValue) override;
     void attachParams(ParameterHandler& parameterHandler);
+    void addParametersToParameterHandler(ParameterHandler& parameterHandler) override;
 
 private:
     std::unique_ptr<Knob1> attackKnob;

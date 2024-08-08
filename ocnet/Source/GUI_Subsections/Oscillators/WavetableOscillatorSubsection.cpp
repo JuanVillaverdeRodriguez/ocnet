@@ -36,7 +36,7 @@ WavetableOscillatorSubsection::WavetableOscillatorSubsection(int id, GUI_EventHa
 
 void WavetableOscillatorSubsection::resized()
 {
-    DBG("WavetableOscillatorSubsection::resized()");
+    //DBG("WavetableOscillatorSubsection::resized()");
 
     auto area = getLocalBounds();
 
@@ -51,15 +51,29 @@ void WavetableOscillatorSubsection::resized()
 
 void WavetableOscillatorSubsection::attachParams(ParameterHandler& parameterHandler)
 {
-    DBG("WavetableOscillatorSubsection::attachParams(ParameterHandler& parameterHandler)");
-    DBG(juce::String(getId()));
+    //DBG("WavetableOscillatorSubsection::attachParams(ParameterHandler& parameterHandler)");
+    //DBG(juce::String(getId()));
 
-    parameterHandler.addSliderParameter(createParameterID("WavetableOscillator", getId(), "volume"), std::make_shared<SliderParameter>("volume"));
     volumeParameterAttachment = std::make_unique<OcnetSliderAttachment>(*volumeKnob, *parameterHandler.getSliderParameter(createParameterID("WavetableOscillator", getId(), "volume"))->get());
 
-    parameterHandler.addSliderParameter(createParameterID("WavetableOscillator", getId(), "panning"), std::make_shared<SliderParameter>("panning"));
     panningParameterAttachment = std::make_unique<OcnetSliderAttachment>(*panningKnob, *parameterHandler.getSliderParameter(createParameterID("WavetableOscillator", getId(), "panning"))->get());
 
-    parameterHandler.addComboBoxParameter(createParameterID("WavetableOscillator", getId(), "waveType"), std::make_shared<ComboBoxParameter>("waveType", juce::StringArray{"Saw", "Square", "Sine"}, 0));
     waveTypeParameterAttachment = std::make_unique<OcnetComboBoxAttachment>(waveTypeComboBox, *parameterHandler.getComboBoxParameter(createParameterID("WavetableOscillator", getId(), "waveType"))->get());
+}
+
+void WavetableOscillatorSubsection::setParameterValue(const juce::String& propertyName, const juce::String& propertyValue)
+{
+    if (propertyName == "volume")
+        volumeKnob->setValue(propertyValue.getFloatValue());
+    else if (propertyName == "volume")
+        panningKnob->setValue(propertyValue.getFloatValue());
+    else if (propertyName == "waveType")
+        waveTypeComboBox.setSelectedId(propertyValue.getIntValue());
+}
+
+void WavetableOscillatorSubsection::addParametersToParameterHandler(ParameterHandler& parameterHandler)
+{
+    parameterHandler.addSliderParameter(createParameterID("WavetableOscillator", getId(), "volume"), std::make_shared<SliderParameter>("volume"));
+    parameterHandler.addSliderParameter(createParameterID("WavetableOscillator", getId(), "panning"), std::make_shared<SliderParameter>("panning"));
+    parameterHandler.addComboBoxParameter(createParameterID("WavetableOscillator", getId(), "waveType"), std::make_shared<ComboBoxParameter>("waveType", juce::StringArray{ "Saw", "Square", "Sine" }, 0));
 }

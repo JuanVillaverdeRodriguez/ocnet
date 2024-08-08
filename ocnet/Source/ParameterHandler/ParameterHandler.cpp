@@ -132,6 +132,21 @@ void ParameterHandler::connectModulation(std::shared_ptr<Parameter2> parameter)
     nodeTree.setProperty(propertyNameIdentifier, -1, nullptr);
 }
 
+void ParameterHandler::setParameterValues(const juce::String& parameterID, const juce::String& propertyValue)
+{
+    auto it = comboBoxParametersMap.find(parameterID);
+    if (it != comboBoxParametersMap.end()) {
+        it->second->setCurrentIndex(propertyValue.getIntValue());
+        return;
+    }
+
+    auto it2 = sliderParametersMap.find(parameterID);
+    if (it2 != sliderParametersMap.end()) {
+        it2->second->setValue(propertyValue.getFloatValue());
+        return;
+    }
+}
+
 std::shared_ptr<ComboBoxParameter>* ParameterHandler::getComboBoxParameter(const juce::String& parameterID)
 {
     auto it = comboBoxParametersMap.find(parameterID);
@@ -233,7 +248,7 @@ juce::ValueTree ParameterHandler::findNodeByName(const juce::ValueTree& tree, co
             return result;
     }
 
-    DBG("NO SE HA ENCONTRADO EL NODO BUSCADO");
+    //DBG("NO SE HA ENCONTRADO EL NODO BUSCADO");
 
     // Si no se encuentra, devolver un ValueTree inválido
     return juce::ValueTree();

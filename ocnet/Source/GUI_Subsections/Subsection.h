@@ -27,12 +27,15 @@ public:
     void buttonClicked(juce::Button* clickedButton) override;
 
     virtual void attachParams(ParameterHandler& parameterHandler) {};
+    virtual void addParametersToParameterHandler(ParameterHandler& parameterHandler) {};
 
     void sectionResized();
 
     virtual juce::String getType() { return juce::String(""); };
 
     juce::String createParameterID(const juce::String& type, int id, const juce::String& parameterName);
+
+    virtual void setParameterValue(const juce::String& propertyName, const juce::String& propertyValue) {};
 
     void setBypassed(bool bypassed);
 

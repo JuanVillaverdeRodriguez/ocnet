@@ -58,21 +58,32 @@ void EnvelopeSubsection::resized()
     modulationBubble.setBounds(posX, area.getHeight() - defaultKnobSize, defaultKnobSize, defaultKnobSize);
 }
 
+void EnvelopeSubsection::setParameterValue(const juce::String& propertyName, const juce::String& propertyValue)
+{
+    if (propertyName == "attack")
+        attackKnob->setValue(propertyValue.getFloatValue());
+    else if (propertyName == "decay")
+        decayKnob->setValue(propertyValue.getFloatValue());
+    else if (propertyName == "sustain")
+        sustainKnob->setValue(propertyValue.getFloatValue());
+    else if (propertyName == "release")
+        releaseKnob->setValue(propertyValue.getFloatValue());
+}
+
 void EnvelopeSubsection::attachParams(ParameterHandler& parameterHandler) {
-    parameterHandler.addSliderParameter(createParameterID("Envelope", getId(), "attack"), std::make_shared<SliderParameter>("attack"));
     attackParameterAttachment = std::make_unique<OcnetSliderAttachment>(*attackKnob, *parameterHandler.getSliderParameter(createParameterID("Envelope", getId(), "attack"))->get());
-
-    parameterHandler.addSliderParameter(createParameterID("Envelope", getId(), "decay"), std::make_shared<SliderParameter>("decay"));
     decayParameterAttachment = std::make_unique<OcnetSliderAttachment>(*decayKnob, *parameterHandler.getSliderParameter(createParameterID("Envelope", getId(), "decay"))->get());
-
-    parameterHandler.addSliderParameter(createParameterID("Envelope", getId(), "sustain"), std::make_shared<SliderParameter>("sustain"));
     sustainParameterAttachment = std::make_unique<OcnetSliderAttachment>(*sustainKnob, *parameterHandler.getSliderParameter(createParameterID("Envelope", getId(), "sustain"))->get());
-
-    parameterHandler.addSliderParameter(createParameterID("Envelope", getId(), "release"), std::make_shared<SliderParameter>("release"));
     releaseParameterAttachment = std::make_unique<OcnetSliderAttachment>(*releaseKnob, *parameterHandler.getSliderParameter(createParameterID("Envelope", getId(), "release"))->get());
 
     dragZone.setParentContainerAndComponent(*juce::DragAndDropContainer::findParentDragContainerFor(this), *this);
 }
 
-
-
+// Mover a audioProcessor
+void EnvelopeSubsection::addParametersToParameterHandler(ParameterHandler& parameterHandler)
+{
+    parameterHandler.addSliderParameter(createParameterID("Envelope", getId(), "attack"), std::make_shared<SliderParameter>("attack"));
+    parameterHandler.addSliderParameter(createParameterID("Envelope", getId(), "decay"), std::make_shared<SliderParameter>("decay"));
+    parameterHandler.addSliderParameter(createParameterID("Envelope", getId(), "sustain"), std::make_shared<SliderParameter>("sustain"));
+    parameterHandler.addSliderParameter(createParameterID("Envelope", getId(), "release"), std::make_shared<SliderParameter>("release"));
+}

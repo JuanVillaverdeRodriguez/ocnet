@@ -36,9 +36,11 @@ public:
 
     void connectModulation(std::shared_ptr<Parameter2> parameter);
    
+    void setParameterValues(const juce::String& parameterID, const juce::String& propertyValue);
 
     juce::ValueTree getRootTree();
 
+    void printValueTree(const juce::ValueTree& tree, int indentLevel);
 
 private:
     juce::ValueTree rootNode;
@@ -51,7 +53,6 @@ private:
     juce::ValueTree findNodeByName(const juce::ValueTree& tree, const juce::Identifier& name);
 
     // Imprime el arbol con indentacion y todo
-    void printValueTree(const juce::ValueTree& tree, int indentLevel);
 
     // Dado un parameterID, divide el string en las 3 partes del parametro separadas por "_"
     // part1 = type

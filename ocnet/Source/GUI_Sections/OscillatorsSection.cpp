@@ -33,15 +33,15 @@ void OscillatorsSection::resized()
     addOscillatorButton.setBounds(area.getWidth() / 2 - 25, lastSubsection + 5, 50, 50);
 }
 
-
-void OscillatorsSection::addOscillator(const juce::String& type, int numberOfWavetableOscillators, ParameterHandler& parameterHandler)
+std::unique_ptr<Subsection>* OscillatorsSection::addOscillator(const juce::String& type, int numberOfWavetableOscillators, ParameterHandler& parameterHandler)
 {
     if (type == "WavetableOscillator")
         subsectionsVector.push_back(std::make_unique<WavetableOscillatorSubsection>(numberOfWavetableOscillators, eventHandler));
 
-    this->addAndMakeVisible(*subsectionsVector.back());
     resized();
-    subsectionsVector.back()->attachParams(parameterHandler);
+
+    return &subsectionsVector.back();
+
 }
 
 std::vector<std::unique_ptr<Subsection>>* OscillatorsSection::getListOfSubsections()

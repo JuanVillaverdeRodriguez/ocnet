@@ -19,14 +19,17 @@ ModulatorsSection::ModulatorsSection(GUI_EventHandler& eventHandler) : eventHand
     addModulatorButton.addListener(this);
 }
 
-void ModulatorsSection::addModulator(const juce::String& type, int numberOfEnvelopes, ParameterHandler& parameterHandler)
+std::unique_ptr<Subsection>* ModulatorsSection::addModulator(const juce::String& type, int numberOfEnvelopes, ParameterHandler& parameterHandler)
 {
     if (type == "Envelope")
         subsectionsVector.push_back(std::make_unique<EnvelopeSubsection>(numberOfEnvelopes, eventHandler));
 
-    this->addAndMakeVisible(*subsectionsVector.back());
     resized();
-    subsectionsVector.back()->attachParams(parameterHandler);
+
+    //this->addAndMakeVisible(*subsectionsVector.back());
+    //subsectionsVector.back()->attachParams(parameterHandler);
+
+    return &subsectionsVector.back();
 }
 
 void ModulatorsSection::paint(juce::Graphics& g)

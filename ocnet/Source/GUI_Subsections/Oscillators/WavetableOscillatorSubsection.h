@@ -24,6 +24,8 @@ public:
     void resized() override;
 
     void attachParams(ParameterHandler& parameterHandler) override;
+    void setParameterValue(const juce::String& propertyName, const juce::String& propertyValue) override;
+    void addParametersToParameterHandler(ParameterHandler& parameterHandler) override;
 
 private:
     std::unique_ptr<Knob1> volumeKnob;

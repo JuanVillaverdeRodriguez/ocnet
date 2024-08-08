@@ -20,7 +20,7 @@ class OscillatorsSection : public Section, juce::Button::Listener {
 public:
     OscillatorsSection(GUI_EventHandler& eventHandler);
 
-    void addOscillator(const juce::String& type, int numberOfWavetableOscillators, ParameterHandler& parameterHandler);
+    std::unique_ptr<Subsection>* addOscillator(const juce::String& type, int numberOfWavetableOscillators, ParameterHandler& parameterHandler);
 
     std::vector<std::unique_ptr<Subsection>>* getListOfSubsections() override;
 

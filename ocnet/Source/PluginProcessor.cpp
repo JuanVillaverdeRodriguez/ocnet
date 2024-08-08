@@ -23,6 +23,7 @@ OcnetAudioProcessor::OcnetAudioProcessor()
                        )
 #endif
 {
+    DBG("OcnetAudioProcessor::OcnetAudioProcessor()");
     
 
     addSound(new SynthSound());

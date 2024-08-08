@@ -36,6 +36,16 @@ void FilterSubsection::resized()
 
 void FilterSubsection::attachParams(ParameterHandler& parameterHandler)
 {
-    parameterHandler.addSliderParameter(createParameterID("Filter", getId(), "freqCut"), std::make_shared<SliderParameter>("freqCut"));
     freqCutParameterAttachment = std::make_unique<OcnetSliderAttachment>(*freqCutKnob, *parameterHandler.getSliderParameter(createParameterID("Filter", getId(), "freqCut"))->get());
+}
+
+void FilterSubsection::addParametersToParameterHandler(ParameterHandler& parameterHandler)
+{
+    parameterHandler.addSliderParameter(createParameterID("Filter", getId(), "freqCut"), std::make_shared<SliderParameter>("freqCut"));
+}
+
+void FilterSubsection::setParameterValue(const juce::String& propertyName, const juce::String& propertyValue)
+{
+    if (propertyName == "freqCut")
+        freqCutKnob->setValue(propertyValue.getFloatValue());
 }

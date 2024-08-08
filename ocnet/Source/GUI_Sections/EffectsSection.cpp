@@ -38,16 +38,16 @@ std::vector<std::unique_ptr<Subsection>>* EffectsSection::getListOfSubsections()
     return &subsectionsVector;
 }
 
-void EffectsSection::addEffect(const juce::String& type, int id, ParameterHandler& parameterHandler)
+std::unique_ptr<Subsection>* EffectsSection::addEffect(const juce::String& type, int id, ParameterHandler& parameterHandler)
 {
     if (type == "Filter")
         subsectionsVector.push_back(std::make_unique<FilterSubsection>(id, eventHandler));
     else if (type == "Distortion")
         subsectionsVector.push_back(std::make_unique<DistortionSubsection>(id, eventHandler));
 
-    this->addAndMakeVisible(*subsectionsVector.back());
     resized();
-    subsectionsVector.back()->attachParams(parameterHandler);
+
+    return &subsectionsVector.back();
 }
 
 

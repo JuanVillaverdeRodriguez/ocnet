@@ -18,15 +18,9 @@ OcnetComboBoxAttachment::OcnetComboBoxAttachment(juce::ComboBox& comboBox, Combo
 
 void OcnetComboBoxAttachment::comboBoxChanged(juce::ComboBox* comboBoxThatHasChanged)
 {
-    DBG("EL COMBO BOX HA CAMBIADO");
-
     if (comboBoxThatHasChanged == &comboBox)
     {
-        DBG("EL COMBO BOX HA CAMBIADO2");
-
-
         int newIndex = comboBox.getSelectedId() - 1;
-        DBG(juce::String(newIndex));
 
         parameter.setCurrentIndex(newIndex);
     }

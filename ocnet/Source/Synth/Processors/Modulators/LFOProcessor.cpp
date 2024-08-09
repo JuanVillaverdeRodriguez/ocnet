@@ -51,6 +51,10 @@ void LFOProcessor::syncParams(const ParameterHandler& parameterHandler)
 {
 }
 
+void LFOProcessor::processBlock(juce::AudioBuffer<float>& buffer)
+{
+}
+
 inline void LFOProcessor::setFrequency() {
     phaseIncrement = juce::MathConstants<float>::twoPi * frequency / sampleRate;
 }

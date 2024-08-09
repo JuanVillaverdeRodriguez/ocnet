@@ -30,7 +30,7 @@ WavetableOscillatorProcessor::WavetableOscillatorProcessor(int id)
     //tables = createWaveTables(2048, juce::String("Sine"));
 
     cnt = 0;
-    //jassert(wavetable.waveTable.getNumChannels() == 1); // Asegúrate de que la wavetable sea mono
+    //jassert(wavetable->waveTable.getNumChannels() == 1); // Asegúrate de que la wavetable sea mono
     oscGain = 1.0f;
 
     isPrepared = false;
@@ -355,5 +355,28 @@ std::vector<WavetableStruct> WavetableOscillatorProcessor::createWaveTables(int 
     wavetablesStructs = fillWavetables(freqWaveRe, freqWaveIm, tableSize);
 
     return wavetablesStructs;
+
+}
+
+void WavetableOscillatorProcessor::processBlock(juce::AudioBuffer<float>& outputBuffer)
+{
+    int numSamples = outputBuffer.getNumSamples();
+    int numChannels = outputBuffer.getNumChannels();
+
+    auto* firstChannelBuffer = outputBuffer.getWritePointer(0);
+
+    for (int sample = 0; sample < numSamples; ++sample) {
+        firstChannelBuffer[sample] += getNextSample(sample);
+    }
+
+    // Copiar el contenido del primer canal a los otros canales
+    for (int channel = 1; channel < numChannels; ++channel) {
+        auto* buffer = outputBuffer.getWritePointer(channel);
+
+        // Copiar los valores del primer canal a este canal
+        for (int sample = 0; sample < numSamples; ++sample) {
+            buffer[sample] = firstChannelBuffer[sample];
+        }
+    }
 
 }

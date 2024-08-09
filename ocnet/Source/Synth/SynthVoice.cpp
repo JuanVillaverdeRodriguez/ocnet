@@ -55,7 +55,8 @@ void SynthVoice::renderNextBlock(juce::AudioBuffer<float>& outputBuffer, int sta
     //jassert(isPrepared); // No deberia ser necesario, JUCE ya lo deberia comprobar, pero por si acaso
 
     // Preparamos un buffer auxiliar para evitar clicks del audio
-    synthBuffer.setSize(1, numSamples, false, false, true);
+    int numChannels = outputBuffer.getNumChannels();
+    synthBuffer.setSize(numChannels, numSamples, false, false, true);
     synthBuffer.clear();
 
     processorhHandler.applyModulations(synthBuffer);
@@ -63,7 +64,7 @@ void SynthVoice::renderNextBlock(juce::AudioBuffer<float>& outputBuffer, int sta
     processorhHandler.processBlock(synthBuffer);
 
     // Añadir synthBuffer al outputBuffer
-    for (int channel = 0; channel < 1; ++channel) {
+    for (int channel = 0; channel < numChannels; ++channel) {
         outputBuffer.addFrom(channel, startSample, synthBuffer, channel, 0, numSamples);
     }
 

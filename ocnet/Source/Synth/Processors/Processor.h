@@ -23,7 +23,7 @@ public:
     virtual void updateParameterValues() = 0 {};
     virtual float getNextSample(int sample) = 0 {};
     virtual void syncParams(const ParameterHandler& parameterHandler) = 0 {};
-
+    virtual void processBlock(juce::AudioBuffer<float>& buffer) = 0 {};
 
     void setVoiceNumberId(int id) { voiceId = id; }
     int getVoiceNumberId() { return voiceId; }

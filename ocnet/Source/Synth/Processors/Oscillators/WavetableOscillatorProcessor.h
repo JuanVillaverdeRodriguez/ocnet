@@ -34,6 +34,8 @@ public:
     std::vector<WavetableStruct> fillWavetables(std::unique_ptr<double[]>& freqWaveRe, std::unique_ptr<double[]>& freqWaveIm, int tableSize);
     std::vector<WavetableStruct> createWaveTables(int tableSize, const juce::String& waveType);
 
+    void processBlock(juce::AudioBuffer<float>& buffer) override;
+
 private:
     juce::Array<float> oscGainModulationBuffer;
 
@@ -64,5 +66,8 @@ private:
     std::shared_ptr<SliderParameter> gainParameter;
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(WavetableOscillatorProcessor)
+
+
+        
 
 };

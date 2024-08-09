@@ -81,6 +81,10 @@ bool EnvelopeProcessor::isActive()
     return adsr.isActive();
 }
 
+void EnvelopeProcessor::processBlock(juce::AudioBuffer<float>& buffer)
+{
+}
+
 void EnvelopeProcessor::syncParams(const ParameterHandler& parameterHandler)
 {
     attackParameter = parameterHandler.syncWithSliderParam(juce::String("Envelope_") + juce::String(getId()) + juce::String("_attack"));

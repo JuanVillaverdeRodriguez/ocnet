@@ -29,6 +29,7 @@ public:
 
     bool isActive();
 
+    void processBlock(juce::AudioBuffer<float>& buffer) override;
 private:
     juce::Array<float> attackModulationBuffer;
     juce::Array<float> decayModulationBuffer;
@@ -49,5 +50,8 @@ private:
     juce::ADSR::Parameters adsrParams;
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(EnvelopeProcessor)
+
+
+        
 
 };

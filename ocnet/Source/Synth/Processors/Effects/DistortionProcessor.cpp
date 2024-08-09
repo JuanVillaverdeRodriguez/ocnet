@@ -60,9 +60,10 @@ void DistortionProcessor::processBlock(juce::AudioBuffer<float>& buffer)
 
     upSampledBlock = oversampler.processSamplesUp(block);
     int numSamples = upSampledBlock.getNumSamples();
+    int numChannels = upSampledBlock.getNumChannels();
 
 
-    for (int channel = 0; channel < 1; ++channel) {
+    for (int channel = 0; channel < numChannels; ++channel) {
         auto* data = upSampledBlock.getChannelPointer(channel);
 
         for (int sample = 0; sample < numSamples; ++sample) {

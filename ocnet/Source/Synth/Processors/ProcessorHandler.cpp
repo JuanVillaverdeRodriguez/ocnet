@@ -51,29 +51,25 @@ ProcessorHandler::~ProcessorHandler()
 
 void ProcessorHandler::processBlock(juce::AudioBuffer<float>& outputBuffer)
 {
-    int numSamples = outputBuffer.getNumSamples();
-
-    for (int channel = 0; channel < 1; ++channel) {
-        auto* buffer = outputBuffer.getWritePointer(channel);
-
-        for (int sample = 0; sample < numSamples; ++sample) {
-
-            for (auto& processor : oscillatorsProcessorsList) {
-                if (!processor->isBypassed()) {
-                    buffer[sample] += processor->getNextSample(sample);
-                }
-            }
-
+    // Procesar osciladores
+    for (auto& processor : oscillatorsProcessorsList) {
+        if (!processor->isBypassed()) {
+            processor->processBlock(outputBuffer);
         }
     }
 
+    // Procesar efectos
     for (auto& processor : effectsProcessorsList) {
         if (!processor->isBypassed()) {
             processor->processBlock(outputBuffer);
         }
     }
 
-    for (int channel = 0; channel < 1; ++channel) {
+    int numSamples = outputBuffer.getNumSamples();
+    int numChannels = outputBuffer.getNumChannels();
+
+    // Aplicar el envelope principal
+    for (int channel = 0; channel < numChannels; ++channel) {
         auto* buffer = outputBuffer.getWritePointer(channel);
         for (int sample = 0; sample < numSamples; ++sample) {
             buffer[sample] *= mainEnvelope->getNextSample(sample);

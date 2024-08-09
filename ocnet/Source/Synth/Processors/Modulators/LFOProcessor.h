@@ -26,6 +26,7 @@ public:
     void updateParameterValues() override;
     void prepareToPlay(juce::dsp::ProcessSpec spec) override;
     void syncParams(const ParameterHandler& parameterHandler) override;
+    void processBlock(juce::AudioBuffer<float>& buffer) override;
 
 
 private:

@@ -20,7 +20,8 @@ public:
     virtual ~ModulatorsSubsection() = default;
     virtual std::unique_ptr<ModulationBubble>* createModulationBubble(ParameterHandler& parameterHandler, juce::String& parameterID, GUI_EventHandler& eventHandler) { return nullptr; };
     juce::String getType() override;
-
+    
+    bool isModulating(const juce::String& modulationID);
     void removeModulationBubble(const juce::String modulationID);
 protected:
     DragZone dragZone;

@@ -20,6 +20,17 @@ juce::String ModulatorsSubsection::getType()
     return juce::String("Modulators");
 }
 
+bool ModulatorsSubsection::isModulating(const juce::String& modulationID)
+{
+    for (auto& modulationBubble : modulationBubblesVector) {
+        if (modulationBubble->getModulationID() == modulationID) {
+            return true;
+        }
+    }
+
+    return false;
+}
+
 void ModulatorsSubsection::removeModulationBubble(const juce::String modulationID)
 {
     DBG("ANTES removeModulationBubble: ");

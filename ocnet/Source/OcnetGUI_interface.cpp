@@ -71,14 +71,18 @@ void OcnetGUI_interface::onAddModulator(int processorType)
 
 void OcnetGUI_interface::onConnectModulation(Subsection& modulator, juce::String& parameterID)
 {
-    auto modulatorCasted = dynamic_cast<ModulatorsSubsection*>(&modulator);
-    std::unique_ptr<ModulationBubble>* modulationBubble = modulatorCasted->createModulationBubble(processor.parameterHandler, parameterID, *this);
-    std::shared_ptr<SliderParameter>* parameterToModulate = processor.parameterHandler.getSliderParameter(parameterID);
 
+    auto modulatorCasted = dynamic_cast<ModulatorsSubsection*>(&modulator);
     juce::String modulationParameterID = modulatorCasted->getSubType() + juce::String("_") + juce::String(modulatorCasted->getId()) + juce::String("_modulationAmount_") + parameterID;
-    processor.connectModulation(modulator.getId(), *parameterToModulate, modulationParameterID);
-    //processor.connectModulation(processorModulatorID, parameter);
-    //processor.connectModulation(parameter);
+
+    // Comprobar no se este itentando modular el mismo parametro mas de una vez con el mismo modulador
+    if (!modulatorCasted->isModulating(modulationParameterID)) {
+        std::unique_ptr<ModulationBubble>* modulationBubble = modulatorCasted->createModulationBubble(processor.parameterHandler, parameterID, *this);
+        std::shared_ptr<SliderParameter>* parameterToModulate = processor.parameterHandler.getSliderParameter(parameterID);
+
+        processor.connectModulation(modulator.getId(), *parameterToModulate, modulationParameterID);
+    }
+
 }
 
 void OcnetGUI_interface::onDeleteSubsection(Subsection& subsection)

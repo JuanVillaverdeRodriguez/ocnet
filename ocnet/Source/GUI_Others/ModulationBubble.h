@@ -12,7 +12,7 @@ public:
         setJustificationType(juce::Justification::centred);
         setVisible(true);
         setSize(300, 15);
-        //setInterceptsMouseClicks(false, false);
+        setInterceptsMouseClicks(false, false);
     }
 
     void setModulationAmount(float amount)

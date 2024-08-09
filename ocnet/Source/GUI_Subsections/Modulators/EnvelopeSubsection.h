@@ -32,7 +32,7 @@ public:
     void setParameterValue(const juce::String& propertyName, const juce::String& propertyValue) override;
     void attachParams(ParameterHandler& parameterHandler);
     void addParametersToParameterHandler(ParameterHandler& parameterHandler) override;
-    std::unique_ptr<ModulationBubble>* createModulationBubble(ParameterHandler& parameterHandler, const juce::String& parameterID) override;
+    std::unique_ptr<ModulationBubble>* createModulationBubble(ParameterHandler& parameterHandler, juce::String& parameterID, GUI_EventHandler& eventHandler) override;
 
 private:
     juce::String attackParameterID;

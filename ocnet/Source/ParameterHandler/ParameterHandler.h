@@ -35,6 +35,8 @@ public:
 
     //void connectModulation(std::shared_ptr<Parameter2> parameter);
    
+    void removeModulationParameterWithID(const juce::String parameterID);
+    void removeParameterFromTree(const juce::String parameterID);
 
     juce::ValueTree getRootTree();
 

@@ -18,8 +18,10 @@ class ModulatorsSubsection : public Subsection {
 public:
     ModulatorsSubsection(GUI_EventHandler& eventHandler);
     virtual ~ModulatorsSubsection() = default;
-    virtual std::unique_ptr<ModulationBubble>* createModulationBubble(ParameterHandler& parameterHandler, const juce::String& parameterID) { return nullptr; };
+    virtual std::unique_ptr<ModulationBubble>* createModulationBubble(ParameterHandler& parameterHandler, juce::String& parameterID, GUI_EventHandler& eventHandler) { return nullptr; };
     juce::String getType() override;
+
+    void removeModulationBubble(const juce::String modulationID);
 protected:
     DragZone dragZone;
     //std::vector<ModulationBubble> modulationBubblesVector;

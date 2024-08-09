@@ -31,7 +31,7 @@ public:
     void addModulator(int processorID, int id);
 
     void setBypassed(int id, bool bypassed);
-
+    void removeModulation(const juce::String& modulationID);
 
 private:
     bool hasMainEnvelope = false;

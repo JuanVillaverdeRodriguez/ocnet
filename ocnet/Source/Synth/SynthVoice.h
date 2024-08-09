@@ -37,7 +37,7 @@ public:
 
     void setVoiceNumberId(int id);
 
-    
+    void removeModulation(const juce::String& modulationID);
 
     void inline setParameterHandler(ParameterHandler& parameterHandler) { this->parameterHandler = &parameterHandler; }
 

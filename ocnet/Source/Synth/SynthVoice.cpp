@@ -107,6 +107,11 @@ void SynthVoice::setVoiceNumberId(int id)
     processorhHandler.setVoiceNumberId(id);
 }
 
+void SynthVoice::removeModulation(const juce::String& modulationID)
+{
+    processorhHandler.removeModulation(modulationID);
+}
+
 
 void SynthVoice::deleteProcessor(int processorID)
 {

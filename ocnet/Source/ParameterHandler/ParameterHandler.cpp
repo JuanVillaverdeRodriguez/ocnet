@@ -210,6 +210,42 @@ void ParameterHandler::addSliderParameter(const juce::String& parameterID, std::
 
 
 
+void ParameterHandler::removeModulationParameterWithID(const juce::String parameterID)
+{
+    DBG("ANTES: ");
+    printValueTree(rootNode, 1);
+
+    for (const auto& param : sliderParametersMap) {
+        DBG(param.second->getParameterID());
+    }
+
+    comboBoxParametersMap.erase(parameterID);
+    sliderParametersMap.erase(parameterID);
+
+    removeParameterFromTree(parameterID);
+
+    DBG("DESPUES: ");
+    printValueTree(rootNode, 1);
+
+    for (const auto& param : sliderParametersMap) {
+        DBG(param.second->getParameterID());
+    }
+}
+
+void ParameterHandler::removeParameterFromTree(const juce::String parameterID)
+{
+    auto [part1, part2, part3] = Utils::splitParameterID(parameterID);
+
+    // Podria buscarse directamente por el ID (no deberia haber repetidos), pero por si acaso hago dos busquedas...
+    juce::ValueTree typeNode = findNodeByName(rootNode, juce::Identifier(part1));
+    juce::ValueTree idNode = findNodeByName(typeNode, juce::Identifier(part2));
+
+    if (idNode.isValid()) {
+        idNode.removeProperty(juce::Identifier(part3), nullptr);
+    }
+
+}
+
 juce::ValueTree ParameterHandler::getRootTree()
 {
     return rootNode;

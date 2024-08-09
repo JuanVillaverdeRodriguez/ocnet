@@ -109,12 +109,12 @@ void EnvelopeSubsection::addParametersToParameterHandler(ParameterHandler& param
     parameterHandler.addSliderParameter(releaseParameterID, std::make_shared<SliderParameter>("release"));
 }
 
-std::unique_ptr<ModulationBubble>* EnvelopeSubsection::createModulationBubble(ParameterHandler& parameterHandler, const juce::String& parameterID)
+std::unique_ptr<ModulationBubble>* EnvelopeSubsection::createModulationBubble(ParameterHandler& parameterHandler,  juce::String& parameterID, GUI_EventHandler& eventHandler)
 {
     juce::String newModulationParameterID = createParameterID("Envelope", getId(), "modulationAmount_" + parameterID);
 
 
-    modulationBubblesVector.push_back(std::make_unique<ModulationBubble>(parameterID));
+    modulationBubblesVector.push_back(std::make_unique<ModulationBubble>(newModulationParameterID, eventHandler));
     this->getParentComponent()->getParentComponent()->addAndMakeVisible(*modulationBubblesVector.back());
         
     parameterHandler.addSliderParameter(newModulationParameterID, std::make_shared<SliderParameter>("modulationAmount_" + parameterID));

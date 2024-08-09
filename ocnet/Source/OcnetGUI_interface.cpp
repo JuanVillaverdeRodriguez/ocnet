@@ -69,10 +69,10 @@ void OcnetGUI_interface::onAddModulator(int processorType)
 }
 
 
-void OcnetGUI_interface::onConnectModulation(Subsection& modulator, const juce::String& parameterID)
+void OcnetGUI_interface::onConnectModulation(Subsection& modulator, juce::String& parameterID)
 {
     auto modulatorCasted = dynamic_cast<ModulatorsSubsection*>(&modulator);
-    std::unique_ptr<ModulationBubble>* modulationBubble = modulatorCasted->createModulationBubble(processor.parameterHandler, parameterID);
+    std::unique_ptr<ModulationBubble>* modulationBubble = modulatorCasted->createModulationBubble(processor.parameterHandler, parameterID, *this);
     std::shared_ptr<SliderParameter>* parameterToModulate = processor.parameterHandler.getSliderParameter(parameterID);
 
     juce::String modulationParameterID = modulatorCasted->getSubType() + juce::String("_") + juce::String(modulatorCasted->getId()) + juce::String("_modulationAmount_") + parameterID;
@@ -109,6 +109,14 @@ void OcnetGUI_interface::onBypassChanged(Subsection& subsection, bool toggled)
     subsection.setBypassed(toggled);
     processor.setBypassed(subsection.getId(), toggled);
     //processor.parameterHandler.setBypassed(subsection.getId(), toggled);
+}
+
+void OcnetGUI_interface::onRemoveModulation(const juce::String& modulationID)
+{
+    DBG("ELIMINANDO MODULACION" + modulationID);
+    processor.parameterHandler.removeModulationParameterWithID(modulationID);
+    processor.removeModulation(modulationID);
+    gui_->getModulatorsSection()->removeModulation(modulationID);
 }
 
 void OcnetGUI_interface::initialiseGUIFromTree(juce::ValueTree tree)

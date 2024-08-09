@@ -39,7 +39,7 @@ WavetableOscillatorProcessor::WavetableOscillatorProcessor(int id)
     currentIndex = 0.0f;
     tableDelta = 0.0f;
     numWavetables = (*tables).size();
-    DBG("TAMANO: " + juce::String(numWavetables));
+    //DBG("TAMANO: " + juce::String(numWavetables));
 
 }
 
@@ -127,7 +127,7 @@ void WavetableOscillatorProcessor::prepareToPlay(juce::dsp::ProcessSpec spec)
 {
     sampleRate = spec.sampleRate;
     gain.prepare(spec);
-    DBG(juce::String(spec.sampleRate));
+    //DBG(juce::String(spec.sampleRate));
 }
 
 void fft(int N, std::unique_ptr<double[]>& ar, std::unique_ptr<double[]>& ai)
@@ -268,9 +268,9 @@ std::vector<WavetableStruct> WavetableOscillatorProcessor::fillWavetables(std::u
     // octave table, which is an additional 1/3
 
     // Calculo de la topFreq para la tabla de ondas inicial (indice 0)
-    DBG("MAX HARMONIC: " + juce::String(maxHarmonic));
+    //DBG("MAX HARMONIC: " + juce::String(maxHarmonic));
     double topFreq = 2.0 / 3.0 / maxHarmonic;
-    DBG("MAX HARMONIC: " + juce::String(topFreq));
+    //DBG("MAX HARMONIC: " + juce::String(topFreq));
 
 
     // for subsquent tables, double topFreq and remove upper half of harmonics

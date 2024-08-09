@@ -10,9 +10,10 @@
 
 #include "Modulation.h"
 
-Modulation::Modulation(std::shared_ptr<SliderParameter> sliderParameter) : sliderToModulate(sliderParameter)
+Modulation::Modulation(std::shared_ptr<SliderParameter> sliderParameter, const juce::String& modulationID) : sliderToModulate(sliderParameter), modulationID(modulationID)
 {
 }
+
 
 void Modulation::updateModulationBuffer(juce::Array<float> modulationArray, int voice)
 {
@@ -33,4 +34,9 @@ juce::Array<float> Modulation::getModulationBuffer()
 void Modulation::syncParams(const ParameterHandler& parameterHandler, const juce::String& parameterID)
 {
     modulationAmount = parameterHandler.syncWithSliderParam(parameterID);
+}
+
+juce::String Modulation::getModulationID()
+{
+    return modulationID;
 }

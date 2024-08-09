@@ -30,6 +30,8 @@ public:
     void paint(juce::Graphics& g) override;
     void resized() override;
 
+    void removeModulation(const juce::String modulationID);
+
 private:
     GUI_EventHandler& eventHandler;
     OcnetLookAndFeel lookAndFeel;

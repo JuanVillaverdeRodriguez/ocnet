@@ -91,6 +91,8 @@ public:
     }
 
     static std::tuple<juce::String, juce::String, juce::String> splitParameterID(const juce::String& input);
+    static std::tuple<juce::String, juce::String> splitParameterModulationID(const juce::String& input);
+
 
 
 

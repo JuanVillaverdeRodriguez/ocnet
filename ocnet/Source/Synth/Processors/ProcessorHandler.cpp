@@ -337,6 +337,19 @@ void ProcessorHandler::setBypassed(int id, bool bypassed)
 
 }
 
+void ProcessorHandler::removeModulation(const juce::String& modulationID)
+{
+    auto [modulatorType, modulatorID, modulationTag] = Utils::splitParameterID(modulationID);
+    
+    if (modulatorID == "0") {
+        mainEnvelope->removeModulation(modulationID);
+    }
+    else {
+        std::unique_ptr<Modulator>* modulator = Utils::findElementByID(modulatorProcessorsList, modulatorID.getIntValue());
+        modulator->get()->removeModulation(modulationID);
+    }
+}
+
 void ProcessorHandler::releaseResources()
 {
 }

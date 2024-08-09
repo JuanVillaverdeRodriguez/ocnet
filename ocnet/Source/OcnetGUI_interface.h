@@ -26,7 +26,7 @@ public:
     void onAddEffect(int processorType) override;
     void onAddModulator(int processorType) override;
 
-    void onConnectModulation(Subsection& modulator, const juce::String& parameterID) override;
+    void onConnectModulation(Subsection& modulator, juce::String& parameterID) override;
 
     void onDeleteSubsection(Subsection& subsection) override;
 
@@ -34,17 +34,16 @@ public:
 
     void onBypassChanged(Subsection& subsection, bool toggled) override;
 
+    void onRemoveModulation(const juce::String& modulationBubble) override;
+
     void initialiseGUIFromTree(juce::ValueTree tree);
 
-    
 
     OcnetGUI* getGui();
 
     void handleNoteOn(juce::MidiKeyboardState*, int midiChannel, int midiNoteNumber, float velocity);
 
     void handleNoteOff(juce::MidiKeyboardState*, int midiChannel, int midiNoteNumber, float velocity);
-
-    void postMessageToList(const juce::MidiMessage& message, const juce::String& source);
 
 private:
     juce::MidiKeyboardState keyboardState;

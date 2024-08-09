@@ -84,3 +84,12 @@ void OcnetSynthesiser::setBypassed(int id, bool bypassed)
         }
     }
 }
+
+void OcnetSynthesiser::removeModulation(const juce::String& modulationID)
+{
+    for (int i = 0; i < getNumVoices(); i++) {
+        if (auto voice = dynamic_cast<SynthVoice*>(getVoice(i))) {
+            voice->removeModulation(modulationID);
+        }
+    }
+}

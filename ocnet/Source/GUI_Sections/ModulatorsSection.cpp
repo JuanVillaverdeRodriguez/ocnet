@@ -64,6 +64,17 @@ void ModulatorsSection::resized()
     }
 }
 
+void ModulatorsSection::removeModulation(const juce::String modulationID)
+{
+    auto [type, modulatorID, modulationTag] = Utils::splitParameterID(modulationID);
+
+    std::unique_ptr<Subsection>* subsection = Utils::findElementByID(subsectionsVector, modulatorID.getIntValue());
+
+    if (auto modulatorSubsection = dynamic_cast<ModulatorsSubsection*>(subsection->get())) {
+        modulatorSubsection->removeModulationBubble(modulationID);
+    }
+}
+
 void ModulatorsSection::buttonClicked(juce::Button* clickedButton)
 {
     if (clickedButton == &addModulatorButton) {

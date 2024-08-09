@@ -23,6 +23,7 @@ public:
     void connectModulation(const ParameterHandler& parameterHandler, std::shared_ptr<SliderParameter> parameterToModulate, const juce::String& parameterID);
 
     void addToModulationBuffer(float newModulationValue, int sample);
+    void removeModulation(const juce::String& modulationID);
 
     //float** getModulationBuffer() { return modulationBuffer; }
 

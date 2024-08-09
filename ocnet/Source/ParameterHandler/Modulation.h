@@ -16,16 +16,19 @@
 
 class Modulation {
 public:
-    Modulation(std::shared_ptr<SliderParameter> sliderParameter);
+    Modulation(std::shared_ptr<SliderParameter> sliderParameter, const juce::String& modulationID);
     ~Modulation() = default;
 
     void updateModulationBuffer(juce::Array<float> modulationArray, int voice);
     juce::Array<float> getModulationBuffer();
     void syncParams(const ParameterHandler& parameterHandler, const juce::String& parameterID);
 
+    juce::String getModulationID();
+
 private:
     juce::Array<float> modulation;
     std::shared_ptr<SliderParameter> modulationAmount;
     std::shared_ptr<SliderParameter> sliderToModulate;
+    juce::String modulationID;
 
 };

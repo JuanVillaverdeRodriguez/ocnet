@@ -51,6 +51,7 @@ public:
     void addModulator(int processorType, int id, const ParameterHandler& parameterHandler);
 
     void setBypassed(int id, bool bypassed);
+    void removeModulation(const juce::String& modulationID);
 
 private:
     int voiceId;

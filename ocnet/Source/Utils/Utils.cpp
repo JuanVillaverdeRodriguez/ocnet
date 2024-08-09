@@ -33,6 +33,17 @@ std::tuple<juce::String, juce::String, juce::String> Utils::splitParameterID(con
     return std::make_tuple(part1, part2, part3);
 }
 
+std::tuple<juce::String, juce::String> Utils::splitParameterModulationID(const juce::String& input)
+{
+    // Encontrar la primera parte de la cadena
+    juce::String part1 = input.upToFirstOccurrenceOf("_", false, false);
+
+    // Eliminar la primera parte y el guion bajo del input
+    juce::String remainder = input.fromFirstOccurrenceOf("_", false, false);
+
+    return std::make_tuple(part1, remainder);
+}
+
 namespace Ocnet {
     ProcessorType fromString(const juce::String& type)
     {

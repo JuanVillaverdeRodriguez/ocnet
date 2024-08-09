@@ -20,7 +20,7 @@ public:
     void connectModulation(int processorModulatorID, std::shared_ptr<SliderParameter> parameter, const juce::String& parameterID);
 
 
-    bool getHasEnvelope() { return hasEnvelope; }
+    bool getHasMainEnvelope() { return hasMainEnvelope; }
 
     void deleteProcessor(int processorID);
 
@@ -34,7 +34,7 @@ public:
 
 
 private:
-    bool hasEnvelope = false;
+    bool hasMainEnvelope = false;
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(OcnetSynthesiser)
 

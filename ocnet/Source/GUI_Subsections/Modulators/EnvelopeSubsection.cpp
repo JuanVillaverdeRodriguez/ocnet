@@ -14,6 +14,10 @@ EnvelopeSubsection::EnvelopeSubsection(int id, GUI_EventHandler& eventHandler) :
 {
     setId(id);
 
+    // Significa que es el envelope principal, no se puede eliminar
+    if (id == 0) {
+        removeButton.setEnabled(false);
+    }
     attackParameterID = createParameterID("Envelope", getId(), "attack");
     decayParameterID = createParameterID("Envelope", getId(), "decay");
     sustainParameterID = createParameterID("Envelope", getId(), "sustain");

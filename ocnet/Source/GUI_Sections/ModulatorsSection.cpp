@@ -76,11 +76,11 @@ void ModulatorsSection::buttonClicked(juce::Button* clickedButton)
             [this](int result)
             {
                 if (result == 1)
-                    eventHandler.onAddOscillator(Envelope);
+                    eventHandler.onAddModulator(Envelope);
                 else if (result == 2)
-                    eventHandler.onAddOscillator(Envelope);
+                    eventHandler.onAddModulator(Envelope);
                 else if (result == 3)
-                    eventHandler.onAddOscillator(Envelope);
+                    eventHandler.onAddModulator(Envelope);
             });
     }
 

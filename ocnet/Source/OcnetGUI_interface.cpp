@@ -21,14 +21,15 @@ OcnetGUI_interface::OcnetGUI_interface(OcnetAudioProcessor *processor) : process
     maxCurrentID = 0;
     gui_ = std::make_unique<OcnetGUI>(*this);
 
+    // Si no esta añadido, añadir un envelope principal
+    if (!processor->getHasMainEnvelope())
+        onAddModulator(Envelope);
+
     initialiseGUIFromTree(processor->parameterHandler.getRootTree());
 }
 
 void OcnetGUI_interface::onAddOscillator(int processorType)
 {
-    if (!processor.getHasEnvelope())
-        onAddModulator(Envelope);
-
     std::unique_ptr<Subsection>* subsection = gui_->getOscillatorsSection()->addOscillator(processorType, maxCurrentID, processor.parameterHandler);
     gui_->getOscillatorsSection()->addAndMakeVisible(**subsection);
     subsection->get()->addParametersToParameterHandler(processor.parameterHandler);
@@ -73,6 +74,13 @@ void OcnetGUI_interface::onConnectModulation(Subsection& modulator, const juce::
 void OcnetGUI_interface::onDeleteSubsection(Subsection& subsection)
 {
     int id = subsection.getId();
+
+    // No se puede eliminar el envelope principal.
+    // Nunca deberia ocurrir esto, ya que el boton de eliminar esta desactivado para el mismo
+    if (id == 0) {
+        return;
+    }
+
     juce::String type = subsection.getType();
 
     gui_->getSection(subsection.getType())->deleteSubsection(id);
@@ -176,6 +184,16 @@ void OcnetGUI_interface::initialiseGUIFromTree(juce::ValueTree tree)
     }
 
     //maxCurrentID = processor.parameterHandler.getMaxCurrentID();
+}
+
+bool OcnetGUI_interface::synthHasOscillators()
+{
+    return false;
+}
+
+bool OcnetGUI_interface::synthHasMainEnvelope()
+{
+    return processor.getHasMainEnvelope();
 }
 
 OcnetGUI* OcnetGUI_interface::getGui() {

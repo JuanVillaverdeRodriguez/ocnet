@@ -64,7 +64,6 @@ void ProcessorHandler::processBlock(juce::AudioBuffer<float>& outputBuffer)
                 }
             }
 
-            //buffer[sample] *= mainEnvelope->getNextSample();
         }
     }
 
@@ -73,6 +72,14 @@ void ProcessorHandler::processBlock(juce::AudioBuffer<float>& outputBuffer)
             processor->processBlock(outputBuffer);
         }
     }
+
+    for (int channel = 0; channel < 1; ++channel) {
+        auto* buffer = outputBuffer.getWritePointer(channel);
+        for (int sample = 0; sample < numSamples; ++sample) {
+            buffer[sample] *= mainEnvelope->getNextSample(sample);
+        }
+    }
+
 }
 
 void ProcessorHandler::startNote(int midiNoteNumber, float velocity, juce::SynthesiserSound* sound, int currentPitchWheelPosition)

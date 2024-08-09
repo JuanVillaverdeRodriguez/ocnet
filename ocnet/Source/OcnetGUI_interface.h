@@ -36,6 +36,8 @@ public:
 
     void initialiseGUIFromTree(juce::ValueTree tree);
 
+    
+
     OcnetGUI* getGui();
 
 private:
@@ -49,6 +51,10 @@ private:
     int numberOfWavetableOscillators;
 
     int maxCurrentID;
+
+
+    bool synthHasOscillators();
+    bool synthHasMainEnvelope();
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(OcnetGUI_interface)
 

@@ -12,7 +12,7 @@
 
 OcnetSynthesiser::OcnetSynthesiser()
 {
-    hasEnvelope = false;
+    hasMainEnvelope = false;
 }
 
 OcnetSynthesiser::~OcnetSynthesiser()
@@ -49,6 +49,7 @@ void OcnetSynthesiser::addEffect(int processorID, int id)
 {
     for (int i = 0; i < getNumVoices(); i++) {
         if (auto voice = dynamic_cast<SynthVoice*>(getVoice(i))) {
+
             voice->addEffect(processorID, id);
         }
     }
@@ -67,6 +68,9 @@ void OcnetSynthesiser::addModulator(int processorID, int id)
 {
     for (int i = 0; i < getNumVoices(); i++) {
         if (auto voice = dynamic_cast<SynthVoice*>(getVoice(i))) {
+            if (id == 0) {
+                hasMainEnvelope = true;
+            }
             voice->addModulator(processorID, id);
         }
     }

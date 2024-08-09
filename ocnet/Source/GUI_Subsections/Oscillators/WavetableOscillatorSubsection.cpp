@@ -53,6 +53,11 @@ void WavetableOscillatorSubsection::resized()
 
 }
 
+juce::String WavetableOscillatorSubsection::getSubType()
+{
+    return juce::String("WavetableOscillator");
+}
+
 void WavetableOscillatorSubsection::attachParams(ParameterHandler& parameterHandler)
 {
     //DBG("WavetableOscillatorSubsection::attachParams(ParameterHandler& parameterHandler)");

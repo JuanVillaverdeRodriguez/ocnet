@@ -61,7 +61,7 @@ void FilterProcessor::processBlock(juce::AudioBuffer<float>& buffer)
     dnBuffer.resize(buffer.getNumChannels(), 0.0f);
     int numSamples = buffer.getNumSamples();
 
-    const auto tan = std::tan(M_PI * (freqCutValue) / samplingRate);
+    const auto tan = std::tan(M_PI * (freqCutValue + (freqCutModulationBuffer[0] * 20000.0f)) / samplingRate);
     const auto a1 = (tan - 1.f) / (tan + 1.f);
 
     for (int channel = 0; channel < 1; ++channel) {

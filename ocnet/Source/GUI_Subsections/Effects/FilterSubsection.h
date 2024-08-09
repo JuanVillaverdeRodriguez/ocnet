@@ -20,6 +20,9 @@ public:
 
     void resized() override;
 
+    juce::String getSubType() override;
+
+
     void attachParams(ParameterHandler& parameterHandler) override;
     void addParametersToParameterHandler(ParameterHandler& parameterHandler) override;
 

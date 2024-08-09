@@ -45,7 +45,11 @@ float DistortionProcessor::getNextSample(int sample)
 
 float DistortionProcessor::getNextSample(float currentSampleValue)
 {
-    return softClip(currentSampleValue, driveValue);
+    float newValue = driveValue + driveModulationBuffer[currentSampleValue];
+    if (newValue < 0.0f)
+        newValue = 0.0f;
+
+    return softClip(currentSampleValue, newValue);
 }
 
 void DistortionProcessor::processBlock(juce::AudioBuffer<float>& buffer)

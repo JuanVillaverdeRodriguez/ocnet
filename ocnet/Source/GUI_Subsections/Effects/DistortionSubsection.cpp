@@ -34,6 +34,11 @@ void DistortionSubsection::resized()
     driveKnob->setBounds(0, area.getHeight() - defaultKnobSize, defaultKnobSize, defaultKnobSize);
 }
 
+juce::String DistortionSubsection::getSubType()
+{
+    return juce::String("Distortion");
+}
+
 void DistortionSubsection::attachParams(ParameterHandler& parameterHandler)
 {
     driveParameterAttachment = std::make_unique<OcnetSliderAttachment>(*driveKnob, *parameterHandler.getSliderParameter(driveParameterID)->get());

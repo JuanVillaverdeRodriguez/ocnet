@@ -36,6 +36,11 @@ void FilterSubsection::resized()
     freqCutKnob->setBounds(0, area.getHeight() - defaultKnobSize, defaultKnobSize, defaultKnobSize);
 }
 
+juce::String FilterSubsection::getSubType()
+{
+    return juce::String("Filter");
+}
+
 void FilterSubsection::attachParams(ParameterHandler& parameterHandler)
 {
     freqCutParameterAttachment = std::make_unique<OcnetSliderAttachment>(*freqCutKnob, *parameterHandler.getSliderParameter(freqParameterID)->get());

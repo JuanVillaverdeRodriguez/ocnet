@@ -17,6 +17,7 @@ ModulatorsSection::ModulatorsSection(GUI_EventHandler& eventHandler) : eventHand
     addModulatorButton.setButtonText("+");
 
     addModulatorButton.addListener(this);
+    
 }
 
 std::unique_ptr<Subsection>* ModulatorsSection::addModulator(const juce::String& type, int numberOfEnvelopes, ParameterHandler& parameterHandler)
@@ -50,6 +51,10 @@ void ModulatorsSection::resized()
     int lastSubsection = sectionResized();
 
     addModulatorButton.setBounds(area.getWidth() / 2 - 25, lastSubsection + 5, 50, 50);
+
+    if (lastSubsection + 100 >= this->getBounds().getHeight()) {
+        this->setBounds(this->getBounds().withHeight(lastSubsection + 100));
+    }
 }
 
 void ModulatorsSection::buttonClicked(juce::Button* clickedButton)

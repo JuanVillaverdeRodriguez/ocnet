@@ -44,6 +44,10 @@ protected:
     std::unique_ptr<ModulatorsSection> modulatorsSection;
     std::unique_ptr<EffectsSection> effectsSection;
 
+    juce::Viewport modulatorsSectionViewport;
+    juce::Viewport oscillatorsSectionViewport;
+    juce::Viewport effectsSectionViewport;
+
 
     
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(OcnetGUI)

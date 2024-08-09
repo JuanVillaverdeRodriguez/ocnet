@@ -51,6 +51,7 @@ void Section::deleteSubsection(int id)
     resized();
 }
 
+
 int Section::sectionResized()
 {
     auto& subsectionsVector = *getListOfSubsections();

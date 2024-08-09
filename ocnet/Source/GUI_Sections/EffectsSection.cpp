@@ -31,6 +31,10 @@ void EffectsSection::resized()
     int lastSubsection = sectionResized();
 
     addEffectButton.setBounds(area.getWidth() / 2 - 25, lastSubsection + 5, 50, 50);
+
+    if (lastSubsection + 100 >= this->getBounds().getHeight()) {
+        this->setBounds(this->getBounds().withHeight(lastSubsection + 100));
+    }
 }
 
 std::vector<std::unique_ptr<Subsection>>* EffectsSection::getListOfSubsections()

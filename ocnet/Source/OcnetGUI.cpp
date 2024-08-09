@@ -11,12 +11,24 @@ OcnetGUI::OcnetGUI(GUI_EventHandler& eventHandler) : eventHandler(eventHandler)
 
     headerSection->addListener(this);
 
+
     this->addAndMakeVisible(headerSection.get());
     this->addAndMakeVisible(footerSection.get());
-    this->addAndMakeVisible(oscillatorsSection.get());
-    this->addAndMakeVisible(modulatorsSection.get());
-    this->addAndMakeVisible(effectsSection.get());
+    this->addAndMakeVisible(effectsSectionViewport);
+    this->addAndMakeVisible(oscillatorsSectionViewport);
+    this->addAndMakeVisible(modulatorsSectionViewport);
 
+    //this->addAndMakeVisible(oscillatorsSection.get());
+    //this->addAndMakeVisible(modulatorsSection.get());
+    //this->addAndMakeVisible(effectsSection.get());
+
+    modulatorsSectionViewport.setViewedComponent(modulatorsSection.get(), false);
+    effectsSectionViewport.setViewedComponent(effectsSection.get(), false);
+    oscillatorsSectionViewport.setViewedComponent(oscillatorsSection.get(), false);
+
+    modulatorsSectionViewport.setScrollBarsShown(true, false, false, false);
+    effectsSectionViewport.setScrollBarsShown(true, false, false, false);
+    oscillatorsSectionViewport.setScrollBarsShown(true, false, false, false);
     
 }
 
@@ -37,17 +49,21 @@ void OcnetGUI::visualizeOscillatorSection()
 {
     DBG("OcnetGUI::visualizeOscillatorSection()");
 
-    this->removeChildComponent(this->getIndexOfChildComponent(getEffectsSection()));
-    this->addAndMakeVisible(getOscillatorsSection());
+    //this->removeChildComponent(this->getIndexOfChildComponent(getEffectsSection()));
+    //this->addAndMakeVisible(getOscillatorsSection());
+    oscillatorsSectionViewport.setVisible(true);
+    effectsSectionViewport.setVisible(false);
 }
 
 
 void OcnetGUI::visualizeEffectsSection()
 {
-    DBG("OcnetGUI::visualizeEffectsSection()");
+    oscillatorsSectionViewport.setVisible(false);
+    effectsSectionViewport.setVisible(true);
+    //DBG("OcnetGUI::visualizeEffectsSection()");
 
-    this->removeChildComponent(this->getIndexOfChildComponent(getOscillatorsSection()));
-    this->addAndMakeVisible(getEffectsSection());
+    //this->removeChildComponent(this->getIndexOfChildComponent(getOscillatorsSection()));
+    //this->addAndMakeVisible(getEffectsSection());
 }
 
 
@@ -66,19 +82,23 @@ void OcnetGUI::resized()
     auto footerSectionBounds = getLocalBounds().removeFromBottom(50);
 
     area = getLocalBounds();
-    auto oscillatorsSectionBounds = area.removeFromLeft(headerSectionBounds.getWidth()).withTrimmedTop(headerSectionBounds.getHeight()).withTrimmedBottom(footerSectionBounds.getHeight());
+    auto oscillatorsSectionViewportBounds = area.removeFromLeft(headerSectionBounds.getWidth()).withTrimmedTop(headerSectionBounds.getHeight()).withTrimmedBottom(footerSectionBounds.getHeight());
 
     area = getLocalBounds();
-    auto modulatorsSectionBounds = area.withTrimmedLeft(headerSectionBounds.getWidth()).withTrimmedBottom(footerSectionBounds.getHeight());
+    auto modulatorsSectionViewportBounds = area.withTrimmedLeft(headerSectionBounds.getWidth()).withTrimmedBottom(footerSectionBounds.getHeight());
 
     area = getLocalBounds();
-    auto effectsSectionBounds = area.removeFromLeft(headerSectionBounds.getWidth()).withTrimmedTop(headerSectionBounds.getHeight()).withTrimmedBottom(footerSectionBounds.getHeight());
+    auto effectsSectionViewportBounds = area.removeFromLeft(headerSectionBounds.getWidth()).withTrimmedTop(headerSectionBounds.getHeight()).withTrimmedBottom(footerSectionBounds.getHeight());
+
+    modulatorsSectionViewport.setBounds(modulatorsSectionViewportBounds);
+    effectsSectionViewport.setBounds(effectsSectionViewportBounds);
+    oscillatorsSectionViewport.setBounds(oscillatorsSectionViewportBounds);
 
     footerSection.get()->setBounds(footerSectionBounds);
-    modulatorsSection.get()->setBounds(modulatorsSectionBounds);
+    modulatorsSection.get()->setBounds(modulatorsSectionViewportBounds);
     headerSection.get()->setBounds(headerSectionBounds);
-    oscillatorsSection.get()->setBounds(oscillatorsSectionBounds);
-    effectsSection.get()->setBounds(effectsSectionBounds);
+    oscillatorsSection.get()->setBounds(oscillatorsSectionViewportBounds);
+    effectsSection.get()->setBounds(effectsSectionViewportBounds);
 
 }
 

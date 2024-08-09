@@ -33,7 +33,6 @@ public:
 private:
     GUI_EventHandler& eventHandler;
     OcnetLookAndFeel lookAndFeel;
-
     //std::vector<std::unique_ptr<EnvelopeSubsection>> envelopeSubsections;
     std::vector<std::unique_ptr<Subsection>> subsectionsVector;
 

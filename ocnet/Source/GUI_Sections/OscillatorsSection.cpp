@@ -31,6 +31,10 @@ void OscillatorsSection::resized()
     int lastSubsection = sectionResized();
 
     addOscillatorButton.setBounds(area.getWidth() / 2 - 25, lastSubsection + 5, 50, 50);
+
+    if (lastSubsection + 100 >= this->getBounds().getHeight()) {
+        this->setBounds(this->getBounds().withHeight(lastSubsection + 100));
+    }
 }
 
 std::unique_ptr<Subsection>* OscillatorsSection::addOscillator(const juce::String& type, int numberOfWavetableOscillators, ParameterHandler& parameterHandler)

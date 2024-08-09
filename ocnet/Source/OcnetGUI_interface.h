@@ -17,10 +17,10 @@
 #include "GUI_EventHandler.h"
 #include "Utils/OcnetTypes.h"
 
-class OcnetGUI_interface : public GUI_EventHandler {
+class OcnetGUI_interface : public GUI_EventHandler, private juce::MidiKeyboardStateListener {
 public:
     OcnetGUI_interface(OcnetAudioProcessor *processor);
-    ~OcnetGUI_interface() = default;
+    ~OcnetGUI_interface();
 
     void onAddOscillator(int processorType) override;
     void onAddEffect(int processorType) override;
@@ -40,13 +40,24 @@ public:
 
     OcnetGUI* getGui();
 
+    void handleNoteOn(juce::MidiKeyboardState*, int midiChannel, int midiNoteNumber, float velocity);
+
+    void handleNoteOff(juce::MidiKeyboardState*, int midiChannel, int midiNoteNumber, float velocity);
+
+    void postMessageToList(const juce::MidiMessage& message, const juce::String& source);
+
 private:
+    juce::MidiKeyboardState keyboardState;
+
     std::unique_ptr<OcnetGUI> gui_; //Vista
     OcnetAudioProcessor& processor; //Modelo
 
     int maxCurrentID;
 
+    bool isAddingFromMidiInput = false;
+
     bool synthHasMainEnvelope();
+
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(OcnetGUI_interface)
 

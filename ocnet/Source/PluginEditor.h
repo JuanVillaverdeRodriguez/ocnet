@@ -12,7 +12,7 @@
 
 // OcnetAudioProcessorEditor se comporta como el controlador de MVC
 
-class OcnetAudioProcessorEditor : public juce::AudioProcessorEditor, public OcnetGUI_interface//, private juce::Button::Listener
+class OcnetAudioProcessorEditor : public juce::AudioProcessorEditor, public OcnetGUI_interface, private juce::AsyncUpdater
 {
 public:
     OcnetAudioProcessorEditor(OcnetAudioProcessor&);
@@ -21,6 +21,8 @@ public:
     //==============================================================================
     void paint(juce::Graphics&) override;
     void resized() override;
+
+    void handleAsyncUpdate() override;
 
 private:
     OcnetAudioProcessor& audioProcessor; // Modelo

@@ -9,10 +9,10 @@ OcnetAudioProcessorEditor::OcnetAudioProcessorEditor(OcnetAudioProcessor & ocnet
     : AudioProcessorEditor(&ocnetAudioProcessor), audioProcessor(ocnetAudioProcessor), OcnetGUI_interface(&ocnetAudioProcessor)
 {
     DBG("OcnetAudioProcessorEditor::OcnetAudioProcessorEditor(OcnetAudioProcessor & ocnetAudioProcessor)");
-
     addAndMakeVisible(getGui());
 
     setSize(1280 / 1.5, 720 / 1.5);
+    triggerAsyncUpdate(); // Programa la actualización asíncrona
 
 
     //ocnetGUI->assignAudioEditor(*this);
@@ -39,4 +39,16 @@ void OcnetAudioProcessorEditor::resized()
     //getGui()->setBounds(getLocalBounds());
     getGui()->setBounds(getLocalBounds());
 
+}
+
+void OcnetAudioProcessorEditor::handleAsyncUpdate()
+{
+    if (isShowing())
+    {
+        getGui()->editorIsShowing();
+    }
+    else
+    {
+        triggerAsyncUpdate(); // Reintenta si aún no está visible
+    }
 }

@@ -12,7 +12,7 @@
 class OcnetGUI : public juce::Component, HeaderSection::Listener, public juce::DragAndDropContainer
 {
 public:
-    OcnetGUI(GUI_EventHandler& eventHandler);
+    OcnetGUI(GUI_EventHandler& eventHandler, juce::MidiKeyboardState& keyboardState);
     ~OcnetGUI() override;
 
     //HeaderSectionListener
@@ -27,12 +27,15 @@ public:
 
     Section* getSection(const juce::String& type);
 
+
+
     HeaderSection* getHeaderSection() { return headerSection.get(); }
     FooterSection* getFooterSection() { return footerSection.get(); }
     OscillatorsSection* getOscillatorsSection() { return oscillatorsSection.get(); }
     ModulatorsSection* getModulatorsSection() { return modulatorsSection.get(); }
     EffectsSection* getEffectsSection() { return effectsSection.get(); }
 
+    void editorIsShowing();
 protected:
     int currentView = 0;
 
@@ -47,6 +50,8 @@ protected:
     juce::Viewport modulatorsSectionViewport;
     juce::Viewport oscillatorsSectionViewport;
     juce::Viewport effectsSectionViewport;
+
+    juce::MidiKeyboardComponent keyboardComponent;
 
 
     

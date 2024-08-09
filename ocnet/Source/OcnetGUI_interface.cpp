@@ -12,12 +12,16 @@
 
 using namespace Ocnet;
 
-OcnetGUI_interface::OcnetGUI_interface(OcnetAudioProcessor *processor) : processor(*processor)
+OcnetGUI_interface::OcnetGUI_interface(OcnetAudioProcessor *processor) : processor(*processor), keyboardState()
 {
     DBG("OcnetGUI_interface::OcnetGUI_interface(OcnetAudioProcessor *processor)");
 
+
     maxCurrentID = 1;
-    gui_ = std::make_unique<OcnetGUI>(*this);
+    keyboardState.addListener(this);
+
+    gui_ = std::make_unique<OcnetGUI>(*this, keyboardState);
+
 
     // Si no esta añadido, añadir un envelope principal
     if (!processor->getHasMainEnvelope()) {
@@ -26,6 +30,12 @@ OcnetGUI_interface::OcnetGUI_interface(OcnetAudioProcessor *processor) : process
     }
 
     initialiseGUIFromTree(processor->parameterHandler.getRootTree());
+
+}
+
+OcnetGUI_interface::~OcnetGUI_interface()
+{
+    keyboardState.removeListener(this);
 }
 
 void OcnetGUI_interface::onAddOscillator(int processorType)
@@ -193,4 +203,18 @@ bool OcnetGUI_interface::synthHasMainEnvelope()
 
 OcnetGUI* OcnetGUI_interface::getGui() {
     return gui_.get(); 
+}
+
+// Implementar el callback para el teclado MIDI
+void OcnetGUI_interface::handleNoteOn(juce::MidiKeyboardState*, int midiChannel, int midiNoteNumber, float velocity)
+{
+    // Lógica cuando se presiona una tecla
+
+    processor.noteOn(midiChannel, midiNoteNumber, velocity);
+}
+
+void OcnetGUI_interface::handleNoteOff(juce::MidiKeyboardState*, int midiChannel, int midiNoteNumber, float velocity)
+{
+    // Lógica cuando se libera una tecla
+    processor.noteOff(midiChannel, midiNoteNumber, velocity, true);
 }

@@ -1,8 +1,12 @@
 
 #include "OcnetGUI.h"
 
-OcnetGUI::OcnetGUI(GUI_EventHandler& eventHandler) : eventHandler(eventHandler)
+OcnetGUI::OcnetGUI(GUI_EventHandler& eventHandler, juce::MidiKeyboardState& keyboardState) : 
+    eventHandler(eventHandler),
+    keyboardComponent(keyboardState, juce::MidiKeyboardComponent::horizontalKeyboard) 
 {
+
+
     headerSection = std::make_unique<HeaderSection>();
     footerSection = std::make_unique<FooterSection>();
     oscillatorsSection = std::make_unique<OscillatorsSection>(eventHandler);
@@ -29,6 +33,10 @@ OcnetGUI::OcnetGUI(GUI_EventHandler& eventHandler) : eventHandler(eventHandler)
     modulatorsSectionViewport.setScrollBarsShown(true, false, false, false);
     effectsSectionViewport.setScrollBarsShown(true, false, false, false);
     oscillatorsSectionViewport.setScrollBarsShown(true, false, false, false);
+
+    addAndMakeVisible(keyboardComponent);
+
+
     
 }
 
@@ -79,7 +87,10 @@ void OcnetGUI::resized()
     auto headerSectionBounds = area.withTrimmedRight(area.getWidth() / 2.2).withTrimmedBottom(area.getHeight() - 50);
 
     area = getLocalBounds();
-    auto footerSectionBounds = getLocalBounds().removeFromBottom(50);
+    auto keyboardSectionBounds = area.removeFromBottom(50);
+
+    area = getLocalBounds();
+    auto footerSectionBounds = area.removeFromBottom(100);
 
     area = getLocalBounds();
     auto oscillatorsSectionViewportBounds = area.removeFromLeft(headerSectionBounds.getWidth()).withTrimmedTop(headerSectionBounds.getHeight()).withTrimmedBottom(footerSectionBounds.getHeight());
@@ -94,11 +105,16 @@ void OcnetGUI::resized()
     effectsSectionViewport.setBounds(effectsSectionViewportBounds);
     oscillatorsSectionViewport.setBounds(oscillatorsSectionViewportBounds);
 
+    keyboardComponent.setBounds(keyboardSectionBounds);
     footerSection.get()->setBounds(footerSectionBounds);
     modulatorsSection.get()->setBounds(modulatorsSectionViewportBounds);
     headerSection.get()->setBounds(headerSectionBounds);
     oscillatorsSection.get()->setBounds(oscillatorsSectionViewportBounds);
     effectsSection.get()->setBounds(effectsSectionViewportBounds);
+
+    // Oculta las barras de desplazamiento (debería ser innecesario si el tamaño es correcto)
+    keyboardComponent.setScrollButtonsVisible(false);
+
 
 }
 
@@ -110,5 +126,12 @@ Section* OcnetGUI::getSection(const juce::String& type)
         return getEffectsSection();
     else if (type == "Oscillators")
         return getOscillatorsSection();
+}
+
+void OcnetGUI::editorIsShowing()
+{
+    // Permitir que el componente del teclado reciba eventos de teclado
+    keyboardComponent.setWantsKeyboardFocus(true);
+    keyboardComponent.grabKeyboardFocus();
 }
 

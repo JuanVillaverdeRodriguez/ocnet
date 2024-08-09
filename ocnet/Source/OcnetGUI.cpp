@@ -114,6 +114,7 @@ void OcnetGUI::resized()
 
     // Oculta las barras de desplazamiento (debería ser innecesario si el tamaño es correcto)
     keyboardComponent.setScrollButtonsVisible(false);
+    keyboardComponent.setAvailableRange(24, 127);
 
 
 }

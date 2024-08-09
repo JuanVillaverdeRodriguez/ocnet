@@ -141,6 +141,7 @@
   <ItemGroup>
     <ClCompile Include="..\..\Source\GUI_Others\ModulationBubble.cpp"/>
     <ClCompile Include="..\..\Source\GUI_EventHandler.cpp"/>
+    <ClCompile Include="..\..\Source\Utils\OcnetTypes.cpp"/>
     <ClCompile Include="..\..\Source\Utils\Utils.cpp"/>
     <ClCompile Include="..\..\Source\ParameterHandler\ComboBoxParameter.cpp"/>
     <ClCompile Include="..\..\Source\ParameterHandler\Modulation.cpp"/>
@@ -2896,6 +2897,7 @@
   <ItemGroup>
     <ClInclude Include="..\..\Source\GUI_Others\ModulationBubble.h"/>
     <ClInclude Include="..\..\Source\GUI_EventHandler.h"/>
+    <ClInclude Include="..\..\Source\Utils\OcnetTypes.h"/>
     <ClInclude Include="..\..\Source\Utils\Utils.h"/>
     <ClInclude Include="..\..\Source\ParameterHandler\ComboBoxParameter.h"/>
     <ClInclude Include="..\..\Source\ParameterHandler\Modulation.h"/>

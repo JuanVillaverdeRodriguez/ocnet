@@ -12,6 +12,7 @@
 #include "Effects/DistortionProcessor.h"
 #include "../../Utils/Utils.h"
 #include "Effects/FilterProcessor.h"
+#include "../../Utils/OcnetTypes.h"
 
 // Porque usar lista en vez de vector:
 
@@ -35,6 +36,8 @@
 //  2
 // Porque es mas rapido obtener los parametros (se hace todo el rato)
 // Problema: Complica el ProcessorHandler
+
+using namespace Ocnet;
 
 ProcessorHandler::ProcessorHandler(const ParameterHandler& parameterHandler)
 {
@@ -245,37 +248,59 @@ void ProcessorHandler::moveProcessor(int processorID, int positions)
     Utils::moveElement(effectsProcessorsList, initIndex, positions);
 }
 
-void ProcessorHandler::addEffect(const juce::String& type, int id, const ParameterHandler& parameterHandler)
+void ProcessorHandler::addEffect(int processorType, int id, const ParameterHandler& parameterHandler)
 {
-    if (type == "Filter")
-        effectsProcessorsList.push_back(std::make_unique<FilterProcessor>(id));
-    else if (type == "Distortion")
-        effectsProcessorsList.push_back(std::make_unique<DistortionProcessor>(id));
+    switch (processorType)
+    {
+        case Filter:
+            effectsProcessorsList.push_back(std::make_unique<FilterProcessor>(id));
+            break;
+
+        case Distortion:
+            effectsProcessorsList.push_back(std::make_unique<DistortionProcessor>(id));
+            break;
+
+        default:
+            return;
+    }
 
     effectsProcessorsList.back()->setVoiceNumberId(voiceId);
     effectsProcessorsList.back()->syncParams(parameterHandler);
 }
 
-void ProcessorHandler::addOscillator(const juce::String& type, int id, const ParameterHandler& parameterHandler)
+void ProcessorHandler::addOscillator(int processorType, int id, const ParameterHandler& parameterHandler)
 {
-    if (type == "WavetableOscillator")
-        oscillatorsProcessorsList.push_back(std::make_unique<WavetableOscillatorProcessor>(id));
+    switch (processorType)
+    {
+        case WavetableOscillator:
+            oscillatorsProcessorsList.push_back(std::make_unique<WavetableOscillatorProcessor>(id));
+            break;
+
+        default:
+            return;
+    }
 
     oscillatorsProcessorsList.back()->setVoiceNumberId(voiceId);
     oscillatorsProcessorsList.back()->syncParams(parameterHandler);
 }
 
-void ProcessorHandler::addModulator(const juce::String& type, int id, const ParameterHandler& parameterHandler)
+void ProcessorHandler::addModulator(int processorType, int id, const ParameterHandler& parameterHandler)
 {
-    if (type == "Envelope") {
-        if (id == 0) {
-            mainEnvelope->syncParams(parameterHandler);
-            mainEnvelope->setVoiceNumberId(voiceId);
+    switch (processorType)
+    {
+        case Envelope:
+            if (id == 0) {
+                mainEnvelope->syncParams(parameterHandler);
+                mainEnvelope->setVoiceNumberId(voiceId);
+                return;
+            }
+            else {
+                modulatorProcessorsList.push_back(std::make_unique<EnvelopeProcessor>(id));
+            }
+            break;
+
+        default:
             return;
-        }
-        else {
-            modulatorProcessorsList.push_back(std::make_unique<EnvelopeProcessor>(id));
-        }
     }
 
     modulatorProcessorsList.back()->setVoiceNumberId(voiceId);

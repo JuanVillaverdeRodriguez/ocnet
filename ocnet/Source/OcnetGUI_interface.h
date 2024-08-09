@@ -15,15 +15,16 @@
 #include "PluginProcessor.h"
 #include "GUI_Sections/EffectsSection.h"
 #include "GUI_EventHandler.h"
+#include "Utils/OcnetTypes.h"
 
 class OcnetGUI_interface : public GUI_EventHandler {
 public:
     OcnetGUI_interface(OcnetAudioProcessor *processor);
     ~OcnetGUI_interface() = default;
 
-    void onAddOscillator(const juce::String& type) override;
-    void onAddEffect(const juce::String& type) override;
-    void onAddModulator(const juce::String& typen) override;
+    void onAddOscillator(int processorType) override;
+    void onAddEffect(int processorType) override;
+    void onAddModulator(int processorType) override;
 
     void onConnectModulation(Subsection& modulator, const juce::String& parameterID) override;
 

@@ -20,7 +20,7 @@ class ModulatorsSection : public Section, public juce::Button::Listener {
 public:
     ModulatorsSection(GUI_EventHandler& eventHandler);
 
-    std::unique_ptr<Subsection>* addModulator(const juce::String& type, int numberOfEnvelopes, ParameterHandler& apvts);
+    std::unique_ptr<Subsection>* addModulator(int processorType, int numberOfEnvelopes, ParameterHandler& apvts);
 
     std::vector<std::unique_ptr<Subsection>>* getListOfSubsections() override;
 

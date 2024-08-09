@@ -17,9 +17,11 @@ class Subsection;
 
 class GUI_EventHandler {
 public:
-    virtual void onAddEffect(const juce::String& type) {};
-    virtual void onAddOscillator(const juce::String& type) {};
-    virtual void onAddModulator(const juce::String& type) {};
+    virtual void onAddEffect(int processorType) {};
+    virtual void onAddOscillator(int processorType) {};
+    virtual void onAddModulator(int processorType) {};
+
+
 
     virtual void onDeleteSubsection(Subsection& subsection) {};
 

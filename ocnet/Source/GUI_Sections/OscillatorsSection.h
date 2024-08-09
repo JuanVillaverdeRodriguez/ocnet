@@ -20,7 +20,7 @@ class OscillatorsSection : public Section, juce::Button::Listener {
 public:
     OscillatorsSection(GUI_EventHandler& eventHandler);
 
-    std::unique_ptr<Subsection>* addOscillator(const juce::String& type, int numberOfWavetableOscillators, ParameterHandler& parameterHandler);
+    std::unique_ptr<Subsection>* addOscillator(int processorType, int numberOfWavetableOscillators, ParameterHandler& parameterHandler);
 
     std::vector<std::unique_ptr<Subsection>>* getListOfSubsections() override;
 
@@ -28,6 +28,7 @@ public:
     void buttonClicked(juce::Button* clickedButton) override;
     void paint(juce::Graphics& g) override;
     void resized() override;
+
 
 private:
     OcnetLookAndFeel lookAndFeel;

@@ -118,23 +118,23 @@ void SynthVoice::moveProcessor(int id, int positions)
 
 }
 
-void SynthVoice::addEffect(const juce::String& type, int id)
+void SynthVoice::addEffect(int processorType, int id)
 {
-    processorhHandler.addEffect(type, id, *parameterHandler);
+    processorhHandler.addEffect(processorType, id, *parameterHandler);
     processorhHandler.prepareToPlay(spec);
 
 }
 
-void SynthVoice::addOscillator(const juce::String& type, int id)
+void SynthVoice::addOscillator(int processorType, int id)
 {
-    processorhHandler.addOscillator(type, id, *parameterHandler);
+    processorhHandler.addOscillator(processorType, id, *parameterHandler);
     processorhHandler.prepareToPlay(spec);
 
 }
 
-void SynthVoice::addModulator(const juce::String& type, int id)
+void SynthVoice::addModulator(int processorType, int id)
 {
-    processorhHandler.addModulator(type, id, *parameterHandler);
+    processorhHandler.addModulator(processorType, id, *parameterHandler);
     processorhHandler.prepareToPlay(spec);
 
 }

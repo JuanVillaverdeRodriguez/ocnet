@@ -9,6 +9,9 @@
 */
 
 #include "EffectsSection.h"
+#include "../Utils/OcnetTypes.h"
+
+using namespace Ocnet;
 
 EffectsSection::EffectsSection(GUI_EventHandler& eventHandler) : eventHandler(eventHandler)
 {
@@ -42,12 +45,21 @@ std::vector<std::unique_ptr<Subsection>>* EffectsSection::getListOfSubsections()
     return &subsectionsVector;
 }
 
-std::unique_ptr<Subsection>* EffectsSection::addEffect(const juce::String& type, int id, ParameterHandler& parameterHandler)
+std::unique_ptr<Subsection>* EffectsSection::addEffect(int processorType, int id, ParameterHandler& parameterHandler)
 {
-    if (type == "Filter")
-        subsectionsVector.push_back(std::make_unique<FilterSubsection>(id, eventHandler));
-    else if (type == "Distortion")
-        subsectionsVector.push_back(std::make_unique<DistortionSubsection>(id, eventHandler));
+    switch (processorType)
+    {
+        case Filter:
+            subsectionsVector.push_back(std::make_unique<FilterSubsection>(id, eventHandler));
+            break;
+
+        case Distortion:
+            subsectionsVector.push_back(std::make_unique<DistortionSubsection>(id, eventHandler));
+            break;
+
+        default:
+            return nullptr;
+    }
 
     resized();
 
@@ -67,11 +79,11 @@ void EffectsSection::buttonClicked(juce::Button* clickedButton)
             [this](int result)
             {
                 if (result == 1)
-                    eventHandler.onAddEffect(juce::String("Distortion"));
+                    eventHandler.onAddEffect(Distortion);
                 else if (result == 2)
-                    eventHandler.onAddEffect(juce::String("Reverb"));
+                    eventHandler.onAddEffect(Distortion);
                 else if (result == 3)
-                    eventHandler.onAddEffect(juce::String("Filter"));
+                    eventHandler.onAddEffect(Filter);
             });
     }
 

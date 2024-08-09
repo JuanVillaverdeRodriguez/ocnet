@@ -17,6 +17,8 @@
       <FILE id="HqJyAK" name="GUI_EventHandler.h" compile="0" resource="0"
             file="Source/GUI_EventHandler.h"/>
       <GROUP id="{AC61CD02-1871-C974-9052-E0D68D806941}" name="Utils">
+        <FILE id="MG2jiv" name="OcnetTypes.cpp" compile="1" resource="0" file="Source/Utils/OcnetTypes.cpp"/>
+        <FILE id="IkHEG1" name="OcnetTypes.h" compile="0" resource="0" file="Source/Utils/OcnetTypes.h"/>
         <FILE id="tfNesW" name="Utils.cpp" compile="1" resource="0" file="Source/Utils/Utils.cpp"/>
         <FILE id="d3i0oc" name="Utils.h" compile="0" resource="0" file="Source/Utils/Utils.h"/>
       </GROUP>

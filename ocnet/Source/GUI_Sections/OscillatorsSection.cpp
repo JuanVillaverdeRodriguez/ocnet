@@ -9,6 +9,9 @@
 */
 
 #include "OscillatorsSection.h"
+#include "../Utils/OcnetTypes.h"
+
+using namespace Ocnet;
 
 OscillatorsSection::OscillatorsSection(GUI_EventHandler& eventHandler) : eventHandler(eventHandler)
 {
@@ -37,10 +40,17 @@ void OscillatorsSection::resized()
     }
 }
 
-std::unique_ptr<Subsection>* OscillatorsSection::addOscillator(const juce::String& type, int numberOfWavetableOscillators, ParameterHandler& parameterHandler)
+std::unique_ptr<Subsection>* OscillatorsSection::addOscillator(int processorType, int numberOfWavetableOscillators, ParameterHandler& parameterHandler)
 {
-    if (type == "WavetableOscillator")
-        subsectionsVector.push_back(std::make_unique<WavetableOscillatorSubsection>(numberOfWavetableOscillators, eventHandler));
+    switch (processorType)
+    {
+        case WavetableOscillator:
+            subsectionsVector.push_back(std::make_unique<WavetableOscillatorSubsection>(numberOfWavetableOscillators, eventHandler));
+            break;
+
+        default:
+            return nullptr;
+    }
 
     resized();
 
@@ -65,11 +75,11 @@ void OscillatorsSection::buttonClicked(juce::Button* clickedButton)
             [this](int result)
             {
                 if (result == 1)
-                    eventHandler.onAddOscillator("WavetableOscillator");
+                    eventHandler.onAddOscillator(WavetableOscillator);
                 else if (result == 2)
-                    eventHandler.onAddOscillator("Sampler");
+                    eventHandler.onAddOscillator(WavetableOscillator);
                 else if (result == 3)
-                    eventHandler.onAddOscillator("Opcion 3");
+                    eventHandler.onAddOscillator(WavetableOscillator);
 
             });
     }

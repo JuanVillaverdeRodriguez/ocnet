@@ -45,29 +45,29 @@ void OcnetSynthesiser::moveProcessor(int id, int positions)
     }
 }
 
-void OcnetSynthesiser::addEffect(const juce::String& type, int id)
+void OcnetSynthesiser::addEffect(int processorID, int id)
 {
     for (int i = 0; i < getNumVoices(); i++) {
         if (auto voice = dynamic_cast<SynthVoice*>(getVoice(i))) {
-            voice->addEffect(type, id);
+            voice->addEffect(processorID, id);
         }
     }
 }
 
-void OcnetSynthesiser::addOscillator(const juce::String& type, int id)
+void OcnetSynthesiser::addOscillator(int processorID, int id)
 {
     for (int i = 0; i < getNumVoices(); i++) {
         if (auto voice = dynamic_cast<SynthVoice*>(getVoice(i))) {
-            voice->addOscillator(type, id);
+            voice->addOscillator(processorID, id);
         }
     }
 }
 
-void OcnetSynthesiser::addModulator(const juce::String& type, int id)
+void OcnetSynthesiser::addModulator(int processorID, int id)
 {
     for (int i = 0; i < getNumVoices(); i++) {
         if (auto voice = dynamic_cast<SynthVoice*>(getVoice(i))) {
-            voice->addModulator(type, id);
+            voice->addModulator(processorID, id);
         }
     }
 }

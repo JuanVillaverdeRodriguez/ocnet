@@ -32,3 +32,14 @@ std::tuple<juce::String, juce::String, juce::String> Utils::splitParameterID(con
 
     return std::make_tuple(part1, part2, part3);
 }
+
+namespace Ocnet {
+    ProcessorType fromString(const juce::String& type)
+    {
+        if (type == "Filter") return Filter;
+        if (type == "Distortion") return Distortion;
+        if (type == "WavetableOscillator") return WavetableOscillator;
+        if (type == "Envelope") return Envelope;
+        return Unknown;
+    }
+}

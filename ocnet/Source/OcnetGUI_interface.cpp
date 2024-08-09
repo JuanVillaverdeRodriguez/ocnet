@@ -10,6 +10,8 @@
 
 #include "OcnetGUI_interface.h"
 
+using namespace Ocnet;
+
 OcnetGUI_interface::OcnetGUI_interface(OcnetAudioProcessor *processor) : processor(*processor)
 {
     DBG("OcnetGUI_interface::OcnetGUI_interface(OcnetAudioProcessor *processor)");
@@ -22,40 +24,39 @@ OcnetGUI_interface::OcnetGUI_interface(OcnetAudioProcessor *processor) : process
     initialiseGUIFromTree(processor->parameterHandler.getRootTree());
 }
 
-void OcnetGUI_interface::onAddOscillator(const juce::String& type)
+void OcnetGUI_interface::onAddOscillator(int processorType)
 {
-    DBG("OcnetGUI_interface::addOscillator(int option)");
-
     if (!processor.getHasEnvelope())
-        onAddModulator(juce::String("Envelope"));
+        onAddModulator(Envelope);
 
-    std::unique_ptr<Subsection>* subsection = gui_->getOscillatorsSection()->addOscillator(type, maxCurrentID, processor.parameterHandler);
+    std::unique_ptr<Subsection>* subsection = gui_->getOscillatorsSection()->addOscillator(processorType, maxCurrentID, processor.parameterHandler);
     gui_->getOscillatorsSection()->addAndMakeVisible(**subsection);
     subsection->get()->addParametersToParameterHandler(processor.parameterHandler);
     subsection->get()->attachParams(processor.parameterHandler);
-    processor.addOscillator(type, maxCurrentID);
+    processor.addOscillator(processorType, maxCurrentID);
     maxCurrentID++;
 }
 
-void OcnetGUI_interface::onAddEffect(const juce::String& type)
+void OcnetGUI_interface::onAddEffect(int processorType)
 {
-    std::unique_ptr<Subsection>* subsection = gui_->getEffectsSection()->addEffect(type, maxCurrentID, processor.parameterHandler);
+    std::unique_ptr<Subsection>* subsection = gui_->getEffectsSection()->addEffect(processorType, maxCurrentID, processor.parameterHandler);
     gui_->getEffectsSection()->addAndMakeVisible(**subsection);
     subsection->get()->addParametersToParameterHandler(processor.parameterHandler);
     subsection->get()->attachParams(processor.parameterHandler);
-    processor.addEffect(type, maxCurrentID);
+    processor.addEffect(processorType, maxCurrentID);
     maxCurrentID++;
 }
 
-void OcnetGUI_interface::onAddModulator(const juce::String& type)
+void OcnetGUI_interface::onAddModulator(int processorType)
 {
-    std::unique_ptr<Subsection>* subsection  = gui_->getModulatorsSection()->addModulator(type, maxCurrentID, processor.parameterHandler);
+    std::unique_ptr<Subsection>* subsection = gui_->getModulatorsSection()->addModulator(processorType, maxCurrentID, processor.parameterHandler);
     gui_->getModulatorsSection()->addAndMakeVisible(**subsection);
     subsection->get()->addParametersToParameterHandler(processor.parameterHandler);
     subsection->get()->attachParams(processor.parameterHandler);
-    processor.addModulator(type, maxCurrentID);
+    processor.addModulator(processorType, maxCurrentID);
     maxCurrentID++;
 }
+
 
 void OcnetGUI_interface::onConnectModulation(Subsection& modulator, const juce::String& parameterID)
 {
@@ -110,7 +111,7 @@ void OcnetGUI_interface::initialiseGUIFromTree(juce::ValueTree tree)
             juce::String id = subTree.getChild(j).getType().toString();
             int numProperties = subTree.getChild(j).getNumProperties();
 
-            std::unique_ptr<Subsection>* subsection = gui_->getModulatorsSection()->addModulator(type, id.getIntValue(), processor.parameterHandler);
+            std::unique_ptr<Subsection>* subsection = gui_->getModulatorsSection()->addModulator(fromString(type), id.getIntValue(), processor.parameterHandler);
             gui_->getModulatorsSection()->addAndMakeVisible(**subsection);
             subsection->get()->attachParams(processor.parameterHandler);
 
@@ -135,7 +136,7 @@ void OcnetGUI_interface::initialiseGUIFromTree(juce::ValueTree tree)
         while (subTree.getChild(j).isValid()) {
             juce::String id = subTree.getChild(j).getType().toString();
             int numProperties = subTree.getChild(j).getNumProperties();
-            std::unique_ptr<Subsection>* subsection = gui_->getOscillatorsSection()->addOscillator(type, id.getIntValue(), processor.parameterHandler);
+            std::unique_ptr<Subsection>* subsection = gui_->getOscillatorsSection()->addOscillator(fromString(type), id.getIntValue(), processor.parameterHandler);
             gui_->getOscillatorsSection()->addAndMakeVisible(**subsection);
             subsection->get()->attachParams(processor.parameterHandler);
 
@@ -160,7 +161,7 @@ void OcnetGUI_interface::initialiseGUIFromTree(juce::ValueTree tree)
         while (subTree.getChild(j).isValid()) {
             juce::String id = subTree.getChild(j).getType().toString();
             int numProperties = subTree.getChild(j).getNumProperties();
-            std::unique_ptr<Subsection>* subsection = gui_->getEffectsSection()->addEffect(type, id.getIntValue(), processor.parameterHandler);
+            std::unique_ptr<Subsection>* subsection = gui_->getEffectsSection()->addEffect(fromString(type), id.getIntValue(), processor.parameterHandler);
             gui_->getEffectsSection()->addAndMakeVisible(**subsection);
             subsection->get()->attachParams(processor.parameterHandler);
 

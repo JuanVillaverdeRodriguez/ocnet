@@ -22,7 +22,7 @@ class EffectsSection : public Section, juce::Button::Listener {
 public:
     EffectsSection(GUI_EventHandler& eventHandler);
 
-    std::unique_ptr<Subsection>* addEffect(const juce::String& type, int id, ParameterHandler& parameterHandler);
+    std::unique_ptr<Subsection>* addEffect(int processorType, int id, ParameterHandler& parameterHandler);
 
     void buttonClicked(juce::Button* clickedButton) override;
     void paint(juce::Graphics& g) override;

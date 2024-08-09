@@ -10,6 +10,9 @@
 
 #include "ModulatorsSection.h"
 #include "../ParameterHandler/ParameterHandler.h"
+#include "../Utils/OcnetTypes.h"
+
+using namespace Ocnet;
 
 ModulatorsSection::ModulatorsSection(GUI_EventHandler& eventHandler) : eventHandler(eventHandler)
 {
@@ -20,15 +23,19 @@ ModulatorsSection::ModulatorsSection(GUI_EventHandler& eventHandler) : eventHand
     
 }
 
-std::unique_ptr<Subsection>* ModulatorsSection::addModulator(const juce::String& type, int numberOfEnvelopes, ParameterHandler& parameterHandler)
+std::unique_ptr<Subsection>* ModulatorsSection::addModulator(int processorType, int numberOfEnvelopes, ParameterHandler& parameterHandler)
 {
-    if (type == "Envelope")
-        subsectionsVector.push_back(std::make_unique<EnvelopeSubsection>(numberOfEnvelopes, eventHandler));
+    switch (processorType)
+    {
+        case Envelope:
+            subsectionsVector.push_back(std::make_unique<EnvelopeSubsection>(numberOfEnvelopes, eventHandler));
+            break;
+
+        default:
+            return nullptr;
+    }
 
     resized();
-
-    //this->addAndMakeVisible(*subsectionsVector.back());
-    //subsectionsVector.back()->attachParams(parameterHandler);
 
     return &subsectionsVector.back();
 }
@@ -69,11 +76,11 @@ void ModulatorsSection::buttonClicked(juce::Button* clickedButton)
             [this](int result)
             {
                 if (result == 1)
-                    eventHandler.onAddOscillator("Envelope");
+                    eventHandler.onAddOscillator(Envelope);
                 else if (result == 2)
-                    eventHandler.onAddOscillator("LFO");
+                    eventHandler.onAddOscillator(Envelope);
                 else if (result == 3)
-                    eventHandler.onAddOscillator("Macro");
+                    eventHandler.onAddOscillator(Envelope);
             });
     }
 

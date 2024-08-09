@@ -45,9 +45,9 @@ public:
 
     void moveProcessor(int id, int positions);
 
-    void addEffect(const juce::String& type, int id);
-    void addOscillator(const juce::String& type, int id);
-    void addModulator(const juce::String& type, int id);
+    void addEffect(int processorType, int id);
+    void addOscillator(int processorType, int id);
+    void addModulator(int processorType, int id);
 
     void setBypassed(int id, bool bypassed);
 private:

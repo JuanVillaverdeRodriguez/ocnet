@@ -10,6 +10,14 @@
 
 #pragma once
 #include "JuceHeader.h"
+#include "OcnetTypes.h"
+
+using namespace Ocnet;
+
+namespace Ocnet {
+    ProcessorType fromString(const juce::String& type);
+
+}
 
 class Utils {
 public:
@@ -83,6 +91,9 @@ public:
     }
 
     static std::tuple<juce::String, juce::String, juce::String> splitParameterID(const juce::String& input);
+
+
+
 private:
     Utils();
 

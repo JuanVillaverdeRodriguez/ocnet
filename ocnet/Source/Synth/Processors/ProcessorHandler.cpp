@@ -57,9 +57,10 @@ void ProcessorHandler::processBlock(juce::AudioBuffer<float>& outputBuffer)
         auto* buffer = outputBuffer.getWritePointer(channel);
 
         for (int sample = 0; sample < numSamples; ++sample) {
+
             for (auto& processor : oscillatorsProcessorsList) {
                 if (!processor->isBypassed()) {
-                    buffer[sample] = processor->getNextSample(sample);
+                    buffer[sample] += processor->getNextSample(sample);
                 }
             }
 

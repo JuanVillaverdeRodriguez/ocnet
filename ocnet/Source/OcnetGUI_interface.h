@@ -44,16 +44,8 @@ private:
     std::unique_ptr<OcnetGUI> gui_; //Vista
     OcnetAudioProcessor& processor; //Modelo
 
-    //std::list<std::unique_ptr<OscillatorsSubsection>> oscillatorsSubsectionList;
-    //std::list<std::unique_ptr<EffectsSubsection>> effectsSubsectionList;
-
-    int numberOfEnvelopes;
-    int numberOfWavetableOscillators;
-
     int maxCurrentID;
 
-
-    bool synthHasOscillators();
     bool synthHasMainEnvelope();
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(OcnetGUI_interface)

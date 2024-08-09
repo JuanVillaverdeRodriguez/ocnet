@@ -16,14 +16,14 @@ OcnetGUI_interface::OcnetGUI_interface(OcnetAudioProcessor *processor) : process
 {
     DBG("OcnetGUI_interface::OcnetGUI_interface(OcnetAudioProcessor *processor)");
 
-    numberOfEnvelopes = 0;
-    numberOfWavetableOscillators = 0;
-    maxCurrentID = 0;
+    maxCurrentID = 1;
     gui_ = std::make_unique<OcnetGUI>(*this);
 
     // Si no esta añadido, añadir un envelope principal
-    if (!processor->getHasMainEnvelope())
+    if (!processor->getHasMainEnvelope()) {
+        maxCurrentID = 0;
         onAddModulator(Envelope);
+    }
 
     initialiseGUIFromTree(processor->parameterHandler.getRootTree());
 }
@@ -184,11 +184,6 @@ void OcnetGUI_interface::initialiseGUIFromTree(juce::ValueTree tree)
     }
 
     //maxCurrentID = processor.parameterHandler.getMaxCurrentID();
-}
-
-bool OcnetGUI_interface::synthHasOscillators()
-{
-    return false;
 }
 
 bool OcnetGUI_interface::synthHasMainEnvelope()

@@ -37,6 +37,8 @@ public:
     void processBlock(juce::AudioBuffer<float>& buffer) override;
 
 private:
+    float currentFrequency;
+
     juce::Array<float> oscGainModulationBuffer;
 
     std::shared_ptr<ComboBoxParameter> waveTypeParameter;

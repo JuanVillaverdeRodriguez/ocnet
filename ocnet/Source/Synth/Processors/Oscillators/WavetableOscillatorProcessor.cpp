@@ -14,6 +14,7 @@
 WavetableOscillatorProcessor::WavetableOscillatorProcessor(int id)
 {
     setId(id);
+    currentFrequency = 0.0f;
 
     waveTypeIndexChoice = 0;
 
@@ -44,6 +45,8 @@ WavetableOscillatorProcessor::WavetableOscillatorProcessor(int id)
 
 void WavetableOscillatorProcessor::setFrequency(float frequency, float sampleRate)
 {
+    currentFrequency = frequency;  // Almacenar la frecuencia actual
+
     auto tableSizeOverSampleRate = (float)tableSize / sampleRate;
     tableDelta = frequency * tableSizeOverSampleRate;
 
@@ -114,6 +117,8 @@ void WavetableOscillatorProcessor::updateParameterValues()
         tables = &squareWaveTables;
     else if (waveTypeIndexChoice == 2)
         tables = &sineWaveTables;
+
+    setFrequency(currentFrequency, sampleRate);
 
     //DBG(juce::String("TIPO DE ONDA SELECIONADA: ") + juce::String(waveTypeIndexChoice));
 }

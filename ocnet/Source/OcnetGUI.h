@@ -36,6 +36,8 @@ public:
     EffectsSection* getEffectsSection() { return effectsSection.get(); }
 
     void editorIsShowing();
+
+
 protected:
     int currentView = 0;
 

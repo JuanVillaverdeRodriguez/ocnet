@@ -46,6 +46,7 @@ public:
 
     void handleNoteOff(juce::MidiKeyboardState*, int midiChannel, int midiNoteNumber, float velocity);
 
+
 private:
     juce::MidiKeyboardState keyboardState;
 

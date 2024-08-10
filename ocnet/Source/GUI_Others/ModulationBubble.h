@@ -32,7 +32,7 @@ private:
     juce::String parameterModulating;
 };
 
-class ModulationBubbleListener : public juce::MouseListener {
+class ModulationBubbleListener : public juce::MouseListener, public juce::TextEditor::Listener {
 public:
     ModulationBubbleListener(GUI_EventHandler& eventHandler, juce::Slider& listener, juce::String& modulationID);
 
@@ -40,11 +40,15 @@ public:
 
     void mouseDown(const juce::MouseEvent& event) override;
 
+    void textEditorReturnKeyPressed(juce::TextEditor& editor) override;
+
 
 private:
     GUI_EventHandler& eventHandler;
     juce::Slider& modBubble;
     juce::String modulationID;
+    juce::TextEditor textEditor;
+
 };
 
 class ModulationBubble : public juce::Slider, juce::Slider::Listener
@@ -67,6 +71,8 @@ public:
     void mouseExit(const juce::MouseEvent& event) override;
 
     juce::String getModulationID();
+
+
 
 
 private:

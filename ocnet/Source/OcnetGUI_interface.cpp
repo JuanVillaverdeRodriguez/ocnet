@@ -23,7 +23,7 @@ OcnetGUI_interface::OcnetGUI_interface(OcnetAudioProcessor *processor) : process
     gui_ = std::make_unique<OcnetGUI>(*this, keyboardState);
 
 
-    // Si no esta añadido, añadir un envelope principal
+    // Si no esta aÃ±adido, aÃ±adir un envelope principal
     if (!processor->getHasMainEnvelope()) {
         maxCurrentID = 0;
         onAddModulator(Envelope);
@@ -76,17 +76,17 @@ void OcnetGUI_interface::onConnectModulation(Subsection& modulator, juce::String
 
     // Comprobar no se este itentando modular el mismo parametro mas de una vez con el mismo modulador
     if (!modulatorCasted->isModulating(modulationParameterID)) {
-        // 1º Crear la burbuja en la GUI
+        // 1Âº Crear la burbuja en la GUI
         std::unique_ptr<ModulationBubble>* modulationBubble = modulatorCasted->createModulationBubble(processor.parameterHandler, parameterID, *this);
 
         juce::String modulationID = modulationBubble->get()->getModulationID();
 
-        // 2º Recrear los parametros si no estan en el arbol
+        // 2Âº Recrear los parametros si no estan en el arbol
         if (recreateParameters) {
             modulatorCasted->addModulationParameter(processor.parameterHandler, modulationID);
         }
 
-        // 3º Attachear los parametros a los sliders
+        // 3Âº Attachear los parametros a los sliders
         modulatorCasted->attachModulationParameter(processor.parameterHandler, modulationID);
 
         // Se obtiene la referencia al parametro que se quiere modular
@@ -256,13 +256,14 @@ OcnetGUI* OcnetGUI_interface::getGui() {
 // Implementar el callback para el teclado MIDI
 void OcnetGUI_interface::handleNoteOn(juce::MidiKeyboardState*, int midiChannel, int midiNoteNumber, float velocity)
 {
-    // Lógica cuando se presiona una tecla
+    // LÃ³gica cuando se presiona una tecla
 
     processor.noteOn(midiChannel, midiNoteNumber, velocity);
 }
 
 void OcnetGUI_interface::handleNoteOff(juce::MidiKeyboardState*, int midiChannel, int midiNoteNumber, float velocity)
 {
-    // Lógica cuando se libera una tecla
+    // LÃ³gica cuando se libera una tecla
     processor.noteOff(midiChannel, midiNoteNumber, velocity, true);
 }
+

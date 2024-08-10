@@ -128,7 +128,21 @@ void ModulationBubbleListener::mouseDown(const juce::MouseEvent& event)
             {
                 if (result == 1)
                     eventHandler.onRemoveModulation(modulationID);
-                //else if (result == 2)
+                else if (result == 2) {
+                    modBubble.getParentComponent()->addAndMakeVisible(textEditor);
+                    textEditor.toFront(true);
+                    textEditor.setBounds(modBubble.getBounds().getX() - 10, modBubble.getBounds().getY() + 10, 30, 20);
+                    textEditor.addListener(this);
+                    textEditor.setFont(juce::Font(10.0f));
+                    textEditor.setInputFilter(new juce::TextEditor::LengthAndCharacterRestriction(5, "-.0123456789"), true);
+                }
             });
     }
+}
+
+void ModulationBubbleListener::textEditorReturnKeyPressed(juce::TextEditor& editor)
+{
+    juce::String enteredText = editor.getText();
+    modBubble.setValue(enteredText.getFloatValue());
+    modBubble.getParentComponent()->removeChildComponent(modBubble.getParentComponent()->getIndexOfChildComponent(&textEditor));
 }

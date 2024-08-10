@@ -112,7 +112,7 @@ void OcnetGUI::resized()
     oscillatorsSection.get()->setBounds(oscillatorsSectionViewportBounds);
     effectsSection.get()->setBounds(effectsSectionViewportBounds);
 
-    // Oculta las barras de desplazamiento (debería ser innecesario si el tamaño es correcto)
+    // Oculta las barras de desplazamiento (deberÃ­a ser innecesario si el tamaÃ±o es correcto)
     keyboardComponent.setScrollButtonsVisible(false);
     keyboardComponent.setAvailableRange(24, 127);
 
@@ -135,4 +135,3 @@ void OcnetGUI::editorIsShowing()
     keyboardComponent.setWantsKeyboardFocus(true);
     keyboardComponent.grabKeyboardFocus();
 }
-

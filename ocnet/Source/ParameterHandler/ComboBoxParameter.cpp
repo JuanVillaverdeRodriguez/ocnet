@@ -15,6 +15,8 @@ ComboBoxParameter::ComboBoxParameter(const juce::String& parameterID, juce::Stri
 {
     // Comprueba que la opcion por defecto sea valida
     jassert(defaultOptionIndex >= 0 && defaultOptionIndex < choices.size());
+    parameterIdentifier = juce::Identifier(parameterID);
+
 }
 
 int ComboBoxParameter::getCurrentIndex()
@@ -26,6 +28,8 @@ void ComboBoxParameter::setCurrentIndex(int newIndex)
 {
     if (newIndex >= 0 && newIndex < choices.size()) {
         currentIndex = newIndex;
+        tree.setProperty(parameterIdentifier, currentIndex, nullptr);
+
     }
 }
 
@@ -42,4 +46,14 @@ juce::StringArray& ComboBoxParameter::getChoices()
 juce::String ComboBoxParameter::getID()
 {
     return parameterID;
+}
+
+void ComboBoxParameter::addTreeListener(juce::ValueTree tree)
+{
+    this->tree = tree;
+    this->tree.addListener(this);
+}
+
+void ComboBoxParameter::valueTreePropertyChanged(juce::ValueTree& treeWhosePropertyHasChanged, const juce::Identifier& property)
+{
 }

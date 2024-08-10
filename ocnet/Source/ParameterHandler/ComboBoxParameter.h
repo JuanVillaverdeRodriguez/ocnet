@@ -12,7 +12,8 @@
 
 #include "JuceHeader.h"
 
-class ComboBoxParameter {
+class ComboBoxParameter : public juce::ValueTree::Listener 
+{
 public:
     ComboBoxParameter(const juce::String& parameterID, juce::StringArray choices, int defaultOptionIndex = 0);
     ~ComboBoxParameter() = default;
@@ -24,8 +25,18 @@ public:
     juce::StringArray& getChoices();
     juce::String getID();
 
+    void addTreeListener(juce::ValueTree tree);
+
+    void valueTreePropertyChanged(juce::ValueTree& treeWhosePropertyHasChanged, const juce::Identifier& property) override;
+
+
+
 private:
     juce::String parameterID;
     juce::StringArray choices;
     int currentIndex;
+
+    juce::Identifier parameterIdentifier;
+    juce::ValueTree tree;
+
 };

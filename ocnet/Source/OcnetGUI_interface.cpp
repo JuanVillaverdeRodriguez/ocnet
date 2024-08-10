@@ -199,7 +199,9 @@ void OcnetGUI_interface::initialiseGUIFromTree(juce::ValueTree tree)
                 juce::Identifier propertyIdentifier = subTree.getChild(j).getPropertyName(k);
                 //juce::var propertyValue = subTree.getChild(j).getProperty(propertyIdentifier);
                 const juce::var& propertyValue = subTree.getChild(j).getProperty(propertyIdentifier);
-                subsection->get()->setParameterValue(propertyIdentifier.toString(), propertyValue.toString());
+                juce::String fullParameterID = type + juce::String("_") + id + juce::String("_") + propertyIdentifier.toString();
+
+                subsection->get()->setParameterValue(fullParameterID, propertyValue.toString());
                 //processor.parameterHandler.setParameterValues(type + juce::String("_") + id + juce::String("_") + propertyIdentifier.toString(), propertyValue.toString());
             }
             j++;
@@ -223,7 +225,9 @@ void OcnetGUI_interface::initialiseGUIFromTree(juce::ValueTree tree)
             for (int k = 0; k < numProperties; k++) {
                 juce::Identifier propertyIdentifier = subTree.getChild(j).getPropertyName(k);
                 const juce::var& propertyValue = subTree.getChild(j).getProperty(propertyIdentifier);
-                subsection->get()->setParameterValue(propertyIdentifier.toString(), propertyValue.toString());
+                juce::String fullParameterID = type + juce::String("_") + id + juce::String("_") + propertyIdentifier.toString();
+
+                subsection->get()->setParameterValue(fullParameterID, propertyValue.toString());
             }
             j++;
         }

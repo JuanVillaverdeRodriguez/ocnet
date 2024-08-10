@@ -152,7 +152,7 @@ void ParameterHandler::addComboBoxParameter(const juce::String& parameterID, std
 {
     auto [type, ownerID, parameterTag] = splitParameterID(parameterID);
 
-    comboBoxParametersMap.emplace(parameterID, std::move(parameter));
+    comboBoxParametersMap.emplace(parameterID, parameter);
 
     juce::Identifier nodeType(type); // Envelopes, LFOs, OSCs...
     juce::ValueTree nodeTree = findNodeByName(rootNode, nodeType);
@@ -163,7 +163,8 @@ void ParameterHandler::addComboBoxParameter(const juce::String& parameterID, std
         juce::ValueTree newNode = nodeTree.getChildWithName(ownerID); // 0, 1, 2....
 
         if (newNode.isValid()) { // Si ya existe el nodo este (NodeID), usar el que ya existe (Añadir propiedades directamente)
-            newNode.setProperty(propertyNameIdentifier, 0.0f, nullptr);
+            newNode.setProperty(propertyNameIdentifier, 0, nullptr);
+            parameter->addTreeListener(newNode);
 
         }
         else { // Si no, crear uno nuevo
@@ -172,7 +173,8 @@ void ParameterHandler::addComboBoxParameter(const juce::String& parameterID, std
 
             nodeTree.addChild(newNode2, -1, nullptr);
 
-            newNode2.setProperty(propertyNameIdentifier, 0.0f, nullptr);
+            newNode2.setProperty(propertyNameIdentifier, 0, nullptr);
+            parameter->addTreeListener(newNode);
 
         }
     }

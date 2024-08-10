@@ -34,6 +34,8 @@ WavetableOscillatorSubsection::WavetableOscillatorSubsection(int id, GUI_EventHa
     waveTypeComboBox.addItem("Square", 2);
     waveTypeComboBox.addItem("Sine", 3);
     waveTypeComboBox.setSelectedId(1); // Selecciona "Saw" por defecto
+    waveTypeComboBox.setName(waveTypeParameterID);
+
     addAndMakeVisible(waveTypeComboBox);
 
 }
@@ -68,14 +70,16 @@ void WavetableOscillatorSubsection::attachParams(ParameterHandler& parameterHand
     waveTypeParameterAttachment = std::make_unique<OcnetComboBoxAttachment>(waveTypeComboBox, *parameterHandler.getComboBoxParameter(waveTypeParameterID)->get());
 }
 
-void WavetableOscillatorSubsection::setParameterValue(const juce::String& propertyName, const juce::String& propertyValue)
+void WavetableOscillatorSubsection::setParameterValue(const juce::String& parameterID, const juce::String& propertyValue)
 {
-    if (propertyName == "volume")
+    if (parameterID == volumeKnob->getParameterID())
         volumeKnob->setValue(propertyValue.getFloatValue());
-    else if (propertyName == "panning")
+
+    else if (parameterID == panningKnob->getParameterID())
         panningKnob->setValue(propertyValue.getFloatValue());
-    else if (propertyName == "waveType")
-        waveTypeComboBox.setSelectedId(propertyValue.getIntValue());
+
+    else if (parameterID == waveTypeComboBox.getName())
+        waveTypeComboBox.setSelectedItemIndex(propertyValue.getIntValue());
 }
 
 void WavetableOscillatorSubsection::addParametersToParameterHandler(ParameterHandler& parameterHandler)

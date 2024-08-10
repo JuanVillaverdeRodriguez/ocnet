@@ -88,6 +88,7 @@ public:
                 return &element;
             }
         }
+        return nullptr;
     }
 
     static std::tuple<juce::String, juce::String, juce::String> splitParameterID(const juce::String& input);

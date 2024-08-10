@@ -313,9 +313,9 @@ void ProcessorHandler::addModulator(int processorType, int id, const ParameterHa
 
 void ProcessorHandler::setBypassed(int id, bool bypassed)
 {
-    std::unique_ptr<Processor>* oscillator;
-    std::unique_ptr<Effector>* effector;
-    std::unique_ptr<Modulator>* modulator;
+    std::unique_ptr<Processor>* oscillator = nullptr;
+    std::unique_ptr<Effector>* effector = nullptr;
+    std::unique_ptr<Modulator>* modulator = nullptr;
 
     effector = Utils::findElementByID(effectsProcessorsList, id);
     if (effector) {

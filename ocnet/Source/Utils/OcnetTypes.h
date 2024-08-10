@@ -20,6 +20,7 @@ namespace Ocnet {
         Distortion,
         WavetableOscillator,
         Envelope,
+        LFO,
         Unknown
     };
 }

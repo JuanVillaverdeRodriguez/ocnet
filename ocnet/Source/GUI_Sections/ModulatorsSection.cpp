@@ -30,6 +30,9 @@ std::unique_ptr<Subsection>* ModulatorsSection::addModulator(int processorType, 
         case Envelope:
             subsectionsVector.push_back(std::make_unique<EnvelopeSubsection>(numberOfEnvelopes, eventHandler));
             break;
+        case LFO:
+            subsectionsVector.push_back(std::make_unique<LFOSubsection>(numberOfEnvelopes, eventHandler));
+            break;
 
         default:
             return nullptr;
@@ -89,9 +92,9 @@ void ModulatorsSection::buttonClicked(juce::Button* clickedButton)
                 if (result == 1)
                     eventHandler.onAddModulator(Envelope);
                 else if (result == 2)
-                    eventHandler.onAddModulator(Envelope);
+                    eventHandler.onAddModulator(LFO);
                 else if (result == 3)
-                    eventHandler.onAddModulator(Envelope);
+                    eventHandler.onAddModulator(LFO);
             });
     }
 

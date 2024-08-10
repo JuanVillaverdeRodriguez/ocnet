@@ -10,16 +10,26 @@
 
 #pragma once
 #include "../../Knobs/Knob1.h"
-#include "../Subsection.h"
+#include "ModulatorsSubsection.h"
 
 #include <JuceHeader.h>
 
-/*class LFOSubsection : public Subsection {
+class LFOSubsection : public ModulatorsSubsection {
 public:
-    LFOSubsection();
-    ~LFOSubsection();
+    LFOSubsection(int id, GUI_EventHandler& eventHandler);
+    ~LFOSubsection() = default;
 
+    juce::String getSubType() override;
+    void attachParams(ParameterHandler& parameterHandler) override;
+    void addParametersToParameterHandler(ParameterHandler& parameterHandler) override;
+    void setParameterValue(const juce::String& propertyName, const juce::String& propertyValue) override;
+    void resized() override;
 private:
-    Knob1 speedKnob;
-    Knob1 
-};*/
+    juce::String speedParameterID;
+
+    std::unique_ptr<Knob1> speedKnob;
+    std::unique_ptr<OcnetSliderAttachment> speedParameterAttachment;
+
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(LFOSubsection)
+
+};

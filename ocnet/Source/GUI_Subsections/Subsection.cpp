@@ -53,6 +53,10 @@ void Subsection::buttonClicked(juce::Button* clickedButton)
     }
 }
 
+void Subsection::onPostInitialization()
+{
+}
+
 void Subsection::paint(juce::Graphics& g)
 {
     if (bypassed) {
@@ -71,7 +75,7 @@ void Subsection::paint(juce::Graphics& g)
     }
     else {
         // Definir la altura de la sección superior negra
-        auto blackSectionHeight = 20; // Puedes ajustar esta altura según sea necesario
+        auto blackSectionHeight = 20;
 
         // Pintar la parte superior de negro
         g.setColour(juce::Colours::darkgrey);
@@ -96,12 +100,18 @@ void Subsection::sectionResized()
     moveUpButton.setBounds(area.getWidth()-75, 0, 20, 20);
     bypassButton.setBounds(0, 0, 20, 20);
 
-    subsectionName.setBounds(20, 0, 20, 20);
+    subsectionName.setBounds(bypassButton.getBounds().getX() + 2, 0, 20, 20);
+    subsectionName.setText(getSubType()  + getIdAsString());
 }
 
 juce::String Subsection::createParameterID(const juce::String& type, int id, const juce::String& parameterName)
 {
     return type + juce::String("_") + juce::String(id) + juce::String("_") + parameterName;
+}
+
+juce::String Subsection::createParameterID(const juce::String& parameterName)
+{
+    return getSubType() + juce::String("_") + getIdAsString() + juce::String("_") + parameterName;
 }
 
 void Subsection::setBypassed(bool bypassed)

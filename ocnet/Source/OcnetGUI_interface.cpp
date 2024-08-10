@@ -60,11 +60,13 @@ void OcnetGUI_interface::onAddEffect(int processorType)
 void OcnetGUI_interface::onAddModulator(int processorType)
 {
     std::unique_ptr<Subsection>* subsection = gui_->getModulatorsSection()->addModulator(processorType, maxCurrentID, processor.parameterHandler);
-    gui_->getModulatorsSection()->addAndMakeVisible(**subsection);
-    subsection->get()->addParametersToParameterHandler(processor.parameterHandler);
-    subsection->get()->attachParams(processor.parameterHandler);
-    processor.addModulator(processorType, maxCurrentID);
-    maxCurrentID++;
+    if (subsection != nullptr) {
+        gui_->getModulatorsSection()->addAndMakeVisible(**subsection);
+        subsection->get()->addParametersToParameterHandler(processor.parameterHandler);
+        subsection->get()->attachParams(processor.parameterHandler);
+        processor.addModulator(processorType, maxCurrentID);
+        maxCurrentID++;
+    }
 }
 
 

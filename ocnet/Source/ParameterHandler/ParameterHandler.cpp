@@ -41,6 +41,9 @@ ParameterHandler::ParameterHandler()
     static juce::Identifier wavetableOscillatorsIndentifier("WavetableOscillator");
     juce::ValueTree wavetableOscillatorsNode(wavetableOscillatorsIndentifier);
 
+    static juce::Identifier LFOsIdentifier("LFO");
+    juce::ValueTree LFOsNode(LFOsIdentifier);
+
 
     rootNode.addChild(modulatorsNode, -1, nullptr);
     rootNode.addChild(oscillatorsNode, -1, nullptr);
@@ -50,8 +53,7 @@ ParameterHandler::ParameterHandler()
     effectsNode.addChild(filtersNode, -1, nullptr);
     effectsNode.addChild(distortionsNode, -1, nullptr);
     oscillatorsNode.addChild(wavetableOscillatorsNode, -1, nullptr);
-
-
+    modulatorsNode.addChild(LFOsNode, -1, nullptr);
 
 }
 

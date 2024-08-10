@@ -26,6 +26,9 @@ float LFOProcessor::getNextSample(int sample)
     phase += phaseIncrement;
     if (phase >= juce::MathConstants<float>::twoPi)
         phase -= juce::MathConstants<float>::twoPi;
+
+    addToModulationBuffer(value, sample); // Asignar el valor de la modulacion
+
     return value;
 }
 

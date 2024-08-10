@@ -19,27 +19,39 @@ public:
     Subsection(GUI_EventHandler& eventHandler);
     virtual ~Subsection() = default;
 
+    // Crea la ID de un parametro
+    juce::String createParameterID(const juce::String& type, int id, const juce::String& parameterName);
+    juce::String createParameterID(const juce::String& parameterName);
+
+
     void inline setId(int id) { this->id = id; }
     int inline getId() const { return id; }
+    juce::String inline getIdAsString() const { return juce::String(id); }
 
     void paint(juce::Graphics& g) override;
+    void sectionResized();
+
+    void setBypassed(bool bypassed);
 
     void buttonClicked(juce::Button* clickedButton) override;
 
-    virtual void attachParams(ParameterHandler& parameterHandler) {};
-    virtual void addParametersToParameterHandler(ParameterHandler& parameterHandler) {};
+    // Attachea los parametros con los knobs
+    virtual void attachParams(ParameterHandler& parameterHandler) = 0 {};
 
-    void sectionResized();
+    // Crea los parametros y los añade al parameterHandler
+    virtual void addParametersToParameterHandler(ParameterHandler& parameterHandler) = 0 {};
 
-    virtual juce::String getType() { return juce::String(""); };
-    virtual juce::String getSubType() { return juce::String(""); };
+    // Obtiene el tipo de la subseccion (Modulator, Oscillator o Effect)
+    virtual juce::String getType() = 0 { return juce::String(""); };
 
+    // Obtiene el subtipo de la subseccion (Envelope, LFO, WavetableOscillator...)
+    virtual juce::String getSubType() = 0 { return juce::String(""); };
 
-    juce::String createParameterID(const juce::String& type, int id, const juce::String& parameterName);
+    // Utlizado al reconstruir la GUI para setear el valor de los parametros al guardado en el arbol
+    virtual void setParameterValue(const juce::String& propertyName, const juce::String& propertyValue) = 0 {};
 
-    virtual void setParameterValue(const juce::String& propertyName, const juce::String& propertyValue) {};
-
-    void setBypassed(bool bypassed);
+    // Para cosas que deban hacere una vez la subseccion se ha creado completamente
+    void onPostInitialization();
 
 private:
     int id;

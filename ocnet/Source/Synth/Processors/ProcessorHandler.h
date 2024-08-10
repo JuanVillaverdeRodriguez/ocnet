@@ -17,6 +17,7 @@
 #include "../Oscillator/WavetableTypes.h"
 #include "Oscillators/WavetableOscillatorProcessor.h"
 #include "Effects/DistortionProcessor.h"
+#include "Modulators/LFOProcessor.h"
 
 class ProcessorHandler {
 public:

@@ -37,9 +37,6 @@ public:
     juce::Array<juce::String> getProperties(const juce::String& parameterOwnerType, const juce::String& ownerID);
     juce::Array<juce::String> getParameterIDs(const juce::String& parameterOwnerType, const juce::String& ownerID);
 
-
-    //void connectModulation(std::shared_ptr<Parameter2> parameter);
-   
     void removeModulationParameterWithID(const juce::String parameterID);
     void removeParameterFromTree(const juce::String parameterID);
 

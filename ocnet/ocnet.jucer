@@ -6,6 +6,10 @@
               pluginVSTCategory="kPlugCategSynth" pluginCharacteristicsValue="pluginIsSynth,pluginWantsMidiIn">
   <MAINGROUP id="Fay8LI" name="ocnet">
     <GROUP id="{B897E036-BD65-2195-C049-E6C429F0FF25}" name="Source">
+      <GROUP id="{E32E9B02-60DC-B84A-A01C-CA0659659B6E}" name="Images">
+        <FILE id="pX79Pj" name="Arrows.png" compile="0" resource="1" file="Source/Images/Arrows.png"
+              xcodeResource="0"/>
+      </GROUP>
       <GROUP id="{F52BF096-D323-543B-BB6D-EE7A16831A24}" name="GUI_Others">
         <FILE id="NLeDeZ" name="ModulationBubble.cpp" compile="1" resource="0"
               file="Source/GUI_Others/ModulationBubble.cpp"/>

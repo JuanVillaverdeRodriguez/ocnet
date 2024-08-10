@@ -51,6 +51,7 @@ namespace Ocnet {
         if (type == "Distortion") return Distortion;
         if (type == "WavetableOscillator") return WavetableOscillator;
         if (type == "Envelope") return Envelope;
+        if (type == "LFO") return LFO;
         return Unknown;
     }
 }

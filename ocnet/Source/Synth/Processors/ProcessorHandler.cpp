@@ -194,7 +194,6 @@ void ProcessorHandler::applyModulations(juce::AudioBuffer<float>& outputBuffer)
         for (auto& processor : modulatorProcessorsList) {
             if (!processor->isBypassed()) {
                 processor->getNextSample(sample);
-
             }
         }
         mainEnvelope->getNextSample(sample);
@@ -302,6 +301,8 @@ void ProcessorHandler::addModulator(int processorType, int id, const ParameterHa
                 modulatorProcessorsList.push_back(std::make_unique<EnvelopeProcessor>(id));
             }
             break;
+        case LFO:
+            modulatorProcessorsList.push_back(std::make_unique<LFOProcessor>(id));
 
         default:
             return;

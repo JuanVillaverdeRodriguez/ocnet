@@ -20,6 +20,7 @@ public:
     void setParentContainerAndComponent(juce::DragAndDropContainer& parentContainer, Subsection& parentComponent);
 
     void mouseDown(const juce::MouseEvent& event) override;
+    void mouseUp(const juce::MouseEvent& event);
     void resized() override;
     void paint(juce::Graphics& g) override;
 private:

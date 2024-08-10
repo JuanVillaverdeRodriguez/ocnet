@@ -26,7 +26,7 @@ public:
     void onAddEffect(int processorType) override;
     void onAddModulator(int processorType) override;
 
-    void onConnectModulation(Subsection& modulator, juce::String& parameterID) override;
+    void onConnectModulation(Subsection& modulator, juce::String& parameterID, bool recreateParameters) override;
 
     void onDeleteSubsection(Subsection& subsection) override;
 
@@ -38,6 +38,7 @@ public:
 
     void initialiseGUIFromTree(juce::ValueTree tree);
 
+    void editorIsShowing();
 
     OcnetGUI* getGui();
 
@@ -56,6 +57,7 @@ private:
     bool isAddingFromMidiInput = false;
 
     bool synthHasMainEnvelope();
+    bool isModulationParameter(const juce::String& parameterID);
 
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(OcnetGUI_interface)

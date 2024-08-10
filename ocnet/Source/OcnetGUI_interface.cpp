@@ -29,7 +29,6 @@ OcnetGUI_interface::OcnetGUI_interface(OcnetAudioProcessor *processor) : process
         onAddModulator(Envelope);
     }
 
-    initialiseGUIFromTree(processor->parameterHandler.getRootTree());
 
 }
 
@@ -69,7 +68,7 @@ void OcnetGUI_interface::onAddModulator(int processorType)
 }
 
 
-void OcnetGUI_interface::onConnectModulation(Subsection& modulator, juce::String& parameterID)
+void OcnetGUI_interface::onConnectModulation(Subsection& modulator, juce::String& parameterID, bool recreateParameters)
 {
 
     auto modulatorCasted = dynamic_cast<ModulatorsSubsection*>(&modulator);
@@ -77,9 +76,23 @@ void OcnetGUI_interface::onConnectModulation(Subsection& modulator, juce::String
 
     // Comprobar no se este itentando modular el mismo parametro mas de una vez con el mismo modulador
     if (!modulatorCasted->isModulating(modulationParameterID)) {
+        // 1º Crear la burbuja en la GUI
         std::unique_ptr<ModulationBubble>* modulationBubble = modulatorCasted->createModulationBubble(processor.parameterHandler, parameterID, *this);
+
+        juce::String modulationID = modulationBubble->get()->getModulationID();
+
+        // 2º Recrear los parametros si no estan en el arbol
+        if (recreateParameters) {
+            modulatorCasted->addModulationParameter(processor.parameterHandler, modulationID);
+        }
+
+        // 3º Attachear los parametros a los sliders
+        modulatorCasted->attachModulationParameter(processor.parameterHandler, modulationID);
+
+        // Se obtiene la referencia al parametro que se quiere modular
         std::shared_ptr<SliderParameter>* parameterToModulate = processor.parameterHandler.getSliderParameter(parameterID);
 
+        // Se conecta con el processor
         processor.connectModulation(modulator.getId(), *parameterToModulate, modulationParameterID);
     }
 
@@ -149,7 +162,19 @@ void OcnetGUI_interface::initialiseGUIFromTree(juce::ValueTree tree)
                 juce::Identifier propertyIdentifier = subTree.getChild(j).getPropertyName(k);
                 //juce::var propertyValue = subTree.getChild(j).getProperty(propertyIdentifier);
                 const juce::var& propertyValue = subTree.getChild(j).getProperty(propertyIdentifier);
-                subsection->get()->setParameterValue(propertyIdentifier.toString(), propertyValue.toString());
+                // SI es una modulacion, primero crear la burbuja de modulacion, attachear los parametros a la misma, despues setear el valor de los mismos al slider
+
+                if (isModulationParameter(propertyIdentifier.toString())) {
+                    auto [modulationTag, parameterModulatingID] = Utils::splitParameterModulationID(propertyIdentifier.toString());
+                    auto modulatorCasted = dynamic_cast<ModulatorsSubsection*>(subsection->get());
+                    std::unique_ptr<ModulationBubble>* modulationBubble = modulatorCasted->createModulationBubble(processor.parameterHandler, parameterModulatingID, *this);
+                    juce::String modulationID = modulationBubble->get()->getModulationID();
+                    modulatorCasted->attachModulationParameter(processor.parameterHandler, modulationID);
+                }
+
+                juce::String fullParameterID = type + juce::String("_") + id + juce::String("_") + propertyIdentifier.toString();
+
+                subsection->get()->setParameterValue(fullParameterID, propertyValue.toString());
                 //processor.parameterHandler.setParameterValues(type + juce::String("_") + id + juce::String("_") + propertyIdentifier.toString(), propertyValue.toString());
             }
             j++;
@@ -208,9 +233,20 @@ void OcnetGUI_interface::initialiseGUIFromTree(juce::ValueTree tree)
     //maxCurrentID = processor.parameterHandler.getMaxCurrentID();
 }
 
+void OcnetGUI_interface::editorIsShowing()
+{
+    gui_->editorIsShowing();
+    initialiseGUIFromTree(processor.parameterHandler.getRootTree());
+}
+
 bool OcnetGUI_interface::synthHasMainEnvelope()
 {
     return processor.getHasMainEnvelope();
+}
+
+bool OcnetGUI_interface::isModulationParameter(const juce::String& parameterTag)
+{
+    return parameterTag.startsWith("modulationAmount_");
 }
 
 OcnetGUI* OcnetGUI_interface::getGui() {

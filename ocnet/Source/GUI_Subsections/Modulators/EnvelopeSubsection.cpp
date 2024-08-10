@@ -79,16 +79,26 @@ juce::String EnvelopeSubsection::getSubType()
     return juce::String("Envelope");
 }
 
-void EnvelopeSubsection::setParameterValue(const juce::String& propertyName, const juce::String& propertyValue)
+void EnvelopeSubsection::setParameterValue(const juce::String& parameterID, const juce::String& propertyValue)
 {
-    if (propertyName == "attack")
+    if (parameterID == attackKnob->getParameterID())
         attackKnob->setValue(propertyValue.getFloatValue());
-    else if (propertyName == "decay")
+
+    else if (parameterID == decayKnob->getParameterID())
         decayKnob->setValue(propertyValue.getFloatValue());
-    else if (propertyName == "sustain")
+
+    else if (parameterID == sustainKnob->getParameterID())
         sustainKnob->setValue(propertyValue.getFloatValue());
-    else if (propertyName == "release")
+
+    else if (parameterID == releaseKnob->getParameterID())
         releaseKnob->setValue(propertyValue.getFloatValue());
+
+
+    for (auto& modulationBubble : modulationBubblesVector) {
+        if (modulationBubble->getModulationID() == parameterID) {
+            modulationBubble->setValue(propertyValue.getFloatValue());
+        }
+    }
 }
 
 void EnvelopeSubsection::attachParams(ParameterHandler& parameterHandler) {
@@ -98,6 +108,7 @@ void EnvelopeSubsection::attachParams(ParameterHandler& parameterHandler) {
     releaseParameterAttachment = std::make_unique<OcnetSliderAttachment>(*releaseKnob, *parameterHandler.getSliderParameter(releaseParameterID)->get());
 
     dragZone.setParentContainerAndComponent(*juce::DragAndDropContainer::findParentDragContainerFor(this), *this);
+
 }
 
 // Mover a audioProcessor
@@ -109,19 +120,3 @@ void EnvelopeSubsection::addParametersToParameterHandler(ParameterHandler& param
     parameterHandler.addSliderParameter(releaseParameterID, std::make_shared<SliderParameter>("release"));
 }
 
-std::unique_ptr<ModulationBubble>* EnvelopeSubsection::createModulationBubble(ParameterHandler& parameterHandler,  juce::String& parameterID, GUI_EventHandler& eventHandler)
-{
-    juce::String newModulationParameterID = createParameterID("Envelope", getId(), "modulationAmount_" + parameterID);
-
-
-    modulationBubblesVector.push_back(std::make_unique<ModulationBubble>(newModulationParameterID, eventHandler));
-    this->getParentComponent()->getParentComponent()->addAndMakeVisible(*modulationBubblesVector.back());
-        
-    parameterHandler.addSliderParameter(newModulationParameterID, std::make_shared<SliderParameter>("modulationAmount_" + parameterID));
-    modulationParameterAttachmentsVector.push_back(std::make_unique<OcnetSliderAttachment>(*modulationBubblesVector.back(), *parameterHandler.getSliderParameter(newModulationParameterID)->get()));
-
-    resized();
-
-    return &modulationBubblesVector.back();
-
-}

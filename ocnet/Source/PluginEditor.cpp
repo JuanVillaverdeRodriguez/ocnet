@@ -45,7 +45,8 @@ void OcnetAudioProcessorEditor::handleAsyncUpdate()
 {
     if (isShowing())
     {
-        getGui()->editorIsShowing();
+        //getGui()->editorIsShowing();
+        editorIsShowing();
     }
     else
     {

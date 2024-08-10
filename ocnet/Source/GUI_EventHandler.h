@@ -24,7 +24,7 @@ public:
 
     virtual void onDeleteSubsection(Subsection& subsection) {};
 
-    virtual void onConnectModulation(Subsection& modulator, juce::String& parameterID) {};
+    virtual void onConnectModulation(Subsection& modulator, juce::String& parameterID, bool recreateParameters) {};
 
     virtual void onMoveSubsection(Subsection& subsection, int positions) {};
 

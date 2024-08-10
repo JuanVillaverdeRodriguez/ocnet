@@ -17,11 +17,16 @@ void Knob1::itemDropped(const SourceDetails& dragSourceDetails)
 	DBG("Envelope sincronizado con el parámetro");
 	if (auto* a = dynamic_cast<ModulatorsSubsection*>(dragSourceDetails.sourceComponent.get())) {
 		DBG("CONECTADO AHORA DEBERIA DE ESTAR");
-		eventHandler.onConnectModulation(*a, parameterID);
+		eventHandler.onConnectModulation(*a, parameterID, true);
 	}
 }
 
 bool Knob1::isInterestedInDragSource(const SourceDetails& dragSourceDetails)
 {
 	return true;
+}
+
+juce::String Knob1::getParameterID()
+{
+	return parameterID;
 }

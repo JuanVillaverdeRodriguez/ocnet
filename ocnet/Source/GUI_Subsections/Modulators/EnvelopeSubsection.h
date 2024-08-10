@@ -32,7 +32,6 @@ public:
     void setParameterValue(const juce::String& propertyName, const juce::String& propertyValue) override;
     void attachParams(ParameterHandler& parameterHandler);
     void addParametersToParameterHandler(ParameterHandler& parameterHandler) override;
-    std::unique_ptr<ModulationBubble>* createModulationBubble(ParameterHandler& parameterHandler, juce::String& parameterID, GUI_EventHandler& eventHandler) override;
 
 private:
     juce::String attackParameterID;
@@ -52,7 +51,6 @@ private:
     std::unique_ptr<Knob1> releaseKnob;
     std::unique_ptr<OcnetSliderAttachment> releaseParameterAttachment;
 
-    std::vector<std::unique_ptr<OcnetSliderAttachment>> modulationParameterAttachmentsVector;
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(EnvelopeSubsection)
 };

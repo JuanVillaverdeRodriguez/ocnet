@@ -34,12 +34,15 @@ private:
     juce::String waveTypeParameterID;
 
     std::unique_ptr<Knob1> volumeKnob;
+    juce::Label volumeKnobLabel;
     std::unique_ptr<OcnetSliderAttachment> volumeParameterAttachment;
 
     std::unique_ptr<Knob1> panningKnob;
+    juce::Label panningKnobLabel;
     std::unique_ptr<OcnetSliderAttachment> panningParameterAttachment;
 
     juce::ComboBox waveTypeComboBox;
+    juce::Label waveTypeComboLabel;
     std::unique_ptr<OcnetComboBoxAttachment> waveTypeParameterAttachment;
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(WavetableOscillatorSubsection)

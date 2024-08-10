@@ -10,7 +10,7 @@
 
 #include "Subsection.h"
 
-Subsection::Subsection(GUI_EventHandler& eventHandler) : eventHandler(eventHandler), defaultKnobSize(35)
+Subsection::Subsection(GUI_EventHandler& eventHandler) : eventHandler(eventHandler), defaultKnobSize(45)
 {
     id = 0;
 

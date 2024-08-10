@@ -12,6 +12,8 @@ public:
 	void itemDropped(const SourceDetails& dragSourceDetails) override;
 	bool isInterestedInDragSource(const SourceDetails& dragSourceDetails) override;
 
+	juce::String getTextFromValue(double value) override;
+
 	juce::String getParameterID();
 private:
 	GUI_EventHandler& eventHandler;

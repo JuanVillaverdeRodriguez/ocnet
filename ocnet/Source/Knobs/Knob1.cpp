@@ -10,6 +10,7 @@ Knob1::Knob1(const juce::String& parameterID, GUI_EventHandler& eventHandler) : 
 
 	this->setSliderStyle(RotaryHorizontalVerticalDrag);
 	this->setTextBoxStyle(juce::Slider::TextBoxBelow, true, 90, 0);
+	this->setPopupDisplayEnabled(true, true, nullptr);
 }
 
 void Knob1::itemDropped(const SourceDetails& dragSourceDetails)
@@ -24,6 +25,13 @@ void Knob1::itemDropped(const SourceDetails& dragSourceDetails)
 bool Knob1::isInterestedInDragSource(const SourceDetails& dragSourceDetails)
 {
 	return true;
+}
+
+juce::String Knob1::getTextFromValue(double value)
+{
+	//return propertyName + juce::String(": ") + juce::String(value);
+	//return propertyName;
+	return juce::String(value);
 }
 
 juce::String Knob1::getParameterID()

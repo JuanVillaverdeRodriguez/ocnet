@@ -21,6 +21,13 @@ WavetableOscillatorSubsection::WavetableOscillatorSubsection(int id, GUI_EventHa
     volumeKnob = std::make_unique<Knob1>(volumeParameterID, eventHandler);
     panningKnob = std::make_unique<Knob1>(panningParameterID, eventHandler);
 
+    volumeKnobLabel.setText("Volume", juce::dontSendNotification);
+    volumeKnobLabel.attachToComponent(&*volumeKnob, false); // Se ancla al knob, pero sin moverse con él
+    volumeKnobLabel.setJustificationType(juce::Justification::centred); // Centrar el texto
+    volumeKnobLabel.setFont(juce::Font(12.0f, juce::Font::bold));
+
+    addAndMakeVisible(volumeKnobLabel);
+
     this->addAndMakeVisible(*volumeKnob);
     this->addAndMakeVisible(*panningKnob);
 
@@ -48,8 +55,9 @@ void WavetableOscillatorSubsection::resized()
 
     sectionResized();
 
-    volumeKnob->setBounds(0, area.getHeight() - defaultKnobSize, defaultKnobSize, defaultKnobSize);
-    panningKnob->setBounds(defaultKnobSize, area.getHeight() - defaultKnobSize, defaultKnobSize, defaultKnobSize);
+    volumeKnob->setBounds(0, 20, defaultKnobSize, defaultKnobSize);
+    panningKnob->setBounds(defaultKnobSize, 20, defaultKnobSize, defaultKnobSize);
+    volumeKnobLabel.setBounds(0, 55, 45, 18);
 
     waveTypeComboBox.setBounds(2 * defaultKnobSize, area.getHeight() - defaultKnobSize, defaultKnobSize * 2, defaultKnobSize);
 

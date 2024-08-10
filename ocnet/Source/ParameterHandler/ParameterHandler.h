@@ -33,6 +33,11 @@ public:
     // Elimina del arbol de parametros y del vector de parametros los parametros para un modulo.
     void deleteAttachedParameters(const juce::String& parameterOwnerType, const juce::String& ownerID);
 
+    //Obtiene los parametros de una subsection o processor.
+    juce::Array<juce::String> getProperties(const juce::String& parameterOwnerType, const juce::String& ownerID);
+    juce::Array<juce::String> getParameterIDs(const juce::String& parameterOwnerType, const juce::String& ownerID);
+
+
     //void connectModulation(std::shared_ptr<Parameter2> parameter);
    
     void removeModulationParameterWithID(const juce::String parameterID);
@@ -43,6 +48,9 @@ public:
     void printValueTree(const juce::ValueTree& tree, int indentLevel);
 
     int getMaxCurrentID();
+
+    // Obtiene todos los modulationsID que estan modulando este parametro.
+    juce::Array<juce::String> getParameterModulationIDs(const juce::String parameterModulating);
 
 private:
     juce::ValueTree rootNode;

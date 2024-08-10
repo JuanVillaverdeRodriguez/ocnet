@@ -109,9 +109,23 @@ void OcnetGUI_interface::onDeleteSubsection(Subsection& subsection)
     }
 
     juce::String type = subsection.getType();
+    juce::String subType = subsection.getSubType();
+
+    juce::Array<juce::String> subsectionProperties = processor.parameterHandler.getParameterIDs(subType, juce::String(id));
+
+    // Primero eliminar las modulaciones de cada parametro
+    for (auto property : subsectionProperties) {
+        juce::Array<juce::String> modulationsID = processor.parameterHandler.getParameterModulationIDs(property);
+
+        for (auto modulationID : modulationsID) {
+            onRemoveModulation(modulationID);
+        }
+    }
 
     gui_->getSection(subsection.getType())->deleteSubsection(id);
     processor.deleteProcessor(id);
+
+
     processor.parameterHandler.deleteAttachedParameters(type, juce::String(id));
 }
 
@@ -135,6 +149,7 @@ void OcnetGUI_interface::onRemoveModulation(const juce::String& modulationID)
     processor.removeModulation(modulationID);
     gui_->getModulatorsSection()->removeModulation(modulationID);
 }
+
 
 void OcnetGUI_interface::initialiseGUIFromTree(juce::ValueTree tree)
 {

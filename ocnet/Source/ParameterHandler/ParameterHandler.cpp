@@ -119,6 +119,31 @@ void ParameterHandler::deleteAttachedParameters(const juce::String& parameterOwn
     printValueTree(rootNode, 1);
 
 }
+juce::Array<juce::String> ParameterHandler::getProperties(const juce::String& parameterOwnerType, const juce::String& ownerID)
+{
+    juce::Array<juce::String> propertiesArray;
+
+    juce::ValueTree nodeID = findNodeByName(rootNode, ownerID);
+
+    for (int i = 0; i < nodeID.getNumProperties(); i++) {
+        propertiesArray.add(nodeID.getPropertyName(i).toString());
+    }
+
+    return propertiesArray;
+}
+
+juce::Array<juce::String> ParameterHandler::getParameterIDs(const juce::String& parameterOwnerType, const juce::String& ownerID)
+{
+    juce::Array<juce::String> parameterIDsArray;
+
+    juce::ValueTree nodeID = findNodeByName(rootNode, ownerID);
+
+    for (int i = 0; i < nodeID.getNumProperties(); i++) {
+        parameterIDsArray.add(parameterOwnerType + juce::String("_") + ownerID + juce::String("_") + nodeID.getPropertyName(i).toString());
+    }
+
+    return parameterIDsArray;
+}
 /*
 void ParameterHandler::connectModulation(std::shared_ptr<Parameter2> parameter)
 {
@@ -310,6 +335,30 @@ int ParameterHandler::getMaxCurrentID()
     }
 
     return i-1;
+}
+
+
+juce::Array<juce::String> ParameterHandler::getParameterModulationIDs(const juce::String parameterModulating)
+{
+    juce::Array<juce::String> modulationIDs;
+
+    for (const auto& pair : sliderParametersMap)
+    {
+        auto [part1, part2, part3] = splitParameterID(pair.first);
+
+        // Si el parametro no es una modulacion, pasa a la siguiente iteracion.
+        if (!part3.startsWith("modulationAmount_"))
+            continue;
+
+        auto [modulationTag, parameterModulatingID] = Utils::splitParameterModulationID(part3);
+
+        if (parameterModulatingID == parameterModulating) {
+            modulationIDs.add(pair.first);
+        }
+
+    }
+
+    return modulationIDs;
 }
 
 std::tuple<juce::String, juce::String, juce::String> ParameterHandler::splitParameterID(const juce::String& input)

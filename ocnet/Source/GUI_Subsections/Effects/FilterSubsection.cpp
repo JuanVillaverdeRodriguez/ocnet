@@ -51,8 +51,8 @@ void FilterSubsection::addParametersToParameterHandler(ParameterHandler& paramet
     parameterHandler.addSliderParameter(freqParameterID, std::make_shared<SliderParameter>("freqCut"));
 }
 
-void FilterSubsection::setParameterValue(const juce::String& propertyName, const juce::String& propertyValue)
+void FilterSubsection::setParameterValue(const juce::String& parameterID, const juce::String& propertyValue)
 {
-    if (propertyName == "freqCut")
+    if (parameterID == freqCutKnob->getParameterID())
         freqCutKnob->setValue(propertyValue.getFloatValue());
 }

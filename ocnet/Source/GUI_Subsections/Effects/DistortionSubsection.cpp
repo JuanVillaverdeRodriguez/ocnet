@@ -49,8 +49,8 @@ void DistortionSubsection::addParametersToParameterHandler(ParameterHandler& par
     parameterHandler.addSliderParameter(driveParameterID, std::make_shared<SliderParameter>("drive"));
 }
 
-void DistortionSubsection::setParameterValue(const juce::String& propertyName, const juce::String& propertyValue)
+void DistortionSubsection::setParameterValue(const juce::String& parameterID, const juce::String& propertyValue)
 {
-    if (propertyName == "drive")
+    if (parameterID == driveKnob->getParameterID())
         driveKnob->setValue(propertyValue.getFloatValue());
 }

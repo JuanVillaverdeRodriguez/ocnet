@@ -42,6 +42,8 @@ public:
 
     void printValueTree(const juce::ValueTree& tree, int indentLevel);
 
+    int getMaxCurrentID();
+
 private:
     juce::ValueTree rootNode;
 

@@ -230,7 +230,7 @@ void OcnetGUI_interface::initialiseGUIFromTree(juce::ValueTree tree)
         i++;
     }
 
-    //maxCurrentID = processor.parameterHandler.getMaxCurrentID();
+    maxCurrentID = processor.parameterHandler.getMaxCurrentID();
 }
 
 void OcnetGUI_interface::editorIsShowing()

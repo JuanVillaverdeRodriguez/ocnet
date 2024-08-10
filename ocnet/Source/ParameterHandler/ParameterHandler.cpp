@@ -298,6 +298,18 @@ void ParameterHandler::printValueTree(const juce::ValueTree& tree, int indentLev
     }
 }
 
+int ParameterHandler::getMaxCurrentID()
+{
+    int i = 0;
+    juce::ValueTree foundNode = findNodeByName(rootNode, juce::Identifier(juce::String(i)));
+    while (foundNode.isValid()) {
+        foundNode = findNodeByName(rootNode, juce::Identifier(juce::String(i)));
+        i++;
+    }
+
+    return i-1;
+}
+
 std::tuple<juce::String, juce::String, juce::String> ParameterHandler::splitParameterID(const juce::String& input)
 {
     // Encontrar la primera parte de la cadena

@@ -18,15 +18,8 @@ WavetableOscillatorSubsection::WavetableOscillatorSubsection(int id, GUI_EventHa
     panningParameterID = createParameterID("WavetableOscillator", getId(), "panning");
     waveTypeParameterID = createParameterID("WavetableOscillator", getId(), "waveType");
 
-    volumeKnob = std::make_unique<Knob1>(volumeParameterID, eventHandler);
-    panningKnob = std::make_unique<Knob1>(panningParameterID, eventHandler);
-
-    volumeKnobLabel.setText("Volume", juce::dontSendNotification);
-    volumeKnobLabel.attachToComponent(&*volumeKnob, false); // Se ancla al knob, pero sin moverse con él
-    volumeKnobLabel.setJustificationType(juce::Justification::centred); // Centrar el texto
-    volumeKnobLabel.setFont(juce::Font(12.0f, juce::Font::bold));
-
-    addAndMakeVisible(volumeKnobLabel);
+    volumeKnob = std::make_unique<Knob1>(volumeParameterID, eventHandler, "Level");
+    panningKnob = std::make_unique<Knob1>(panningParameterID, eventHandler, "Pan");
 
     this->addAndMakeVisible(*volumeKnob);
     this->addAndMakeVisible(*panningKnob);
@@ -57,7 +50,9 @@ void WavetableOscillatorSubsection::resized()
 
     volumeKnob->setBounds(0, 20, defaultKnobSize, defaultKnobSize);
     panningKnob->setBounds(defaultKnobSize, 20, defaultKnobSize, defaultKnobSize);
-    volumeKnobLabel.setBounds(0, 55, 45, 18);
+
+    volumeKnob->showLabel(*this, *volumeKnob);
+    panningKnob->showLabel(*this, *panningKnob);
 
     waveTypeComboBox.setBounds(2 * defaultKnobSize, area.getHeight() - defaultKnobSize, defaultKnobSize * 2, defaultKnobSize);
 
@@ -70,9 +65,6 @@ juce::String WavetableOscillatorSubsection::getSubType()
 
 void WavetableOscillatorSubsection::attachParams(ParameterHandler& parameterHandler)
 {
-    //DBG("WavetableOscillatorSubsection::attachParams(ParameterHandler& parameterHandler)");
-    //DBG(juce::String(getId()));
-
     volumeParameterAttachment = std::make_unique<OcnetSliderAttachment>(*volumeKnob, *parameterHandler.getSliderParameter(volumeParameterID)->get());
     panningParameterAttachment = std::make_unique<OcnetSliderAttachment>(*panningKnob, *parameterHandler.getSliderParameter(panningParameterID)->get());
     waveTypeParameterAttachment = std::make_unique<OcnetComboBoxAttachment>(waveTypeComboBox, *parameterHandler.getComboBoxParameter(waveTypeParameterID)->get());

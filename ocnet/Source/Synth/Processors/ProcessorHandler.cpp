@@ -69,12 +69,15 @@ void ProcessorHandler::processBlock(juce::AudioBuffer<float>& outputBuffer)
     int numChannels = outputBuffer.getNumChannels();
 
     // Aplicar el envelope principal
-    for (int channel = 0; channel < numChannels; ++channel) {
+
+    /*for (int channel = 0; channel < numChannels; ++channel) {
         auto* buffer = outputBuffer.getWritePointer(channel);
         for (int sample = 0; sample < numSamples; ++sample) {
             buffer[sample] *= mainEnvelope->getNextSample(sample);
         }
-    }
+    }*/
+
+    mainEnvelope->processBlock(outputBuffer);
 
 }
 
@@ -303,6 +306,7 @@ void ProcessorHandler::addModulator(int processorType, int id, const ParameterHa
             break;
         case LFO:
             modulatorProcessorsList.push_back(std::make_unique<LFOProcessor>(id));
+            break;
 
         default:
             return;

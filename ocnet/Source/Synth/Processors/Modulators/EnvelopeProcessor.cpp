@@ -81,8 +81,26 @@ bool EnvelopeProcessor::isActive()
     return adsr.isActive();
 }
 
-void EnvelopeProcessor::processBlock(juce::AudioBuffer<float>& buffer)
+void EnvelopeProcessor::processBlock(juce::AudioBuffer<float>& outputBuffer)
 {
+    int numSamples = outputBuffer.getNumSamples();
+    int numChannels = outputBuffer.getNumChannels();
+
+    auto* firstChannelBuffer = outputBuffer.getWritePointer(0);
+
+    for (int sample = 0; sample < numSamples; ++sample) {
+        firstChannelBuffer[sample] *= getNextSample(sample);
+    }
+
+    // Copiar el contenido del primer canal a los otros canales
+    for (int channel = 1; channel < numChannels; ++channel) {
+        auto* buffer = outputBuffer.getWritePointer(channel);
+
+        // Copiar los valores del primer canal a este canal
+        for (int sample = 0; sample < numSamples; ++sample) {
+            buffer[sample] = firstChannelBuffer[sample];
+        }
+    }
 }
 
 void EnvelopeProcessor::syncParams(const ParameterHandler& parameterHandler)
@@ -93,16 +111,3 @@ void EnvelopeProcessor::syncParams(const ParameterHandler& parameterHandler)
     releaseParameter = parameterHandler.syncWithSliderParam(juce::String("Envelope_") + juce::String(getId()) + juce::String("_release"));
 
 }
-
-/*void EnvelopeProcessor::connectModulationTo(Parameter2& parameter)
-{
-    parameter.setModulationListener(this);
-
-    modulationListeners.pushback(parameter);
-}
-
-void onModulationChanged() {
-    for (auto param : modulationListeners) {
-        param->updateModulationValue();
-    }
-}*/

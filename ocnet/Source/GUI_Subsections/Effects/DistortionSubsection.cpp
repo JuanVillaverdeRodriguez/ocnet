@@ -14,7 +14,7 @@ DistortionSubsection::DistortionSubsection(int id, GUI_EventHandler& eventHandle
 {
     setId(id);
     driveParameterID = createParameterID("Distortion", getId(), "drive");
-    driveKnob = std::make_unique<Knob1>(driveParameterID, eventHandler);
+    driveKnob = std::make_unique<Knob1>(driveParameterID, eventHandler, "Drive");
 
     this->addAndMakeVisible(*driveKnob);
 
@@ -31,7 +31,10 @@ void DistortionSubsection::resized()
 
     sectionResized();
 
-    driveKnob->setBounds(0, area.getHeight() - defaultKnobSize, defaultKnobSize, defaultKnobSize);
+    driveKnob->setBounds(0, 20, defaultKnobSize, defaultKnobSize);
+
+
+    driveKnob->showLabel(*this, *driveKnob);
 }
 
 juce::String DistortionSubsection::getSubType()

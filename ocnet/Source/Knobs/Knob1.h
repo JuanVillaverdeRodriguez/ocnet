@@ -8,6 +8,8 @@
 class Knob1 : public juce::Slider, public juce::DragAndDropTarget {
 public:
 	Knob1(const juce::String& parameterID, GUI_EventHandler &eventHandler);
+	Knob1(const juce::String& parameterID, GUI_EventHandler& eventHandler, juce::String knobLabelText);
+
 
 	void itemDropped(const SourceDetails& dragSourceDetails) override;
 	bool isInterestedInDragSource(const SourceDetails& dragSourceDetails) override;
@@ -15,9 +17,17 @@ public:
 	juce::String getTextFromValue(double value) override;
 
 	juce::String getParameterID();
+
+	// Colocar la label en bounds
+	void showLabel(juce::Component& component, juce::Rectangle<int> bounds);
+
+	// Colocar la label debajo de attachToComp
+	void showLabel(juce::Component& parentComp, juce::Component& attachToComp);
+
 private:
 	GUI_EventHandler& eventHandler;
 	juce::String parameterID;
+	juce::Label knobLabel;
 
 	juce::String propertyName;
 

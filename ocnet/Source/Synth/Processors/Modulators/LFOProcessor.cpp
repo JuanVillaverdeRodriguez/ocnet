@@ -11,7 +11,7 @@
 #include "LFOProcessor.h"
 
 LFOProcessor::LFOProcessor(int id) 
-    : frequency(1.0f), phase(0.0f), sampleRate(44100.0f), phaseIncrement(0.0f)
+    : frequency(1.0f), phase(0.0f), sampleRate(44100.0f), phaseIncrement(0.0f), maxFreq(32)
 {
     setId(id);
 }
@@ -42,22 +42,30 @@ void LFOProcessor::stopNote(float velocity, bool allowTailOff)
 
 void LFOProcessor::updateParameterValues()
 {
+    float newFreq = freqParameter->getValue() * maxFreq;
+    if (newFreq != frequency) {
+        frequency = newFreq;
+        updateFrequency();
+    }
+
+    freqModulationBuffer = freqParameter->getModulationBuffer(getVoiceNumberId());
 }
 
 void LFOProcessor::prepareToPlay(juce::dsp::ProcessSpec spec)
 {
     sampleRate = spec.sampleRate;
-    setFrequency();
+    updateFrequency();
 }
 
 void LFOProcessor::syncParams(const ParameterHandler& parameterHandler)
 {
+    freqParameter = parameterHandler.syncWithSliderParam(juce::String("LFO_") + juce::String(getId()) + juce::String("_freq"));
 }
 
 void LFOProcessor::processBlock(juce::AudioBuffer<float>& buffer)
 {
 }
 
-inline void LFOProcessor::setFrequency() {
+inline void LFOProcessor::updateFrequency() {
     phaseIncrement = juce::MathConstants<float>::twoPi * frequency / sampleRate;
 }

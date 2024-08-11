@@ -30,7 +30,12 @@ public:
 
 
 private:
-    void setFrequency();
+    juce::Array<float> freqModulationBuffer;
+    std::shared_ptr<SliderParameter> freqParameter;
+
+    void updateFrequency();
+
+    float maxFreq;
 
     float frequency;
     float phase;

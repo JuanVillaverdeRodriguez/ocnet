@@ -23,10 +23,10 @@ EnvelopeSubsection::EnvelopeSubsection(int id, GUI_EventHandler& eventHandler) :
     sustainParameterID = createParameterID("Envelope", getId(), "sustain");
     releaseParameterID = createParameterID("Envelope", getId(), "release");
 
-    attackKnob = std::make_unique<Knob1>(attackParameterID, eventHandler);
-    decayKnob = std::make_unique<Knob1>(decayParameterID, eventHandler);
-    sustainKnob = std::make_unique<Knob1>(sustainParameterID, eventHandler);
-    releaseKnob = std::make_unique<Knob1>(releaseParameterID, eventHandler);
+    attackKnob = std::make_unique<Knob1>(attackParameterID, eventHandler, "Attack");
+    decayKnob = std::make_unique<Knob1>(decayParameterID, eventHandler, "Decay");
+    sustainKnob = std::make_unique<Knob1>(sustainParameterID, eventHandler, "Sustain");
+    releaseKnob = std::make_unique<Knob1>(releaseParameterID, eventHandler, "Release");
 
     this->addAndMakeVisible(*attackKnob);
     this->addAndMakeVisible(*decayKnob);
@@ -44,25 +44,30 @@ void EnvelopeSubsection::resized()
     sectionResized();
 
     int posX = 0;
-    attackKnob->setBounds(posX, area.getHeight() - defaultKnobSize, defaultKnobSize, defaultKnobSize);
+    attackKnob->setBounds(posX, 20, defaultKnobSize, defaultKnobSize);
     posX += defaultKnobSize;
 
-    decayKnob->setBounds(posX, area.getHeight() - defaultKnobSize, defaultKnobSize, defaultKnobSize);
+    decayKnob->setBounds(posX, 20, defaultKnobSize, defaultKnobSize);
     posX += defaultKnobSize;
 
-    sustainKnob->setBounds(posX, area.getHeight() - defaultKnobSize, defaultKnobSize, defaultKnobSize);
+    sustainKnob->setBounds(posX, 20, defaultKnobSize, defaultKnobSize);
     posX += defaultKnobSize;
 
-    releaseKnob->setBounds(posX, area.getHeight() - defaultKnobSize, defaultKnobSize, defaultKnobSize);
+    releaseKnob->setBounds(posX, 20, defaultKnobSize, defaultKnobSize);
     posX += defaultKnobSize;
 
-    dragZone.setBounds(posX, area.getHeight() - defaultKnobSize, defaultKnobSize, defaultKnobSize);
+    dragZone.setBounds(posX, 20, defaultKnobSize, defaultKnobSize);
     posX += defaultKnobSize;
 
     attackKnob->setRange(0.0f, 1.0f, 0.01f);
     decayKnob->setRange(0.0f, 1.0f, 0.01f);
     sustainKnob->setRange(0.0f, 1.0f, 0.01f);
     releaseKnob->setRange(0.0f, 1.0f, 0.01f);
+
+    attackKnob->showLabel(*this, *attackKnob);
+    decayKnob->showLabel(*this, *decayKnob);
+    sustainKnob->showLabel(*this, *sustainKnob);
+    releaseKnob->showLabel(*this, *releaseKnob);
 
     int lastX = 0;
     for (auto& modulationBubble : modulationBubblesVector) {

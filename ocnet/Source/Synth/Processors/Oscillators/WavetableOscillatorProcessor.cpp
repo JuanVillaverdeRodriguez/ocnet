@@ -421,10 +421,13 @@ void WavetableOscillatorProcessor::processBlock(juce::AudioBuffer<float>& output
 {
     int numSamples = outputBuffer.getNumSamples();
 
-    auto globalPanAngle = (panning + panningModulationBuffer[0]) * juce::MathConstants<float>::halfPi;
-    auto globalPanningLeft = std::cos(globalPanAngle);
-    auto globalPanningRight = std::sin(globalPanAngle);
+    const auto globalPanAngle = (panning + panningModulationBuffer[0]) * juce::MathConstants<float>::halfPi;
+    const auto globalPanningLeft = std::cos(globalPanAngle);
+    const auto globalPanningRight = std::sin(globalPanAngle);
 
+    const float newGainValue = oscGain + oscGainModulationBuffer[0];
+    newGainValue < 0.0f ? gain.setGainLinear(0.0f) : gain.setGainLinear(newGainValue);
+    
     auto* leftChannelBuffer = outputBuffer.getWritePointer(0);
     auto* rightChannelBuffer = outputBuffer.getWritePointer(1);
 
@@ -433,11 +436,6 @@ void WavetableOscillatorProcessor::processBlock(juce::AudioBuffer<float>& output
         float* newCurrentIndex = unisonVoices == 1 ? currentIndex : unisonVoiceCurrentIndexArray[unisonVoice];
 
         for (int sample = 0; sample < numSamples; ++sample) {
-            float newGainValue = oscGain + oscGainModulationBuffer[sample];
-            if (newGainValue < 0.0f)
-                newGainValue = 0.0f;
-            gain.setGainLinear(newGainValue);
-            
             float nextSample = getNextSample(sample, newVoiceDelta, newCurrentIndex) * gain.getGainLinear();
                 
             leftChannelBuffer[sample] += nextSample * unisonSpreadArrayL[unisonVoice] * globalPanningLeft;

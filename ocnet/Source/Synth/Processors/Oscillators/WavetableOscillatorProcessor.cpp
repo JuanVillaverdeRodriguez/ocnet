@@ -49,14 +49,23 @@ currentFrequency2NotesDown(0.0f), currentFrequency2NotesUp(0.0f)
     unisonDetuneArray.set(6, 1.5);
     unisonDetuneArray.set(7, -0.25);
 
-    unisonSpreadArray.set(0, 0);
-    unisonSpreadArray.set(1, 1);
-    unisonSpreadArray.set(2, 0.5);
-    unisonSpreadArray.set(3, 0.60);
-    unisonSpreadArray.set(4, 0.85);
-    unisonSpreadArray.set(5, 0.475);
-    unisonSpreadArray.set(6, 0.625);
-    unisonSpreadArray.set(7, 0.5375);
+    unisonSpreadArrayL.set(0, std::cos(0));
+    unisonSpreadArrayL.set(1, std::cos(1));
+    unisonSpreadArrayL.set(2, std::cos(0.5));
+    unisonSpreadArrayL.set(3, std::cos(0.60));
+    unisonSpreadArrayL.set(4, std::cos(0.85));
+    unisonSpreadArrayL.set(5, std::cos(0.475));
+    unisonSpreadArrayL.set(6, std::cos(0.625));
+    unisonSpreadArrayL.set(7, std::cos(0.5375));
+
+    unisonSpreadArrayR.set(0, std::sin(0));
+    unisonSpreadArrayR.set(1, std::sin(1));
+    unisonSpreadArrayR.set(2, std::sin(0.5));
+    unisonSpreadArrayR.set(3, std::sin(0.60));
+    unisonSpreadArrayR.set(4, std::sin(0.85));
+    unisonSpreadArrayR.set(5, std::sin(0.475));
+    unisonSpreadArrayR.set(6, std::sin(0.625));
+    unisonSpreadArrayR.set(7, std::sin(0.5375));
 
     for (int i = 0; i < 8; ++i)
     {
@@ -414,11 +423,7 @@ void WavetableOscillatorProcessor::processBlock(juce::AudioBuffer<float>& output
 
     for (int unisonVoice = 0; unisonVoice < 8; unisonVoice++) {
         float newVoiceDelta = unisonVoices == 1 ? tableDelta : getUnisonDeltaFromFrequency(freqRelativeTo(currentFrequency, unisonDetuneArray[unisonVoice] * unisonDetune), sampleRate);
-        auto unisonPanAngle = (unisonSpreadArray[unisonVoice]) * juce::MathConstants<float>::halfPi;
         float* newCurrentIndex = unisonVoices == 1 ? currentIndex : unisonVoiceCurrentIndexArray[unisonVoice];
-
-        auto unisonPanningLeft = std::cos(unisonPanAngle);
-        auto unisonPanningRight = std::sin(unisonPanAngle);
 
         for (int sample = 0; sample < numSamples; ++sample) {
             float newGainValue = oscGain + oscGainModulationBuffer[sample];
@@ -428,8 +433,8 @@ void WavetableOscillatorProcessor::processBlock(juce::AudioBuffer<float>& output
 
             float nextSample = getNextSample(sample, newVoiceDelta, newCurrentIndex) * gain.getGainLinear();
                 
-            leftChannelBuffer[sample] += nextSample * unisonPanningLeft * globalPanningLeft;
-            rightChannelBuffer[sample] += nextSample * unisonPanningRight * globalPanningRight;
+            leftChannelBuffer[sample] += nextSample * unisonSpreadArrayL[unisonVoice] * globalPanningLeft;
+            rightChannelBuffer[sample] += nextSample * unisonSpreadArrayR[unisonVoice] * globalPanningRight;
         }
     }
 

@@ -15,6 +15,7 @@
 #include "../../Oscillator/WavetableTypes.h"
 #include "../../../ParameterHandler/SliderParameter.h"
 #include <random>
+#include <immintrin.h> // Header para operaciones SSE
 
 #define M_PI 3.14159265358979323846
 
@@ -45,7 +46,8 @@ private:
     float unisonSpread;
 
     juce::Array<float> unisonDetuneArray; // Guarda el incremento en vez de la frecuenia
-    juce::Array<float> unisonSpreadArray;
+    juce::Array<float> unisonSpreadArrayL;
+    juce::Array<float> unisonSpreadArrayR;
     juce::Array<float*> unisonVoiceCurrentIndexArray;
 
     float maxUnisonDetuning;
@@ -100,8 +102,6 @@ private:
     // Obtiene la nota relativa a relativeFreq
     // *Notes => Numero de notas de diferencia
     float freqRelativeTo(float relativeFreq, float notes);
-
-    __m128 getNextSampleSSE(__m128 newVoiceDelta, float* newCurrentIndex);
 
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(WavetableOscillatorProcessor)

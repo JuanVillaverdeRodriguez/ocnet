@@ -35,6 +35,7 @@ float EnvelopeProcessor::getNextSample(int sample)
     float currentValue = adsr.getNextSample();
     //DBG("CURRENT ENVELOPE VALUE: " + juce::String(currentValue));
     addToModulationBuffer(currentValue, sample); // Asignar el valor de la modulacion
+
     return currentValue;
 }
 
@@ -84,22 +85,16 @@ bool EnvelopeProcessor::isActive()
 void EnvelopeProcessor::processBlock(juce::AudioBuffer<float>& outputBuffer)
 {
     int numSamples = outputBuffer.getNumSamples();
-    int numChannels = outputBuffer.getNumChannels();
 
-    auto* firstChannelBuffer = outputBuffer.getWritePointer(0);
+    auto* leftChannelBuffer = outputBuffer.getWritePointer(0);
+    auto* rightChannelBuffer = outputBuffer.getWritePointer(1);
 
     for (int sample = 0; sample < numSamples; ++sample) {
-        firstChannelBuffer[sample] *= getNextSample(sample);
-    }
 
-    // Copiar el contenido del primer canal a los otros canales
-    for (int channel = 1; channel < numChannels; ++channel) {
-        auto* buffer = outputBuffer.getWritePointer(channel);
+        float nextSample = getNextSample(sample);
 
-        // Copiar los valores del primer canal a este canal
-        for (int sample = 0; sample < numSamples; ++sample) {
-            buffer[sample] = firstChannelBuffer[sample];
-        }
+        leftChannelBuffer[sample] *= nextSample;
+        rightChannelBuffer[sample] *= nextSample;
     }
 }
 

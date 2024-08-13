@@ -14,18 +14,21 @@
 #include "../Processor.h"
 #include "../../Oscillator/WavetableTypes.h"
 #include "../../../ParameterHandler/SliderParameter.h"
+#include <random>
 
 #define M_PI 3.14159265358979323846
 
 class WavetableOscillatorProcessor : public Processor {
 public:
     WavetableOscillatorProcessor(int id);
+    ~WavetableOscillatorProcessor();
 
     void startNote(int midiNoteNumber, float velocity, juce::SynthesiserSound* sound, int currentPitchWheelPosition) override;
     void stopNote(float velocity, bool allowTailOff) override;
     void updateParameterValues() override;
     void prepareToPlay(juce::dsp::ProcessSpec spec) override;
     float getNextSample(int sample) override;
+    float getNextSample(int sample, float tableDelta, float* newCurrentIndex);
     void syncParams(const ParameterHandler& parameterHandler) override;
 
     void setFrequency(float frequency, float sampleRate);
@@ -37,9 +40,20 @@ public:
     void processBlock(juce::AudioBuffer<float>& buffer) override;
 
 private:
+    float unisonVoices;
+    float unisonDetune;
+    float unisonSpread;
+
+    juce::Array<float> unisonDetuneArray; // Guarda el incremento en vez de la frecuenia
+    juce::Array<float> unisonSpreadArray;
+    juce::Array<float*> unisonVoiceCurrentIndexArray;
+
+    float maxUnisonDetuning;
+    float maxUnisonSpread;
+    float maxUnisonVoices;
+
     float currentFrequency;
 
-    juce::Array<float> oscGainModulationBuffer;
 
     std::shared_ptr<ComboBoxParameter> waveTypeParameter;
     int waveTypeIndexChoice;
@@ -49,13 +63,12 @@ private:
     WavetableStruct* wavetable;
 
     int tableSize;
-    float currentIndex = 0.0f, tableDelta = 0.0f;
+    float* currentIndex;
+    float tableDelta = 0.0f;
 
     int numWavetables;
 
     juce::dsp::Gain<float> gain;
-
-    float oscGain;
 
     std::vector<WavetableStruct>* tables;
     std::vector<WavetableStruct> sawWaveTables;
@@ -66,6 +79,30 @@ private:
     int cnt = 0;
 
     std::shared_ptr<SliderParameter> gainParameter;
+    std::shared_ptr<SliderParameter> panningParameter;
+
+    float oscGain;
+    juce::Array<float> oscGainModulationBuffer;
+
+    float panning;
+    juce::Array<float> panningModulationBuffer;
+
+    std::random_device rd;
+    std::mt19937 gen;
+    std::uniform_real_distribution<> distrib;
+
+    float currentFrequency2NotesDown;
+    float currentFrequency2NotesUp;
+
+
+    float getUnisonDeltaFromFrequency(float frequency, float sampleRate);
+
+    // Obtiene la nota relativa a relativeFreq
+    // *Notes => Numero de notas de diferencia
+    float freqRelativeTo(float relativeFreq, float notes);
+
+    __m128 getNextSampleSSE(__m128 newVoiceDelta, float* newCurrentIndex);
+
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(WavetableOscillatorProcessor)
 

@@ -28,11 +28,23 @@ EnvelopeSubsection::EnvelopeSubsection(int id, GUI_EventHandler& eventHandler) :
     sustainKnob = std::make_unique<Knob1>(sustainParameterID, eventHandler, "Sustain");
     releaseKnob = std::make_unique<Knob1>(releaseParameterID, eventHandler, "Release");
 
+    attackKnob->setRange(0.0f, 1.0f, 0.01f);
+    decayKnob->setRange(0.0f, 1.0f, 0.01f);
+    sustainKnob->setRange(0.0f, 1.0f, 0.01f);
+    releaseKnob->setRange(0.0f, 1.0f, 0.01f);
+
+    attackKnob->setValue(0.1f);
+    decayKnob->setValue(0.5f);
+    sustainKnob->setValue(1.0f);
+    releaseKnob->setValue(0.1f);
+
     this->addAndMakeVisible(*attackKnob);
     this->addAndMakeVisible(*decayKnob);
     this->addAndMakeVisible(*sustainKnob);
     this->addAndMakeVisible(*releaseKnob);
     this->addAndMakeVisible(dragZone);
+
+
 
     subsectionName.setText(juce::String("Envelope ") + juce::String(getId()));
 }
@@ -59,10 +71,7 @@ void EnvelopeSubsection::resized()
     dragZone.setBounds(posX, 20, defaultKnobSize, defaultKnobSize);
     posX += defaultKnobSize;
 
-    attackKnob->setRange(0.0f, 1.0f, 0.01f);
-    decayKnob->setRange(0.0f, 1.0f, 0.01f);
-    sustainKnob->setRange(0.0f, 1.0f, 0.01f);
-    releaseKnob->setRange(0.0f, 1.0f, 0.01f);
+
 
     attackKnob->showLabel(*this, *attackKnob);
     decayKnob->showLabel(*this, *decayKnob);
@@ -104,6 +113,8 @@ void EnvelopeSubsection::setParameterValue(const juce::String& parameterID, cons
             modulationBubble->setValue(propertyValue.getFloatValue());
         }
     }
+
+
 }
 
 void EnvelopeSubsection::attachParams(ParameterHandler& parameterHandler) {
@@ -114,14 +125,22 @@ void EnvelopeSubsection::attachParams(ParameterHandler& parameterHandler) {
 
     dragZone.setParentContainerAndComponent(*juce::DragAndDropContainer::findParentDragContainerFor(this), *this);
 
+
 }
 
 // Mover a audioProcessor
 void EnvelopeSubsection::addParametersToParameterHandler(ParameterHandler& parameterHandler)
 {
+
     parameterHandler.addSliderParameter(attackParameterID, std::make_shared<SliderParameter>("attack"));
     parameterHandler.addSliderParameter(decayParameterID, std::make_shared<SliderParameter>("decay"));
     parameterHandler.addSliderParameter(sustainParameterID, std::make_shared<SliderParameter>("sustain"));
     parameterHandler.addSliderParameter(releaseParameterID, std::make_shared<SliderParameter>("release"));
+
+    parameterHandler.getSliderParameter(attackParameterID)->get()->setValue(0.1f);
+    parameterHandler.getSliderParameter(decayParameterID)->get()->setValue(0.5f);
+    parameterHandler.getSliderParameter(sustainParameterID)->get()->setValue(1.0f);
+    parameterHandler.getSliderParameter(releaseParameterID)->get()->setValue(0.1f);
+
 }
 

@@ -31,7 +31,13 @@ private:
     juce::String driveParameterID;
 
     std::unique_ptr<Knob1> driveKnob;
+
     std::unique_ptr<OcnetSliderAttachment> driveParameterAttachment;
+
+    std::unique_ptr<Knob1> mixKnob;
+    std::unique_ptr<OcnetSliderAttachment> mixParameterAttachment;
+    juce::String mixParameterID;
+
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(DistortionSubsection)
 

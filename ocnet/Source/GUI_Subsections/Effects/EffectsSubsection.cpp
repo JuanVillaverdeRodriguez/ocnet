@@ -12,6 +12,7 @@
 
 EffectsSubsection::EffectsSubsection(GUI_EventHandler& eventHandler) : Subsection(eventHandler)
 {
+
 }
 
 

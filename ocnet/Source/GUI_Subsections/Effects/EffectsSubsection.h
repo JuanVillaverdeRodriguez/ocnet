@@ -12,6 +12,7 @@
 
 #include "../Subsection.h"
 #include "../../Knobs/Knob1.h"
+#include "../../ParameterHandler/OcnetSliderAttachment.h"
 
 class EffectsSubsection : public Subsection {
 public:
@@ -20,5 +21,6 @@ public:
 
     juce::String getType() override;
 
-private:
+protected:
+
 };

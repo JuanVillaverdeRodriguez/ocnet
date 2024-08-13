@@ -18,6 +18,10 @@ LFOSubsection::LFOSubsection(int id, GUI_EventHandler& eventHandler) : Modulator
 
     speedKnob = std::make_unique<Knob1>(speedParameterID, eventHandler, "Frequency");
 
+    speedKnob->setRange(0.0f, 1.0f, 0.01f);
+
+    speedKnob->setValue(0.5f);
+
     this->addAndMakeVisible(*speedKnob);
 }
 
@@ -63,7 +67,6 @@ void LFOSubsection::resized()
     dragZone.setBounds(posX, area.getHeight() - defaultKnobSize, defaultKnobSize, defaultKnobSize);
     posX += defaultKnobSize;
 
-    speedKnob->setRange(0.0f, 1.0f, 0.01f);
 
     speedKnob->showLabel(*this, *speedKnob);
 

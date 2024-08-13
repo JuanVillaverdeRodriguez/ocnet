@@ -27,6 +27,9 @@ WavetableOscillatorSubsection::WavetableOscillatorSubsection(int id, GUI_EventHa
     volumeKnob->setRange(0.0f, 1.0f, 0.01f); // Quizas mejor seria volumeKnob.setRange(0, 1, 0.01f)?;
     panningKnob->setRange(0.0f, 1.0f, 0.01f); // Quizas mejor seria volumeKnob.setRange(0, 1, 0.01f)?;
 
+    volumeKnob->setValue(0.75f);
+    panningKnob->setValue(0.5f);
+
     subsectionName.setText(juce::String("Oscillator ") + juce::String(getId()));
 
     // Configuración del ComboBox

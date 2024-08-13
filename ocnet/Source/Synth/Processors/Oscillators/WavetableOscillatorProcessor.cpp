@@ -437,7 +437,6 @@ void WavetableOscillatorProcessor::processBlock(juce::AudioBuffer<float>& output
             rightChannelBuffer[sample] += nextSample * unisonSpreadArrayR[unisonVoice] * globalPanningRight;
         }
     }
-
 }
 
 float WavetableOscillatorProcessor::getUnisonDeltaFromFrequency(float frequency, float sampleRate)

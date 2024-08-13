@@ -91,7 +91,7 @@ private:
 
     std::random_device rd;
     std::mt19937 gen;
-    std::uniform_real_distribution<> distrib;
+    std::uniform_real_distribution<> phaseRandomnes;
 
     float currentFrequency2NotesDown;
     float currentFrequency2NotesUp;

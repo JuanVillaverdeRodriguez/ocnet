@@ -11,7 +11,7 @@
 #include "WavetableOscillatorProcessor.h"
 #include "../Source/Utils/Utils.h"
 
-WavetableOscillatorProcessor::WavetableOscillatorProcessor(int id) : unisonVoices(8), unisonDetune(0.20f), unisonSpread(0.15), gen(rd()), distrib(-10, 10), maxUnisonDetuning(10), maxUnisonSpread(10), maxUnisonVoices(8),
+WavetableOscillatorProcessor::WavetableOscillatorProcessor(int id) : unisonVoices(8), unisonDetune(0.20f), unisonSpread(0.15), gen(rd()), maxUnisonDetuning(10), maxUnisonSpread(10), maxUnisonVoices(8),
 currentFrequency2NotesDown(0.0f), currentFrequency2NotesUp(0.0f)
 {
     setId(id);
@@ -27,6 +27,7 @@ currentFrequency2NotesDown(0.0f), currentFrequency2NotesUp(0.0f)
 
     wavetable = &(*tables)[9];
     tableSize = (*tables)[0].waveTable.getNumSamples() - 1;
+    phaseRandomnes = std::uniform_real_distribution<>(0, tableSize);
 
     //tables = createWaveTables(2048, juce::String("Square"));
     //tables = createWaveTables(2048, juce::String("Sine"));
@@ -69,7 +70,13 @@ currentFrequency2NotesDown(0.0f), currentFrequency2NotesUp(0.0f)
 
     for (int i = 0; i < 8; ++i)
     {
-        float* value = new float(0.0f);
+        float newPhase = 0.0f + phaseRandomnes(gen);
+        // Asegurarse de que newPhase no se pasa del tamaño de la wavetable
+        while (newPhase >= tableSize) {
+            newPhase = 0.0f + phaseRandomnes(gen);
+        }
+        float* value = new float(newPhase);
+
         unisonVoiceCurrentIndexArray.add(value);
     }
     //DBG("TAMANO: " + juce::String(numWavetables));
@@ -430,7 +437,7 @@ void WavetableOscillatorProcessor::processBlock(juce::AudioBuffer<float>& output
             if (newGainValue < 0.0f)
                 newGainValue = 0.0f;
             gain.setGainLinear(newGainValue);
-
+            
             float nextSample = getNextSample(sample, newVoiceDelta, newCurrentIndex) * gain.getGainLinear();
                 
             leftChannelBuffer[sample] += nextSample * unisonSpreadArrayL[unisonVoice] * globalPanningLeft;

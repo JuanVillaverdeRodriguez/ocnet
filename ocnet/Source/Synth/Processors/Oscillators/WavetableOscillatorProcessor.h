@@ -29,7 +29,10 @@ public:
     void updateParameterValues() override;
     void prepareToPlay(juce::dsp::ProcessSpec spec) override;
     float getNextSample(int sample) override;
-    float getNextSample(int sample, float tableDelta, float* newCurrentIndex);
+    float getNextSampleSSE(int sample, float tableDelta, float* newCurrentIndex);
+    float getNextSample(const float tableDelta, float* newCurrentIndex);
+
+
     void syncParams(const ParameterHandler& parameterHandler) override;
 
     void setFrequency(float frequency, float sampleRate);
@@ -45,17 +48,22 @@ private:
     float unisonDetune;
     float unisonSpread;
 
+    //juce::Array<std::vector<float>> unisonVoiceCurrentIndexArray; // Cambiado a std::vector<float>
+    //juce::Array<std::vector<float*>> unisonVoiceCurrentIndexArray;
+    juce::Array<float*> unisonVoiceCurrentIndexArray2;
+
+
     juce::Array<float> unisonDetuneArray; // Guarda el incremento en vez de la frecuenia
     juce::Array<float> unisonSpreadArrayL;
     juce::Array<float> unisonSpreadArrayR;
-    juce::Array<float*> unisonVoiceCurrentIndexArray;
+    juce::Array<__m128> unisonSpreadArrayL128;
+    juce::Array<__m128> unisonSpreadArrayR128;
 
     float maxUnisonDetuning;
     float maxUnisonSpread;
     float maxUnisonVoices;
 
     float currentFrequency;
-
 
     std::shared_ptr<ComboBoxParameter> waveTypeParameter;
     int waveTypeIndexChoice;
@@ -77,9 +85,6 @@ private:
     std::vector<WavetableStruct> squareWaveTables;
     std::vector<WavetableStruct> sineWaveTables;
 
-
-    int cnt = 0;
-
     std::shared_ptr<SliderParameter> gainParameter;
     std::shared_ptr<SliderParameter> panningParameter;
 
@@ -96,17 +101,8 @@ private:
     float currentFrequency2NotesDown;
     float currentFrequency2NotesUp;
 
-
     float getUnisonDeltaFromFrequency(float frequency, float sampleRate);
-
-    // Obtiene la nota relativa a relativeFreq
-    // *Notes => Numero de notas de diferencia
     float freqRelativeTo(float relativeFreq, float notes);
 
-
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(WavetableOscillatorProcessor)
-
-
-        
-
 };

@@ -19,7 +19,6 @@ public:
     void runTest() override;
 
 private:
-    WavetableOscillatorProcessor oscProcessor;
     
     void performanceTest();
 };

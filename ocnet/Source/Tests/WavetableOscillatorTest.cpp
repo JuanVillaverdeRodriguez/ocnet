@@ -10,7 +10,7 @@
 
 #include "WavetableOscillatorTest.h"
 
-WavetableOscillatorTest::WavetableOscillatorTest()  : UnitTest("WavetableOscillator"), oscProcessor(1)
+WavetableOscillatorTest::WavetableOscillatorTest() : UnitTest("WavetableOscillator")
 {
     //DBG("WAVETABLE TEST");
 }
@@ -24,6 +24,8 @@ void WavetableOscillatorTest::runTest()
 
 void WavetableOscillatorTest::performanceTest()
 {
+    WavetableOscillatorProcessor oscProcessor(1);
+
     beginTest("Performance Test");
 
     const int numIterations = 1000;

@@ -141,6 +141,11 @@ WavetableOscillatorProcessor::~WavetableOscillatorProcessor()
     {
         delete ptr;
     }
+
+    for (float* ptr : unisonVoiceCurrentIndexArray)
+    {
+        delete ptr;
+    }
 }
 
 void WavetableOscillatorProcessor::setFrequency(float frequency, float sampleRate)

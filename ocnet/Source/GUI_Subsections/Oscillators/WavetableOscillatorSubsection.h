@@ -27,6 +27,7 @@ public:
     void attachParams(ParameterHandler& parameterHandler) override;
     void setParameterValue(const juce::String& propertyName, const juce::String& propertyValue) override;
     void addParametersToParameterHandler(ParameterHandler& parameterHandler) override;
+    void updateFMCombo(juce::Array<int> ids);
 
 private:
     juce::String volumeParameterID;

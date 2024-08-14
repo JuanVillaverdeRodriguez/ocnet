@@ -63,6 +63,21 @@ std::vector<std::unique_ptr<Subsection>>* OscillatorsSection::getListOfSubsectio
     return &subsectionsVector;
 }
 
+void OscillatorsSection::updateOscillatorsFMCombo()
+{
+    juce::Array<int> ids;
+
+    for (auto& subsection : subsectionsVector) {
+        ids.add(subsection->getId());
+    }
+
+    for (auto& subsection : subsectionsVector) {
+        if (auto oscillatorSubsection = dynamic_cast<WavetableOscillatorSubsection*>(subsection.get())) {
+            oscillatorSubsection->updateFMCombo(ids);
+        }
+    }
+}
+
 void OscillatorsSection::buttonClicked(juce::Button* clickedButton)
 {
     if (clickedButton == &addOscillatorButton) {

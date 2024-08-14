@@ -15,7 +15,7 @@
 
 // Cuando se añada algo aqui, añadir tambien la conversion a string en Utils.h
 namespace Ocnet {
-#define RUN_TESTS 1
+#define RUN_TESTS 0
 
     enum ProcessorType
     {

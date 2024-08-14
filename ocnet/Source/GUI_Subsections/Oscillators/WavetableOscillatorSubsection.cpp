@@ -58,9 +58,7 @@ WavetableOscillatorSubsection::WavetableOscillatorSubsection(int id, GUI_EventHa
     waveTypeComboBox.setName(waveTypeParameterID);
 
     // Configuración del ComboBox
-    fmFromComboBox.addItem("1", 1);
-    fmFromComboBox.addItem("2", 2);
-    fmFromComboBox.addItem("3", 3);
+    fmFromComboBox.addItem("None", 1);
     fmFromComboBox.setSelectedId(1);
     fmFromComboBox.setName(fmFromParameterID);
 
@@ -131,7 +129,7 @@ void WavetableOscillatorSubsection::setParameterValue(const juce::String& parame
         fmAmountKnob->setValue(propertyValue.getFloatValue());
 
     else if (parameterID == fmFromComboBox.getName())
-        waveTypeComboBox.setSelectedItemIndex(propertyValue.getIntValue());
+        fmFromComboBox.setSelectedItemIndex(propertyValue.getIntValue());
 }
 
 void WavetableOscillatorSubsection::addParametersToParameterHandler(ParameterHandler& parameterHandler)
@@ -143,5 +141,24 @@ void WavetableOscillatorSubsection::addParametersToParameterHandler(ParameterHan
     parameterHandler.addSliderParameter(numVoicesParameterID, std::make_shared<SliderParameter>("unisonNumVoices"));
     parameterHandler.addSliderParameter(fmAmountParameterID, std::make_shared<SliderParameter>("fmAmount"));
     parameterHandler.addComboBoxParameter(fmFromParameterID, std::make_shared<ComboBoxParameter>("fmFrom", juce::StringArray{ "1", "2", "3" }, 0));
+
+}
+
+void WavetableOscillatorSubsection::updateFMCombo(juce::Array<int> ids)
+{
+    int selectedIndex = fmFromComboBox.getSelectedItemIndex();
+    fmFromComboBox.clear();
+    fmFromComboBox.addItem("None", 1);
+
+    int i = 2;
+    for (int id : ids) {
+        if (id != getId()) {
+
+            fmFromComboBox.addItem("FM FROM: " + juce::String(id), i);
+            i++;
+        }
+    }
+
+    fmFromComboBox.setSelectedItemIndex(selectedIndex);
 
 }

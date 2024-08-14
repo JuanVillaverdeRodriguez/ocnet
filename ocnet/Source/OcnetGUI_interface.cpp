@@ -40,10 +40,12 @@ OcnetGUI_interface::~OcnetGUI_interface()
 void OcnetGUI_interface::onAddOscillator(int processorType)
 {
     std::unique_ptr<Subsection>* subsection = gui_->getOscillatorsSection()->addOscillator(processorType, maxCurrentID, processor.parameterHandler);
+    gui_->getOscillatorsSection()->updateOscillatorsFMCombo();
     gui_->getOscillatorsSection()->addAndMakeVisible(**subsection);
     subsection->get()->addParametersToParameterHandler(processor.parameterHandler);
     subsection->get()->attachParams(processor.parameterHandler);
     processor.addOscillator(processorType, maxCurrentID);
+
     maxCurrentID++;
 }
 
@@ -113,6 +115,8 @@ void OcnetGUI_interface::onDeleteSubsection(Subsection& subsection)
     juce::String type = subsection.getType();
     juce::String subType = subsection.getSubType();
 
+
+
     juce::Array<juce::String> subsectionProperties = processor.parameterHandler.getParameterIDs(subType, juce::String(id));
 
     // Primero eliminar las modulaciones de cada parametro
@@ -125,6 +129,11 @@ void OcnetGUI_interface::onDeleteSubsection(Subsection& subsection)
     }
 
     gui_->getSection(subsection.getType())->deleteSubsection(id);
+
+    if (type == "Oscillator") {
+        gui_->getOscillatorsSection()->updateOscillatorsFMCombo();
+    }
+
     processor.deleteProcessor(id);
 
 
@@ -209,6 +218,7 @@ void OcnetGUI_interface::initialiseGUIFromTree(juce::ValueTree tree)
             juce::String id = subTree.getChild(j).getType().toString();
             int numProperties = subTree.getChild(j).getNumProperties();
             std::unique_ptr<Subsection>* subsection = gui_->getOscillatorsSection()->addOscillator(fromString(type), id.getIntValue(), processor.parameterHandler);
+            gui_->getOscillatorsSection()->updateOscillatorsFMCombo();
             gui_->getOscillatorsSection()->addAndMakeVisible(**subsection);
             subsection->get()->attachParams(processor.parameterHandler);
 

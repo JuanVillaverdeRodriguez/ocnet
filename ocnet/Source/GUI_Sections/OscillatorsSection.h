@@ -24,6 +24,8 @@ public:
 
     std::vector<std::unique_ptr<Subsection>>* getListOfSubsections() override;
 
+    // Actualiza los valores del comboBox de todos los osciladores
+    void updateOscillatorsFMCombo();
 
     void buttonClicked(juce::Button* clickedButton) override;
     void paint(juce::Graphics& g) override;

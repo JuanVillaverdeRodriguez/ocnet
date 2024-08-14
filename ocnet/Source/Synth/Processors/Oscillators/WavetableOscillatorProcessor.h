@@ -29,7 +29,6 @@ public:
     void updateParameterValues() override;
     void prepareToPlay(juce::dsp::ProcessSpec spec) override;
     float getNextSample(int sample) override;
-    float getNextSampleSSE(int sample, float tableDelta, float* newCurrentIndex);
     float getNextSample(const float tableDelta, float* newCurrentIndex);
 
     void oldWay(juce::AudioBuffer<float>& buffer);
@@ -44,7 +43,6 @@ public:
     std::vector<WavetableStruct> createWaveTables(int tableSize, const juce::String& waveType);
 
     void processBlock(juce::AudioBuffer<float>& buffer) override;
-    void processBlockWithoutSIMD(juce::AudioBuffer<float>& buffer);
 
 
 private:
@@ -54,14 +52,10 @@ private:
 
     //juce::Array<std::vector<float>> unisonVoiceCurrentIndexArray; // Cambiado a std::vector<float>
     juce::Array<float*> unisonVoiceCurrentIndexArray;
-    juce::Array<float*> unisonVoiceCurrentIndexArray2;
-
 
     juce::Array<float> unisonDetuneArray; // Guarda el incremento en vez de la frecuenia
     juce::Array<float> unisonSpreadArrayL;
     juce::Array<float> unisonSpreadArrayR;
-    juce::Array<__m128> unisonSpreadArrayL128;
-    juce::Array<__m128> unisonSpreadArrayR128;
 
     float maxUnisonDetuning;
     float maxUnisonSpread;

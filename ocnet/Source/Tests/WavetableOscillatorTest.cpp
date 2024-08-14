@@ -28,7 +28,7 @@ void WavetableOscillatorTest::performanceTest()
 
     beginTest("Performance Test");
 
-    const int numIterations = 1000;
+    const int numIterations = 10000;
     const int numChannels = 2;  // Estéreo
     const int numSamples = 512; // Tamaño del bloque
     const double sampleRate = 44100.0;
@@ -55,20 +55,6 @@ void WavetableOscillatorTest::performanceTest()
     auto endTime = juce::Time::getMillisecondCounterHiRes();
     auto duration = endTime - startTime;
 
-    DBG("(SIMD) Time taken for " << numIterations << " iterations: " << duration << " milliseconds");
-    expect(duration > 0, "Performance test should take some time to execute.");
-
-    startTime = juce::Time::getMillisecondCounterHiRes();
-
-    for (int i = 0; i < numIterations; ++i) {
-        audioBuffer.clear();
-
-        oscProcessor.processBlockWithoutSIMD(audioBuffer);
-    }
-
-    endTime = juce::Time::getMillisecondCounterHiRes();
-    duration = endTime - startTime;
-
-    DBG("(NORMAL) Time taken for " << numIterations << " iterations: " << duration << " milliseconds");
+    DBG("Time taken for " << numIterations << " iterations: " << duration << " milliseconds");
     expect(duration > 0, "Performance test should take some time to execute.");
 }

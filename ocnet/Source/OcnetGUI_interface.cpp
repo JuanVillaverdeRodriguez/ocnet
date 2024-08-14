@@ -12,11 +12,9 @@
 
 using namespace Ocnet;
 
+
 OcnetGUI_interface::OcnetGUI_interface(OcnetAudioProcessor *processor) : processor(*processor), keyboardState()
 {
-    DBG("OcnetGUI_interface::OcnetGUI_interface(OcnetAudioProcessor *processor)");
-
-
     maxCurrentID = 1;
     keyboardState.addListener(this);
 
@@ -28,6 +26,8 @@ OcnetGUI_interface::OcnetGUI_interface(OcnetAudioProcessor *processor) : process
         maxCurrentID = 0;
         onAddModulator(Envelope);
     }
+
+
 
 
 }
@@ -159,7 +159,7 @@ void OcnetGUI_interface::initialiseGUIFromTree(juce::ValueTree tree)
     juce::ValueTree oscillatorsTree = tree.getChildWithName("Oscillators");
     juce::ValueTree effectsTree = tree.getChildWithName("Effects");
 
-    processor.parameterHandler.printValueTree(tree, 1);
+    //processor.parameterHandler.printValueTree(tree, 1);
 
     int i = 0;
     while (modulatorsTree.getChild(i).isValid()) {
@@ -256,6 +256,11 @@ void OcnetGUI_interface::initialiseGUIFromTree(juce::ValueTree tree)
 
 void OcnetGUI_interface::editorIsShowing()
 {
+#if RUN_TESTS
+    juce::UnitTestRunner runner;
+    runner.runAllTests();
+#endif
+
     gui_->editorIsShowing();
     initialiseGUIFromTree(processor.parameterHandler.getRootTree());
 }

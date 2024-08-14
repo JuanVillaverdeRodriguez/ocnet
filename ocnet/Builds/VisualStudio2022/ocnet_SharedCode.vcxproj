@@ -139,6 +139,7 @@
     </Bscmake>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\Source\Tests\WavetableOscillatorTest.cpp"/>
     <ClCompile Include="..\..\Source\GUI_Others\ModulationBubble.cpp"/>
     <ClCompile Include="..\..\Source\GUI_EventHandler.cpp"/>
     <ClCompile Include="..\..\Source\Utils\OcnetTypes.cpp"/>
@@ -2896,6 +2897,7 @@
     <ClCompile Include="..\..\JuceLibraryCode\include_juce_osc.cpp"/>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\Source\Tests\WavetableOscillatorTest.h"/>
     <ClInclude Include="..\..\Source\GUI_Others\ModulationBubble.h"/>
     <ClInclude Include="..\..\Source\GUI_EventHandler.h"/>
     <ClInclude Include="..\..\Source\Utils\OcnetTypes.h"/>

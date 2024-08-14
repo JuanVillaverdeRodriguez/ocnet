@@ -2,6 +2,9 @@
 
 <Project ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
+    <Filter Include="ocnet\Source\Tests">
+      <UniqueIdentifier>{1842D821-9FBA-73EE-4A20-5F7F88B6CD2D}</UniqueIdentifier>
+    </Filter>
     <Filter Include="ocnet\Source\Images">
       <UniqueIdentifier>{513C8AB7-DBD9-A17A-6D72-C6F30BEE3DCD}</UniqueIdentifier>
     </Filter>
@@ -754,6 +757,9 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\Source\Tests\WavetableOscillatorTest.cpp">
+      <Filter>ocnet\Source\Tests</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\Source\GUI_Others\ModulationBubble.cpp">
       <Filter>ocnet\Source\GUI_Others</Filter>
     </ClCompile>
@@ -3780,6 +3786,9 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\Source\Tests\WavetableOscillatorTest.h">
+      <Filter>ocnet\Source\Tests</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\Source\GUI_Others\ModulationBubble.h">
       <Filter>ocnet\Source\GUI_Others</Filter>
     </ClInclude>

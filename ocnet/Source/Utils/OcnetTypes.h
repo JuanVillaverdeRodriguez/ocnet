@@ -12,8 +12,11 @@
 
 #include <juce_core/juce_core.h>
 
+
 // Cuando se añada algo aqui, añadir tambien la conversion a string en Utils.h
 namespace Ocnet {
+#define RUN_TESTS 1
+
     enum ProcessorType
     {
         Filter,

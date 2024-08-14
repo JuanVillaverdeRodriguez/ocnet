@@ -79,8 +79,6 @@ void SynthVoice::pitchWheelMoved(int newPitchWheelValue) {
 }
 
 void SynthVoice::prepareToPlay(double sampleRate, int samplesPerBlock, int outputChannels) {
-    DBG("PREPARE TO PLAY");
-
     spec.maximumBlockSize = samplesPerBlock;
 
     spec.numChannels = outputChannels;

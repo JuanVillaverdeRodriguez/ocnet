@@ -14,7 +14,9 @@
 #include "Synth/SynthSound.h"
 #include "Synth/OcnetSynthesiser.h"
 #include "ParameterHandler/ParameterHandler.h"
+#include "Tests/WavetableOscillatorTest.h"
 
+static WavetableOscillatorTest wavetableOscillatorTest;
 
 class OcnetAudioProcessor  : public juce::AudioProcessor, public OcnetSynthesiser
 {

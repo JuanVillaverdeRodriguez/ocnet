@@ -16,7 +16,6 @@
 #include "../../../ParameterHandler/SliderParameter.h"
 #include <random>
 #include <immintrin.h> // Header para operaciones SSE
-#include <chrono>
 
 #define M_PI 3.14159265358979323846
 
@@ -33,6 +32,8 @@ public:
     float getNextSampleSSE(int sample, float tableDelta, float* newCurrentIndex);
     float getNextSample(const float tableDelta, float* newCurrentIndex);
 
+    void oldWay(juce::AudioBuffer<float>& buffer);
+    void newWay(juce::AudioBuffer<float>& buffer);
 
     void syncParams(const ParameterHandler& parameterHandler) override;
 
@@ -43,6 +44,8 @@ public:
     std::vector<WavetableStruct> createWaveTables(int tableSize, const juce::String& waveType);
 
     void processBlock(juce::AudioBuffer<float>& buffer) override;
+    void processBlockWithoutSIMD(juce::AudioBuffer<float>& buffer);
+
 
 private:
     float unisonVoices;
@@ -50,7 +53,7 @@ private:
     float unisonSpread;
 
     //juce::Array<std::vector<float>> unisonVoiceCurrentIndexArray; // Cambiado a std::vector<float>
-    //juce::Array<std::vector<float*>> unisonVoiceCurrentIndexArray;
+    juce::Array<float*> unisonVoiceCurrentIndexArray;
     juce::Array<float*> unisonVoiceCurrentIndexArray2;
 
 

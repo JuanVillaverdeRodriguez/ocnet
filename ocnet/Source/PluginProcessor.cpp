@@ -11,6 +11,7 @@
 #include <windows.h>
 
 //==============================================================================
+
 OcnetAudioProcessor::OcnetAudioProcessor()
 #ifndef JucePlugin_PreferredChannelConfigurations
      : AudioProcessor (BusesProperties()
@@ -23,8 +24,6 @@ OcnetAudioProcessor::OcnetAudioProcessor()
                        )
 #endif
 {
-    DBG("OcnetAudioProcessor::OcnetAudioProcessor()");
-    
 
     addSound(new SynthSound());
     for (int i = 0; i < numVoices; ++i)
@@ -205,7 +204,7 @@ juce::AudioProcessorValueTreeState::ParameterLayout OcnetAudioProcessor::createP
     int maxNumberOfParams = 64;
 
     //ADSR
-    DBG("MAX MODULATORS: " + juce::String(maxNumberOfParams));
+    //DBG("MAX MODULATORS: " + juce::String(maxNumberOfParams));
 
     for (int i = 0; i < maxNumberOfParams; i++) {
         layout.add(std::make_unique<juce::AudioParameterFloat>("param_" + juce::String(i), "Attack", juce::NormalisableRange<float>(0.f, 1.f, 0.01f, 1.f), 1.0f));

@@ -77,12 +77,8 @@ void OcnetGUI::visualizeEffectsSection()
 
 void OcnetGUI::resized()
 {
-    DBG("OcnetGUI::resized()");
 
     auto area = getLocalBounds();
-
-    DBG("TotalWidth: " + juce::String(area.getWidth()));
-    DBG("TotalHeight: " + juce::String(area.getHeight()));
 
     auto headerSectionBounds = area.withTrimmedRight(area.getWidth() / 2.2).withTrimmedBottom(area.getHeight() - 50);
 

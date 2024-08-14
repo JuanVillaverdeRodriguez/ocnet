@@ -12,11 +12,12 @@
 #include "../Source/Utils/Utils.h"
 
 WavetableOscillatorProcessor::WavetableOscillatorProcessor(int id)
-    : unisonVoices(1), unisonDetune(0.20f), unisonSpread(0.15f), gen(rd()),
+    : unisonVoices(8), unisonDetune(0.20f), unisonSpread(0.15f), gen(rd()),
     maxUnisonDetuning(10), maxUnisonSpread(10), maxUnisonVoices(8),
     currentFrequency2NotesDown(0.0f), currentFrequency2NotesUp(0.0f)
 {
     setId(id);
+
     currentFrequency = 0.0f;
 
     waveTypeIndexChoice = 0;
@@ -50,6 +51,18 @@ WavetableOscillatorProcessor::WavetableOscillatorProcessor(int id)
         unisonVoiceCurrentIndexArray.add(std::move(indexBlock));  // Añadir el vector al juce::Array
     }*/
     
+    for (int i = 0; i < 8; ++i)
+    {
+        float newPhase = 0.0f + phaseRandomnes(gen);
+        // Asegurarse de que newPhase no se pasa del tamaño de la wavetable
+        while (newPhase >= tableSize) {
+            newPhase = 0.0f + phaseRandomnes(gen);
+        }
+        float* value = new float(newPhase);
+
+        unisonVoiceCurrentIndexArray.add(value);
+    }
+
     for (int i = 0; i < 8; ++i)
     {
         float newPhase = 0.0f + phaseRandomnes(gen);
@@ -486,8 +499,6 @@ std::vector<WavetableStruct> WavetableOscillatorProcessor::createWaveTables(int 
 
 void WavetableOscillatorProcessor::processBlock(juce::AudioBuffer<float>& outputBuffer)
 {
-    std::chrono::steady_clock::time_point begin = std::chrono::steady_clock::now();
-
     int numSamples = outputBuffer.getNumSamples();
     auto* leftChannelBuffer = outputBuffer.getWritePointer(0);
     auto* rightChannelBuffer = outputBuffer.getWritePointer(1);
@@ -496,11 +507,6 @@ void WavetableOscillatorProcessor::processBlock(juce::AudioBuffer<float>& output
     __m128 globalPanningLeft = _mm_cos_ps(globalPanAngle);
     __m128 globalPanningRight = _mm_sin_ps(globalPanAngle);
     __m128 gainValue = _mm_set1_ps(oscGain + oscGainModulationBuffer[0]);
-
-
-    //DBG("Before: " + juce::String(*unisonVoiceCurrentIndexArray[0][0]));  // Verificación antes
-
-
 
     for (int unisonVoice = 0; unisonVoice < unisonVoices; unisonVoice++) {
         const float newVoiceDelta = unisonVoices == 1 ? tableDelta : getUnisonDeltaFromFrequency(freqRelativeTo(currentFrequency, unisonDetuneArray[unisonVoice] * unisonDetune), sampleRate);
@@ -548,13 +554,33 @@ void WavetableOscillatorProcessor::processBlock(juce::AudioBuffer<float>& output
 
         }
     }
-    std::chrono::steady_clock::time_point end = std::chrono::steady_clock::now();
+}
 
-    //DBG("After: " + juce::String(*unisonVoiceCurrentIndexArray[0][0]));  // Verificación antes
-    auto durationInMicroseconds = std::chrono::duration<double, std::micro>(end - begin).count();
+void WavetableOscillatorProcessor::processBlockWithoutSIMD(juce::AudioBuffer<float>& outputBuffer)
+{
+    int numSamples = outputBuffer.getNumSamples();
 
-    DBG("LE LLEVO: " + juce::String(durationInMicroseconds, 5) + "Microsegundos");
+    const auto globalPanAngle = (panning + panningModulationBuffer[0]) * juce::MathConstants<float>::halfPi;
+    const auto globalPanningLeft = std::cos(globalPanAngle);
+    const auto globalPanningRight = std::sin(globalPanAngle);
 
+    const float newGainValue = oscGain + oscGainModulationBuffer[0];
+    newGainValue < 0.0f ? gain.setGainLinear(0.0f) : gain.setGainLinear(newGainValue);
+
+    auto* leftChannelBuffer = outputBuffer.getWritePointer(0);
+    auto* rightChannelBuffer = outputBuffer.getWritePointer(1);
+
+    for (int unisonVoice = 0; unisonVoice < unisonVoices; unisonVoice++) {
+        float newVoiceDelta = unisonVoices == 1 ? tableDelta : getUnisonDeltaFromFrequency(freqRelativeTo(currentFrequency, unisonDetuneArray[unisonVoice] * unisonDetune), sampleRate);
+        float* newCurrentIndex = unisonVoices == 1 ? currentIndex : unisonVoiceCurrentIndexArray[unisonVoice];
+
+        for (int sample = 0; sample < numSamples; ++sample) {
+            float nextSample = getNextSample(newVoiceDelta, newCurrentIndex) * gain.getGainLinear();
+
+            leftChannelBuffer[sample] += nextSample * unisonSpreadArrayL[unisonVoice] * globalPanningLeft;
+            rightChannelBuffer[sample] += nextSample * unisonSpreadArrayR[unisonVoice] * globalPanningRight;
+        }
+    }
 }
 
 float WavetableOscillatorProcessor::getNextSample(const float newTableDelta, float* newCurrentIndex)
@@ -574,6 +600,14 @@ float WavetableOscillatorProcessor::getNextSample(const float newTableDelta, flo
         *newCurrentIndex -= (float)tableSize;
 
     return currentSample;
+}
+
+void WavetableOscillatorProcessor::oldWay(juce::AudioBuffer<float>& buffer)
+{
+}
+
+void WavetableOscillatorProcessor::newWay(juce::AudioBuffer<float>& buffer)
+{
 }
 
 float WavetableOscillatorProcessor::getUnisonDeltaFromFrequency(float frequency, float sampleRate)

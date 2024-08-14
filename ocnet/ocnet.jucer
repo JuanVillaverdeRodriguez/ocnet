@@ -6,6 +6,12 @@
               pluginVSTCategory="kPlugCategSynth" pluginCharacteristicsValue="pluginIsSynth,pluginWantsMidiIn">
   <MAINGROUP id="Fay8LI" name="ocnet">
     <GROUP id="{B897E036-BD65-2195-C049-E6C429F0FF25}" name="Source">
+      <GROUP id="{F591502B-D252-AF77-BD88-02035A3602DE}" name="Tests">
+        <FILE id="GBB83Z" name="WavetableOscillatorTest.cpp" compile="1" resource="0"
+              file="Source/Tests/WavetableOscillatorTest.cpp"/>
+        <FILE id="m7XIt0" name="WavetableOscillatorTest.h" compile="0" resource="0"
+              file="Source/Tests/WavetableOscillatorTest.h"/>
+      </GROUP>
       <GROUP id="{E32E9B02-60DC-B84A-A01C-CA0659659B6E}" name="Images">
         <FILE id="pX79Pj" name="Arrows.png" compile="0" resource="1" file="Source/Images/Arrows.png"
               xcodeResource="0"/>

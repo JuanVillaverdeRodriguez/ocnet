@@ -486,6 +486,8 @@ std::vector<WavetableStruct> WavetableOscillatorProcessor::createWaveTables(int 
 
 void WavetableOscillatorProcessor::processBlock(juce::AudioBuffer<float>& outputBuffer)
 {
+    std::chrono::steady_clock::time_point begin = std::chrono::steady_clock::now();
+
     int numSamples = outputBuffer.getNumSamples();
     auto* leftChannelBuffer = outputBuffer.getWritePointer(0);
     auto* rightChannelBuffer = outputBuffer.getWritePointer(1);
@@ -498,12 +500,13 @@ void WavetableOscillatorProcessor::processBlock(juce::AudioBuffer<float>& output
 
     //DBG("Before: " + juce::String(*unisonVoiceCurrentIndexArray[0][0]));  // Verificación antes
 
+
+
     for (int unisonVoice = 0; unisonVoice < unisonVoices; unisonVoice++) {
         const float newVoiceDelta = unisonVoices == 1 ? tableDelta : getUnisonDeltaFromFrequency(freqRelativeTo(currentFrequency, unisonDetuneArray[unisonVoice] * unisonDetune), sampleRate);
 
         // Almacenar el puntero en una variable local antes del bucle
         //std::vector<float>& currentIndexVector = unisonVoiceCurrentIndexArray[unisonVoice];
-
         //float* newCurrentIndex0 = unisonVoiceCurrentIndexArray[unisonVoice][0];
         //float* newCurrentIndex1 = unisonVoiceCurrentIndexArray[unisonVoice][1];
         //float* newCurrentIndex2 = unisonVoiceCurrentIndexArray[unisonVoice][2];
@@ -545,8 +548,12 @@ void WavetableOscillatorProcessor::processBlock(juce::AudioBuffer<float>& output
 
         }
     }
+    std::chrono::steady_clock::time_point end = std::chrono::steady_clock::now();
 
     //DBG("After: " + juce::String(*unisonVoiceCurrentIndexArray[0][0]));  // Verificación antes
+    auto durationInMicroseconds = std::chrono::duration<double, std::micro>(end - begin).count();
+
+    DBG("LE LLEVO: " + juce::String(durationInMicroseconds, 5) + "Microsegundos");
 
 }
 

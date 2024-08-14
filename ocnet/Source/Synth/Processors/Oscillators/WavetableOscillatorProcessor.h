@@ -16,6 +16,7 @@
 #include "../../../ParameterHandler/SliderParameter.h"
 #include <random>
 #include <immintrin.h> // Header para operaciones SSE
+#include <chrono>
 
 #define M_PI 3.14159265358979323846
 

@@ -110,6 +110,11 @@ void WavetableOscillatorProcessor::syncParams(const ParameterHandler& parameterH
     gainParameter = parameterHandler.syncWithSliderParam(juce::String("WavetableOscillator_") + juce::String(getId()) + juce::String("_volume"));
     waveTypeParameter = parameterHandler.syncWithComboBoxParam(juce::String("WavetableOscillator_") + juce::String(getId()) + juce::String("_waveType"));
     panningParameter = parameterHandler.syncWithSliderParam(juce::String("WavetableOscillator_") + juce::String(getId()) + juce::String("_panning"));
+
+    unisonDetuneParameter = parameterHandler.syncWithSliderParam(juce::String("WavetableOscillator_") + juce::String(getId()) + juce::String("_unisonDetuneAmount"));
+    unisonNumVoicesParameter = parameterHandler.syncWithSliderParam(juce::String("WavetableOscillator_") + juce::String(getId()) + juce::String("_unisonNumVoices"));
+    fmAmountParameter = parameterHandler.syncWithSliderParam(juce::String("WavetableOscillator_") + juce::String(getId()) + juce::String("_fmAmount"));
+    fmFromParameter = parameterHandler.syncWithComboBoxParam(juce::String("WavetableOscillator_") + juce::String(getId()) + juce::String("_fmFrom"));
 }
 
 void WavetableOscillatorProcessor::startNote(int midiNoteNumber, float velocity, juce::SynthesiserSound* sound, int currentPitchWheelPosition)
@@ -133,6 +138,16 @@ void WavetableOscillatorProcessor::updateParameterValues()
     panning = panningParameter->getValue();
     panningModulationBuffer = panningParameter->getModulationBuffer(getVoiceNumberId());
 
+    unisonDetune = unisonDetuneParameter->getValue();
+    unisonDetuneModulationBuffer = unisonDetuneParameter->getModulationBuffer(getVoiceNumberId());
+
+    unisonVoices = unisonNumVoicesParameter->getValue();
+    unisonVoicesModulationBuffer = unisonNumVoicesParameter->getModulationBuffer(getVoiceNumberId());
+
+    fmAmount = fmAmountParameter->getValue();
+    fmAmountModulationBuffer = fmAmountParameter->getModulationBuffer(getVoiceNumberId());
+
+    fmFromIndexChoice = fmFromParameter->getCurrentIndex();
     waveTypeIndexChoice = waveTypeParameter->getCurrentIndex();
 
     if (waveTypeIndexChoice == 0)
@@ -431,10 +446,12 @@ void WavetableOscillatorProcessor::processBlock(juce::AudioBuffer<float>& output
     }
 }
 
+void WavetableOscillatorProcessor::processBlockTest(juce::AudioBuffer<float>& buffer)
+{
+}
+
 float WavetableOscillatorProcessor::getNextSample(const float newTableDelta, float* newCurrentIndex)
 {
-
-
     auto index0 = (unsigned int)*newCurrentIndex;
     auto index1 = index0 + 1;
 

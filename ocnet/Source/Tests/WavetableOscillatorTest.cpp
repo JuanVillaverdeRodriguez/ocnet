@@ -18,11 +18,11 @@ WavetableOscillatorTest::WavetableOscillatorTest() : UnitTest("WavetableOscillat
 void WavetableOscillatorTest::runTest()
 {
     // Performance test
-    performanceTest();
+    performanceTest(false);
 }
 
 
-void WavetableOscillatorTest::performanceTest()
+void WavetableOscillatorTest::performanceTest(bool compareWithNewwer)
 {
     WavetableOscillatorProcessor oscProcessor(1);
 
@@ -55,6 +55,22 @@ void WavetableOscillatorTest::performanceTest()
     auto endTime = juce::Time::getMillisecondCounterHiRes();
     auto duration = endTime - startTime;
 
-    DBG("Time taken for " << numIterations << " iterations: " << duration << " milliseconds");
+    DBG("(CURRENT) Time taken for " << numIterations << " iterations: " << duration << " milliseconds");
     expect(duration > 0, "Performance test should take some time to execute.");
+
+    if (compareWithNewwer) {
+        startTime = juce::Time::getMillisecondCounterHiRes();
+
+        for (int i = 0; i < numIterations; ++i) {
+            audioBuffer.clear();
+
+            oscProcessor.processBlockTest(audioBuffer);
+        }
+
+        endTime = juce::Time::getMillisecondCounterHiRes();
+        duration = endTime - startTime;
+
+        DBG("(NEW) Time taken for " << numIterations << " iterations: " << duration << " milliseconds");
+        expect(duration > 0, "Performance test should take some time to execute.");
+    }
 }

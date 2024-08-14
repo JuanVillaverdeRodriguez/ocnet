@@ -33,11 +33,28 @@ private:
     juce::String panningParameterID;
     juce::String waveTypeParameterID;
 
+    juce::String numVoicesParameterID;
+    juce::String detuneAmountParameterID;
+    juce::String fmAmountParameterID;
+    juce::String fmFromParameterID;
+    
     std::unique_ptr<Knob1> volumeKnob;
     std::unique_ptr<OcnetSliderAttachment> volumeParameterAttachment;
 
     std::unique_ptr<Knob1> panningKnob;
     std::unique_ptr<OcnetSliderAttachment> panningParameterAttachment;
+
+    std::unique_ptr<Knob1> numVoicesKnob;
+    std::unique_ptr<OcnetSliderAttachment> numVoicesParameterAttachment;
+
+    std::unique_ptr<Knob1> detuneAmountKnob;
+    std::unique_ptr<OcnetSliderAttachment> detuneAmountParameterAttachment;
+
+    std::unique_ptr<Knob1> fmAmountKnob;
+    std::unique_ptr<OcnetSliderAttachment> fmAmountParameterAttachment;
+
+    juce::ComboBox fmFromComboBox;
+    std::unique_ptr<OcnetComboBoxAttachment> fmFromParameterAttachment;
 
     juce::ComboBox waveTypeComboBox;
     std::unique_ptr<OcnetComboBoxAttachment> waveTypeParameterAttachment;

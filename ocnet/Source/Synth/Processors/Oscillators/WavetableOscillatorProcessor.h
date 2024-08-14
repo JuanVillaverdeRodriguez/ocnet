@@ -43,12 +43,22 @@ public:
     std::vector<WavetableStruct> createWaveTables(int tableSize, const juce::String& waveType);
 
     void processBlock(juce::AudioBuffer<float>& buffer) override;
+    void processBlockTest(juce::AudioBuffer<float>& buffer);
+
 
 
 private:
-    float unisonVoices;
+    int unisonVoices;
+    juce::Array<float> unisonVoicesModulationBuffer;
+
     float unisonDetune;
+    juce::Array<float> unisonDetuneModulationBuffer;
+
+    float fmAmount;
+    juce::Array<float> fmAmountModulationBuffer;
+
     float unisonSpread;
+
 
     //juce::Array<std::vector<float>> unisonVoiceCurrentIndexArray; // Cambiado a std::vector<float>
     juce::Array<float*> unisonVoiceCurrentIndexArray;
@@ -63,8 +73,11 @@ private:
 
     float currentFrequency;
 
-    std::shared_ptr<ComboBoxParameter> waveTypeParameter;
+
+
     int waveTypeIndexChoice;
+    int fmFromIndexChoice;
+
 
     bool isPrepared;
     float sampleRate = 0.0f;
@@ -85,6 +98,12 @@ private:
 
     std::shared_ptr<SliderParameter> gainParameter;
     std::shared_ptr<SliderParameter> panningParameter;
+    std::shared_ptr<SliderParameter> fmAmountParameter;
+    std::shared_ptr<SliderParameter> unisonNumVoicesParameter;
+    std::shared_ptr<SliderParameter> unisonDetuneParameter;
+
+    std::shared_ptr<ComboBoxParameter> waveTypeParameter;
+    std::shared_ptr<ComboBoxParameter> fmFromParameter;
 
     float oscGain;
     juce::Array<float> oscGainModulationBuffer;

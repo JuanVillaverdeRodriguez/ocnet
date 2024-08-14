@@ -7,6 +7,12 @@
   <MAINGROUP id="Fay8LI" name="ocnet">
     <GROUP id="{B897E036-BD65-2195-C049-E6C429F0FF25}" name="Source">
       <GROUP id="{F591502B-D252-AF77-BD88-02035A3602DE}" name="Tests">
+        <FILE id="Fjljia" name="GUITest.cpp" compile="1" resource="0" file="Source/Tests/GUITest.cpp"/>
+        <FILE id="TmZKnz" name="GUITest.h" compile="0" resource="0" file="Source/Tests/GUITest.h"/>
+        <FILE id="lRiiJs" name="ParameterHandlerTest.cpp" compile="1" resource="0"
+              file="Source/Tests/ParameterHandlerTest.cpp"/>
+        <FILE id="w4zp5K" name="ParameterHandlerTest.h" compile="0" resource="0"
+              file="Source/Tests/ParameterHandlerTest.h"/>
         <FILE id="GBB83Z" name="WavetableOscillatorTest.cpp" compile="1" resource="0"
               file="Source/Tests/WavetableOscillatorTest.cpp"/>
         <FILE id="m7XIt0" name="WavetableOscillatorTest.h" compile="0" resource="0"

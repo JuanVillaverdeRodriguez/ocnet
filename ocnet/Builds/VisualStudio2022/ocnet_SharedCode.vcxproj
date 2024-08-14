@@ -139,6 +139,8 @@
     </Bscmake>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\Source\Tests\GUITest.cpp"/>
+    <ClCompile Include="..\..\Source\Tests\ParameterHandlerTest.cpp"/>
     <ClCompile Include="..\..\Source\Tests\WavetableOscillatorTest.cpp"/>
     <ClCompile Include="..\..\Source\GUI_Others\ModulationBubble.cpp"/>
     <ClCompile Include="..\..\Source\GUI_EventHandler.cpp"/>
@@ -2897,6 +2899,8 @@
     <ClCompile Include="..\..\JuceLibraryCode\include_juce_osc.cpp"/>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\Source\Tests\GUITest.h"/>
+    <ClInclude Include="..\..\Source\Tests\ParameterHandlerTest.h"/>
     <ClInclude Include="..\..\Source\Tests\WavetableOscillatorTest.h"/>
     <ClInclude Include="..\..\Source\GUI_Others\ModulationBubble.h"/>
     <ClInclude Include="..\..\Source\GUI_EventHandler.h"/>

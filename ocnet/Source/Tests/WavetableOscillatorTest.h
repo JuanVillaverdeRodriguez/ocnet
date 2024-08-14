@@ -20,6 +20,7 @@ public:
 
 private:
     
-    void performanceTest();
+    // Si el flag esta activado compara el processBlock actual con el processBlockTest
+    void performanceTest(bool compareWithPrevious);
 };
 

@@ -757,6 +757,12 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\Source\Tests\GUITest.cpp">
+      <Filter>ocnet\Source\Tests</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Tests\ParameterHandlerTest.cpp">
+      <Filter>ocnet\Source\Tests</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\Source\Tests\WavetableOscillatorTest.cpp">
       <Filter>ocnet\Source\Tests</Filter>
     </ClCompile>
@@ -3786,6 +3792,12 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\Source\Tests\GUITest.h">
+      <Filter>ocnet\Source\Tests</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Tests\ParameterHandlerTest.h">
+      <Filter>ocnet\Source\Tests</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\Source\Tests\WavetableOscillatorTest.h">
       <Filter>ocnet\Source\Tests</Filter>
     </ClInclude>

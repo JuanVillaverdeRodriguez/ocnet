@@ -31,6 +31,7 @@ public:
     float getNextSample(int sample) override;
     float getNextSample(const float tableDelta, float* newCurrentIndex);
 
+
     void oldWay(juce::AudioBuffer<float>& buffer);
     void newWay(juce::AudioBuffer<float>& buffer);
 
@@ -45,9 +46,13 @@ public:
     void processBlock(juce::AudioBuffer<float>& buffer) override;
     void processBlockTest(juce::AudioBuffer<float>& buffer);
 
-
+    void setFmFrom(std::unique_ptr<Processor>* modulator) override;
+    float getNextFMValue() override;
 
 private:
+    int lastTableChoice;
+    float currentFMIndex;
+
     int unisonVoices;
     juce::Array<float> unisonVoicesModulationBuffer;
 
@@ -57,9 +62,12 @@ private:
     float fmAmount;
     juce::Array<float> fmAmountModulationBuffer;
 
+    int transpose;
+    juce::Array<float> transposeModulationBuffer;
+
     float unisonSpread;
 
-
+    float fmMod;
     //juce::Array<std::vector<float>> unisonVoiceCurrentIndexArray; // Cambiado a std::vector<float>
     juce::Array<float*> unisonVoiceCurrentIndexArray;
 
@@ -73,7 +81,7 @@ private:
 
     float currentFrequency;
 
-
+    std::unique_ptr<Processor>* fmModulatorOsc;
 
     int waveTypeIndexChoice;
     int fmFromIndexChoice;
@@ -101,6 +109,8 @@ private:
     std::shared_ptr<SliderParameter> fmAmountParameter;
     std::shared_ptr<SliderParameter> unisonNumVoicesParameter;
     std::shared_ptr<SliderParameter> unisonDetuneParameter;
+    std::shared_ptr<SliderParameter> transposeParameter;
+
 
     std::shared_ptr<ComboBoxParameter> waveTypeParameter;
     std::shared_ptr<ComboBoxParameter> fmFromParameter;
@@ -120,6 +130,7 @@ private:
 
     float getUnisonDeltaFromFrequency(float frequency, float sampleRate);
     float freqRelativeTo(float relativeFreq, float notes);
+    void updateTablePointer();
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(WavetableOscillatorProcessor)
 };

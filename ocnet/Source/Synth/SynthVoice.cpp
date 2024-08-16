@@ -148,3 +148,9 @@ void SynthVoice::setBypassed(int id, bool bypassed)
     processorhHandler.setBypassed(id, bypassed);
 
 }
+
+void SynthVoice::setFmFrom(int carrierID, int modulatorID)
+{
+    processorhHandler.setFmFrom(carrierID, modulatorID);
+
+}

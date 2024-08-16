@@ -50,6 +50,8 @@ public:
     void addModulator(int processorType, int id);
 
     void setBypassed(int id, bool bypassed);
+    void setFmFrom(int idFrom, int idTo);
+
 private:
     juce::dsp::ProcessSpec spec;
 

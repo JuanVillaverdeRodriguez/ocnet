@@ -36,6 +36,9 @@ public:
 
     void onRemoveModulation(const juce::String& modulationBubble) override;
 
+    void onFmFromChanged(const juce::String& carrierID, const juce::String& modulatorID) override;
+
+
     void initialiseGUIFromTree(juce::ValueTree tree);
 
     void editorIsShowing();
@@ -45,6 +48,7 @@ public:
     void handleNoteOn(juce::MidiKeyboardState*, int midiChannel, int midiNoteNumber, float velocity);
 
     void handleNoteOff(juce::MidiKeyboardState*, int midiChannel, int midiNoteNumber, float velocity);
+
 
 
 private:

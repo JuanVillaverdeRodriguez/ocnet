@@ -17,7 +17,7 @@
 #include "../../ParameterHandler/OcnetComboBoxAttachment.h"
 #include "../../ParameterHandler/OcnetSliderAttachment.h"
 
-class WavetableOscillatorSubsection : public OscillatorsSubsection {
+class WavetableOscillatorSubsection : public OscillatorsSubsection, public juce::ComboBox::Listener {
 public:
     WavetableOscillatorSubsection(int id, GUI_EventHandler& eventHandler);
 
@@ -28,6 +28,7 @@ public:
     void setParameterValue(const juce::String& propertyName, const juce::String& propertyValue) override;
     void addParametersToParameterHandler(ParameterHandler& parameterHandler) override;
     void updateFMCombo(juce::Array<int> ids);
+    void comboBoxChanged(juce::ComboBox* comboBoxThatHasChanged) override;
 
 private:
     juce::String volumeParameterID;
@@ -38,6 +39,8 @@ private:
     juce::String detuneAmountParameterID;
     juce::String fmAmountParameterID;
     juce::String fmFromParameterID;
+    juce::String transposeParameterID;
+
     
     std::unique_ptr<Knob1> volumeKnob;
     std::unique_ptr<OcnetSliderAttachment> volumeParameterAttachment;
@@ -53,6 +56,9 @@ private:
 
     std::unique_ptr<Knob1> fmAmountKnob;
     std::unique_ptr<OcnetSliderAttachment> fmAmountParameterAttachment;
+
+    std::unique_ptr<Knob1> transposeKnob;
+    std::unique_ptr<OcnetSliderAttachment> transposeParameterAttachment;
 
     juce::ComboBox fmFromComboBox;
     std::unique_ptr<OcnetComboBoxAttachment> fmFromParameterAttachment;

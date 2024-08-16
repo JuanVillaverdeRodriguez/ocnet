@@ -93,3 +93,12 @@ void OcnetSynthesiser::removeModulation(const juce::String& modulationID)
         }
     }
 }
+
+void OcnetSynthesiser::setFmFrom(int carrierID, int modulatorID)
+{
+    for (int i = 0; i < getNumVoices(); i++) {
+        if (auto voice = dynamic_cast<SynthVoice*>(getVoice(i))) {
+            voice->setFmFrom(carrierID, modulatorID);
+        }
+    }
+}

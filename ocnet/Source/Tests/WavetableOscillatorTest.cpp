@@ -18,7 +18,7 @@ WavetableOscillatorTest::WavetableOscillatorTest() : UnitTest("WavetableOscillat
 void WavetableOscillatorTest::runTest()
 {
     // Performance test
-    performanceTest(false);
+    performanceTest(true);
 }
 
 
@@ -28,7 +28,7 @@ void WavetableOscillatorTest::performanceTest(bool compareWithNewwer)
 
     beginTest("Performance Test");
 
-    const int numIterations = 10000;
+    const int numIterations = 20000;
     const int numChannels = 2;  // Estéreo
     const int numSamples = 512; // Tamaño del bloque
     const double sampleRate = 44100.0;

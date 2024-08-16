@@ -32,7 +32,7 @@ public:
 
     void setBypassed(int id, bool bypassed);
     void removeModulation(const juce::String& modulationID);
-
+    void setFmFrom(int carrierID, int modulatorID);
 private:
     bool hasMainEnvelope = false;
 

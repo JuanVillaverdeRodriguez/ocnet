@@ -55,12 +55,13 @@ public:
 
 private:
     int id;
-    GUI_EventHandler& eventHandler;
 
     bool bypassed;
 
 
 protected:
+    GUI_EventHandler& eventHandler;
+
     juce::TextButton removeButton;
     juce::TextButton moveUpButton;
     juce::TextButton moveDownButton;

@@ -31,6 +31,8 @@ public:
     virtual void onBypassChanged(Subsection& subsection, bool toggled) {};
 
     virtual void onRemoveModulation(const juce::String& modulationBubble) {};
+
+    virtual void onFmFromChanged(const juce::String& carrierID, const juce::String& modulatorID) {};
 private:
 
 };

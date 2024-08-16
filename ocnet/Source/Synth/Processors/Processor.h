@@ -25,6 +25,10 @@ public:
     virtual void syncParams(const ParameterHandler& parameterHandler) = 0 {};
     virtual void processBlock(juce::AudioBuffer<float>& buffer) = 0 {};
 
+    virtual void setFmFrom(std::unique_ptr<Processor>* modulator) {};
+    virtual float getNextFMValue() { return 0.0f; };
+
+
     void setVoiceNumberId(int id) { voiceId = id; }
     int getVoiceNumberId() { return voiceId; }
 

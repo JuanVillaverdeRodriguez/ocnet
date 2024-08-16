@@ -355,6 +355,21 @@ void ProcessorHandler::removeModulation(const juce::String& modulationID)
     }
 }
 
+void ProcessorHandler::setFmFrom(int carrierID, int modulatorID)
+{
+    std::unique_ptr<Processor>* processorCarrier = Utils::findElementByID(oscillatorsProcessorsList, carrierID);
+
+    // Si es mayor a 0, buscar el oscilador y ponerlo. Si no, apuntar a null
+    if (modulatorID > 0) {
+        std::unique_ptr<Processor>* processorModulator = Utils::findElementByID(oscillatorsProcessorsList, modulatorID);
+        processorCarrier->get()->setFmFrom(processorModulator);
+    }
+    else {
+        processorCarrier->get()->setFmFrom(nullptr);
+    }
+
+}
+
 void ProcessorHandler::releaseResources()
 {
 }

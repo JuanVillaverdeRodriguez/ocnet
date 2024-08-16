@@ -161,6 +161,11 @@ void OcnetGUI_interface::onRemoveModulation(const juce::String& modulationID)
     gui_->getModulatorsSection()->removeModulation(modulationID);
 }
 
+void OcnetGUI_interface::onFmFromChanged(const juce::String& carrierID, const juce::String& modulatorID)
+{
+    processor.setFmFrom(carrierID.getIntValue(), modulatorID.getIntValue());
+}
+
 
 void OcnetGUI_interface::initialiseGUIFromTree(juce::ValueTree tree)
 {

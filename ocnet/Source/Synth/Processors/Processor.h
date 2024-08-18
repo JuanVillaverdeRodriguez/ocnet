@@ -37,6 +37,7 @@ public:
 
     void setBypassed(bool bypassed);
     bool isBypassed();
+    virtual float getCurrentFreq() { return 0.0f; }
 
 private:
     int voiceId;

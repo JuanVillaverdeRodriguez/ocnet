@@ -37,7 +37,7 @@ public:
 
     void syncParams(const ParameterHandler& parameterHandler) override;
 
-    void setFrequency(float frequency, float sampleRate);
+    float setFrequency(float frequency, float sampleRate);
 
     WavetableStruct makeWaveTable(int tableSize, std::unique_ptr<double[]>& ar, std::unique_ptr<double[]>& ai, double topFreq);
     std::vector<WavetableStruct> fillWavetables(std::unique_ptr<double[]>& freqWaveRe, std::unique_ptr<double[]>& freqWaveIm, int tableSize);
@@ -48,10 +48,12 @@ public:
 
     void setFmFrom(std::unique_ptr<Processor>* modulator) override;
     float getNextFMValue() override;
+    float getCurrentFreq() override;
 
 private:
     int lastTableChoice;
     float currentFMIndex;
+    float fmMod;
 
     int unisonVoices;
     juce::Array<float> unisonVoicesModulationBuffer;
@@ -67,7 +69,6 @@ private:
 
     float unisonSpread;
 
-    float fmMod;
     //juce::Array<std::vector<float>> unisonVoiceCurrentIndexArray; // Cambiado a std::vector<float>
     juce::Array<float*> unisonVoiceCurrentIndexArray;
 
@@ -129,8 +130,9 @@ private:
     float currentFrequency2NotesUp;
 
     float getUnisonDeltaFromFrequency(float frequency, float sampleRate);
-    float freqRelativeTo(float relativeFreq, float notes);
+    float freqRelativeTo(float relativeFreq, float notes, bool cents);
     void updateTablePointer();
+    void setFrequencyWithoutAntiAlias(float frequency, float sampleRate);
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(WavetableOscillatorProcessor)
 };

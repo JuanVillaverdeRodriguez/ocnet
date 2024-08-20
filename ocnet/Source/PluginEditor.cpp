@@ -28,7 +28,6 @@ void OcnetAudioProcessorEditor::paint(juce::Graphics& g)
 
     g.setColour(juce::Colours::white);
     g.setFont(15.0f);
-    //g.drawFittedText("Midi Volume", 0, 0, getWidth(), 30, juce::Justification::centred, 1);
 }
 
 void OcnetAudioProcessorEditor::resized()

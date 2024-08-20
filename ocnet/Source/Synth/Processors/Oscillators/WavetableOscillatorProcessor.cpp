@@ -456,7 +456,7 @@ void WavetableOscillatorProcessor::processBlock(juce::AudioBuffer<float>& output
     auto* leftChannelBuffer = outputBuffer.getWritePointer(0);
     auto* rightChannelBuffer = outputBuffer.getWritePointer(1);
 
-    float finalDelta;
+    float finalDelta = 0.0f;
 
     for (int unisonVoice = 0; unisonVoice < unisonVoices; unisonVoice++) {
         float newVoiceDelta = unisonVoices == 1 ? tableDelta : getUnisonDeltaFromFrequency(freqRelativeTo(currentFrequency, unisonDetuneArray[unisonVoice] * unisonDetune, false), sampleRate);
@@ -478,6 +478,9 @@ void WavetableOscillatorProcessor::processBlock(juce::AudioBuffer<float>& output
                 if (newFreq < 0.0f)
                     newFreq = 0.0f;
                 finalDelta = unisonVoices == 1 ? setFrequency(newFreq, sampleRate) : newVoiceDelta + setFrequency(newFreq, sampleRate);
+            }
+            else {
+                finalDelta = newVoiceDelta;
             }
 
             float nextSample = getNextSample(finalDelta, newCurrentIndex);

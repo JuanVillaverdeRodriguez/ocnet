@@ -13,6 +13,7 @@
 #include "JuceHeader.h"
 #include "ComboBoxParameter.h"
 #include "SliderParameter.h"
+#include "ButtonParameter.h"
 
 class ParameterHandler {
 public:
@@ -22,13 +23,16 @@ public:
     // Añadir parametros
     void addComboBoxParameter(const juce::String& parameterID, std::shared_ptr<ComboBoxParameter> parameter);
     void addSliderParameter(const juce::String& parameterID, std::shared_ptr<SliderParameter> parameter);
+    void addButtonParameter(const juce::String& parameterID, std::shared_ptr<ButtonParameter> parameter);
 
     std::shared_ptr<SliderParameter> syncWithSliderParam(const juce::String& parameterID) const;
     std::shared_ptr<ComboBoxParameter> syncWithComboBoxParam(const juce::String& parameterID) const;
+    std::shared_ptr<ButtonParameter> syncWithButtonParam(const juce::String& parameterID) const;
 
     // Quizas se podria quitar estas y se usan las de arriba
     std::shared_ptr<ComboBoxParameter>* getComboBoxParameter(const juce::String& parameterID);
     std::shared_ptr<SliderParameter>* getSliderParameter(const juce::String& parameterID);
+    std::shared_ptr<ButtonParameter>* getButtonParameter(const juce::String& parameterID);
 
     // Elimina del arbol de parametros y del vector de parametros los parametros para un modulo.
     void deleteAttachedParameters(const juce::String& parameterOwnerType, const juce::String& ownerID);
@@ -40,8 +44,10 @@ public:
     void removeModulationParameterWithID(const juce::String parameterID);
     void removeParameterFromTree(const juce::String parameterID);
 
+    // Obtiene el nodo raiz
     juce::ValueTree getRootTree();
 
+    // Imprime el arbol
     void printValueTree(const juce::ValueTree& tree, int indentLevel);
 
     int getMaxCurrentID();
@@ -55,6 +61,8 @@ private:
     // Listas de parametros
     std::unordered_map<juce::String, std::shared_ptr<ComboBoxParameter>> comboBoxParametersMap;
     std::unordered_map<juce::String, std::shared_ptr<SliderParameter>> sliderParametersMap;
+    std::unordered_map<juce::String, std::shared_ptr<ButtonParameter>> buttonParametersMap;
+
 
     // Realiza una busqueda recursiva para buscar un nodo concreto en el arbol
     juce::ValueTree findNodeByName(const juce::ValueTree& tree, const juce::Identifier& name);

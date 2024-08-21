@@ -27,6 +27,9 @@
               file="Source/GUI_Others/ModulationBubble.cpp"/>
         <FILE id="sCF83h" name="ModulationBubble.h" compile="0" resource="0"
               file="Source/GUI_Others/ModulationBubble.h"/>
+        <FILE id="nSHmOY" name="OcnetComboBox.cpp" compile="1" resource="0"
+              file="Source/GUI_Others/OcnetComboBox.cpp"/>
+        <FILE id="PHfgfX" name="OcnetComboBox.h" compile="0" resource="0" file="Source/GUI_Others/OcnetComboBox.h"/>
       </GROUP>
       <FILE id="iKKaEz" name="GUI_EventHandler.cpp" compile="1" resource="0"
             file="Source/GUI_EventHandler.cpp"/>
@@ -39,6 +42,14 @@
         <FILE id="d3i0oc" name="Utils.h" compile="0" resource="0" file="Source/Utils/Utils.h"/>
       </GROUP>
       <GROUP id="{3886D1F5-0388-AA25-2786-5DDC6F87D140}" name="ParameterHandler">
+        <FILE id="YcHYEi" name="ButtonParameter.cpp" compile="1" resource="0"
+              file="Source/ParameterHandler/ButtonParameter.cpp"/>
+        <FILE id="MNdQVQ" name="ButtonParameter.h" compile="0" resource="0"
+              file="Source/ParameterHandler/ButtonParameter.h"/>
+        <FILE id="Mpxf2v" name="ButtonParameterAttachment.cpp" compile="1"
+              resource="0" file="Source/ParameterHandler/ButtonParameterAttachment.cpp"/>
+        <FILE id="jUlWAD" name="ButtonParameterAttachment.h" compile="0" resource="0"
+              file="Source/ParameterHandler/ButtonParameterAttachment.h"/>
         <FILE id="cHO19z" name="ComboBoxParameter.cpp" compile="1" resource="0"
               file="Source/ParameterHandler/ComboBoxParameter.cpp"/>
         <FILE id="itv5y7" name="ComboBoxParameter.h" compile="0" resource="0"

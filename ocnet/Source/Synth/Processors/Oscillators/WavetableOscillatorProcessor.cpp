@@ -489,7 +489,6 @@ void WavetableOscillatorProcessor::processBlock(juce::AudioBuffer<float>& output
             rightChannelBuffer[sample] += nextSample * gainRight;
         }
     }
-
 }
 
 void WavetableOscillatorProcessor::processBlockTest(juce::AudioBuffer<float>& outputBuffer)

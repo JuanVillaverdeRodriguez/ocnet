@@ -10,14 +10,15 @@
 
 #include "EnvelopeSubsection.h"
 
-EnvelopeSubsection::EnvelopeSubsection(int id, GUI_EventHandler& eventHandler) : ModulatorsSubsection(eventHandler)
+EnvelopeSubsection::EnvelopeSubsection(int id, GUI_EventHandler& eventHandler) : ModulatorsSubsection(eventHandler, id, "Envelope")
 {
-    setId(id);
-
     // Significa que es el envelope principal, no se puede eliminar
     if (id == 0) {
         removeButton.setEnabled(false);
+        bypassButton.setEnabled(false);
+        bypassButton.setVisible(false);
     }
+
     attackParameterID = createParameterID("Envelope", getId(), "attack");
     decayParameterID = createParameterID("Envelope", getId(), "decay");
     sustainParameterID = createParameterID("Envelope", getId(), "sustain");
@@ -42,9 +43,6 @@ EnvelopeSubsection::EnvelopeSubsection(int id, GUI_EventHandler& eventHandler) :
     this->addAndMakeVisible(*decayKnob);
     this->addAndMakeVisible(*sustainKnob);
     this->addAndMakeVisible(*releaseKnob);
-    this->addAndMakeVisible(dragZone);
-
-
 
     subsectionName.setText(juce::String("Envelope ") + juce::String(getId()));
 }
@@ -71,8 +69,6 @@ void EnvelopeSubsection::resized()
     dragZone.setBounds(posX, 20, defaultKnobSize, defaultKnobSize);
     posX += defaultKnobSize;
 
-
-
     attackKnob->showLabel(*this, *attackKnob);
     decayKnob->showLabel(*this, *decayKnob);
     sustainKnob->showLabel(*this, *sustainKnob);
@@ -86,11 +82,6 @@ void EnvelopeSubsection::resized()
         lastX += modulationBubble->getBounds().getWidth() + 3;
     }
 
-}
-
-juce::String EnvelopeSubsection::getSubType()
-{
-    return juce::String("Envelope");
 }
 
 void EnvelopeSubsection::setParameterValue(const juce::String& parameterID, const juce::String& propertyValue)
@@ -117,14 +108,11 @@ void EnvelopeSubsection::setParameterValue(const juce::String& parameterID, cons
 
 }
 
-void EnvelopeSubsection::attachParams(ParameterHandler& parameterHandler) {
+void EnvelopeSubsection::attachParameters(ParameterHandler& parameterHandler) {
     attackParameterAttachment = std::make_unique<OcnetSliderAttachment>(*attackKnob, *parameterHandler.getSliderParameter(attackParameterID)->get());
     decayParameterAttachment = std::make_unique<OcnetSliderAttachment>(*decayKnob, *parameterHandler.getSliderParameter(decayParameterID)->get());
     sustainParameterAttachment = std::make_unique<OcnetSliderAttachment>(*sustainKnob, *parameterHandler.getSliderParameter(sustainParameterID)->get());
     releaseParameterAttachment = std::make_unique<OcnetSliderAttachment>(*releaseKnob, *parameterHandler.getSliderParameter(releaseParameterID)->get());
-
-    dragZone.setParentContainerAndComponent(*juce::DragAndDropContainer::findParentDragContainerFor(this), *this);
-
 
 }
 

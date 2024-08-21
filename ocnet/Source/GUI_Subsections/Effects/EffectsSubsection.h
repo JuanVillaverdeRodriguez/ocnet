@@ -16,11 +16,16 @@
 
 class EffectsSubsection : public Subsection {
 public:
-    EffectsSubsection(GUI_EventHandler& eventHandler);
+    EffectsSubsection(GUI_EventHandler& eventHandler, int id, const juce::String& subType);
     virtual ~EffectsSubsection() = default;
 
-    juce::String getType() override;
+    // Patron template methods
+    void attachParams(ParameterHandler& parameterHandler) final override;
+    void addParamsToParameterHandler(ParameterHandler& parameterHandler) final override;
+    void setParamValue(const juce::String& parameterID, const juce::String& propertyValue) final override;
 
 protected:
-
+    virtual void attachParameters(ParameterHandler& parameterHandler) = 0 {};
+    virtual void addParametersToParameterHandler(ParameterHandler& parameterHandler) = 0 {};
+    virtual void setParameterValue(const juce::String& parameterID, const juce::String& propertyValue) = 0 {};
 };

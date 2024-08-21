@@ -769,6 +769,9 @@
     <ClCompile Include="..\..\Source\GUI_Others\ModulationBubble.cpp">
       <Filter>ocnet\Source\GUI_Others</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Source\GUI_Others\OcnetComboBox.cpp">
+      <Filter>ocnet\Source\GUI_Others</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\Source\GUI_EventHandler.cpp">
       <Filter>ocnet\Source</Filter>
     </ClCompile>
@@ -777,6 +780,12 @@
     </ClCompile>
     <ClCompile Include="..\..\Source\Utils\Utils.cpp">
       <Filter>ocnet\Source\Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\ParameterHandler\ButtonParameter.cpp">
+      <Filter>ocnet\Source\ParameterHandler</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\ParameterHandler\ButtonParameterAttachment.cpp">
+      <Filter>ocnet\Source\ParameterHandler</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\ParameterHandler\ComboBoxParameter.cpp">
       <Filter>ocnet\Source\ParameterHandler</Filter>
@@ -3804,6 +3813,9 @@
     <ClInclude Include="..\..\Source\GUI_Others\ModulationBubble.h">
       <Filter>ocnet\Source\GUI_Others</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Source\GUI_Others\OcnetComboBox.h">
+      <Filter>ocnet\Source\GUI_Others</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\Source\GUI_EventHandler.h">
       <Filter>ocnet\Source</Filter>
     </ClInclude>
@@ -3812,6 +3824,12 @@
     </ClInclude>
     <ClInclude Include="..\..\Source\Utils\Utils.h">
       <Filter>ocnet\Source\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\ParameterHandler\ButtonParameter.h">
+      <Filter>ocnet\Source\ParameterHandler</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\ParameterHandler\ButtonParameterAttachment.h">
+      <Filter>ocnet\Source\ParameterHandler</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\ParameterHandler\ComboBoxParameter.h">
       <Filter>ocnet\Source\ParameterHandler</Filter>

@@ -10,9 +10,10 @@
 
 #include "Subsection.h"
 
-Subsection::Subsection(GUI_EventHandler& eventHandler) : eventHandler(eventHandler), defaultKnobSize(45)
+Subsection::Subsection(GUI_EventHandler& eventHandler, int id, const juce::String& type, const juce::String& subType) 
+    : eventHandler(eventHandler), defaultKnobSize(45), subType(subType), id(id)
 {
-    id = 0;
+    bypassParameterID = createParameterID("bypass");
 
     bypassed = false;
 
@@ -33,7 +34,7 @@ Subsection::Subsection(GUI_EventHandler& eventHandler) : eventHandler(eventHandl
     bypassButton.addListener(this);
 
     bypassButton.setToggleable(true);
-
+    bypassButton.setName(bypassParameterID);
 }
 
 void Subsection::buttonClicked(juce::Button* clickedButton)
@@ -52,6 +53,17 @@ void Subsection::buttonClicked(juce::Button* clickedButton)
         eventHandler.onBypassChanged(*this, bypassButton.getToggleState());
     }
 }
+
+juce::String Subsection::getType()
+{
+    return type;
+}
+
+juce::String Subsection::getSubType()
+{
+    return subType;
+}
+
 
 void Subsection::onPostInitialization()
 {
@@ -86,9 +98,7 @@ void Subsection::paint(juce::Graphics& g)
         g.fillRect(0, blackSectionHeight, getWidth(), getHeight() - blackSectionHeight);
 
         bypassButton.setColour(juce::TextButton::buttonColourId, juce::Colours::orange);
-
     }
-    
 }
 
 void Subsection::sectionResized()

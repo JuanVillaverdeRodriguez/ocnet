@@ -10,10 +10,8 @@
 
 #include "FilterSubsection.h"
 
-FilterSubsection::FilterSubsection(int id, GUI_EventHandler& eventHandler) : EffectsSubsection(eventHandler)
+FilterSubsection::FilterSubsection(int id, GUI_EventHandler& eventHandler) : EffectsSubsection(eventHandler, id, "Filter")
 {
-    setId(id);
-    
     freqParameterID = createParameterID("Filter", getId(), "freqCut");
 
     subsectionName.setText(juce::String("Filter ") + juce::String(getId()));
@@ -54,12 +52,8 @@ void FilterSubsection::resized()
     mixKnob->showLabel(*this, *freqCutKnob);
 }
 
-juce::String FilterSubsection::getSubType()
-{
-    return juce::String("Filter");
-}
 
-void FilterSubsection::attachParams(ParameterHandler& parameterHandler)
+void FilterSubsection::attachParameters(ParameterHandler& parameterHandler)
 {
     freqCutParameterAttachment = std::make_unique<OcnetSliderAttachment>(*freqCutKnob, *parameterHandler.getSliderParameter(freqParameterID)->get());
     mixParameterAttachment = std::make_unique<OcnetSliderAttachment>(*mixKnob, *parameterHandler.getSliderParameter(mixParameterID)->get());

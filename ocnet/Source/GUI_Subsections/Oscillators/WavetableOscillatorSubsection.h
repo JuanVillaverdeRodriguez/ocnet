@@ -22,11 +22,11 @@ public:
     WavetableOscillatorSubsection(int id, GUI_EventHandler& eventHandler);
 
     void resized() override;
-    juce::String getSubType() override;
 
-    void attachParams(ParameterHandler& parameterHandler) override;
-    void setParameterValue(const juce::String& propertyName, const juce::String& propertyValue) override;
+    void attachParameters(ParameterHandler& parameterHandler) override;
     void addParametersToParameterHandler(ParameterHandler& parameterHandler) override;
+
+    void setParameterValue(const juce::String& propertyName, const juce::String& propertyValue) override;
     void updateFMCombo(juce::Array<int> ids);
     void comboBoxChanged(juce::ComboBox* comboBoxThatHasChanged) override;
 

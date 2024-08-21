@@ -17,21 +17,30 @@
 
 class ModulatorsSubsection : public Subsection {
 public:
-    ModulatorsSubsection(GUI_EventHandler& eventHandler);
+    ModulatorsSubsection(GUI_EventHandler& eventHandler, int id, const juce::String& subType);
     virtual ~ModulatorsSubsection() = default;
 
     // Esto podria definirse aqui directamete
     std::unique_ptr<ModulationBubble>* createModulationBubble(ParameterHandler& parameterHandler, juce::String& parameterID, GUI_EventHandler& eventHandler);
+
     void addModulationParameter(ParameterHandler& parameterHandler, juce::String& modulationID);
     void attachModulationParameter(ParameterHandler& parameterHandler, juce::String& modulationID);
 
-    juce::String getType() override;
-    
+    // Patron template methods
+    void attachParams(ParameterHandler& parameterHandler) final override;
+    void addParamsToParameterHandler(ParameterHandler& parameterHandler) final override;
+    void setParamValue(const juce::String& propertyName, const juce::String& propertyValue) final override;
+
     bool isModulating(const juce::String& modulationID);
     void removeModulationBubble(const juce::String modulationID);
 
 protected:
+    virtual void attachParameters(ParameterHandler& parameterHandler) = 0 {};
+    virtual void addParametersToParameterHandler(ParameterHandler& parameterHandler) = 0 {};
+    virtual void setParameterValue(const juce::String& propertyName, const juce::String& propertyValue) = 0 {};
+
     DragZone dragZone;
+
     //std::vector<ModulationBubble> modulationBubblesVector;
     //ModulationBubble modulationBubble;
     std::vector<std::unique_ptr<ModulationBubble>> modulationBubblesVector;

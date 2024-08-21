@@ -73,6 +73,14 @@ std::shared_ptr<ComboBoxParameter> ParameterHandler::syncWithComboBoxParam(const
     return nullptr;
 }
 
+std::shared_ptr<ButtonParameter> ParameterHandler::syncWithButtonParam(const juce::String& parameterID) const
+{
+    auto it = buttonParametersMap.find(parameterID);
+    if (it != buttonParametersMap.end())
+        return it->second;
+    return nullptr;
+}
+
 void ParameterHandler::deleteAttachedParameters(const juce::String& parameterOwnerType, const juce::String& ownerID)
 {
     // Crear identificadores para el tipo de propietario y el ID del propietario
@@ -175,6 +183,14 @@ std::shared_ptr<SliderParameter>* ParameterHandler::getSliderParameter(const juc
     return nullptr;
 }
 
+std::shared_ptr<ButtonParameter>* ParameterHandler::getButtonParameter(const juce::String& parameterID)
+{
+    auto it = buttonParametersMap.find(parameterID);
+    if (it != buttonParametersMap.end())
+        return &it->second;
+    return nullptr;
+}
+
 void ParameterHandler::addComboBoxParameter(const juce::String& parameterID, std::shared_ptr<ComboBoxParameter> parameter)
 {
     auto [type, ownerID, parameterTag] = splitParameterID(parameterID);
@@ -232,6 +248,36 @@ void ParameterHandler::addSliderParameter(const juce::String& parameterID, std::
             nodeTree.addChild(newNode2, -1, nullptr);
 
             newNode2.setProperty(propertyNameIdentifier, 0.0f, nullptr);
+            parameter->addTreeListener(newNode2);
+        }
+    }
+}
+
+void ParameterHandler::addButtonParameter(const juce::String& parameterID, std::shared_ptr<ButtonParameter> parameter)
+{
+    auto [type, ownerID, parameterTag] = splitParameterID(parameterID);
+
+    buttonParametersMap.emplace(parameterID, parameter);
+
+    juce::Identifier nodeType(type); // Envelopes, LFOs, OSCs...
+    juce::ValueTree nodeTree = findNodeByName(rootNode, nodeType);
+
+    if (nodeTree.isValid()) {
+        juce::Identifier propertyNameIdentifier(parameterTag); // Attack, decay, volume...
+
+        juce::ValueTree newNode = nodeTree.getChildWithName(ownerID); // 0, 1, 2....
+
+        if (newNode.isValid()) { // Si ya existe el nodo este (NodeID), usar el que ya existe (Añadir propiedades directamente)
+            newNode.setProperty(propertyNameIdentifier, 0, nullptr);
+            parameter->addTreeListener(newNode);
+        }
+        else { // Si no, crear uno nuevo
+            juce::Identifier newNode2Identifier(ownerID);
+            juce::ValueTree newNode2(newNode2Identifier);
+
+            nodeTree.addChild(newNode2, -1, nullptr);
+
+            newNode2.setProperty(propertyNameIdentifier, 0, nullptr);
             parameter->addTreeListener(newNode2);
         }
     }

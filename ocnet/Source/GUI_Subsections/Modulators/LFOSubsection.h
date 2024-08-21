@@ -19,8 +19,7 @@ public:
     LFOSubsection(int id, GUI_EventHandler& eventHandler);
     ~LFOSubsection() = default;
 
-    juce::String getSubType() override;
-    void attachParams(ParameterHandler& parameterHandler) override;
+    void attachParameters(ParameterHandler& parameterHandler) override;
     void addParametersToParameterHandler(ParameterHandler& parameterHandler) override;
     void setParameterValue(const juce::String& propertyName, const juce::String& propertyValue) override;
     void resized() override;

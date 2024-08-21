@@ -10,10 +10,8 @@
 
 #include "WavetableOscillatorSubsection.h"
 
-WavetableOscillatorSubsection::WavetableOscillatorSubsection(int id, GUI_EventHandler& eventHandler) : OscillatorsSubsection(eventHandler)
+WavetableOscillatorSubsection::WavetableOscillatorSubsection(int id, GUI_EventHandler& eventHandler) : OscillatorsSubsection(eventHandler, id, "WavetableOscillator")
 {
-    setId(id);
-
     volumeParameterID = createParameterID("WavetableOscillator", getId(), "volume");
     panningParameterID = createParameterID("WavetableOscillator", getId(), "panning");
     waveTypeParameterID = createParameterID("WavetableOscillator", getId(), "waveType");
@@ -106,12 +104,7 @@ void WavetableOscillatorSubsection::resized()
     fmFromComboBox.setBounds(defaultKnobSize * 7 + (defaultKnobSize * 2), area.getHeight() - defaultKnobSize, defaultKnobSize * 2, defaultKnobSize - 10);
 }
 
-juce::String WavetableOscillatorSubsection::getSubType()
-{
-    return juce::String("WavetableOscillator");
-}
-
-void WavetableOscillatorSubsection::attachParams(ParameterHandler& parameterHandler)
+void WavetableOscillatorSubsection::attachParameters(ParameterHandler& parameterHandler)
 {
     volumeParameterAttachment = std::make_unique<OcnetSliderAttachment>(*volumeKnob, *parameterHandler.getSliderParameter(volumeParameterID)->get());
     panningParameterAttachment = std::make_unique<OcnetSliderAttachment>(*panningKnob, *parameterHandler.getSliderParameter(panningParameterID)->get());

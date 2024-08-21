@@ -10,10 +10,8 @@
 
 #include "LFOSubsection.h"
 
-LFOSubsection::LFOSubsection(int id, GUI_EventHandler& eventHandler) : ModulatorsSubsection(eventHandler)
+LFOSubsection::LFOSubsection(int id, GUI_EventHandler& eventHandler) : ModulatorsSubsection(eventHandler, id, "LFO")
 {
-    setId(id);
-
     speedParameterID = createParameterID("freq");
 
     speedKnob = std::make_unique<Knob1>(speedParameterID, eventHandler, "Frequency");
@@ -25,16 +23,10 @@ LFOSubsection::LFOSubsection(int id, GUI_EventHandler& eventHandler) : Modulator
     this->addAndMakeVisible(*speedKnob);
 }
 
-juce::String LFOSubsection::getSubType()
-{
-    return juce::String("LFO");
-}
-
-void LFOSubsection::attachParams(ParameterHandler& parameterHandler)
+void LFOSubsection::attachParameters(ParameterHandler& parameterHandler)
 {
     speedParameterAttachment = std::make_unique<OcnetSliderAttachment>(*speedKnob, *parameterHandler.getSliderParameter(speedParameterID)->get());
 
-    dragZone.setParentContainerAndComponent(*juce::DragAndDropContainer::findParentDragContainerFor(this), *this);
 }
 
 void LFOSubsection::addParametersToParameterHandler(ParameterHandler& parameterHandler)

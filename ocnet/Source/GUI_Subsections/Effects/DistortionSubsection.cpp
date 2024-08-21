@@ -10,9 +10,8 @@
 
 #include "DistortionSubsection.h"
 
-DistortionSubsection::DistortionSubsection(int id, GUI_EventHandler& eventHandler) : EffectsSubsection(eventHandler)
+DistortionSubsection::DistortionSubsection(int id, GUI_EventHandler& eventHandler) : EffectsSubsection(eventHandler, id, "Distortion")
 {
-    setId(id);
     driveParameterID = createParameterID("Distortion", getId(), "drive");
 
     driveKnob = std::make_unique<Knob1>(driveParameterID, eventHandler, "Drive");
@@ -51,12 +50,7 @@ void DistortionSubsection::resized()
     mixKnob->showLabel(*this, *mixKnob);
 }
 
-juce::String DistortionSubsection::getSubType()
-{
-    return juce::String("Distortion");
-}
-
-void DistortionSubsection::attachParams(ParameterHandler& parameterHandler)
+void DistortionSubsection::attachParameters(ParameterHandler& parameterHandler)
 {
     driveParameterAttachment = std::make_unique<OcnetSliderAttachment>(*driveKnob, *parameterHandler.getSliderParameter(driveParameterID)->get());
     mixParameterAttachment = std::make_unique<OcnetSliderAttachment>(*mixKnob, *parameterHandler.getSliderParameter(mixParameterID)->get());

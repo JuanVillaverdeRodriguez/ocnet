@@ -10,10 +10,10 @@
 
 #include "ModulatorsSubsection.h"
 
-ModulatorsSubsection::ModulatorsSubsection(GUI_EventHandler& eventHandler) : Subsection(eventHandler)
+ModulatorsSubsection::ModulatorsSubsection(GUI_EventHandler& eventHandler, int id, const juce::String& subtype) : Subsection(eventHandler, id, "Oscillators", subtype)
 {
-    this->addAndMakeVisible(dragZone);
 
+    this->addAndMakeVisible(dragZone);
 }
 
 
@@ -42,10 +42,30 @@ void ModulatorsSubsection::attachModulationParameter(ParameterHandler& parameter
     modulationParameterAttachmentsVector.push_back(std::make_unique<OcnetSliderAttachment>(*modulationBubblesVector.back(), *parameterHandler.getSliderParameter(modulationID)->get()));
 }
 
-juce::String ModulatorsSubsection::getType()
+void ModulatorsSubsection::attachParams(ParameterHandler& parameterHandler)
 {
-    return juce::String("Modulators");
+    bypassButtonAttachment = std::make_unique<ButtonParameterAttachment>(bypassButton, *parameterHandler.getButtonParameter(bypassParameterID)->get());
+    dragZone.setParentContainerAndComponent(*juce::DragAndDropContainer::findParentDragContainerFor(this), *this);
+
+    attachParameters(parameterHandler);
 }
+
+
+void ModulatorsSubsection::addParamsToParameterHandler(ParameterHandler& parameterHandler)
+{
+    parameterHandler.addButtonParameter(bypassParameterID, std::make_shared<ButtonParameter>("bypass"));
+    addParametersToParameterHandler(parameterHandler);
+}
+
+void ModulatorsSubsection::setParamValue(const juce::String& parameterID, const juce::String& propertyValue)
+{
+    if (parameterID == bypassButton.getName())
+        setBypassed(propertyValue.getIntValue());
+
+
+    setParameterValue(parameterID, propertyValue);
+}
+
 
 bool ModulatorsSubsection::isModulating(const juce::String& modulationID)
 {

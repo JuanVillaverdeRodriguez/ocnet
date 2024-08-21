@@ -14,12 +14,18 @@
 
 class OscillatorsSubsection : public Subsection {
 public:
-    OscillatorsSubsection(GUI_EventHandler& eventHandler);
+    OscillatorsSubsection(GUI_EventHandler& eventHandler, int id, const juce::String& subtype);
     virtual ~OscillatorsSubsection() = default;
 
-    juce::String getType() override;
+    // Patron template methods
+    void attachParams(ParameterHandler& parameterHandler) final override;
+    void addParamsToParameterHandler(ParameterHandler& parameterHandler) final override;
+    void setParamValue(const juce::String& propertyName, const juce::String& propertyValue) final override;
+
 
 protected:
-    juce::String baseParameterID;
+    virtual void attachParameters(ParameterHandler& parameterHandler) = 0 {};
+    virtual void addParametersToParameterHandler(ParameterHandler& parameterHandler) = 0 {};
+    virtual void setParameterValue(const juce::String& propertyName, const juce::String& propertyValue) = 0 {};
 
 };

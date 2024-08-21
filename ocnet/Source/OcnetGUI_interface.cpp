@@ -26,10 +26,6 @@ OcnetGUI_interface::OcnetGUI_interface(OcnetAudioProcessor *processor) : process
         maxCurrentID = 0;
         onAddModulator(Envelope);
     }
-
-
-
-
 }
 
 OcnetGUI_interface::~OcnetGUI_interface()
@@ -42,10 +38,9 @@ void OcnetGUI_interface::onAddOscillator(int processorType)
     std::unique_ptr<Subsection>* subsection = gui_->getOscillatorsSection()->addOscillator(processorType, maxCurrentID, processor.parameterHandler);
     gui_->getOscillatorsSection()->updateOscillatorsFMCombo();
     gui_->getOscillatorsSection()->addAndMakeVisible(**subsection);
-    subsection->get()->addParametersToParameterHandler(processor.parameterHandler);
+    subsection->get()->addParamsToParameterHandler(processor.parameterHandler);
     subsection->get()->attachParams(processor.parameterHandler);
     processor.addOscillator(processorType, maxCurrentID);
-
     maxCurrentID++;
 }
 
@@ -53,7 +48,7 @@ void OcnetGUI_interface::onAddEffect(int processorType)
 {
     std::unique_ptr<Subsection>* subsection = gui_->getEffectsSection()->addEffect(processorType, maxCurrentID, processor.parameterHandler);
     gui_->getEffectsSection()->addAndMakeVisible(**subsection);
-    subsection->get()->addParametersToParameterHandler(processor.parameterHandler);
+    subsection->get()->addParamsToParameterHandler(processor.parameterHandler);
     subsection->get()->attachParams(processor.parameterHandler);
     processor.addEffect(processorType, maxCurrentID);
     maxCurrentID++;
@@ -64,7 +59,7 @@ void OcnetGUI_interface::onAddModulator(int processorType)
     std::unique_ptr<Subsection>* subsection = gui_->getModulatorsSection()->addModulator(processorType, maxCurrentID, processor.parameterHandler);
     if (subsection != nullptr) {
         gui_->getModulatorsSection()->addAndMakeVisible(**subsection);
-        subsection->get()->addParametersToParameterHandler(processor.parameterHandler);
+        subsection->get()->addParamsToParameterHandler(processor.parameterHandler);
         subsection->get()->attachParams(processor.parameterHandler);
         processor.addModulator(processorType, maxCurrentID);
         maxCurrentID++;
@@ -173,7 +168,7 @@ void OcnetGUI_interface::initialiseGUIFromTree(juce::ValueTree tree)
     juce::ValueTree oscillatorsTree = tree.getChildWithName("Oscillators");
     juce::ValueTree effectsTree = tree.getChildWithName("Effects");
 
-    //processor.parameterHandler.printValueTree(tree, 1);
+    processor.parameterHandler.printValueTree(tree, 1);
 
     int i = 0;
     while (modulatorsTree.getChild(i).isValid()) {
@@ -205,7 +200,7 @@ void OcnetGUI_interface::initialiseGUIFromTree(juce::ValueTree tree)
 
                 juce::String fullParameterID = type + juce::String("_") + id + juce::String("_") + propertyIdentifier.toString();
 
-                subsection->get()->setParameterValue(fullParameterID, propertyValue.toString());
+                subsection->get()->setParamValue(fullParameterID, propertyValue.toString());
                 //processor.parameterHandler.setParameterValues(type + juce::String("_") + id + juce::String("_") + propertyIdentifier.toString(), propertyValue.toString());
             }
             j++;
@@ -233,7 +228,7 @@ void OcnetGUI_interface::initialiseGUIFromTree(juce::ValueTree tree)
                 const juce::var& propertyValue = subTree.getChild(j).getProperty(propertyIdentifier);
                 juce::String fullParameterID = type + juce::String("_") + id + juce::String("_") + propertyIdentifier.toString();
 
-                subsection->get()->setParameterValue(fullParameterID, propertyValue.toString());
+                subsection->get()->setParamValue(fullParameterID, propertyValue.toString());
                 //processor.parameterHandler.setParameterValues(type + juce::String("_") + id + juce::String("_") + propertyIdentifier.toString(), propertyValue.toString());
             }
             j++;
@@ -259,7 +254,7 @@ void OcnetGUI_interface::initialiseGUIFromTree(juce::ValueTree tree)
                 const juce::var& propertyValue = subTree.getChild(j).getProperty(propertyIdentifier);
                 juce::String fullParameterID = type + juce::String("_") + id + juce::String("_") + propertyIdentifier.toString();
 
-                subsection->get()->setParameterValue(fullParameterID, propertyValue.toString());
+                subsection->get()->setParamValue(fullParameterID, propertyValue.toString());
             }
             j++;
         }

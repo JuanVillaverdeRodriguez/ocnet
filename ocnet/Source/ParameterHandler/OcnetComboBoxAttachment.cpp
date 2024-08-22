@@ -14,6 +14,7 @@ OcnetComboBoxAttachment::OcnetComboBoxAttachment(juce::ComboBox& comboBox, Combo
     : comboBox(comboBox), parameter(parameter)
 {
     comboBox.addListener(this);
+    comboBox.setSelectedId(parameter.getCurrentIndex()+1);
 }
 
 void OcnetComboBoxAttachment::comboBoxChanged(juce::ComboBox* comboBoxThatHasChanged)

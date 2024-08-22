@@ -17,6 +17,11 @@ SliderParameter::SliderParameter(const juce::String& parameterID) : parameterID(
     parameterIdentifier = juce::Identifier(parameterID);
 }
 
+SliderParameter::SliderParameter(const juce::String& parameterID, float value) : parameterID(parameterID), value(value)
+{
+    parameterIdentifier = juce::Identifier(parameterID);
+}
+
 void SliderParameter::setValue(float value)
 {
     this->value = value;

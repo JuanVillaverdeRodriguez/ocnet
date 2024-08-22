@@ -19,7 +19,7 @@ DistortionSubsection::DistortionSubsection(int id, GUI_EventHandler& eventHandle
     this->addAndMakeVisible(*driveKnob);
 
     driveKnob->setRange(0.0f, 10.0f, 0.01f); // Quizas mejor seria volumeKnob.setRange(0, 1, 0.01f)?;
-    driveKnob->setValue(5.0f);
+    //driveKnob->setValue(5.0f);
 
     mixParameterID = createParameterID("mix");
     mixKnob = std::make_unique<Knob1>(mixParameterID, eventHandler, "Mix");
@@ -27,7 +27,7 @@ DistortionSubsection::DistortionSubsection(int id, GUI_EventHandler& eventHandle
     this->addAndMakeVisible(*mixKnob);
 
     mixKnob->setRange(0.0f, 1.0f, 0.01f);
-    mixKnob->setValue(1.0f);
+    //mixKnob->setValue(1.0f);
 
     subsectionName.setText(juce::String("Distortion ") + juce::String(getId()));
 }
@@ -58,14 +58,7 @@ void DistortionSubsection::attachParameters(ParameterHandler& parameterHandler)
 
 void DistortionSubsection::addParametersToParameterHandler(ParameterHandler& parameterHandler)
 {
-    parameterHandler.addSliderParameter(driveParameterID, std::make_shared<SliderParameter>("drive"));
-    parameterHandler.addSliderParameter(mixParameterID, std::make_shared<SliderParameter>("mix"));
+    parameterHandler.addSliderParameter(driveParameterID, std::make_shared<SliderParameter>("drive", 5.0f));
+    parameterHandler.addSliderParameter(mixParameterID, std::make_shared<SliderParameter>("mix", 1.0f));
 }
 
-void DistortionSubsection::setParameterValue(const juce::String& parameterID, const juce::String& propertyValue)
-{
-    if (parameterID == driveKnob->getParameterID())
-        driveKnob->setValue(propertyValue.getFloatValue());
-    else if (parameterID == mixKnob->getParameterID())
-        mixKnob->setValue(propertyValue.getFloatValue());
-}

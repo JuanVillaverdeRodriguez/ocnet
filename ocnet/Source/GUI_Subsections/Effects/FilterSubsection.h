@@ -22,7 +22,6 @@ public:
 
     void attachParameters(ParameterHandler& parameterHandler) override;
     void addParametersToParameterHandler(ParameterHandler& parameterHandler) override;
-    void setParameterValue(const juce::String& propertyName, const juce::String& propertyValue);
 
 private:
     juce::String freqParameterID;

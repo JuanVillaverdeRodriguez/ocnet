@@ -20,12 +20,9 @@ public:
     // Patron template methods
     void attachParams(ParameterHandler& parameterHandler) final override;
     void addParamsToParameterHandler(ParameterHandler& parameterHandler) final override;
-    void setParamValue(const juce::String& propertyName, const juce::String& propertyValue) final override;
-
 
 protected:
     virtual void attachParameters(ParameterHandler& parameterHandler) = 0 {};
     virtual void addParametersToParameterHandler(ParameterHandler& parameterHandler) = 0 {};
-    virtual void setParameterValue(const juce::String& propertyName, const juce::String& propertyValue) = 0 {};
 
 };

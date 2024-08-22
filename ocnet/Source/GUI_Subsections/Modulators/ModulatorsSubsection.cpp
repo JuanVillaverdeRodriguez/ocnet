@@ -10,7 +10,7 @@
 
 #include "ModulatorsSubsection.h"
 
-ModulatorsSubsection::ModulatorsSubsection(GUI_EventHandler& eventHandler, int id, const juce::String& subtype) : Subsection(eventHandler, id, "Oscillators", subtype)
+ModulatorsSubsection::ModulatorsSubsection(GUI_EventHandler& eventHandler, int id, const juce::String& subtype) : Subsection(eventHandler, id, "Modulators", subtype)
 {
 
     this->addAndMakeVisible(dragZone);
@@ -34,7 +34,7 @@ void ModulatorsSubsection::addModulationParameter(ParameterHandler& parameterHan
 {
     auto [type, id, parameterTag] = Utils::splitParameterID(modulationID);
 
-    parameterHandler.addSliderParameter(modulationID, std::make_shared<SliderParameter>(parameterTag));
+    parameterHandler.addSliderParameter(modulationID, std::make_shared<SliderParameter>(parameterTag, 0.5f));
 }
 
 void ModulatorsSubsection::attachModulationParameter(ParameterHandler& parameterHandler, juce::String& modulationID)
@@ -45,6 +45,7 @@ void ModulatorsSubsection::attachModulationParameter(ParameterHandler& parameter
 void ModulatorsSubsection::attachParams(ParameterHandler& parameterHandler)
 {
     bypassButtonAttachment = std::make_unique<ButtonParameterAttachment>(bypassButton, *parameterHandler.getButtonParameter(bypassParameterID)->get());
+    setBypassed(bypassButton.getToggleState());
     dragZone.setParentContainerAndComponent(*juce::DragAndDropContainer::findParentDragContainerFor(this), *this);
 
     attachParameters(parameterHandler);
@@ -53,19 +54,9 @@ void ModulatorsSubsection::attachParams(ParameterHandler& parameterHandler)
 
 void ModulatorsSubsection::addParamsToParameterHandler(ParameterHandler& parameterHandler)
 {
-    parameterHandler.addButtonParameter(bypassParameterID, std::make_shared<ButtonParameter>("bypass"));
+    parameterHandler.addButtonParameter(bypassParameterID, std::make_shared<ButtonParameter>("bypass", false));
     addParametersToParameterHandler(parameterHandler);
 }
-
-void ModulatorsSubsection::setParamValue(const juce::String& parameterID, const juce::String& propertyValue)
-{
-    if (parameterID == bypassButton.getName())
-        setBypassed(propertyValue.getIntValue());
-
-
-    setParameterValue(parameterID, propertyValue);
-}
-
 
 bool ModulatorsSubsection::isModulating(const juce::String& modulationID)
 {

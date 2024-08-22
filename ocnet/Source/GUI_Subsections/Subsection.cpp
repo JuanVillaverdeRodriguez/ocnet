@@ -50,6 +50,7 @@ void Subsection::buttonClicked(juce::Button* clickedButton)
     }
     if (clickedButton == &bypassButton) {
         bypassButton.setToggleState(!bypassed, juce::NotificationType::dontSendNotification);
+        setBypassed(!bypassButton.getToggleState());
         eventHandler.onBypassChanged(*this, bypassButton.getToggleState());
     }
 }

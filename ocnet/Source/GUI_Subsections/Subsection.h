@@ -47,9 +47,6 @@ public:
     // Obtiene el subtipo de la subseccion (Envelope, LFO, WavetableOscillator...)
     juce::String getSubType();
 
-    // Utlizado al reconstruir la GUI para setear el valor de los parametros al guardado en el arbol
-    virtual void setParamValue(const juce::String& propertyName, const juce::String& propertyValue) = 0 {};
-
     // Para cosas que deban hacere una vez la subseccion se ha creado completamente
     void onPostInitialization();
 

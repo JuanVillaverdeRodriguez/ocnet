@@ -34,10 +34,10 @@ EnvelopeSubsection::EnvelopeSubsection(int id, GUI_EventHandler& eventHandler) :
     sustainKnob->setRange(0.0f, 1.0f, 0.01f);
     releaseKnob->setRange(0.0f, 1.0f, 0.01f);
 
-    attackKnob->setValue(0.1f);
+    /*attackKnob->setValue(0.1f);
     decayKnob->setValue(0.5f);
     sustainKnob->setValue(1.0f);
-    releaseKnob->setValue(0.1f);
+    releaseKnob->setValue(0.1f);*/
 
     this->addAndMakeVisible(*attackKnob);
     this->addAndMakeVisible(*decayKnob);
@@ -84,29 +84,6 @@ void EnvelopeSubsection::resized()
 
 }
 
-void EnvelopeSubsection::setParameterValue(const juce::String& parameterID, const juce::String& propertyValue)
-{
-    if (parameterID == attackKnob->getParameterID())
-        attackKnob->setValue(propertyValue.getFloatValue());
-
-    else if (parameterID == decayKnob->getParameterID())
-        decayKnob->setValue(propertyValue.getFloatValue());
-
-    else if (parameterID == sustainKnob->getParameterID())
-        sustainKnob->setValue(propertyValue.getFloatValue());
-
-    else if (parameterID == releaseKnob->getParameterID())
-        releaseKnob->setValue(propertyValue.getFloatValue());
-
-
-    for (auto& modulationBubble : modulationBubblesVector) {
-        if (modulationBubble->getModulationID() == parameterID) {
-            modulationBubble->setValue(propertyValue.getFloatValue());
-        }
-    }
-
-
-}
 
 void EnvelopeSubsection::attachParameters(ParameterHandler& parameterHandler) {
     attackParameterAttachment = std::make_unique<OcnetSliderAttachment>(*attackKnob, *parameterHandler.getSliderParameter(attackParameterID)->get());
@@ -120,15 +97,14 @@ void EnvelopeSubsection::attachParameters(ParameterHandler& parameterHandler) {
 void EnvelopeSubsection::addParametersToParameterHandler(ParameterHandler& parameterHandler)
 {
 
-    parameterHandler.addSliderParameter(attackParameterID, std::make_shared<SliderParameter>("attack"));
-    parameterHandler.addSliderParameter(decayParameterID, std::make_shared<SliderParameter>("decay"));
-    parameterHandler.addSliderParameter(sustainParameterID, std::make_shared<SliderParameter>("sustain"));
-    parameterHandler.addSliderParameter(releaseParameterID, std::make_shared<SliderParameter>("release"));
+    parameterHandler.addSliderParameter(attackParameterID, std::make_shared<SliderParameter>("attack", 0.1f));
+    parameterHandler.addSliderParameter(decayParameterID, std::make_shared<SliderParameter>("decay", 0.5f));
+    parameterHandler.addSliderParameter(sustainParameterID, std::make_shared<SliderParameter>("sustain", 1.0f));
+    parameterHandler.addSliderParameter(releaseParameterID, std::make_shared<SliderParameter>("release", 0.1f));
 
-    parameterHandler.getSliderParameter(attackParameterID)->get()->setValue(0.1f);
-    parameterHandler.getSliderParameter(decayParameterID)->get()->setValue(0.5f);
-    parameterHandler.getSliderParameter(sustainParameterID)->get()->setValue(1.0f);
-    parameterHandler.getSliderParameter(releaseParameterID)->get()->setValue(0.1f);
-
+    //parameterHandler.getSliderParameter(attackParameterID)->get()->setValue(0.1f);
+    //parameterHandler.getSliderParameter(decayParameterID)->get()->setValue(0.5f);
+    //parameterHandler.getSliderParameter(sustainParameterID)->get()->setValue(1.0f);
+    //parameterHandler.getSliderParameter(releaseParameterID)->get()->setValue(0.1f);
 }
 

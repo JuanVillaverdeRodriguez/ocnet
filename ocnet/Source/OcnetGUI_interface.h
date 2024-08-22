@@ -41,6 +41,7 @@ public:
 
     void initialiseGUIFromTree(juce::ValueTree tree);
 
+
     void editorIsShowing();
 
     OcnetGUI* getGui();
@@ -52,6 +53,11 @@ public:
 
 
 private:
+    void initialiseOscillators(juce::ValueTree& oscillatorsTree);
+    void initialiseModulators(juce::ValueTree& modulatorsTree);
+    void initialiseEffects(juce::ValueTree& effectsTree);
+    void attachModulationParameters(std::unique_ptr<Subsection>* subsection, juce::ValueTree& subTree);
+
     juce::MidiKeyboardState keyboardState;
 
     std::unique_ptr<OcnetGUI> gui_; //Vista

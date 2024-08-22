@@ -18,7 +18,7 @@ LFOSubsection::LFOSubsection(int id, GUI_EventHandler& eventHandler) : Modulator
 
     speedKnob->setRange(0.0f, 1.0f, 0.01f);
 
-    speedKnob->setValue(0.5f);
+    //speedKnob->setValue(0.5f);
 
     this->addAndMakeVisible(*speedKnob);
 }
@@ -31,20 +31,10 @@ void LFOSubsection::attachParameters(ParameterHandler& parameterHandler)
 
 void LFOSubsection::addParametersToParameterHandler(ParameterHandler& parameterHandler)
 {
-    parameterHandler.addSliderParameter(speedParameterID, std::make_shared<SliderParameter>("freq"));
+    parameterHandler.addSliderParameter(speedParameterID, std::make_shared<SliderParameter>("freq", 0.5f));
 }
 
-void LFOSubsection::setParameterValue(const juce::String& parameterID, const juce::String& propertyValue)
-{
-    if (parameterID == speedKnob->getParameterID())
-        speedKnob->setValue(propertyValue.getFloatValue());
 
-    for (auto& modulationBubble : modulationBubblesVector) {
-        if (modulationBubble->getModulationID() == parameterID) {
-            modulationBubble->setValue(propertyValue.getFloatValue());
-        }
-    }
-}
 
 void LFOSubsection::resized()
 {

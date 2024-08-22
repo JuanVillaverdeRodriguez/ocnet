@@ -12,6 +12,7 @@
 
 OcnetSliderAttachment::OcnetSliderAttachment(juce::Slider& slider, SliderParameter& sliderParameter) : slider(slider), sliderParameter(sliderParameter)
 {
+    slider.setValue(sliderParameter.getValue());
     slider.addListener(this);
 }
 

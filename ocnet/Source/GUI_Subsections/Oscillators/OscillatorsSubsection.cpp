@@ -17,20 +17,14 @@ OscillatorsSubsection::OscillatorsSubsection(GUI_EventHandler& eventHandler, int
 void OscillatorsSubsection::attachParams(ParameterHandler& parameterHandler)
 {
     bypassButtonAttachment = std::make_unique<ButtonParameterAttachment>(bypassButton, *parameterHandler.getButtonParameter(bypassParameterID)->get());
+    setBypassed(bypassButton.getToggleState());
+
     attachParameters(parameterHandler);
 }
 
 
 void OscillatorsSubsection::addParamsToParameterHandler(ParameterHandler& parameterHandler)
 {
-    parameterHandler.addButtonParameter(bypassParameterID, std::make_shared<ButtonParameter>("bypass"));
+    parameterHandler.addButtonParameter(bypassParameterID, std::make_shared<ButtonParameter>("bypass", false));
     addParametersToParameterHandler(parameterHandler);
-}
-
-void OscillatorsSubsection::setParamValue(const juce::String& parameterID, const juce::String& propertyValue)
-{
-    if (parameterID == bypassButton.getName())
-        setBypassed(propertyValue.getIntValue());
-
-    setParameterValue(parameterID, propertyValue);
 }

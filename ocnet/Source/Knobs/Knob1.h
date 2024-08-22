@@ -10,7 +10,6 @@ public:
 	Knob1(const juce::String& parameterID, GUI_EventHandler &eventHandler);
 	Knob1(const juce::String& parameterID, GUI_EventHandler& eventHandler, juce::String knobLabelText);
 
-
 	void itemDropped(const SourceDetails& dragSourceDetails) override;
 	bool isInterestedInDragSource(const SourceDetails& dragSourceDetails) override;
 

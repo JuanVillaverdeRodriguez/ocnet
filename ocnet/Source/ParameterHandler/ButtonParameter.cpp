@@ -16,6 +16,11 @@ ButtonParameter::ButtonParameter(const juce::String& parameterID) : currentState
     parameterIdentifier = juce::Identifier(parameterID);
 }
 
+ButtonParameter::ButtonParameter(const juce::String& parameterID, bool isToggled) : currentState(isToggled), parameterID(parameterID)
+{
+    parameterIdentifier = juce::Identifier(parameterID);
+}
+
 int ButtonParameter::getState()
 {
     return currentState;

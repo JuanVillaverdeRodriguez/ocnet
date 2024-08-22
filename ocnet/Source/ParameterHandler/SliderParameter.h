@@ -16,6 +16,7 @@
 class SliderParameter : public juce::ValueTree::Listener {
 public:
     SliderParameter(const juce::String& parameterID);
+    SliderParameter(const juce::String& parameterID, float value);
     ~SliderParameter() = default;
 
     juce::String getParameterID();

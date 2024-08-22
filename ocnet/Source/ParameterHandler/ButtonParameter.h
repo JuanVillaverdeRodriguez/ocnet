@@ -16,6 +16,7 @@ class ButtonParameter : public juce::ValueTree::Listener
 {
 public:
     ButtonParameter(const juce::String& parameterID);
+    ButtonParameter(const juce::String& parameterID, bool isToggled);
     ~ButtonParameter() = default;
 
     int getState();

@@ -161,108 +161,102 @@ void OcnetGUI_interface::onFmFromChanged(const juce::String& carrierID, const ju
     processor.setFmFrom(carrierID.getIntValue(), modulatorID.getIntValue());
 }
 
-
 void OcnetGUI_interface::initialiseGUIFromTree(juce::ValueTree tree)
 {
-    juce::ValueTree modulatorsTree = tree.getChildWithName("Modulators");
-    juce::ValueTree oscillatorsTree = tree.getChildWithName("Oscillators");
-    juce::ValueTree effectsTree = tree.getChildWithName("Effects");
+    // Obtener arboles de moduladores, osciladores y efectos
+    auto modulatorsTree = tree.getChildWithName("Modulators");
+    auto oscillatorsTree = tree.getChildWithName("Oscillators");
+    auto effectsTree = tree.getChildWithName("Effects");
 
     processor.parameterHandler.printValueTree(tree, 1);
 
-    int i = 0;
-    while (modulatorsTree.getChild(i).isValid()) {
-        juce::String type = modulatorsTree.getChild(i).getType().toString();
-        juce::ValueTree subTree = modulatorsTree.getChild(i);
+    // Inicializar moduladores
+    initialiseModulators(modulatorsTree);
 
-        int j = 0;
-        while (subTree.getChild(j).isValid()) {
-            juce::String id = subTree.getChild(j).getType().toString();
-            int numProperties = subTree.getChild(j).getNumProperties();
+    // Inicializar osciladores
+    initialiseOscillators(oscillatorsTree);
 
-            std::unique_ptr<Subsection>* subsection = gui_->getModulatorsSection()->addModulator(fromString(type), id.getIntValue(), processor.parameterHandler);
+    // Inicializar efectos
+    initialiseEffects(effectsTree);
+
+    // Actualizar el ID máximo actual
+    maxCurrentID = processor.parameterHandler.getMaxCurrentID();
+}
+
+void OcnetGUI_interface::initialiseModulators(juce::ValueTree& modulatorsTree)
+{
+    for (int i = 0; modulatorsTree.getChild(i).isValid(); ++i)
+    {
+        auto type = modulatorsTree.getChild(i).getType().toString();
+        auto subTree = modulatorsTree.getChild(i);
+
+        for (int j = 0; subTree.getChild(j).isValid(); ++j)
+        {
+            auto id = subTree.getChild(j).getType().toString();
+            auto subsection = gui_->getModulatorsSection()->addModulator(fromString(type), id.getIntValue(), processor.parameterHandler);
+
             gui_->getModulatorsSection()->addAndMakeVisible(**subsection);
             subsection->get()->attachParams(processor.parameterHandler);
 
-            for (int k = 0; k < numProperties; k++) {
-                juce::Identifier propertyIdentifier = subTree.getChild(j).getPropertyName(k);
-                //juce::var propertyValue = subTree.getChild(j).getProperty(propertyIdentifier);
-                const juce::var& propertyValue = subTree.getChild(j).getProperty(propertyIdentifier);
-                // SI es una modulacion, primero crear la burbuja de modulacion, attachear los parametros a la misma, despues setear el valor de los mismos al slider
-
-                if (isModulationParameter(propertyIdentifier.toString())) {
-                    auto [modulationTag, parameterModulatingID] = Utils::splitParameterModulationID(propertyIdentifier.toString());
-                    auto modulatorCasted = dynamic_cast<ModulatorsSubsection*>(subsection->get());
-                    std::unique_ptr<ModulationBubble>* modulationBubble = modulatorCasted->createModulationBubble(processor.parameterHandler, parameterModulatingID, *this);
-                    juce::String modulationID = modulationBubble->get()->getModulationID();
-                    modulatorCasted->attachModulationParameter(processor.parameterHandler, modulationID);
-                }
-
-                juce::String fullParameterID = type + juce::String("_") + id + juce::String("_") + propertyIdentifier.toString();
-
-                subsection->get()->setParamValue(fullParameterID, propertyValue.toString());
-                //processor.parameterHandler.setParameterValues(type + juce::String("_") + id + juce::String("_") + propertyIdentifier.toString(), propertyValue.toString());
-            }
-            j++;
+            attachModulationParameters(subsection, subTree.getChild(j));
         }
-        i++;
     }
+}
 
-    i = 0;
-    while (oscillatorsTree.getChild(i).isValid()) {
-        juce::String type = oscillatorsTree.getChild(i).getType().toString();
-        juce::ValueTree subTree = oscillatorsTree.getChild(i);
+void OcnetGUI_interface::initialiseOscillators(juce::ValueTree& oscillatorsTree)
+{
+    for (int i = 0; oscillatorsTree.getChild(i).isValid(); ++i)
+    {
+        auto type = oscillatorsTree.getChild(i).getType().toString();
+        auto subTree = oscillatorsTree.getChild(i);
 
-        int j = 0;
-        while (subTree.getChild(j).isValid()) {
-            juce::String id = subTree.getChild(j).getType().toString();
-            int numProperties = subTree.getChild(j).getNumProperties();
-            std::unique_ptr<Subsection>* subsection = gui_->getOscillatorsSection()->addOscillator(fromString(type), id.getIntValue(), processor.parameterHandler);
+        for (int j = 0; subTree.getChild(j).isValid(); ++j)
+        {
+            auto id = subTree.getChild(j).getType().toString();
+            auto subsection = gui_->getOscillatorsSection()->addOscillator(fromString(type), id.getIntValue(), processor.parameterHandler);
+
             gui_->getOscillatorsSection()->updateOscillatorsFMCombo();
             gui_->getOscillatorsSection()->addAndMakeVisible(**subsection);
             subsection->get()->attachParams(processor.parameterHandler);
-
-            for (int k = 0; k < numProperties; k++) {
-                juce::Identifier propertyIdentifier = subTree.getChild(j).getPropertyName(k);
-                //juce::var propertyValue = subTree.getChild(j).getProperty(propertyIdentifier);
-                const juce::var& propertyValue = subTree.getChild(j).getProperty(propertyIdentifier);
-                juce::String fullParameterID = type + juce::String("_") + id + juce::String("_") + propertyIdentifier.toString();
-
-                subsection->get()->setParamValue(fullParameterID, propertyValue.toString());
-                //processor.parameterHandler.setParameterValues(type + juce::String("_") + id + juce::String("_") + propertyIdentifier.toString(), propertyValue.toString());
-            }
-            j++;
         }
-        i++;
     }
+}
 
-    i = 0;
-    while (effectsTree.getChild(i).isValid()) {
-        juce::String type = effectsTree.getChild(i).getType().toString();
-        juce::ValueTree subTree = effectsTree.getChild(i);
+void OcnetGUI_interface::initialiseEffects(juce::ValueTree& effectsTree)
+{
+    for (int i = 0; effectsTree.getChild(i).isValid(); ++i)
+    {
+        auto type = effectsTree.getChild(i).getType().toString();
+        auto subTree = effectsTree.getChild(i);
 
-        int j = 0;
-        while (subTree.getChild(j).isValid()) {
-            juce::String id = subTree.getChild(j).getType().toString();
-            int numProperties = subTree.getChild(j).getNumProperties();
-            std::unique_ptr<Subsection>* subsection = gui_->getEffectsSection()->addEffect(fromString(type), id.getIntValue(), processor.parameterHandler);
+        for (int j = 0; subTree.getChild(j).isValid(); ++j)
+        {
+            auto id = subTree.getChild(j).getType().toString();
+            auto subsection = gui_->getEffectsSection()->addEffect(fromString(type), id.getIntValue(), processor.parameterHandler);
+
             gui_->getEffectsSection()->addAndMakeVisible(**subsection);
             subsection->get()->attachParams(processor.parameterHandler);
-
-            for (int k = 0; k < numProperties; k++) {
-                juce::Identifier propertyIdentifier = subTree.getChild(j).getPropertyName(k);
-                const juce::var& propertyValue = subTree.getChild(j).getProperty(propertyIdentifier);
-                juce::String fullParameterID = type + juce::String("_") + id + juce::String("_") + propertyIdentifier.toString();
-
-                subsection->get()->setParamValue(fullParameterID, propertyValue.toString());
-            }
-            j++;
         }
-        i++;
     }
-
-    maxCurrentID = processor.parameterHandler.getMaxCurrentID();
 }
+
+void OcnetGUI_interface::attachModulationParameters(std::unique_ptr<Subsection>* subsection, juce::ValueTree& subTree)
+{
+    for (int k = 0; k < subTree.getNumProperties(); ++k)
+    {
+        auto propertyIdentifier = subTree.getPropertyName(k);
+        if (isModulationParameter(propertyIdentifier.toString()))
+        {
+            auto [modulationTag, parameterModulatingID] = Utils::splitParameterModulationID(propertyIdentifier.toString());
+            auto modulatorCasted = dynamic_cast<ModulatorsSubsection*>(subsection->get());
+            auto modulationBubble = modulatorCasted->createModulationBubble(processor.parameterHandler, parameterModulatingID, *this);
+
+            modulatorCasted->attachModulationParameter(processor.parameterHandler, modulationBubble->get()->getModulationID());
+        }
+    }
+}
+
+
 
 void OcnetGUI_interface::editorIsShowing()
 {

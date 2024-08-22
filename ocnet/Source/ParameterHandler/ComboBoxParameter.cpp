@@ -10,13 +10,12 @@
 
 #include "ComboBoxParameter.h"
 
-ComboBoxParameter::ComboBoxParameter(const juce::String& parameterID, juce::StringArray choices, int defaultOptionIndex) 
+ComboBoxParameter::ComboBoxParameter(const juce::String& parameterID, juce::StringArray choices, int defaultOptionIndex)
     : parameterID(parameterID), choices(choices), currentIndex(defaultOptionIndex)
 {
     // Comprueba que la opcion por defecto sea valida
     jassert(defaultOptionIndex >= 0 && defaultOptionIndex < choices.size());
     parameterIdentifier = juce::Identifier(parameterID);
-
 }
 
 int ComboBoxParameter::getCurrentIndex()

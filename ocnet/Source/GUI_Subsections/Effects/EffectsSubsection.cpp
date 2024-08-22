@@ -10,7 +10,7 @@
 
 #include "EffectsSubsection.h"
 
-EffectsSubsection::EffectsSubsection(GUI_EventHandler& eventHandler, int id, const juce::String& subtype) : Subsection(eventHandler, id, "Oscillators", subtype)
+EffectsSubsection::EffectsSubsection(GUI_EventHandler& eventHandler, int id, const juce::String& subtype) : Subsection(eventHandler, id, "Effects", subtype)
 {
 
 }
@@ -19,20 +19,13 @@ EffectsSubsection::EffectsSubsection(GUI_EventHandler& eventHandler, int id, con
 void EffectsSubsection::attachParams(ParameterHandler& parameterHandler)
 {
     bypassButtonAttachment = std::make_unique<ButtonParameterAttachment>(bypassButton, *parameterHandler.getButtonParameter(bypassParameterID)->get());
+    setBypassed(bypassButton.getToggleState());
+
     attachParameters(parameterHandler);
 }
 
-void EffectsSubsection::setParamValue(const juce::String& parameterID, const juce::String& propertyValue)
-{
-    if (parameterID == bypassButton.getName())
-        setBypassed(propertyValue.getIntValue());
-
-    setParameterValue(parameterID, propertyValue);
-}
-
-
 void EffectsSubsection::addParamsToParameterHandler(ParameterHandler& parameterHandler)
 {
-    parameterHandler.addButtonParameter(bypassParameterID, std::make_shared<ButtonParameter>("bypass"));
+    parameterHandler.addButtonParameter(bypassParameterID, std::make_shared<ButtonParameter>("bypass", false));
     addParametersToParameterHandler(parameterHandler);
 }

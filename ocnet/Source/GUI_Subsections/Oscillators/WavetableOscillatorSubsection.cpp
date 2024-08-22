@@ -45,13 +45,13 @@ WavetableOscillatorSubsection::WavetableOscillatorSubsection(int id, GUI_EventHa
     fmAmountKnob->setRange(0.0f, 1.0f, 0.01f); // Quizas mejor seria volumeKnob.setRange(0, 1, 0.01f)?;
     transposeKnob->setRange(-24, 24, 1); // Quizas mejor seria volumeKnob.setRange(0, 1, 0.01f)?;
 
-
+    /*
     volumeKnob->setValue(0.75f);
     panningKnob->setValue(0.5f);
     numVoicesKnob->setValue(1);
     detuneAmountKnob->setValue(0.20f);
     fmAmountKnob->setValue(1.0f);
-    transposeKnob->setValue(0);
+    transposeKnob->setValue(0);*/
 
 
     subsectionName.setText(juce::String("Oscillator ") + juce::String(getId()));
@@ -60,12 +60,12 @@ WavetableOscillatorSubsection::WavetableOscillatorSubsection(int id, GUI_EventHa
     waveTypeComboBox.addItem("Saw", 1);
     waveTypeComboBox.addItem("Square", 2);
     waveTypeComboBox.addItem("Sine", 3);
-    waveTypeComboBox.setSelectedId(1); // Selecciona "Saw" por defecto
+    //waveTypeComboBox.setSelectedId(1); // Selecciona "Saw" por defecto
     waveTypeComboBox.setName(waveTypeParameterID);
 
     // Configuración del ComboBox
     fmFromComboBox.addItem("None", 1);
-    fmFromComboBox.setSelectedId(1);
+    //fmFromComboBox.setSelectedId(1);
     fmFromComboBox.setName(fmFromParameterID);
 
     addAndMakeVisible(waveTypeComboBox);
@@ -118,41 +118,14 @@ void WavetableOscillatorSubsection::attachParameters(ParameterHandler& parameter
 
 }
 
-void WavetableOscillatorSubsection::setParameterValue(const juce::String& parameterID, const juce::String& propertyValue)
-{
-    if (parameterID == volumeKnob->getParameterID())
-        volumeKnob->setValue(propertyValue.getFloatValue());
-
-    else if (parameterID == panningKnob->getParameterID())
-        panningKnob->setValue(propertyValue.getFloatValue());
-
-    else if (parameterID == detuneAmountKnob->getParameterID())
-        detuneAmountKnob->setValue(propertyValue.getFloatValue());
-
-    else if (parameterID == numVoicesKnob->getParameterID())
-        numVoicesKnob->setValue(propertyValue.getFloatValue());
-
-    else if (parameterID == fmAmountKnob->getParameterID())
-        fmAmountKnob->setValue(propertyValue.getFloatValue());
-
-    else if (parameterID == transposeKnob->getParameterID())
-        transposeKnob->setValue(propertyValue.getFloatValue());
-
-    else if (parameterID == fmFromComboBox.getName())
-        fmFromComboBox.setSelectedItemIndex(propertyValue.getIntValue());
-
-    else if (parameterID == waveTypeComboBox.getName())
-        waveTypeComboBox.setSelectedItemIndex(propertyValue.getIntValue());
-}
-
 void WavetableOscillatorSubsection::addParametersToParameterHandler(ParameterHandler& parameterHandler)
 {
-    parameterHandler.addSliderParameter(volumeParameterID, std::make_shared<SliderParameter>("volume"));
-    parameterHandler.addSliderParameter(panningParameterID, std::make_shared<SliderParameter>("panning"));
-    parameterHandler.addSliderParameter(detuneAmountParameterID, std::make_shared<SliderParameter>("unisonDetuneAmount"));
-    parameterHandler.addSliderParameter(numVoicesParameterID, std::make_shared<SliderParameter>("unisonNumVoices"));
-    parameterHandler.addSliderParameter(fmAmountParameterID, std::make_shared<SliderParameter>("fmAmount"));
-    parameterHandler.addSliderParameter(transposeParameterID, std::make_shared<SliderParameter>("transpose"));
+    parameterHandler.addSliderParameter(volumeParameterID, std::make_shared<SliderParameter>("volume", 0.75f));
+    parameterHandler.addSliderParameter(panningParameterID, std::make_shared<SliderParameter>("panning", 0.5f));
+    parameterHandler.addSliderParameter(detuneAmountParameterID, std::make_shared<SliderParameter>("unisonDetuneAmount", 0.20f));
+    parameterHandler.addSliderParameter(numVoicesParameterID, std::make_shared<SliderParameter>("unisonNumVoices", 1));
+    parameterHandler.addSliderParameter(fmAmountParameterID, std::make_shared<SliderParameter>("fmAmount", 1.0f));
+    parameterHandler.addSliderParameter(transposeParameterID, std::make_shared<SliderParameter>("transpose", 0));
 
 
     parameterHandler.addComboBoxParameter(waveTypeParameterID, std::make_shared<ComboBoxParameter>("waveType", juce::StringArray{ "Saw", "Square", "Sine" }, 0));

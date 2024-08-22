@@ -28,7 +28,6 @@ public:
     void resized() override;
 
 
-    void setParameterValue(const juce::String& propertyName, const juce::String& propertyValue) override;
     void attachParameters(ParameterHandler& parameterHandler);
     void addParametersToParameterHandler(ParameterHandler& parameterHandler) override;
 

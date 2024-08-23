@@ -18,10 +18,9 @@ public:
     FilterSubsection(int id, GUI_EventHandler& eventHandler);
     ~FilterSubsection() override = default;
 
-    void resized() override;
-
     void attachParameters(ParameterHandler& parameterHandler) override;
     void addParametersToParameterHandler(ParameterHandler& parameterHandler) override;
+    void subsectionResized() override;
 
 private:
     juce::String freqParameterID;

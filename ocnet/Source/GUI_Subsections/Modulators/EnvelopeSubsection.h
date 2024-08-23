@@ -25,11 +25,9 @@ public:
     EnvelopeSubsection(int id, GUI_EventHandler& eventHandler);
     ~EnvelopeSubsection() = default;
 
-    void resized() override;
-
-
     void attachParameters(ParameterHandler& parameterHandler);
     void addParametersToParameterHandler(ParameterHandler& parameterHandler) override;
+    void subsectionResized() override;
 
 private:
     juce::String attackParameterID;

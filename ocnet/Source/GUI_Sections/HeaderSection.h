@@ -11,6 +11,7 @@
 #pragma once
 
 #include <JuceHeader.h>
+#include "../LookAndFeel_V4/OcnetLookAndFeel.h"
 
 class HeaderSection : public juce::Component, juce::Button::Listener {
 public:
@@ -31,6 +32,7 @@ public:
 
 
 private:
+    OcnetLookAndFeel lookAndFeel;
     std::vector<Listener*> listeners;
 
     juce::TextButton oscillatorsButton;

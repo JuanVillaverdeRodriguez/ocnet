@@ -44,14 +44,11 @@ EnvelopeSubsection::EnvelopeSubsection(int id, GUI_EventHandler& eventHandler) :
     this->addAndMakeVisible(*sustainKnob);
     this->addAndMakeVisible(*releaseKnob);
 
-    subsectionName.setText(juce::String("Envelope ") + juce::String(getId()));
 }
 
-void EnvelopeSubsection::resized()
+void EnvelopeSubsection::subsectionResized()
 {
     auto area = getLocalBounds();
-
-    sectionResized();
 
     int posX = 0;
     attackKnob->setBounds(posX, 20, defaultKnobSize, defaultKnobSize);

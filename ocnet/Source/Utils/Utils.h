@@ -16,6 +16,7 @@ using namespace Ocnet;
 
 namespace Ocnet {
     ProcessorType fromString(const juce::String& type);
+    juce::String createSynthParameter(const juce::String& paramName);
 
 }
 

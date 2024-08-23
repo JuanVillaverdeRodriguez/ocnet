@@ -29,15 +29,12 @@ DistortionSubsection::DistortionSubsection(int id, GUI_EventHandler& eventHandle
     mixKnob->setRange(0.0f, 1.0f, 0.01f);
     //mixKnob->setValue(1.0f);
 
-    subsectionName.setText(juce::String("Distortion ") + juce::String(getId()));
 }
 
 
-void DistortionSubsection::resized()
+void DistortionSubsection::subsectionResized()
 {
     auto area = getLocalBounds();
-
-    sectionResized();
 
     int posX = 0;
     driveKnob->setBounds(posX, 20, defaultKnobSize, defaultKnobSize);

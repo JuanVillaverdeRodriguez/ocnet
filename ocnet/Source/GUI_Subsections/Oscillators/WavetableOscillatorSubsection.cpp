@@ -53,9 +53,6 @@ WavetableOscillatorSubsection::WavetableOscillatorSubsection(int id, GUI_EventHa
     fmAmountKnob->setValue(1.0f);
     transposeKnob->setValue(0);*/
 
-
-    subsectionName.setText(juce::String("Oscillator ") + juce::String(getId()));
-
     // Configuración del ComboBox
     waveTypeComboBox.addItem("Saw", 1);
     waveTypeComboBox.addItem("Square", 2);
@@ -76,13 +73,11 @@ WavetableOscillatorSubsection::WavetableOscillatorSubsection(int id, GUI_EventHa
 
 }
 
-void WavetableOscillatorSubsection::resized()
+void WavetableOscillatorSubsection::subsectionResized()
 {
     //DBG("WavetableOscillatorSubsection::resized()");
 
     auto area = getLocalBounds();
-
-    sectionResized();
 
     volumeKnob->setBounds(0, 20, defaultKnobSize, defaultKnobSize);
     panningKnob->setBounds(defaultKnobSize, 20, defaultKnobSize, defaultKnobSize);

@@ -58,6 +58,20 @@ void ModulatorsSubsection::addParamsToParameterHandler(ParameterHandler& paramet
     addParametersToParameterHandler(parameterHandler);
 }
 
+void ModulatorsSubsection::resized()
+{
+    auto area = getLocalBounds();
+
+    removeButton.setBounds(area.getWidth() - 25, 0, 20, 20);
+    moveDownButton.setBounds(area.getWidth() - 50, 0, 20, 20);
+    moveUpButton.setBounds(area.getWidth() - 75, 0, 20, 20);
+    bypassButton.setBounds(0, 0, 20, 20);
+
+    subsectionName.setBounds(bypassButton.getWidth() + 5, 0, 100, 20);
+
+    subsectionResized();
+}
+
 bool ModulatorsSubsection::isModulating(const juce::String& modulationID)
 {
     for (auto& modulationBubble : modulationBubblesVector) {

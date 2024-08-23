@@ -46,7 +46,8 @@ std::unique_ptr<Subsection>* ModulatorsSection::addModulator(int processorType, 
 void ModulatorsSection::paint(juce::Graphics& g)
 {
     // (Our component is opaque, so we must completely fill the background with a solid colour)
-    g.fillAll(juce::Colours::darkcyan);
+    g.fillAll(Palette::Section);
+
 }
 
 std::vector<std::unique_ptr<Subsection>>* ModulatorsSection::getListOfSubsections()

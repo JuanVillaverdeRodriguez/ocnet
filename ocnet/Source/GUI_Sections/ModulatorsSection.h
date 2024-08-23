@@ -17,6 +17,8 @@
 #include "../GUI_Subsections/Modulators/LFOSubsection.h"
 #include "Section.h"
 
+using namespace Ocnet;
+
 class ModulatorsSection : public Section, public juce::Button::Listener {
 public:
     ModulatorsSection(GUI_EventHandler& eventHandler);

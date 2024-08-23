@@ -20,13 +20,22 @@ Subsection::Subsection(GUI_EventHandler& eventHandler, int id, const juce::Strin
     this->addAndMakeVisible(removeButton);
     this->addAndMakeVisible(moveUpButton);
     this->addAndMakeVisible(moveDownButton);
-    this->addAndMakeVisible(subsectionName);
     this->addAndMakeVisible(bypassButton);
+    this->addAndMakeVisible(subsectionName);
+
+    subsectionName.setText(subType + " " + getIdAsString(), juce::dontSendNotification);
+
+    subsectionName.setFont(juce::Font("Bahnschrift", 12.0f, juce::Font::bold));
+    subsectionName.setColour(subsectionName.textColourId, Palette::Text);
 
     removeButton.setButtonText("X");
     moveUpButton.setButtonText("<");
     moveDownButton.setButtonText(">");
     bypassButton.setButtonText("");
+
+    removeButton.setLookAndFeel(&lookAndFeel);
+    moveUpButton.setLookAndFeel(&lookAndFeel);
+    moveDownButton.setLookAndFeel(&lookAndFeel);
 
     removeButton.addListener(this);
     moveUpButton.addListener(this);
@@ -72,47 +81,42 @@ void Subsection::onPostInitialization()
 
 void Subsection::paint(juce::Graphics& g)
 {
+    const float cornerRadius = 5.0f; // Radio para los bordes redondeados
+    const float blackSectionHeight = 20.0f; // Altura de la sección superior negra
+
+    juce::Path topRoundedRect;
+    juce::Path bottomRoundedRect;
+
+    // Crear el rectángulo superior con bordes redondeados solo arriba
+    topRoundedRect.addRoundedRectangle(0, 0, getWidth(), blackSectionHeight, cornerRadius, cornerRadius, true, true, false, false);
+
+    // Crear el rectángulo inferior con bordes redondeados solo abajo
+    bottomRoundedRect.addRoundedRectangle(0, blackSectionHeight, getWidth(), getHeight() - blackSectionHeight, cornerRadius, cornerRadius, false, false, true, true);
+
     if (bypassed) {
-        // Definir la altura de la sección superior negra
-        auto blackSectionHeight = 20; // Puedes ajustar esta altura según sea necesario
+        // Pintar la parte superior con bordes redondeados solo arriba
+        g.setColour(Palette::SubsectionTop);
+        g.setOpacity(0.5);
+        g.fillPath(topRoundedRect);
 
-        // Pintar la parte superior de negro
-        g.setColour(juce::Colours::darkgrey.withAlpha(0.5f));
-        g.fillRect(0, 0, getWidth(), blackSectionHeight);
+        // Pintar el resto de la región de gris con bordes redondeados solo abajo
+        g.setColour(Palette::Subsection);
+        g.setOpacity(0.5);
+        g.fillPath(bottomRoundedRect);
 
-        // Pintar el resto de la región de gris
-        g.setColour(juce::Colours::grey.withAlpha(0.5f));
-        g.fillRect(0, blackSectionHeight, getWidth(), getHeight() - blackSectionHeight);
-
-        bypassButton.setColour(juce::TextButton::buttonColourId, juce::Colours::grey);
+        bypassButton.setColour(juce::TextButton::buttonColourId, Palette::BypasButtonToggled);
     }
     else {
-        // Definir la altura de la sección superior negra
-        auto blackSectionHeight = 20;
+        // Pintar la parte superior con bordes redondeados solo arriba
+        g.setColour(Palette::SubsectionTop);
+        g.fillPath(topRoundedRect);
 
-        // Pintar la parte superior de negro
-        g.setColour(juce::Colours::darkgrey);
-        g.fillRect(0, 0, getWidth(), blackSectionHeight);
+        // Pintar el resto de la región de gris con bordes redondeados solo abajo
+        g.setColour(Palette::Subsection);
+        g.fillPath(bottomRoundedRect);
 
-        // Pintar el resto de la región de gris
-        g.setColour(juce::Colours::grey);
-        g.fillRect(0, blackSectionHeight, getWidth(), getHeight() - blackSectionHeight);
-
-        bypassButton.setColour(juce::TextButton::buttonColourId, juce::Colours::orange);
+        bypassButton.setColour(juce::TextButton::buttonColourId, Palette::BypasButtonOff);
     }
-}
-
-void Subsection::sectionResized()
-{
-    auto area = getLocalBounds();
-
-    removeButton.setBounds(area.getWidth()-25, 0, 20, 20);
-    moveDownButton.setBounds(area.getWidth()-50, 0, 20, 20);
-    moveUpButton.setBounds(area.getWidth()-75, 0, 20, 20);
-    bypassButton.setBounds(0, 0, 20, 20);
-
-    subsectionName.setBounds(bypassButton.getBounds().getX() + 2, 0, 20, 20);
-    subsectionName.setText(getSubType()  + getIdAsString());
 }
 
 juce::String Subsection::createParameterID(const juce::String& type, int id, const juce::String& parameterName)

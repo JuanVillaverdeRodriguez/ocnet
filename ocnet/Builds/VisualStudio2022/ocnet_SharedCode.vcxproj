@@ -188,6 +188,7 @@
     <ClCompile Include="..\..\Source\Synth\SynthVoice.cpp"/>
     <ClCompile Include="..\..\Source\Knobs\DragZone.cpp"/>
     <ClCompile Include="..\..\Source\Knobs\Knob1.cpp"/>
+    <ClCompile Include="..\..\Source\Knobs\Knob2.cpp"/>
     <ClCompile Include="..\..\Source\Knobs\OcnetComboBox.cpp"/>
     <ClCompile Include="..\..\Source\PluginProcessor.cpp"/>
     <ClCompile Include="..\..\Source\PluginEditor.cpp"/>
@@ -2930,6 +2931,8 @@
     <ClInclude Include="..\..\Source\GUI_Subsections\Oscillators\WavetableOscillatorSubsection.h"/>
     <ClInclude Include="..\..\Source\GUI_Subsections\Subsection.h"/>
     <ClInclude Include="..\..\Source\LookAndFeel_V4\OcnetLookAndFeel.h"/>
+    <ClInclude Include="..\..\Source\LookAndFeel_V4\OcnetLookAndFeel_SubsectionButtons.h"/>
+    <ClInclude Include="..\..\Source\LookAndFeel_V4\OcnetLookAndFeel_BypassButton.h"/>
     <ClInclude Include="..\..\Source\GUI_Sections\Section.h"/>
     <ClInclude Include="..\..\Source\GUI_Sections\ModulatorsSection.h"/>
     <ClInclude Include="..\..\Source\GUI_Sections\EffectsSection.h"/>
@@ -2954,6 +2957,7 @@
     <ClInclude Include="..\..\Source\Synth\SynthVoice.h"/>
     <ClInclude Include="..\..\Source\Knobs\DragZone.h"/>
     <ClInclude Include="..\..\Source\Knobs\Knob1.h"/>
+    <ClInclude Include="..\..\Source\Knobs\Knob2.h"/>
     <ClInclude Include="..\..\Source\Knobs\OcnetComboBox.h"/>
     <ClInclude Include="..\..\Source\PluginProcessor.h"/>
     <ClInclude Include="..\..\Source\PluginEditor.h"/>

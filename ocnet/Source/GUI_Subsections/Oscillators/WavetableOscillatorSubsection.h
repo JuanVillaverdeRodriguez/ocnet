@@ -21,10 +21,10 @@ class WavetableOscillatorSubsection : public OscillatorsSubsection, public juce:
 public:
     WavetableOscillatorSubsection(int id, GUI_EventHandler& eventHandler);
 
-    void resized() override;
 
     void attachParameters(ParameterHandler& parameterHandler) override;
     void addParametersToParameterHandler(ParameterHandler& parameterHandler) override;
+    void subsectionResized() override;
 
     void updateFMCombo(juce::Array<int> ids);
     void comboBoxChanged(juce::ComboBox* comboBoxThatHasChanged) override;

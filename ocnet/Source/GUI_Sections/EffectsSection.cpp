@@ -24,7 +24,7 @@ EffectsSection::EffectsSection(GUI_EventHandler& eventHandler) : eventHandler(ev
 void EffectsSection::paint(juce::Graphics& g)
 {
     // (Our component is opaque, so we must completely fill the background with a solid colour)
-    g.fillAll(juce::Colours::darkorange);
+    g.fillAll(Palette::Section);
 }
 
 void EffectsSection::resized()

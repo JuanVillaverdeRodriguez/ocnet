@@ -21,7 +21,8 @@ public:
 
     void attachParameters(ParameterHandler& parameterHandler) override;
     void addParametersToParameterHandler(ParameterHandler& parameterHandler) override;
-    void resized() override;
+    void subsectionResized() override;
+
 private:
     juce::String speedParameterID;
 

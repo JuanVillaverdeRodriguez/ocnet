@@ -123,6 +123,10 @@
       <GROUP id="{A8633C04-BAF0-C482-E4B8-B30DCE05F41B}" name="LookAndFeel_V4">
         <FILE id="QbAx0j" name="OcnetLookAndFeel.h" compile="0" resource="0"
               file="Source/LookAndFeel_V4/OcnetLookAndFeel.h"/>
+        <FILE id="GXmelY" name="OcnetLookAndFeel_SubsectionButtons.h" compile="0"
+              resource="0" file="Source/LookAndFeel_V4/OcnetLookAndFeel_SubsectionButtons.h"/>
+        <FILE id="C10fQB" name="OcnetLookAndFeel_BypassButton.h" compile="0"
+              resource="0" file="Source/LookAndFeel_V4/OcnetLookAndFeel_BypassButton.h"/>
       </GROUP>
       <GROUP id="{0CFAC4A2-8953-FE87-2F35-5E3903C2974E}" name="GUI_Sections">
         <FILE id="f56ft7" name="Section.cpp" compile="1" resource="0" file="Source/GUI_Sections/Section.cpp"/>
@@ -212,6 +216,8 @@
         <FILE id="ptmhY6" name="DragZone.h" compile="0" resource="0" file="Source/Knobs/DragZone.h"/>
         <FILE id="cqEOg6" name="Knob1.cpp" compile="1" resource="0" file="Source/Knobs/Knob1.cpp"/>
         <FILE id="CnyiZ3" name="Knob1.h" compile="0" resource="0" file="Source/Knobs/Knob1.h"/>
+        <FILE id="ovWlmJ" name="Knob2.cpp" compile="1" resource="0" file="Source/Knobs/Knob2.cpp"/>
+        <FILE id="ejSiGi" name="Knob2.h" compile="0" resource="0" file="Source/Knobs/Knob2.h"/>
         <FILE id="Yd7K7R" name="OcnetComboBox.cpp" compile="1" resource="0"
               file="Source/Knobs/OcnetComboBox.cpp"/>
         <FILE id="PPuc6m" name="OcnetComboBox.h" compile="0" resource="0" file="Source/Knobs/OcnetComboBox.h"/>

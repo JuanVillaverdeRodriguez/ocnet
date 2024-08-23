@@ -14,6 +14,9 @@
 #include "../ParameterHandler/ParameterHandler.h"
 #include "../GUI_EventHandler.h"
 #include "../ParameterHandler/ButtonParameterAttachment.h"
+#include "../LookAndFeel_V4/OcnetLookAndFeel_SubsectionButtons.h"
+
+using namespace Ocnet;
 
 class Subsection : public juce::Component, juce::Button::Listener {
 public:
@@ -29,7 +32,6 @@ public:
     juce::String inline getIdAsString() const { return juce::String(id); }
 
     void paint(juce::Graphics& g) override;
-    void sectionResized();
 
     void setBypassed(bool bypassed);
 
@@ -58,6 +60,7 @@ private:
 
 
 protected:
+    OcnetLookAndFeel_2 lookAndFeel;
     GUI_EventHandler& eventHandler;
 
     juce::TextButton removeButton;
@@ -67,7 +70,7 @@ protected:
     juce::String bypassParameterID;
     std::unique_ptr<ButtonParameterAttachment> bypassButtonAttachment;
 
-    juce::DrawableText subsectionName;
+    juce::Label subsectionName;
 
     int defaultKnobSize;
 

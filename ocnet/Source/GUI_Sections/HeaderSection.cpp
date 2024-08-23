@@ -19,9 +19,17 @@ HeaderSection::HeaderSection()
     effectsButton.addListener(this);
 
 
+    oscillatorsButton.setLookAndFeel(&lookAndFeel);
+    effectsButton.setLookAndFeel(&lookAndFeel);
 
     oscillatorsButton.setButtonText("OSC");
     effectsButton.setButtonText("EFFECTS");
+
+    oscillatorsButton.setToggleable(true);
+    effectsButton.setToggleable(true);
+
+    oscillatorsButton.setToggleState(true, juce::dontSendNotification);
+
 
 }
 
@@ -41,11 +49,15 @@ void HeaderSection::addListener(Listener* listener)
 void HeaderSection::buttonClicked(juce::Button* clickedButton) {
     if (clickedButton == &oscillatorsButton) {
         for each (Listener * listener in listeners) {
+            oscillatorsButton.setToggleState(true, juce::NotificationType::dontSendNotification);
+            effectsButton.setToggleState(false, juce::NotificationType::dontSendNotification);
             listener->visualizeOscillatorSection();
         }
     }
     else {
         for each (Listener * listener in listeners) {
+            oscillatorsButton.setToggleState(false, juce::NotificationType::dontSendNotification);
+            effectsButton.setToggleState(true, juce::NotificationType::dontSendNotification);
             listener->visualizeEffectsSection();
         }
     }

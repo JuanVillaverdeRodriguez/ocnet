@@ -16,6 +16,8 @@
 #include "../GUI_EventHandler.h"
 #include "Section.h"
 
+using namespace Ocnet;
+
 class OscillatorsSection : public Section, juce::Button::Listener {
 public:
     OscillatorsSection(GUI_EventHandler& eventHandler);

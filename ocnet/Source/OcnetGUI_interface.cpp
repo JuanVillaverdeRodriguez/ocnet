@@ -21,6 +21,8 @@ OcnetGUI_interface::OcnetGUI_interface(OcnetAudioProcessor *processor) : process
     gui_ = std::make_unique<OcnetGUI>(*this, keyboardState);
 
 
+
+
     // Si no esta añadido, añadir un envelope principal
     if (!processor->getHasMainEnvelope()) {
         maxCurrentID = 0;
@@ -145,7 +147,6 @@ void OcnetGUI_interface::onBypassChanged(Subsection& subsection, bool toggled)
 {
     subsection.setBypassed(toggled);
     processor.setBypassed(subsection.getId(), toggled);
-    //processor.parameterHandler.setBypassed(subsection.getId(), toggled);
 }
 
 void OcnetGUI_interface::onRemoveModulation(const juce::String& modulationID)
@@ -267,6 +268,8 @@ void OcnetGUI_interface::editorIsShowing()
 
     gui_->editorIsShowing();
     initialiseGUIFromTree(processor.parameterHandler.getRootTree());
+    //gui_->addSynthParams(processor.parameterHandler);
+    //gui_->attachSynthParams(processor.parameterHandler);
 }
 
 bool OcnetGUI_interface::synthHasMainEnvelope()

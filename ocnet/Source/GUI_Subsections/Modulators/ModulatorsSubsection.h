@@ -29,13 +29,16 @@ public:
     // Patron template methods
     void attachParams(ParameterHandler& parameterHandler) final override;
     void addParamsToParameterHandler(ParameterHandler& parameterHandler) final override;
+    void resized() final override;
 
     bool isModulating(const juce::String& modulationID);
     void removeModulationBubble(const juce::String modulationID);
 
+
 protected:
     virtual void attachParameters(ParameterHandler& parameterHandler) = 0 {};
     virtual void addParametersToParameterHandler(ParameterHandler& parameterHandler) = 0 {};
+    virtual void subsectionResized() = 0 {};
 
     DragZone dragZone;
 

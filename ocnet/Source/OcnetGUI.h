@@ -19,9 +19,10 @@ public:
     void visualizeOscillatorSection() override;
     void visualizeEffectsSection() override;
 
-    void clear();
+    void addSynthParams(ParameterHandler& parameterHandler);
+    void attachSynthParams(ParameterHandler& parameterHandler);
 
-    void attachParams(juce::AudioProcessorValueTreeState& apvts);
+    void clear();
 
     void resized() override;
 

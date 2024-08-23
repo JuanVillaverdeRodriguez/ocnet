@@ -36,11 +36,9 @@ void LFOSubsection::addParametersToParameterHandler(ParameterHandler& parameterH
 
 
 
-void LFOSubsection::resized()
+void LFOSubsection::subsectionResized()
 {
     auto area = getLocalBounds();
-
-    sectionResized();
 
     int posX = 0;
     speedKnob->setBounds(posX, 20, defaultKnobSize, defaultKnobSize);

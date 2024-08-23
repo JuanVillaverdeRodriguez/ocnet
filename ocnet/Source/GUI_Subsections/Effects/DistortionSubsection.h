@@ -20,10 +20,9 @@ public:
     DistortionSubsection(int id, GUI_EventHandler& eventHandler);
     ~DistortionSubsection() = default;
 
-    void resized() override;
-
     void attachParameters(ParameterHandler& parameterHandler) override;
     void addParametersToParameterHandler(ParameterHandler& parameterHandler) override;
+    void subsectionResized() override;
 
 private:
     juce::String driveParameterID;

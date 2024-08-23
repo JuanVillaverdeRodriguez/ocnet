@@ -8,7 +8,7 @@ OcnetGUI::OcnetGUI(GUI_EventHandler& eventHandler, juce::MidiKeyboardState& keyb
 
 
     headerSection = std::make_unique<HeaderSection>();
-    footerSection = std::make_unique<FooterSection>();
+    footerSection = std::make_unique<FooterSection>(eventHandler);
     oscillatorsSection = std::make_unique<OscillatorsSection>(eventHandler);
     modulatorsSection = std::make_unique<ModulatorsSection>(eventHandler);
     effectsSection = std::make_unique<EffectsSection>(eventHandler);
@@ -44,11 +44,6 @@ OcnetGUI::~OcnetGUI()
 {
 }
 
-void OcnetGUI::attachParams(juce::AudioProcessorValueTreeState& apvts) {
-
-    //getModulatorsSection()->attachParams(apvts);
-}
-
 void OcnetGUI::clear() {
     this->removeAllChildren();
 }
@@ -72,6 +67,16 @@ void OcnetGUI::visualizeEffectsSection()
 
     //this->removeChildComponent(this->getIndexOfChildComponent(getOscillatorsSection()));
     //this->addAndMakeVisible(getEffectsSection());
+}
+
+void OcnetGUI::addSynthParams(ParameterHandler& parameterHandler)
+{
+    footerSection->addSynthParams(parameterHandler);
+
+}
+
+void OcnetGUI::attachSynthParams(ParameterHandler& parameterHandler)
+{
 }
 
 

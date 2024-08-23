@@ -904,6 +904,9 @@
     <ClCompile Include="..\..\Source\Knobs\Knob1.cpp">
       <Filter>ocnet\Source\Knobs</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Source\Knobs\Knob2.cpp">
+      <Filter>ocnet\Source\Knobs</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\Source\Knobs\OcnetComboBox.cpp">
       <Filter>ocnet\Source\Knobs</Filter>
     </ClCompile>
@@ -3885,6 +3888,12 @@
     <ClInclude Include="..\..\Source\LookAndFeel_V4\OcnetLookAndFeel.h">
       <Filter>ocnet\Source\LookAndFeel_V4</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Source\LookAndFeel_V4\OcnetLookAndFeel_SubsectionButtons.h">
+      <Filter>ocnet\Source\LookAndFeel_V4</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\LookAndFeel_V4\OcnetLookAndFeel_BypassButton.h">
+      <Filter>ocnet\Source\LookAndFeel_V4</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\Source\GUI_Sections\Section.h">
       <Filter>ocnet\Source\GUI_Sections</Filter>
     </ClInclude>
@@ -3955,6 +3964,9 @@
       <Filter>ocnet\Source\Knobs</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\Knobs\Knob1.h">
+      <Filter>ocnet\Source\Knobs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Knobs\Knob2.h">
       <Filter>ocnet\Source\Knobs</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\Knobs\OcnetComboBox.h">

@@ -24,7 +24,8 @@ OscillatorsSection::OscillatorsSection(GUI_EventHandler& eventHandler) : eventHa
 void OscillatorsSection::paint(juce::Graphics& g)
 {
     // (Our component is opaque, so we must completely fill the background with a solid colour)
-    g.fillAll(juce::Colours::darkgreen);
+    g.fillAll(Palette::Section);
+
 }
 
 void OscillatorsSection::resized()

@@ -54,4 +54,8 @@ namespace Ocnet {
         if (type == "LFO") return LFO;
         return Unknown;
     }
+    juce::String createSynthParameter(const juce::String& paramName)
+    {
+        return "";
+    }
 }

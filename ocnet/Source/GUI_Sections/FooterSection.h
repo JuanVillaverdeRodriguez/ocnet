@@ -11,34 +11,29 @@
 #pragma once
 
 #include <JuceHeader.h>
-#include "../LookAndFeel_V4/OcnetLookAndFeel.h"
+#include "../Knobs/Knob2.h"
 
-class FooterSection : public juce::Component, juce::Slider::Listener {
+using namespace Ocnet;
+
+class FooterSection : public juce::Component {
 public:
-    FooterSection();
-
-    class Listener {
-    public:
-        virtual ~Listener() { }
-        virtual void visualizeOscillatorSection() = 0;
-        virtual void visualizeEffectsSection() = 0;
-    };
-
-    
+    FooterSection(GUI_EventHandler& eventHandler);
 
     void resized() override;
 
-    void sliderValueChanged(juce::Slider* slider) override;
     void paint(juce::Graphics& g) override;
 
-
+    void addSynthParams(ParameterHandler& parameterHandler);
+    void attachSynthParams(ParameterHandler& parameterHandler);
 
 private:
-    std::vector<Listener*> listeners;
-    OcnetLookAndFeel lookAndFeel;
+    GUI_EventHandler& eventHandler;
+
 
 
     juce::Slider slider;
+
+    Knob2 numVoicesKnob;
 
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(FooterSection)

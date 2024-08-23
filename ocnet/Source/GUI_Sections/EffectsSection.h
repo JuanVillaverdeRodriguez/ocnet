@@ -18,6 +18,8 @@
 #include "../GUI_EventHandler.h"
 #include "Section.h"
 
+using namespace Ocnet;
+
 class EffectsSection : public Section, juce::Button::Listener {
 public:
     EffectsSection(GUI_EventHandler& eventHandler);

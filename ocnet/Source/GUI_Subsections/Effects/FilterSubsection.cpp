@@ -14,8 +14,6 @@ FilterSubsection::FilterSubsection(int id, GUI_EventHandler& eventHandler) : Eff
 {
     freqParameterID = createParameterID("Filter", getId(), "freqCut");
 
-    subsectionName.setText(juce::String("Filter ") + juce::String(getId()));
-
     freqCutKnob = std::make_unique<Knob1>(freqParameterID, eventHandler, "Frequency");
 
     this->addAndMakeVisible(*freqCutKnob);
@@ -35,11 +33,9 @@ FilterSubsection::FilterSubsection(int id, GUI_EventHandler& eventHandler) : Eff
 
 }
 
-void FilterSubsection::resized()
+void FilterSubsection::subsectionResized()
 {
     auto area = getLocalBounds();
-
-    sectionResized();
 
     int posX = 0;
     freqCutKnob->setBounds(posX, 20, defaultKnobSize, defaultKnobSize);

@@ -34,20 +34,14 @@ void LFOSubsection::addParametersToParameterHandler(ParameterHandler& parameterH
     parameterHandler.addSliderParameter(speedParameterID, std::make_shared<SliderParameter>("freq", 0.5f));
 }
 
-
-
 void LFOSubsection::subsectionResized()
 {
     auto area = getLocalBounds();
 
-    int posX = 0;
+    int posX = 35;
     speedKnob->setBounds(posX, 20, defaultKnobSize, defaultKnobSize);
     posX += defaultKnobSize;
     
-    dragZone.setBounds(posX, area.getHeight() - defaultKnobSize, defaultKnobSize, defaultKnobSize);
-    posX += defaultKnobSize;
-
-
     speedKnob->showLabel(*this, *speedKnob);
 
     int lastX = 0;
@@ -57,5 +51,4 @@ void LFOSubsection::subsectionResized()
         modulationBubble->setBounds(globalBounds.getX() + lastX, globalBounds.getY(), defaultKnobSize - 25, defaultKnobSize - 25);
         lastX += modulationBubble->getBounds().getWidth() + 3;
     }
-
 }

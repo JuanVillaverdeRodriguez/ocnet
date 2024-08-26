@@ -69,6 +69,8 @@ void ModulatorsSubsection::resized()
 
     subsectionName.setBounds(bypassButton.getWidth() + 5, 0, 100, 20);
 
+    dragZone.setBounds(0, 20, 35, area.getHeight() - 20);
+
     subsectionResized();
 }
 

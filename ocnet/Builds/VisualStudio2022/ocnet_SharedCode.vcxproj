@@ -4268,7 +4268,8 @@
     <ClInclude Include="..\..\JuceLibraryCode\JucePluginDefines.h"/>
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\..\Source\Images\Arrows.png"/>
+    <None Include="..\..\Source\Images\AddAutomationIcon_Hovering.png"/>
+    <None Include="..\..\Source\Images\AddAutomationIcon_NotHovering.png"/>
     <None Include="..\..\JuceLibraryCode\modules\juce_audio_devices\native\oboe\src\common\README.md"/>
     <None Include="..\..\JuceLibraryCode\modules\juce_audio_devices\native\oboe\src\flowgraph\resampler\README.md"/>
     <None Include="..\..\JuceLibraryCode\modules\juce_audio_devices\native\oboe\CMakeLists.txt"/>

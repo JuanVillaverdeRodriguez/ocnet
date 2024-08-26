@@ -7895,7 +7895,10 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\..\Source\Images\Arrows.png">
+    <None Include="..\..\Source\Images\AddAutomationIcon_Hovering.png">
+      <Filter>ocnet\Source\Images</Filter>
+    </None>
+    <None Include="..\..\Source\Images\AddAutomationIcon_NotHovering.png">
       <Filter>ocnet\Source\Images</Filter>
     </None>
     <None Include="..\..\JuceLibraryCode\modules\juce_audio_devices\native\oboe\src\common\README.md">

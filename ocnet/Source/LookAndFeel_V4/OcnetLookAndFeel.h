@@ -75,10 +75,14 @@ public:
         g.setColour(Palette::SliderBackground);
         g.fillPath(backgroundArc);
 
+
+        // Cambiar el color según si el ratón está sobre el slider o no
+        juce::Colour fillColour = slider.isMouseOver() ? Palette::SliderFillHovering : Palette::SliderFill;
+
         // Arco del valor actual
         juce::Path valueArc;
         valueArc.addPieSegment(rx, ry, rw, rw, rotaryStartAngle, angle, 0.5f);
-        g.setColour(Palette::SliderFill); // Color personalizado del arco
+        g.setColour(fillColour); // Color personalizado del arco
         g.fillPath(valueArc);
 
         // Parte blanca (sector pequeño)

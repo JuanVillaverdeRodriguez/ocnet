@@ -12,6 +12,9 @@
 
 #include <JuceHeader.h>
 #include "../GUI_Subsections/Subsection.h"
+
+using namespace Ocnet;
+
 class DragZone : public juce::Component, public juce::DragAndDropContainer
 {
 public:
@@ -21,9 +24,12 @@ public:
 
     void mouseDown(const juce::MouseEvent& event) override;
     void mouseUp(const juce::MouseEvent& event);
+    void mouseEnter(const juce::MouseEvent& event) override;
+    void mouseExit(const juce::MouseEvent& event) override;
     void resized() override;
     void paint(juce::Graphics& g) override;
 private:
+    bool mouseHovering;
     juce::DragAndDropContainer* parentContainer;
     Subsection* parentComponent;
 

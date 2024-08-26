@@ -61,6 +61,8 @@ void ModulatorsSection::resized()
 
     int lastSubsection = sectionResized();
 
+
+
     addModulatorButton.setBounds(area.getWidth() / 2 - 25, lastSubsection + 5, 50, 50);
 
     if (lastSubsection + 100 >= this->getBounds().getHeight()) {

@@ -10,7 +10,7 @@
 
 #include "DragZone.h"
 
-DragZone::DragZone()
+DragZone::DragZone() : mouseHovering(false)
 {
     setSize(50, 50);       
 }
@@ -37,9 +37,30 @@ void DragZone::resized()
 
 void DragZone::paint(juce::Graphics& g)
 {
-    g.fillAll(juce::Colours::darkcyan);
-    g.setColour(juce::Colours::darkgrey);
-    g.drawRect(getLocalBounds(), 2);
+    // Llenar el fondo con el color especificado
+    g.fillAll(Palette::BackgroundSecondary);
+
+    juce::Image dragImage;
+    if (!mouseHovering) {
+        dragImage = juce::PNGImageFormat::loadFrom(BinaryData::AddAutomationIcon_NotHovering_png, BinaryData::AddAutomationIcon_NotHovering_pngSize);
+    }
+    else {
+        dragImage = juce::PNGImageFormat::loadFrom(BinaryData::AddAutomationIcon_Hovering_png, BinaryData::AddAutomationIcon_Hovering_pngSize);
+    }
+    // Cargar la imagen
+
+    // Escalar la imagen al tamaño deseado
+    dragImage = dragImage.rescaled(32, 32);
+
+    if (dragImage.isValid())
+    {
+        // Calcular la posición para centrar la imagen
+        int x = (getWidth() - dragImage.getWidth()) / 2;
+        int y = (getHeight() - dragImage.getHeight()) / 2;
+
+        // Dibujar la imagen centrada
+        g.drawImageAt(dragImage, x, y);
+    }
 }
 
 void DragZone::mouseDown(const juce::MouseEvent& event)
@@ -48,7 +69,7 @@ void DragZone::mouseDown(const juce::MouseEvent& event)
     {
         juce::var dragDescription = "LFO1"; // Descripción de lo que se está arrastrando
 
-        juce::Image dragImage = juce::PNGImageFormat::loadFrom(BinaryData::Arrows_png, BinaryData::Arrows_pngSize);
+        juce::Image dragImage = juce::PNGImageFormat::loadFrom(BinaryData::AddAutomationIcon_Hovering_png, BinaryData::AddAutomationIcon_Hovering_pngSize);
         
         dragImage = dragImage.rescaled(64, 64);
 
@@ -72,4 +93,18 @@ void DragZone::mouseUp(const juce::MouseEvent& event)
 {
     // Restaurar el cursor al predeterminado después de soltar el mouse
     setMouseCursor(juce::MouseCursor::NormalCursor);
+}
+
+void DragZone::mouseEnter(const juce::MouseEvent& event)
+{
+    setMouseCursor(juce::MouseCursor::DraggingHandCursor);
+    mouseHovering = true;
+    repaint();
+}
+
+void DragZone::mouseExit(const juce::MouseEvent& event)
+{
+    setMouseCursor(juce::MouseCursor::NormalCursor);
+    mouseHovering = false;
+    repaint();
 }

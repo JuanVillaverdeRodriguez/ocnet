@@ -19,8 +19,10 @@
               file="Source/Tests/WavetableOscillatorTest.h"/>
       </GROUP>
       <GROUP id="{E32E9B02-60DC-B84A-A01C-CA0659659B6E}" name="Images">
-        <FILE id="pX79Pj" name="Arrows.png" compile="0" resource="1" file="Source/Images/Arrows.png"
-              xcodeResource="0"/>
+        <FILE id="wpiUV3" name="AddAutomationIcon_Hovering.png" compile="0"
+              resource="1" file="Source/Images/AddAutomationIcon_Hovering.png"/>
+        <FILE id="mxnTHM" name="AddAutomationIcon_NotHovering.png" compile="0"
+              resource="1" file="Source/Images/AddAutomationIcon_NotHovering.png"/>
       </GROUP>
       <GROUP id="{F52BF096-D323-543B-BB6D-EE7A16831A24}" name="GUI_Others">
         <FILE id="NLeDeZ" name="ModulationBubble.cpp" compile="1" resource="0"

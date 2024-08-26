@@ -29,22 +29,24 @@ namespace Ocnet {
 }
 
 namespace Ocnet::Palette {
-    const juce::Colour Background { 0xff171717 }; // Rich Black
-    const juce::Colour BackgroundSecondary { 0xff272727 }; // Raisin Black
-    const juce::Colour Primary { 0xff314068 }; // Space Cadet
-    const juce::Colour Secondary { 0xff32576C }; // Mexican Pink
-    const juce::Colour Accent { 0xff6727C1 }; // Vivid Sky Blue
-    const juce::Colour White { 0xffE0E0E0 }; // White Smoke
+    const juce::Colour Background { 0xff272727 }; // Rich Black
+    const juce::Colour BackgroundSecondary { 0xff353535 }; // Raisin Black
+    const juce::Colour BackgroundThird { 0xff525252 }; // Raisin Black
+    const juce::Colour Primary { 0xff5B4373 }; // Space Cadet
+    const juce::Colour Secondary { 0xff436C73 }; // Mexican Pink
+    const juce::Colour Accent { 0xff4B7981 }; // Vivid Sky Blue
+    const juce::Colour White { 0xffE3E3E3 }; // White Smoke
 
     //==============================================
 
     const juce::Colour Text{ White }; // White Smoke
 
     const juce::Colour Section { Background }; // Fondo de las secciones 
-    const juce::Colour Subsection { Primary }; // Fondo de las subsecciones
+    const juce::Colour Subsection { BackgroundThird }; // Fondo de las subsecciones
     const juce::Colour SubsectionTop { BackgroundSecondary };
 
-    const juce::Colour SliderFill { Accent };
+    const juce::Colour SliderFill { Secondary };
+    const juce::Colour SliderFillHovering { Accent };
     const juce::Colour SliderDot { White };
     const juce::Colour SliderBackground{ BackgroundSecondary };
 

@@ -50,7 +50,7 @@ void EnvelopeSubsection::subsectionResized()
 {
     auto area = getLocalBounds();
 
-    int posX = 0;
+    int posX = 35;
     attackKnob->setBounds(posX, 20, defaultKnobSize, defaultKnobSize);
     posX += defaultKnobSize;
 
@@ -61,9 +61,6 @@ void EnvelopeSubsection::subsectionResized()
     posX += defaultKnobSize;
 
     releaseKnob->setBounds(posX, 20, defaultKnobSize, defaultKnobSize);
-    posX += defaultKnobSize;
-
-    dragZone.setBounds(posX, 20, defaultKnobSize, defaultKnobSize);
     posX += defaultKnobSize;
 
     attackKnob->showLabel(*this, *attackKnob);

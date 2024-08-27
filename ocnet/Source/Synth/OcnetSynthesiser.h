@@ -33,6 +33,9 @@ public:
     void setBypassed(int id, bool bypassed);
     void removeModulation(const juce::String& modulationID);
     void setFmFrom(int carrierID, int modulatorID);
+
+    void samplerSampleChanged(int id, const juce::String& filename);
+
 private:
     bool hasMainEnvelope = false;
 

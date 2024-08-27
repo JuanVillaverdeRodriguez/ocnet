@@ -11,7 +11,7 @@
 #include "Subsection.h"
 
 Subsection::Subsection(GUI_EventHandler& eventHandler, int id, const juce::String& type, const juce::String& subType) 
-    : eventHandler(eventHandler), defaultKnobSize(45), subType(subType), id(id)
+    : eventHandler(eventHandler), defaultKnobSize(45), subType(subType), id(id), type(type)
 {
     bypassParameterID = createParameterID("bypass");
 
@@ -51,16 +51,19 @@ void Subsection::buttonClicked(juce::Button* clickedButton)
     if (clickedButton == &removeButton) {
         eventHandler.onDeleteSubsection(*this);
     }
-    if (clickedButton == &moveUpButton) {
+    else if (clickedButton == &moveUpButton) {
         eventHandler.onMoveSubsection(*this, -1);
     }
-    if (clickedButton == &moveDownButton) {
+    else if (clickedButton == &moveDownButton) {
         eventHandler.onMoveSubsection(*this, 1);
     }
-    if (clickedButton == &bypassButton) {
+    else if (clickedButton == &bypassButton) {
         bypassButton.setToggleState(!bypassed, juce::NotificationType::dontSendNotification);
         setBypassed(!bypassButton.getToggleState());
         eventHandler.onBypassChanged(*this, bypassButton.getToggleState());
+    }
+    else {
+        buttonClickedCalled(clickedButton);
     }
 }
 

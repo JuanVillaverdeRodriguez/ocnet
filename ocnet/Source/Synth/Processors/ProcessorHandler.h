@@ -56,6 +56,8 @@ public:
 
     void setFmFrom(int carrierID, int modulatorID);
 
+    void samplerSampleChanged(int id, const juce::String& filename);
+
 private:
     int voiceId;
 

@@ -9,10 +9,20 @@
       <GROUP id="{F591502B-D252-AF77-BD88-02035A3602DE}" name="Tests">
         <FILE id="Fjljia" name="GUITest.cpp" compile="1" resource="0" file="Source/Tests/GUITest.cpp"/>
         <FILE id="TmZKnz" name="GUITest.h" compile="0" resource="0" file="Source/Tests/GUITest.h"/>
+        <FILE id="ooybWQ" name="InternalFilesTest.cpp" compile="1" resource="0"
+              file="Source/Tests/InternalFilesTest.cpp"/>
+        <FILE id="R8Onpb" name="InternalFilesTest.h" compile="0" resource="0"
+              file="Source/Tests/InternalFilesTest.h"/>
+        <FILE id="nsWAuz" name="ModulationsTest.cpp" compile="1" resource="0"
+              file="Source/Tests/ModulationsTest.cpp"/>
+        <FILE id="RofRZX" name="ModulationsTest.h" compile="0" resource="0"
+              file="Source/Tests/ModulationsTest.h"/>
         <FILE id="lRiiJs" name="ParameterHandlerTest.cpp" compile="1" resource="0"
               file="Source/Tests/ParameterHandlerTest.cpp"/>
         <FILE id="w4zp5K" name="ParameterHandlerTest.h" compile="0" resource="0"
               file="Source/Tests/ParameterHandlerTest.h"/>
+        <FILE id="f4qtDY" name="StressTest.cpp" compile="1" resource="0" file="Source/Tests/StressTest.cpp"/>
+        <FILE id="UFlGYr" name="StressTest.h" compile="0" resource="0" file="Source/Tests/StressTest.h"/>
         <FILE id="GBB83Z" name="WavetableOscillatorTest.cpp" compile="1" resource="0"
               file="Source/Tests/WavetableOscillatorTest.cpp"/>
         <FILE id="m7XIt0" name="WavetableOscillatorTest.h" compile="0" resource="0"
@@ -114,6 +124,10 @@
                 file="Source/GUI_Subsections/Oscillators/OscillatorsSubsection.cpp"/>
           <FILE id="xagz08" name="OscillatorsSubsection.h" compile="0" resource="0"
                 file="Source/GUI_Subsections/Oscillators/OscillatorsSubsection.h"/>
+          <FILE id="cnGrgN" name="SamplerSubsection.cpp" compile="1" resource="0"
+                file="Source/GUI_Subsections/Oscillators/SamplerSubsection.cpp"/>
+          <FILE id="Ns1GOr" name="SamplerSubsection.h" compile="0" resource="0"
+                file="Source/GUI_Subsections/Oscillators/SamplerSubsection.h"/>
           <FILE id="tA03u8" name="WavetableOscillatorSubsection.cpp" compile="1"
                 resource="0" file="Source/GUI_Subsections/Oscillators/WavetableOscillatorSubsection.cpp"/>
           <FILE id="uSBclJ" name="WavetableOscillatorSubsection.h" compile="0"
@@ -173,12 +187,15 @@
           <FILE id="fas4ma" name="ProcessorHandler.h" compile="0" resource="0"
                 file="Source/Synth/Processors/ProcessorHandler.h"/>
           <GROUP id="{F42BDE12-C9CD-9A85-C66D-85900EFF7C78}" name="Oscillators">
+            <FILE id="SC1RqH" name="SamplerProcessor.cpp" compile="1" resource="0"
+                  file="Source/Synth/Processors/Oscillators/SamplerProcessor.cpp"/>
+            <FILE id="sNs4Ta" name="SamplerProcessor.h" compile="0" resource="0"
+                  file="Source/Synth/Processors/Oscillators/SamplerProcessor.h"/>
             <FILE id="R44Eph" name="WavetableOscillatorProcessor.cpp" compile="1"
                   resource="0" file="Source/Synth/Processors/Oscillators/WavetableOscillatorProcessor.cpp"/>
             <FILE id="SsHFrw" name="WavetableOscillatorProcessor.h" compile="0"
                   resource="0" file="Source/Synth/Processors/Oscillators/WavetableOscillatorProcessor.h"/>
           </GROUP>
-          <GROUP id="{A0D7E883-2E8B-DAB9-94D8-C766BB592BE4}" name="EffectsChains"/>
           <GROUP id="{E9BC3EE7-B3EF-6C8B-FB4D-C92AA9B0031D}" name="Effects">
             <FILE id="GAoXMY" name="DistortionProcessor.cpp" compile="1" resource="0"
                   file="Source/Synth/Processors/Effects/DistortionProcessor.cpp"/>

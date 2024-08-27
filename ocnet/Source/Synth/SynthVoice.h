@@ -52,6 +52,9 @@ public:
     void setBypassed(int id, bool bypassed);
     void setFmFrom(int idFrom, int idTo);
 
+    void samplerSampleChanged(int id, const juce::String& filename);
+
+
 private:
     juce::dsp::ProcessSpec spec;
 

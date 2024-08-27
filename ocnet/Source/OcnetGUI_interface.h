@@ -38,6 +38,7 @@ public:
 
     void onFmFromChanged(const juce::String& carrierID, const juce::String& modulatorID) override;
 
+    void onSamplerSampleChanged(int samplerID, const juce::String& parameterID, const juce::String& sampleName) override;
 
     void initialiseGUIFromTree(juce::ValueTree tree);
 

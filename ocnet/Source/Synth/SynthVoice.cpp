@@ -154,3 +154,8 @@ void SynthVoice::setFmFrom(int carrierID, int modulatorID)
     processorhHandler.setFmFrom(carrierID, modulatorID);
 
 }
+
+void SynthVoice::samplerSampleChanged(int id, const juce::String& filename)
+{
+    processorhHandler.samplerSampleChanged(id, filename);
+}

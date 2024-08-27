@@ -39,6 +39,7 @@ public:
     bool isBypassed();
     virtual float getCurrentFreq() { return 0.0f; }
 
+    virtual void loadAudioFile(const juce::String& filename) {};
 private:
     int voiceId;
     int id;

@@ -18,7 +18,7 @@
 
 using namespace Ocnet;
 
-class Subsection : public juce::Component, juce::Button::Listener {
+class Subsection : public juce::Component, public juce::Button::Listener {
 public:
     Subsection(GUI_EventHandler& eventHandler, int id, const juce::String& type, const juce::String& subType);
     virtual ~Subsection() = default;
@@ -36,6 +36,7 @@ public:
     void setBypassed(bool bypassed);
 
     void buttonClicked(juce::Button* clickedButton) override;
+    virtual void buttonClickedCalled(juce::Button* clickedButton) {};
 
     // Attachea los parametros con los knobs
     virtual void attachParams(ParameterHandler& parameterHandler) = 0 {};
@@ -60,6 +61,7 @@ private:
 
 
 protected:
+
     OcnetLookAndFeel_2 lookAndFeel;
     GUI_EventHandler& eventHandler;
 

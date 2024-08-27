@@ -55,6 +55,11 @@ public:
     // Obtiene todos los modulationsID que estan modulando este parametro.
     juce::Array<juce::String> getParameterModulationIDs(const juce::String parameterModulating);
 
+    // Funciones genericas para actualizar, añadir y obtener parametros del arbol
+    void updateParameter(const juce::String& parameterID, const juce::String& newValue);
+    void addParameter(const juce::String& parameterID, juce::var initialValue);
+    juce::var getParameterValue(const juce::String& parameterID);
+
 private:
     juce::ValueTree rootNode;
 

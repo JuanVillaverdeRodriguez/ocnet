@@ -760,7 +760,16 @@
     <ClCompile Include="..\..\Source\Tests\GUITest.cpp">
       <Filter>ocnet\Source\Tests</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Source\Tests\InternalFilesTest.cpp">
+      <Filter>ocnet\Source\Tests</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Tests\ModulationsTest.cpp">
+      <Filter>ocnet\Source\Tests</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\Source\Tests\ParameterHandlerTest.cpp">
+      <Filter>ocnet\Source\Tests</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Tests\StressTest.cpp">
       <Filter>ocnet\Source\Tests</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\Tests\WavetableOscillatorTest.cpp">
@@ -832,6 +841,9 @@
     <ClCompile Include="..\..\Source\GUI_Subsections\Oscillators\OscillatorsSubsection.cpp">
       <Filter>ocnet\Source\GUI_Subsections\Oscillators</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Source\GUI_Subsections\Oscillators\SamplerSubsection.cpp">
+      <Filter>ocnet\Source\GUI_Subsections\Oscillators</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\Source\GUI_Subsections\Oscillators\WavetableOscillatorSubsection.cpp">
       <Filter>ocnet\Source\GUI_Subsections\Oscillators</Filter>
     </ClCompile>
@@ -873,6 +885,9 @@
     </ClCompile>
     <ClCompile Include="..\..\Source\Synth\Processors\ProcessorHandler.cpp">
       <Filter>ocnet\Source\Synth\Processors</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Synth\Processors\Oscillators\SamplerProcessor.cpp">
+      <Filter>ocnet\Source\Synth\Processors\Oscillators</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\Synth\Processors\Oscillators\WavetableOscillatorProcessor.cpp">
       <Filter>ocnet\Source\Synth\Processors\Oscillators</Filter>
@@ -3807,7 +3822,16 @@
     <ClInclude Include="..\..\Source\Tests\GUITest.h">
       <Filter>ocnet\Source\Tests</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Source\Tests\InternalFilesTest.h">
+      <Filter>ocnet\Source\Tests</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Tests\ModulationsTest.h">
+      <Filter>ocnet\Source\Tests</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\Source\Tests\ParameterHandlerTest.h">
+      <Filter>ocnet\Source\Tests</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Tests\StressTest.h">
       <Filter>ocnet\Source\Tests</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\Tests\WavetableOscillatorTest.h">
@@ -3879,6 +3903,9 @@
     <ClInclude Include="..\..\Source\GUI_Subsections\Oscillators\OscillatorsSubsection.h">
       <Filter>ocnet\Source\GUI_Subsections\Oscillators</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Source\GUI_Subsections\Oscillators\SamplerSubsection.h">
+      <Filter>ocnet\Source\GUI_Subsections\Oscillators</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\Source\GUI_Subsections\Oscillators\WavetableOscillatorSubsection.h">
       <Filter>ocnet\Source\GUI_Subsections\Oscillators</Filter>
     </ClInclude>
@@ -3929,6 +3956,9 @@
     </ClInclude>
     <ClInclude Include="..\..\Source\Synth\Processors\ProcessorHandler.h">
       <Filter>ocnet\Source\Synth\Processors</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Synth\Processors\Oscillators\SamplerProcessor.h">
+      <Filter>ocnet\Source\Synth\Processors\Oscillators</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\Synth\Processors\Oscillators\WavetableOscillatorProcessor.h">
       <Filter>ocnet\Source\Synth\Processors\Oscillators</Filter>

@@ -48,6 +48,9 @@ std::unique_ptr<Subsection>* OscillatorsSection::addOscillator(int processorType
         case WavetableOscillator:
             subsectionsVector.push_back(std::make_unique<WavetableOscillatorSubsection>(numberOfWavetableOscillators, eventHandler));
             break;
+        case Sampler:
+            subsectionsVector.push_back(std::make_unique<SamplerSubsection>(numberOfWavetableOscillators, eventHandler));
+            break;
 
         default:
             return nullptr;
@@ -93,7 +96,7 @@ void OscillatorsSection::buttonClicked(juce::Button* clickedButton)
                 if (result == 1)
                     eventHandler.onAddOscillator(WavetableOscillator);
                 else if (result == 2)
-                    eventHandler.onAddOscillator(WavetableOscillator);
+                    eventHandler.onAddOscillator(Sampler);
                 else if (result == 3)
                     eventHandler.onAddOscillator(WavetableOscillator);
 

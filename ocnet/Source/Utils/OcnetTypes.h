@@ -24,6 +24,7 @@ namespace Ocnet {
         WavetableOscillator,
         Envelope,
         LFO,
+        Sampler,
         Unknown
     };
 }

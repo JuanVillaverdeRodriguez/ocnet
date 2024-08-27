@@ -140,7 +140,10 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\..\Source\Tests\GUITest.cpp"/>
+    <ClCompile Include="..\..\Source\Tests\InternalFilesTest.cpp"/>
+    <ClCompile Include="..\..\Source\Tests\ModulationsTest.cpp"/>
     <ClCompile Include="..\..\Source\Tests\ParameterHandlerTest.cpp"/>
+    <ClCompile Include="..\..\Source\Tests\StressTest.cpp"/>
     <ClCompile Include="..\..\Source\Tests\WavetableOscillatorTest.cpp"/>
     <ClCompile Include="..\..\Source\GUI_Others\ModulationBubble.cpp"/>
     <ClCompile Include="..\..\Source\GUI_Others\OcnetComboBox.cpp"/>
@@ -164,6 +167,7 @@
     <ClCompile Include="..\..\Source\GUI_Subsections\Modulators\LFOSubsection.cpp"/>
     <ClCompile Include="..\..\Source\GUI_Subsections\Modulators\ModulatorsSubsection.cpp"/>
     <ClCompile Include="..\..\Source\GUI_Subsections\Oscillators\OscillatorsSubsection.cpp"/>
+    <ClCompile Include="..\..\Source\GUI_Subsections\Oscillators\SamplerSubsection.cpp"/>
     <ClCompile Include="..\..\Source\GUI_Subsections\Oscillators\WavetableOscillatorSubsection.cpp"/>
     <ClCompile Include="..\..\Source\GUI_Subsections\Subsection.cpp"/>
     <ClCompile Include="..\..\Source\GUI_Sections\Section.cpp"/>
@@ -178,6 +182,7 @@
     <ClCompile Include="..\..\Source\Synth\Processors\Effector.cpp"/>
     <ClCompile Include="..\..\Source\Synth\Processors\Modulator.cpp"/>
     <ClCompile Include="..\..\Source\Synth\Processors\ProcessorHandler.cpp"/>
+    <ClCompile Include="..\..\Source\Synth\Processors\Oscillators\SamplerProcessor.cpp"/>
     <ClCompile Include="..\..\Source\Synth\Processors\Oscillators\WavetableOscillatorProcessor.cpp"/>
     <ClCompile Include="..\..\Source\Synth\Processors\Effects\DistortionProcessor.cpp"/>
     <ClCompile Include="..\..\Source\Synth\Processors\Effects\FilterProcessor.cpp"/>
@@ -2904,7 +2909,10 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Source\Tests\GUITest.h"/>
+    <ClInclude Include="..\..\Source\Tests\InternalFilesTest.h"/>
+    <ClInclude Include="..\..\Source\Tests\ModulationsTest.h"/>
     <ClInclude Include="..\..\Source\Tests\ParameterHandlerTest.h"/>
+    <ClInclude Include="..\..\Source\Tests\StressTest.h"/>
     <ClInclude Include="..\..\Source\Tests\WavetableOscillatorTest.h"/>
     <ClInclude Include="..\..\Source\GUI_Others\ModulationBubble.h"/>
     <ClInclude Include="..\..\Source\GUI_Others\OcnetComboBox.h"/>
@@ -2928,6 +2936,7 @@
     <ClInclude Include="..\..\Source\GUI_Subsections\Modulators\LFOSubsection.h"/>
     <ClInclude Include="..\..\Source\GUI_Subsections\Modulators\ModulatorsSubsection.h"/>
     <ClInclude Include="..\..\Source\GUI_Subsections\Oscillators\OscillatorsSubsection.h"/>
+    <ClInclude Include="..\..\Source\GUI_Subsections\Oscillators\SamplerSubsection.h"/>
     <ClInclude Include="..\..\Source\GUI_Subsections\Oscillators\WavetableOscillatorSubsection.h"/>
     <ClInclude Include="..\..\Source\GUI_Subsections\Subsection.h"/>
     <ClInclude Include="..\..\Source\LookAndFeel_V4\OcnetLookAndFeel.h"/>
@@ -2945,6 +2954,7 @@
     <ClInclude Include="..\..\Source\Synth\Processors\Effector.h"/>
     <ClInclude Include="..\..\Source\Synth\Processors\Modulator.h"/>
     <ClInclude Include="..\..\Source\Synth\Processors\ProcessorHandler.h"/>
+    <ClInclude Include="..\..\Source\Synth\Processors\Oscillators\SamplerProcessor.h"/>
     <ClInclude Include="..\..\Source\Synth\Processors\Oscillators\WavetableOscillatorProcessor.h"/>
     <ClInclude Include="..\..\Source\Synth\Processors\Effects\DistortionProcessor.h"/>
     <ClInclude Include="..\..\Source\Synth\Processors\Effects\FilterProcessor.h"/>

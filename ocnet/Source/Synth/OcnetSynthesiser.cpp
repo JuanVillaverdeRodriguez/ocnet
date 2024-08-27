@@ -102,3 +102,12 @@ void OcnetSynthesiser::setFmFrom(int carrierID, int modulatorID)
         }
     }
 }
+
+void OcnetSynthesiser::samplerSampleChanged(int id, const juce::String& filename)
+{
+    for (int i = 0; i < getNumVoices(); i++) {
+        if (auto voice = dynamic_cast<SynthVoice*>(getVoice(i))) {
+            voice->samplerSampleChanged(id, filename);
+        }
+    }
+}

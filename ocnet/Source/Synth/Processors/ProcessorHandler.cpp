@@ -13,6 +13,7 @@
 #include "../../Utils/Utils.h"
 #include "Effects/FilterProcessor.h"
 #include "../../Utils/OcnetTypes.h"
+#include "Oscillators/SamplerProcessor.h"
 
 // Porque usar lista en vez de vector:
 
@@ -281,6 +282,9 @@ void ProcessorHandler::addOscillator(int processorType, int id, const ParameterH
         case WavetableOscillator:
             oscillatorsProcessorsList.push_back(std::make_unique<WavetableOscillatorProcessor>(id));
             break;
+        case Sampler:
+            oscillatorsProcessorsList.push_back(std::make_unique<SamplerProcessor>(id));
+            break;
 
         default:
             return;
@@ -368,6 +372,12 @@ void ProcessorHandler::setFmFrom(int carrierID, int modulatorID)
         processorCarrier->get()->setFmFrom(nullptr);
     }
 
+}
+
+void ProcessorHandler::samplerSampleChanged(int id, const juce::String& filename)
+{
+    auto sampler = Utils::findElementByID(oscillatorsProcessorsList, id);
+    sampler->get()->loadAudioFile(filename);
 }
 
 void ProcessorHandler::releaseResources()

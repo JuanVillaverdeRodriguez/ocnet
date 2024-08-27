@@ -33,6 +33,8 @@ public:
     virtual void onRemoveModulation(const juce::String& modulationBubble) {};
 
     virtual void onFmFromChanged(const juce::String& carrierID, const juce::String& modulatorID) {};
+
+    virtual void onSamplerSampleChanged(int samplerID, const juce::String& parameterID, const juce::String& sampleName) {};
 private:
 
 };

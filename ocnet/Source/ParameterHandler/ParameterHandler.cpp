@@ -41,6 +41,9 @@ ParameterHandler::ParameterHandler()
     static juce::Identifier wavetableOscillatorsIndentifier("WavetableOscillator");
     juce::ValueTree wavetableOscillatorsNode(wavetableOscillatorsIndentifier);
 
+    static juce::Identifier samplersIdentifier("Sampler");
+    juce::ValueTree samplersNode(samplersIdentifier);
+
     static juce::Identifier LFOsIdentifier("LFO");
     juce::ValueTree LFOsNode(LFOsIdentifier);
 
@@ -49,11 +52,15 @@ ParameterHandler::ParameterHandler()
     rootNode.addChild(oscillatorsNode, -1, nullptr);
     rootNode.addChild(effectsNode, -1, nullptr);
 
-    modulatorsNode.addChild(envelopesNode, -1, nullptr);
     effectsNode.addChild(filtersNode, -1, nullptr);
     effectsNode.addChild(distortionsNode, -1, nullptr);
+
     oscillatorsNode.addChild(wavetableOscillatorsNode, -1, nullptr);
+    oscillatorsNode.addChild(samplersNode, -1, nullptr);
+
+    modulatorsNode.addChild(envelopesNode, -1, nullptr);
     modulatorsNode.addChild(LFOsNode, -1, nullptr);
+
 
 }
 
@@ -407,6 +414,52 @@ juce::Array<juce::String> ParameterHandler::getParameterModulationIDs(const juce
     }
 
     return modulationIDs;
+}
+
+void ParameterHandler::updateParameter(const juce::String& parameterID, const juce::String& newValue)
+{
+    auto [type, ownerID, parameterTag] = splitParameterID(parameterID);
+
+    juce::ValueTree node = findNodeByName(rootNode, juce::Identifier(ownerID));
+
+    node.setProperty(juce::Identifier(parameterTag), newValue, nullptr);
+}
+
+void ParameterHandler::addParameter(const juce::String& parameterID, juce::var initialValue)
+{
+    auto [type, ownerID, parameterTag] = splitParameterID(parameterID);
+
+    juce::Identifier nodeType(type); // Envelopes, LFOs, OSCs...
+    juce::ValueTree nodeTree = findNodeByName(rootNode, nodeType);
+
+    if (nodeTree.isValid()) {
+        juce::Identifier propertyNameIdentifier(parameterTag); // Attack, decay, volume...
+
+        juce::ValueTree newNode = nodeTree.getChildWithName(ownerID); // 0, 1, 2....
+
+        if (newNode.isValid()) { // Si ya existe el nodo este (NodeID), usar el que ya existe (Añadir propiedades directamente)
+            newNode.setProperty(propertyNameIdentifier, initialValue, nullptr);
+            //parameter->addTreeListener(newNode);
+        }
+        else { // Si no, crear uno nuevo
+            juce::Identifier newNode2Identifier(ownerID);
+            juce::ValueTree newNode2(newNode2Identifier);
+
+            nodeTree.addChild(newNode2, -1, nullptr);
+
+            newNode2.setProperty(propertyNameIdentifier, initialValue, nullptr);
+            //parameter->addTreeListener(newNode2);
+        }
+    }
+}
+
+juce::var ParameterHandler::getParameterValue(const juce::String& parameterID)
+{
+    auto [type, ownerID, parameterTag] = splitParameterID(parameterID);
+
+    auto node = findNodeByName(rootNode, juce::Identifier(ownerID));
+
+    return node.getProperty(juce::Identifier(parameterTag));
 }
 
 std::tuple<juce::String, juce::String, juce::String> ParameterHandler::splitParameterID(const juce::String& input)

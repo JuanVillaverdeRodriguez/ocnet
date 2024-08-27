@@ -52,6 +52,7 @@ namespace Ocnet {
         if (type == "WavetableOscillator") return WavetableOscillator;
         if (type == "Envelope") return Envelope;
         if (type == "LFO") return LFO;
+        if (type == "Sampler") return Sampler;
         return Unknown;
     }
     juce::String createSynthParameter(const juce::String& paramName)

@@ -162,6 +162,12 @@ void OcnetGUI_interface::onFmFromChanged(const juce::String& carrierID, const ju
     processor.setFmFrom(carrierID.getIntValue(), modulatorID.getIntValue());
 }
 
+void OcnetGUI_interface::onSamplerSampleChanged(int samplerID, const juce::String& parameterID, const juce::String& sampleName)
+{
+    processor.samplerSampleChanged(samplerID, sampleName);
+    processor.parameterHandler.updateParameter(parameterID, sampleName);
+}
+
 void OcnetGUI_interface::initialiseGUIFromTree(juce::ValueTree tree)
 {
     // Obtener arboles de moduladores, osciladores y efectos

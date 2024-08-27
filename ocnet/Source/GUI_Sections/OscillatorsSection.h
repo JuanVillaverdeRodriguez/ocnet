@@ -13,6 +13,7 @@
 #include <JuceHeader.h>
 #include "../LookAndFeel_V4/OcnetLookAndFeel.h"
 #include "../GUI_Subsections/Oscillators/WavetableOscillatorSubsection.h"
+#include "../GUI_Subsections/Oscillators/SamplerSubsection.h"
 #include "../GUI_EventHandler.h"
 #include "Section.h"
 

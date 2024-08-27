@@ -81,7 +81,7 @@ juce::String Knob2::getParameterID()
 void Knob2::showLabel(juce::Component& component, juce::Rectangle<int> bounds)
 {
 	component.addAndMakeVisible(knobLabel);
-	knobLabel.setBounds(bounds.getX(), bounds.getY() + 35, 45, 18);
+	knobLabel.setBounds(bounds.getX(), bounds.getY() + 40, 45, 18);
 }
 
 void Knob2::showLabel(juce::Component& parentComp, juce::Component& attachToComp)
@@ -89,5 +89,5 @@ void Knob2::showLabel(juce::Component& parentComp, juce::Component& attachToComp
 	juce::Rectangle<int> bounds = attachToComp.getBounds();
 
 	parentComp.addAndMakeVisible(knobLabel);
-	knobLabel.setBounds(bounds.getX(), bounds.getY() + 35, 45, 18);
+	knobLabel.setBounds(bounds.getX(), bounds.getY() + 40, 45, 18);
 }

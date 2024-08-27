@@ -159,3 +159,9 @@ void SynthVoice::samplerSampleChanged(int id, const juce::String& filename)
 {
     processorhHandler.samplerSampleChanged(id, filename);
 }
+
+juce::Array<float> SynthVoice::getSamplerSampleSamples(int samplerID)
+{
+    return processorhHandler.getSamplerSampleSamples(samplerID);
+
+}

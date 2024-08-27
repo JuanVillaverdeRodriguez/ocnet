@@ -31,8 +31,12 @@ public:
     void processBlock(juce::AudioBuffer<float>& buffer) override;
 
     void loadAudioFile(const juce::String& filename) override;
+    juce::Array<float> getSamplerSampleSamples();
+
 private:
     //void setCurrentAudioFile();
+    juce::Array<float> sampleSamples;
+
 
     std::shared_ptr<SliderParameter> gainParameter;
     float oscGain;

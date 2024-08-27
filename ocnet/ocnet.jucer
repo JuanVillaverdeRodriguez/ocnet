@@ -137,6 +137,9 @@
         <FILE id="whsOBA" name="Subsection.h" compile="0" resource="0" file="Source/GUI_Subsections/Subsection.h"/>
       </GROUP>
       <GROUP id="{A8633C04-BAF0-C482-E4B8-B30DCE05F41B}" name="LookAndFeel_V4">
+        <GROUP id="{C1BE0E62-38E6-C3FF-428E-1E59FEA204F4}" name="ComboBoxes"/>
+        <GROUP id="{67EFEA9B-FC75-1AE2-877F-325690E23758}" name="Sliders"/>
+        <GROUP id="{41104744-B5A8-D348-BB32-A144067CC82D}" name="Buttons"/>
         <FILE id="QbAx0j" name="OcnetLookAndFeel.h" compile="0" resource="0"
               file="Source/LookAndFeel_V4/OcnetLookAndFeel.h"/>
         <FILE id="GXmelY" name="OcnetLookAndFeel_SubsectionButtons.h" compile="0"

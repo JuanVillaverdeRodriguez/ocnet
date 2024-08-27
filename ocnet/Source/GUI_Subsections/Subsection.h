@@ -61,6 +61,7 @@ private:
 
 
 protected:
+    virtual void paintCalled(juce::Graphics& g) {};
 
     OcnetLookAndFeel_2 lookAndFeel;
     GUI_EventHandler& eventHandler;

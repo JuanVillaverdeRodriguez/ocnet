@@ -36,6 +36,8 @@ public:
 
     void samplerSampleChanged(int id, const juce::String& filename);
 
+    juce::Array<float> getSamplerSampleSamples(int samplerID);
+
 private:
     bool hasMainEnvelope = false;
 

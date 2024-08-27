@@ -111,3 +111,10 @@ void OcnetSynthesiser::samplerSampleChanged(int id, const juce::String& filename
         }
     }
 }
+
+juce::Array<float> OcnetSynthesiser::getSamplerSampleSamples(int samplerID)
+{
+    if (auto voice = dynamic_cast<SynthVoice*>(getVoice(0))) {
+        return voice->getSamplerSampleSamples(samplerID);
+    }
+}

@@ -67,3 +67,9 @@ int Section::sectionResized()
 
     return lastSubsectionPosition;
 }
+
+Subsection* Section::getSubsectionWithID(int id)
+{
+    auto& subsectionsVector = *getListOfSubsections();
+    return Utils::findElementByID(subsectionsVector, id)->get();
+}

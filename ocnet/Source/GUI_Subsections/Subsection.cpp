@@ -120,6 +120,8 @@ void Subsection::paint(juce::Graphics& g)
 
         bypassButton.setColour(juce::TextButton::buttonColourId, Palette::BypasButtonOff);
     }
+
+    paintCalled(g);
 }
 
 juce::String Subsection::createParameterID(const juce::String& type, int id, const juce::String& parameterName)

@@ -53,6 +53,7 @@ public:
     void setFmFrom(int idFrom, int idTo);
 
     void samplerSampleChanged(int id, const juce::String& filename);
+    juce::Array<float> getSamplerSampleSamples(int samplerID);
 
 
 private:

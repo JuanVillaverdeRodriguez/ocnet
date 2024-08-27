@@ -166,6 +166,14 @@ void OcnetGUI_interface::onSamplerSampleChanged(int samplerID, const juce::Strin
 {
     processor.samplerSampleChanged(samplerID, sampleName);
     processor.parameterHandler.updateParameter(parameterID, sampleName);
+    Subsection* subsection = gui_->getOscillatorsSection()->getSubsectionWithID(samplerID);
+    if (subsection != nullptr) {
+        juce::Array<float> samples = processor.getSamplerSampleSamples(samplerID);
+        if (auto samplerSubsection = dynamic_cast<SamplerSubsection*>(subsection)) {
+            samplerSubsection->updateWaveformView(samples);
+        }
+    }
+        
 }
 
 void OcnetGUI_interface::initialiseGUIFromTree(juce::ValueTree tree)

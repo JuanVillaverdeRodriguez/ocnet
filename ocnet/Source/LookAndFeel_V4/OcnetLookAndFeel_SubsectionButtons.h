@@ -34,10 +34,13 @@ public:
     // Sobreescribimos el método para dibujar solo el texto
     void drawButtonText(juce::Graphics& g, juce::TextButton& button, bool shouldDrawButtonAsHighlighted, bool /*shouldDrawButtonAsDown*/) override
     {
-        auto font = juce::Font(15.0f); // Tamaño de la fuente
+        juce::Font font("Bahnschrift", 15.0f, juce::Font::bold); // Usar la fuente "Helvetica"
         g.setFont(font);
 
         juce::Colour textColour = shouldDrawButtonAsHighlighted ? Palette::Accent : Palette::Text;
+        shouldDrawButtonAsHighlighted ? button.setMouseCursor(juce::MouseCursor::PointingHandCursor) : button.setMouseCursor(juce::MouseCursor::NormalCursor);
+        //shouldDrawButtonAsHighlighted ? button.setSize(button.getBounds().getWidth() + 3, button.getBounds().getHeight() + 3) : button.setSize(button.getBounds().getWidth(), button.getBounds().getHeight());
+
         g.setColour(textColour);
 
         // Dibuja el texto centrado en el botón

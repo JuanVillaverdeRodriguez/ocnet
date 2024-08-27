@@ -380,6 +380,14 @@ void ProcessorHandler::samplerSampleChanged(int id, const juce::String& filename
     sampler->get()->loadAudioFile(filename);
 }
 
+juce::Array<float> ProcessorHandler::getSamplerSampleSamples(int samplerID)
+{
+    auto sampler = Utils::findElementByID(oscillatorsProcessorsList, samplerID);
+    if (auto samplerProcessor = dynamic_cast<SamplerProcessor*>(sampler->get())) {
+        return samplerProcessor->getSamplerSampleSamples();
+    }
+}
+
 void ProcessorHandler::releaseResources()
 {
 }

@@ -22,8 +22,9 @@ public:
     virtual std::vector<std::unique_ptr<Subsection>>* getListOfSubsections();
     void moveSubsection(int id, int positions);
     void deleteSubsection(int id);
-
     int sectionResized();
+
+    Subsection* getSubsectionWithID(int id);
 
 protected:
 

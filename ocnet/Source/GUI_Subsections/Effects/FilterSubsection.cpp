@@ -52,13 +52,9 @@ void FilterSubsection::subsectionResized()
 void FilterSubsection::attachParameters(ParameterHandler& parameterHandler)
 {
     freqCutParameterAttachment = std::make_unique<OcnetSliderAttachment>(*freqCutKnob, *parameterHandler.getSliderParameter(freqParameterID)->get());
-    mixParameterAttachment = std::make_unique<OcnetSliderAttachment>(*mixKnob, *parameterHandler.getSliderParameter(mixParameterID)->get());
-
-
 }
 
 void FilterSubsection::addParametersToParameterHandler(ParameterHandler& parameterHandler)
 {
     parameterHandler.addSliderParameter(freqParameterID, std::make_shared<SliderParameter>("freqCut", 20000.0f));
-    parameterHandler.addSliderParameter(mixParameterID, std::make_shared<SliderParameter>("mix", 1.0f));
 }

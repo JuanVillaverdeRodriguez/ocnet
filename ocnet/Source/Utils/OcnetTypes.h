@@ -25,6 +25,7 @@ namespace Ocnet {
         Envelope,
         LFO,
         Sampler,
+        Reverb,
         Unknown
     };
 }

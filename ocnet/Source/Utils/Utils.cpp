@@ -44,6 +44,30 @@ std::tuple<juce::String, juce::String> Utils::splitParameterModulationID(const j
     return std::make_tuple(part1, remainder);
 }
 
+float Utils::average(float* values, int numValues, bool inAbsoluteValue, int loopIncrement)
+{
+    if (numValues <= 0) {
+        return 0.0f; // Evitar división por cero o procesamiento innecesario
+    }
+
+    float sum = 0.0f;
+
+    // Recorrer el array y sumar todos los valores
+    for (int i = 0; i < numValues; i += loopIncrement) {
+        if (inAbsoluteValue) {
+            sum += std::abs(values[i]);
+        }
+        else {
+            sum += values[i];
+        }
+    }
+
+    // Calcular la media
+    float average = sum / numValues;
+
+    return average;
+}
+
 namespace Ocnet {
     ProcessorType fromString(const juce::String& type)
     {
@@ -53,6 +77,7 @@ namespace Ocnet {
         if (type == "Envelope") return Envelope;
         if (type == "LFO") return LFO;
         if (type == "Sampler") return Sampler;
+        if (type == "Reverb") return Reverb;
         return Unknown;
     }
     juce::String createSynthParameter(const juce::String& paramName)

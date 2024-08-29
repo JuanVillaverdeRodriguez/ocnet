@@ -47,6 +47,9 @@ ParameterHandler::ParameterHandler()
     static juce::Identifier LFOsIdentifier("LFO");
     juce::ValueTree LFOsNode(LFOsIdentifier);
 
+    static juce::Identifier ReverbsIdentifier("Reverb");
+    juce::ValueTree ReverbsNode(ReverbsIdentifier);
+
 
     rootNode.addChild(modulatorsNode, -1, nullptr);
     rootNode.addChild(oscillatorsNode, -1, nullptr);
@@ -54,6 +57,7 @@ ParameterHandler::ParameterHandler()
 
     effectsNode.addChild(filtersNode, -1, nullptr);
     effectsNode.addChild(distortionsNode, -1, nullptr);
+    effectsNode.addChild(ReverbsNode, -1, nullptr);
 
     oscillatorsNode.addChild(wavetableOscillatorsNode, -1, nullptr);
     oscillatorsNode.addChild(samplersNode, -1, nullptr);

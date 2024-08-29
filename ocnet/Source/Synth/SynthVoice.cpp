@@ -49,7 +49,7 @@ void SynthVoice::controllerMoved(int controllerNumber, int newControllerValue) {
 
 void SynthVoice::renderNextBlock(juce::AudioBuffer<float>& outputBuffer, int startSample, int numSamples) {
 
-    if (!isVoiceActive()) // Si no hay voces, no devuelve nada
+    if (!isVoiceActiveOcnet()) // Si no hay voces, no devuelve nada
         return;
     
     //jassert(isPrepared); // No deberia ser necesario, JUCE ya lo deberia comprobar, pero por si acaso
@@ -164,4 +164,9 @@ juce::Array<float> SynthVoice::getSamplerSampleSamples(int samplerID)
 {
     return processorhHandler.getSamplerSampleSamples(samplerID);
 
+}
+
+bool SynthVoice::isVoiceActiveOcnet()
+{
+    return isVoiceActive() || processorhHandler.reverbIsActive();
 }

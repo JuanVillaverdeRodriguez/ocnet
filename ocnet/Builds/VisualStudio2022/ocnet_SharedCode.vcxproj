@@ -163,6 +163,7 @@
     <ClCompile Include="..\..\Source\GUI_Subsections\Effects\DistortionSubsection.cpp"/>
     <ClCompile Include="..\..\Source\GUI_Subsections\Effects\EffectsSubsection.cpp"/>
     <ClCompile Include="..\..\Source\GUI_Subsections\Effects\FilterSubsection.cpp"/>
+    <ClCompile Include="..\..\Source\GUI_Subsections\Effects\ReverbSubsection.cpp"/>
     <ClCompile Include="..\..\Source\GUI_Subsections\Modulators\EnvelopeSubsection.cpp"/>
     <ClCompile Include="..\..\Source\GUI_Subsections\Modulators\LFOSubsection.cpp"/>
     <ClCompile Include="..\..\Source\GUI_Subsections\Modulators\ModulatorsSubsection.cpp"/>
@@ -179,6 +180,11 @@
     <ClCompile Include="..\..\Source\GUI_Sections\OscillatorsSection.cpp"/>
     <ClCompile Include="..\..\Source\OcnetGUI.cpp"/>
     <ClCompile Include="..\..\Source\OcnetGUI_interface.cpp"/>
+    <ClCompile Include="..\..\Source\Synth\ProcessorBlocks\HouseholderMatrix.cpp"/>
+    <ClCompile Include="..\..\Source\Synth\ProcessorBlocks\MultiChannelAllpassDelay.cpp"/>
+    <ClCompile Include="..\..\Source\Synth\ProcessorBlocks\MultiChannelAllpassInvertPolarity.cpp"/>
+    <ClCompile Include="..\..\Source\Synth\ProcessorBlocks\MultiChannelAllpassMixingMatrix.cpp"/>
+    <ClCompile Include="..\..\Source\Synth\ProcessorBlocks\MultiChannelFeedback.cpp"/>
     <ClCompile Include="..\..\Source\Synth\Processors\Effector.cpp"/>
     <ClCompile Include="..\..\Source\Synth\Processors\Modulator.cpp"/>
     <ClCompile Include="..\..\Source\Synth\Processors\ProcessorHandler.cpp"/>
@@ -186,6 +192,7 @@
     <ClCompile Include="..\..\Source\Synth\Processors\Oscillators\WavetableOscillatorProcessor.cpp"/>
     <ClCompile Include="..\..\Source\Synth\Processors\Effects\DistortionProcessor.cpp"/>
     <ClCompile Include="..\..\Source\Synth\Processors\Effects\FilterProcessor.cpp"/>
+    <ClCompile Include="..\..\Source\Synth\Processors\Effects\ReverbProcessor.cpp"/>
     <ClCompile Include="..\..\Source\Synth\Processors\Modulators\EnvelopeProcessor.cpp"/>
     <ClCompile Include="..\..\Source\Synth\Processors\Modulators\LFOProcessor.cpp"/>
     <ClCompile Include="..\..\Source\Synth\Processors\Processor.cpp"/>
@@ -2908,6 +2915,17 @@
     <ClCompile Include="..\..\JuceLibraryCode\include_juce_osc.cpp"/>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\Source\SignalSmithLibrary\dsp\delay.h"/>
+    <ClInclude Include="..\..\Source\SignalSmithLibrary\dsp\envelopes.h"/>
+    <ClInclude Include="..\..\Source\SignalSmithLibrary\dsp\fft.h"/>
+    <ClInclude Include="..\..\Source\SignalSmithLibrary\dsp\filters.h"/>
+    <ClInclude Include="..\..\Source\SignalSmithLibrary\dsp\mix.h"/>
+    <ClInclude Include="..\..\Source\SignalSmithLibrary\dsp\perf.h"/>
+    <ClInclude Include="..\..\Source\SignalSmithLibrary\dsp\rates.h"/>
+    <ClInclude Include="..\..\Source\SignalSmithLibrary\dsp\spectral.h"/>
+    <ClInclude Include="..\..\Source\SignalSmithLibrary\dsp\windows.h"/>
+    <ClInclude Include="..\..\Source\SignalSmithLibrary\dsp\common.h"/>
+    <ClInclude Include="..\..\Source\SignalSmithLibrary\dsp\curves.h"/>
     <ClInclude Include="..\..\Source\Tests\GUITest.h"/>
     <ClInclude Include="..\..\Source\Tests\InternalFilesTest.h"/>
     <ClInclude Include="..\..\Source\Tests\ModulationsTest.h"/>
@@ -2932,6 +2950,7 @@
     <ClInclude Include="..\..\Source\GUI_Subsections\Effects\DistortionSubsection.h"/>
     <ClInclude Include="..\..\Source\GUI_Subsections\Effects\EffectsSubsection.h"/>
     <ClInclude Include="..\..\Source\GUI_Subsections\Effects\FilterSubsection.h"/>
+    <ClInclude Include="..\..\Source\GUI_Subsections\Effects\ReverbSubsection.h"/>
     <ClInclude Include="..\..\Source\GUI_Subsections\Modulators\EnvelopeSubsection.h"/>
     <ClInclude Include="..\..\Source\GUI_Subsections\Modulators\LFOSubsection.h"/>
     <ClInclude Include="..\..\Source\GUI_Subsections\Modulators\ModulatorsSubsection.h"/>
@@ -2951,6 +2970,11 @@
     <ClInclude Include="..\..\Source\GUI_Sections\OscillatorsSection.h"/>
     <ClInclude Include="..\..\Source\OcnetGUI.h"/>
     <ClInclude Include="..\..\Source\OcnetGUI_interface.h"/>
+    <ClInclude Include="..\..\Source\Synth\ProcessorBlocks\HouseholderMatrix.h"/>
+    <ClInclude Include="..\..\Source\Synth\ProcessorBlocks\MultiChannelAllpassDelay.h"/>
+    <ClInclude Include="..\..\Source\Synth\ProcessorBlocks\MultiChannelAllpassInvertPolarity.h"/>
+    <ClInclude Include="..\..\Source\Synth\ProcessorBlocks\MultiChannelAllpassMixingMatrix.h"/>
+    <ClInclude Include="..\..\Source\Synth\ProcessorBlocks\MultiChannelFeedback.h"/>
     <ClInclude Include="..\..\Source\Synth\Processors\Effector.h"/>
     <ClInclude Include="..\..\Source\Synth\Processors\Modulator.h"/>
     <ClInclude Include="..\..\Source\Synth\Processors\ProcessorHandler.h"/>
@@ -2958,6 +2982,7 @@
     <ClInclude Include="..\..\Source\Synth\Processors\Oscillators\WavetableOscillatorProcessor.h"/>
     <ClInclude Include="..\..\Source\Synth\Processors\Effects\DistortionProcessor.h"/>
     <ClInclude Include="..\..\Source\Synth\Processors\Effects\FilterProcessor.h"/>
+    <ClInclude Include="..\..\Source\Synth\Processors\Effects\ReverbProcessor.h"/>
     <ClInclude Include="..\..\Source\Synth\Processors\Modulators\EnvelopeProcessor.h"/>
     <ClInclude Include="..\..\Source\Synth\Processors\Modulators\LFOProcessor.h"/>
     <ClInclude Include="..\..\Source\Synth\Processors\Processor.h"/>
@@ -4278,6 +4303,8 @@
     <ClInclude Include="..\..\JuceLibraryCode\JucePluginDefines.h"/>
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\..\Source\SignalSmithLibrary\dsp\LICENSE.txt"/>
+    <None Include="..\..\Source\SignalSmithLibrary\dsp\README.md"/>
     <None Include="..\..\Source\Images\AddAutomationIcon_Hovering.png"/>
     <None Include="..\..\Source\Images\AddAutomationIcon_NotHovering.png"/>
     <None Include="..\..\JuceLibraryCode\modules\juce_audio_devices\native\oboe\src\common\README.md"/>

@@ -19,15 +19,6 @@ DistortionSubsection::DistortionSubsection(int id, GUI_EventHandler& eventHandle
     this->addAndMakeVisible(*driveKnob);
 
     driveKnob->setRange(0.0f, 10.0f, 0.01f); // Quizas mejor seria volumeKnob.setRange(0, 1, 0.01f)?;
-    //driveKnob->setValue(5.0f);
-
-    mixParameterID = createParameterID("mix");
-    mixKnob = std::make_unique<Knob1>(mixParameterID, eventHandler, "Mix");
-
-    this->addAndMakeVisible(*mixKnob);
-
-    mixKnob->setRange(0.0f, 1.0f, 0.01f);
-    //mixKnob->setValue(1.0f);
 
 }
 
@@ -50,12 +41,10 @@ void DistortionSubsection::subsectionResized()
 void DistortionSubsection::attachParameters(ParameterHandler& parameterHandler)
 {
     driveParameterAttachment = std::make_unique<OcnetSliderAttachment>(*driveKnob, *parameterHandler.getSliderParameter(driveParameterID)->get());
-    mixParameterAttachment = std::make_unique<OcnetSliderAttachment>(*mixKnob, *parameterHandler.getSliderParameter(mixParameterID)->get());
 }
 
 void DistortionSubsection::addParametersToParameterHandler(ParameterHandler& parameterHandler)
 {
     parameterHandler.addSliderParameter(driveParameterID, std::make_shared<SliderParameter>("drive", 5.0f));
-    parameterHandler.addSliderParameter(mixParameterID, std::make_shared<SliderParameter>("mix", 1.0f));
 }
 

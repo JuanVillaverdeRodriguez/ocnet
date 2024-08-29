@@ -59,6 +59,8 @@ void ProcessorHandler::processBlock(juce::AudioBuffer<float>& outputBuffer)
         }
     }
 
+    mainEnvelope->processBlock(outputBuffer);
+
     // Procesar efectos
     for (auto& processor : effectsProcessorsList) {
         if (!processor->isBypassed()) {
@@ -78,7 +80,7 @@ void ProcessorHandler::processBlock(juce::AudioBuffer<float>& outputBuffer)
         }
     }*/
 
-    mainEnvelope->processBlock(outputBuffer);
+    
 
 }
 
@@ -120,7 +122,7 @@ void ProcessorHandler::stopNote(float velocity, bool allowTailOff)
 
 bool ProcessorHandler::canClearNote()
 {
-    return !mainEnvelope->isActive();
+    return !mainEnvelope->isActive() && !reverbIsActive();
 }
 
 void ProcessorHandler::prepareToPlay(juce::dsp::ProcessSpec spec)
@@ -267,6 +269,10 @@ void ProcessorHandler::addEffect(int processorType, int id, const ParameterHandl
             effectsProcessorsList.push_back(std::make_unique<DistortionProcessor>(id));
             break;
 
+        case Reverb:
+            effectsProcessorsList.push_back(std::make_unique<ReverbProcessor>(id));
+            break;
+
         default:
             return;
     }
@@ -285,6 +291,7 @@ void ProcessorHandler::addOscillator(int processorType, int id, const ParameterH
         case Sampler:
             oscillatorsProcessorsList.push_back(std::make_unique<SamplerProcessor>(id));
             break;
+
 
         default:
             return;
@@ -386,6 +393,17 @@ juce::Array<float> ProcessorHandler::getSamplerSampleSamples(int samplerID)
     if (auto samplerProcessor = dynamic_cast<SamplerProcessor*>(sampler->get())) {
         return samplerProcessor->getSamplerSampleSamples();
     }
+}
+
+bool ProcessorHandler::reverbIsActive()
+{
+    for (auto& effect : effectsProcessorsList) {    
+        if (auto reverb = dynamic_cast<ReverbProcessor*>(effect.get())) {
+            if (reverb->isActive())
+                return true;
+        }
+    }
+    return false;
 }
 
 void ProcessorHandler::releaseResources()

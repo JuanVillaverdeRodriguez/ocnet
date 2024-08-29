@@ -27,8 +27,4 @@ private:
 
     std::unique_ptr<Knob1> freqCutKnob;
     std::unique_ptr<OcnetSliderAttachment> freqCutParameterAttachment;
-
-    std::unique_ptr<Knob1> mixKnob;
-    std::unique_ptr<OcnetSliderAttachment> mixParameterAttachment;
-    juce::String mixParameterID;
 };

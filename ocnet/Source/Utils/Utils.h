@@ -96,7 +96,7 @@ public:
     static std::tuple<juce::String, juce::String> splitParameterModulationID(const juce::String& input);
 
 
-
+    static float average(float* values, int numValues, bool inAbsoluteValue = false, int loopIncrement = 1);
 
 private:
     Utils();

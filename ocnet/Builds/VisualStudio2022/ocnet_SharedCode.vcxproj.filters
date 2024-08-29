@@ -2,6 +2,12 @@
 
 <Project ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
+    <Filter Include="ocnet\Source\SignalSmithLibrary\dsp">
+      <UniqueIdentifier>{134987D7-4E9F-660B-8DA9-B87D4C8E1EFE}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ocnet\Source\SignalSmithLibrary">
+      <UniqueIdentifier>{7989C138-88C1-6CF8-D6B4-7BA5AC6AF367}</UniqueIdentifier>
+    </Filter>
     <Filter Include="ocnet\Source\Tests">
       <UniqueIdentifier>{1842D821-9FBA-73EE-4A20-5F7F88B6CD2D}</UniqueIdentifier>
     </Filter>
@@ -34,6 +40,9 @@
     </Filter>
     <Filter Include="ocnet\Source\GUI_Sections">
       <UniqueIdentifier>{7C0D2F38-407C-899E-B41F-6A4B67787C16}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ocnet\Source\Synth\ProcessorBlocks">
+      <UniqueIdentifier>{A3D033D3-D562-1F18-5725-D892B38EFBF1}</UniqueIdentifier>
     </Filter>
     <Filter Include="ocnet\Source\Synth\Processors\Oscillators">
       <UniqueIdentifier>{ADB46FFD-A68A-24C6-4017-BCEE730E47CC}</UniqueIdentifier>
@@ -829,6 +838,9 @@
     <ClCompile Include="..\..\Source\GUI_Subsections\Effects\FilterSubsection.cpp">
       <Filter>ocnet\Source\GUI_Subsections\Effects</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Source\GUI_Subsections\Effects\ReverbSubsection.cpp">
+      <Filter>ocnet\Source\GUI_Subsections\Effects</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\Source\GUI_Subsections\Modulators\EnvelopeSubsection.cpp">
       <Filter>ocnet\Source\GUI_Subsections\Modulators</Filter>
     </ClCompile>
@@ -877,6 +889,21 @@
     <ClCompile Include="..\..\Source\OcnetGUI_interface.cpp">
       <Filter>ocnet\Source</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Source\Synth\ProcessorBlocks\HouseholderMatrix.cpp">
+      <Filter>ocnet\Source\Synth\ProcessorBlocks</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Synth\ProcessorBlocks\MultiChannelAllpassDelay.cpp">
+      <Filter>ocnet\Source\Synth\ProcessorBlocks</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Synth\ProcessorBlocks\MultiChannelAllpassInvertPolarity.cpp">
+      <Filter>ocnet\Source\Synth\ProcessorBlocks</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Synth\ProcessorBlocks\MultiChannelAllpassMixingMatrix.cpp">
+      <Filter>ocnet\Source\Synth\ProcessorBlocks</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Synth\ProcessorBlocks\MultiChannelFeedback.cpp">
+      <Filter>ocnet\Source\Synth\ProcessorBlocks</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\Source\Synth\Processors\Effector.cpp">
       <Filter>ocnet\Source\Synth\Processors</Filter>
     </ClCompile>
@@ -896,6 +923,9 @@
       <Filter>ocnet\Source\Synth\Processors\Effects</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\Synth\Processors\Effects\FilterProcessor.cpp">
+      <Filter>ocnet\Source\Synth\Processors\Effects</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Synth\Processors\Effects\ReverbProcessor.cpp">
       <Filter>ocnet\Source\Synth\Processors\Effects</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\Synth\Processors\Modulators\EnvelopeProcessor.cpp">
@@ -3819,6 +3849,39 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\Source\SignalSmithLibrary\dsp\delay.h">
+      <Filter>ocnet\Source\SignalSmithLibrary\dsp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\SignalSmithLibrary\dsp\envelopes.h">
+      <Filter>ocnet\Source\SignalSmithLibrary\dsp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\SignalSmithLibrary\dsp\fft.h">
+      <Filter>ocnet\Source\SignalSmithLibrary\dsp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\SignalSmithLibrary\dsp\filters.h">
+      <Filter>ocnet\Source\SignalSmithLibrary\dsp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\SignalSmithLibrary\dsp\mix.h">
+      <Filter>ocnet\Source\SignalSmithLibrary\dsp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\SignalSmithLibrary\dsp\perf.h">
+      <Filter>ocnet\Source\SignalSmithLibrary\dsp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\SignalSmithLibrary\dsp\rates.h">
+      <Filter>ocnet\Source\SignalSmithLibrary\dsp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\SignalSmithLibrary\dsp\spectral.h">
+      <Filter>ocnet\Source\SignalSmithLibrary\dsp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\SignalSmithLibrary\dsp\windows.h">
+      <Filter>ocnet\Source\SignalSmithLibrary\dsp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\SignalSmithLibrary\dsp\common.h">
+      <Filter>ocnet\Source\SignalSmithLibrary\dsp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\SignalSmithLibrary\dsp\curves.h">
+      <Filter>ocnet\Source\SignalSmithLibrary\dsp</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\Source\Tests\GUITest.h">
       <Filter>ocnet\Source\Tests</Filter>
     </ClInclude>
@@ -3891,6 +3954,9 @@
     <ClInclude Include="..\..\Source\GUI_Subsections\Effects\FilterSubsection.h">
       <Filter>ocnet\Source\GUI_Subsections\Effects</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Source\GUI_Subsections\Effects\ReverbSubsection.h">
+      <Filter>ocnet\Source\GUI_Subsections\Effects</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\Source\GUI_Subsections\Modulators\EnvelopeSubsection.h">
       <Filter>ocnet\Source\GUI_Subsections\Modulators</Filter>
     </ClInclude>
@@ -3948,6 +4014,21 @@
     <ClInclude Include="..\..\Source\OcnetGUI_interface.h">
       <Filter>ocnet\Source</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Source\Synth\ProcessorBlocks\HouseholderMatrix.h">
+      <Filter>ocnet\Source\Synth\ProcessorBlocks</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Synth\ProcessorBlocks\MultiChannelAllpassDelay.h">
+      <Filter>ocnet\Source\Synth\ProcessorBlocks</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Synth\ProcessorBlocks\MultiChannelAllpassInvertPolarity.h">
+      <Filter>ocnet\Source\Synth\ProcessorBlocks</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Synth\ProcessorBlocks\MultiChannelAllpassMixingMatrix.h">
+      <Filter>ocnet\Source\Synth\ProcessorBlocks</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Synth\ProcessorBlocks\MultiChannelFeedback.h">
+      <Filter>ocnet\Source\Synth\ProcessorBlocks</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\Source\Synth\Processors\Effector.h">
       <Filter>ocnet\Source\Synth\Processors</Filter>
     </ClInclude>
@@ -3967,6 +4048,9 @@
       <Filter>ocnet\Source\Synth\Processors\Effects</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\Synth\Processors\Effects\FilterProcessor.h">
+      <Filter>ocnet\Source\Synth\Processors\Effects</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Synth\Processors\Effects\ReverbProcessor.h">
       <Filter>ocnet\Source\Synth\Processors\Effects</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\Synth\Processors\Modulators\EnvelopeProcessor.h">
@@ -7925,6 +8009,12 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\..\Source\SignalSmithLibrary\dsp\LICENSE.txt">
+      <Filter>ocnet\Source\SignalSmithLibrary\dsp</Filter>
+    </None>
+    <None Include="..\..\Source\SignalSmithLibrary\dsp\README.md">
+      <Filter>ocnet\Source\SignalSmithLibrary\dsp</Filter>
+    </None>
     <None Include="..\..\Source\Images\AddAutomationIcon_Hovering.png">
       <Filter>ocnet\Source\Images</Filter>
     </None>

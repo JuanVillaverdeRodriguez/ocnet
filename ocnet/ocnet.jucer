@@ -6,6 +6,23 @@
               pluginVSTCategory="kPlugCategSynth" pluginCharacteristicsValue="pluginIsSynth,pluginWantsMidiIn">
   <MAINGROUP id="Fay8LI" name="ocnet">
     <GROUP id="{B897E036-BD65-2195-C049-E6C429F0FF25}" name="Source">
+      <GROUP id="{88CCFDAB-B21E-D838-D657-9FD706067BEE}" name="SignalSmithLibrary">
+        <GROUP id="{4B3BA1FD-7D1C-FE79-7F48-7FF9F7691907}" name="dsp">
+          <FILE id="YRhQ87" name="delay.h" compile="0" resource="0" file="Source/SignalSmithLibrary/dsp/delay.h"/>
+          <FILE id="SmSvZ3" name="envelopes.h" compile="0" resource="0" file="Source/SignalSmithLibrary/dsp/envelopes.h"/>
+          <FILE id="tzNqZK" name="fft.h" compile="0" resource="0" file="Source/SignalSmithLibrary/dsp/fft.h"/>
+          <FILE id="lglm6B" name="filters.h" compile="0" resource="0" file="Source/SignalSmithLibrary/dsp/filters.h"/>
+          <FILE id="FDjgxv" name="LICENSE.txt" compile="0" resource="1" file="Source/SignalSmithLibrary/dsp/LICENSE.txt"/>
+          <FILE id="h5IzRV" name="mix.h" compile="0" resource="0" file="Source/SignalSmithLibrary/dsp/mix.h"/>
+          <FILE id="XkDkJY" name="perf.h" compile="0" resource="0" file="Source/SignalSmithLibrary/dsp/perf.h"/>
+          <FILE id="ketX11" name="rates.h" compile="0" resource="0" file="Source/SignalSmithLibrary/dsp/rates.h"/>
+          <FILE id="GlxFVX" name="README.md" compile="0" resource="1" file="Source/SignalSmithLibrary/dsp/README.md"/>
+          <FILE id="Dqnj30" name="spectral.h" compile="0" resource="0" file="Source/SignalSmithLibrary/dsp/spectral.h"/>
+          <FILE id="zzOpi7" name="windows.h" compile="0" resource="0" file="Source/SignalSmithLibrary/dsp/windows.h"/>
+          <FILE id="LYVtVG" name="common.h" compile="0" resource="0" file="Source/SignalSmithLibrary/dsp/common.h"/>
+          <FILE id="iiaLJd" name="curves.h" compile="0" resource="0" file="Source/SignalSmithLibrary/dsp/curves.h"/>
+        </GROUP>
+      </GROUP>
       <GROUP id="{F591502B-D252-AF77-BD88-02035A3602DE}" name="Tests">
         <FILE id="Fjljia" name="GUITest.cpp" compile="1" resource="0" file="Source/Tests/GUITest.cpp"/>
         <FILE id="TmZKnz" name="GUITest.h" compile="0" resource="0" file="Source/Tests/GUITest.h"/>
@@ -105,6 +122,10 @@
                 file="Source/GUI_Subsections/Effects/FilterSubsection.cpp"/>
           <FILE id="ePaVjz" name="FilterSubsection.h" compile="0" resource="0"
                 file="Source/GUI_Subsections/Effects/FilterSubsection.h"/>
+          <FILE id="PN5R2Z" name="ReverbSubsection.cpp" compile="1" resource="0"
+                file="Source/GUI_Subsections/Effects/ReverbSubsection.cpp"/>
+          <FILE id="nzUN91" name="ReverbSubsection.h" compile="0" resource="0"
+                file="Source/GUI_Subsections/Effects/ReverbSubsection.h"/>
         </GROUP>
         <GROUP id="{52A041BF-AD4F-4C01-D669-48DDF46103E9}" name="Modulators">
           <FILE id="BIptSF" name="EnvelopeSubsection.cpp" compile="1" resource="0"
@@ -180,6 +201,28 @@
       <FILE id="bQXL1R" name="OcnetGUI_interface.h" compile="0" resource="0"
             file="Source/OcnetGUI_interface.h"/>
       <GROUP id="{F3B0B463-C0DE-0D39-E0FD-236DC0836EDE}" name="Synth">
+        <GROUP id="{5F20FB59-C677-638D-CBE6-FA2860D9D990}" name="ProcessorBlocks">
+          <FILE id="KIxqNP" name="HouseholderMatrix.cpp" compile="1" resource="0"
+                file="Source/Synth/ProcessorBlocks/HouseholderMatrix.cpp"/>
+          <FILE id="EPjRLs" name="HouseholderMatrix.h" compile="0" resource="0"
+                file="Source/Synth/ProcessorBlocks/HouseholderMatrix.h"/>
+          <FILE id="lLhM65" name="MultiChannelAllpassDelay.cpp" compile="1" resource="0"
+                file="Source/Synth/ProcessorBlocks/MultiChannelAllpassDelay.cpp"/>
+          <FILE id="zojvWR" name="MultiChannelAllpassDelay.h" compile="0" resource="0"
+                file="Source/Synth/ProcessorBlocks/MultiChannelAllpassDelay.h"/>
+          <FILE id="YW0AO9" name="MultiChannelAllpassInvertPolarity.cpp" compile="1"
+                resource="0" file="Source/Synth/ProcessorBlocks/MultiChannelAllpassInvertPolarity.cpp"/>
+          <FILE id="lGvyFa" name="MultiChannelAllpassInvertPolarity.h" compile="0"
+                resource="0" file="Source/Synth/ProcessorBlocks/MultiChannelAllpassInvertPolarity.h"/>
+          <FILE id="ErLKt7" name="MultiChannelAllpassMixingMatrix.cpp" compile="1"
+                resource="0" file="Source/Synth/ProcessorBlocks/MultiChannelAllpassMixingMatrix.cpp"/>
+          <FILE id="QdUGz1" name="MultiChannelAllpassMixingMatrix.h" compile="0"
+                resource="0" file="Source/Synth/ProcessorBlocks/MultiChannelAllpassMixingMatrix.h"/>
+          <FILE id="H6DNbq" name="MultiChannelFeedback.cpp" compile="1" resource="0"
+                file="Source/Synth/ProcessorBlocks/MultiChannelFeedback.cpp"/>
+          <FILE id="CRKwK2" name="MultiChannelFeedback.h" compile="0" resource="0"
+                file="Source/Synth/ProcessorBlocks/MultiChannelFeedback.h"/>
+        </GROUP>
         <GROUP id="{E55E5413-BAED-13DF-5573-AF7ABCF50AC1}" name="Processors">
           <FILE id="Byhm0i" name="Effector.cpp" compile="1" resource="0" file="Source/Synth/Processors/Effector.cpp"/>
           <FILE id="HCxoze" name="Effector.h" compile="0" resource="0" file="Source/Synth/Processors/Effector.h"/>
@@ -208,6 +251,10 @@
                   file="Source/Synth/Processors/Effects/FilterProcessor.cpp"/>
             <FILE id="xjstr3" name="FilterProcessor.h" compile="0" resource="0"
                   file="Source/Synth/Processors/Effects/FilterProcessor.h"/>
+            <FILE id="ohIxzt" name="ReverbProcessor.cpp" compile="1" resource="0"
+                  file="Source/Synth/Processors/Effects/ReverbProcessor.cpp"/>
+            <FILE id="D4CCkg" name="ReverbProcessor.h" compile="0" resource="0"
+                  file="Source/Synth/Processors/Effects/ReverbProcessor.h"/>
           </GROUP>
           <GROUP id="{56F0D0BF-3FB3-CBB3-8460-81F27FB410F7}" name="Modulators">
             <FILE id="a06LBG" name="EnvelopeProcessor.cpp" compile="1" resource="0"

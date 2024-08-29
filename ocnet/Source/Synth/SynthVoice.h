@@ -55,6 +55,7 @@ public:
     void samplerSampleChanged(int id, const juce::String& filename);
     juce::Array<float> getSamplerSampleSamples(int samplerID);
 
+    bool isVoiceActiveOcnet();
 
 private:
     juce::dsp::ProcessSpec spec;

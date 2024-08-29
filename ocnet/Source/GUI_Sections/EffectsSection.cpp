@@ -57,6 +57,10 @@ std::unique_ptr<Subsection>* EffectsSection::addEffect(int processorType, int id
             subsectionsVector.push_back(std::make_unique<DistortionSubsection>(id, eventHandler));
             break;
 
+        case Reverb:
+            subsectionsVector.push_back(std::make_unique<ReverbSubsection>(id, eventHandler));
+            break;
+
         default:
             return nullptr;
     }
@@ -81,7 +85,7 @@ void EffectsSection::buttonClicked(juce::Button* clickedButton)
                 if (result == 1)
                     eventHandler.onAddEffect(Distortion);
                 else if (result == 2)
-                    eventHandler.onAddEffect(Distortion);
+                    eventHandler.onAddEffect(Reverb);
                 else if (result == 3)
                     eventHandler.onAddEffect(Filter);
             });

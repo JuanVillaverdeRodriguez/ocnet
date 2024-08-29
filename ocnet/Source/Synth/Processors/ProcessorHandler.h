@@ -17,6 +17,7 @@
 #include "../Oscillator/WavetableTypes.h"
 #include "Oscillators/WavetableOscillatorProcessor.h"
 #include "Effects/DistortionProcessor.h"
+#include "Effects/ReverbProcessor.h"
 #include "Modulators/LFOProcessor.h"
 
 class ProcessorHandler {
@@ -59,7 +60,11 @@ public:
     void samplerSampleChanged(int id, const juce::String& filename);
     juce::Array<float> getSamplerSampleSamples(int samplerID);
 
+    // Busca si algun reverb esta funcionando.
+    bool reverbIsActive();
 private:
+
+
     int voiceId;
 
     std::vector<std::unique_ptr<Processor>> oscillatorsProcessorsList;

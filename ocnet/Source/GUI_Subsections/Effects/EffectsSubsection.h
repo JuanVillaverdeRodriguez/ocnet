@@ -29,4 +29,8 @@ protected:
     virtual void addParametersToParameterHandler(ParameterHandler& parameterHandler) = 0 {};
     virtual void subsectionResized() = 0 {};
 
+    std::unique_ptr<Knob1> mixKnob;
+    std::unique_ptr<OcnetSliderAttachment> mixParameterAttachment;
+    juce::String mixParameterID;
+
 };

@@ -52,6 +52,7 @@ std::unique_ptr<Subsection>* OscillatorsSection::addOscillator(int processorType
             subsectionsVector.push_back(std::make_unique<SamplerSubsection>(numberOfWavetableOscillators, eventHandler));
             break;
 
+
         default:
             return nullptr;
     }

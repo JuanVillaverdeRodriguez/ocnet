@@ -31,7 +31,7 @@ void EffectsSubsection::attachParams(ParameterHandler& parameterHandler)
 void EffectsSubsection::addParamsToParameterHandler(ParameterHandler& parameterHandler)
 {
     parameterHandler.addButtonParameter(bypassParameterID, std::make_shared<ButtonParameter>("bypass", false));
-    parameterHandler.addSliderParameter(mixParameterID, std::make_shared<SliderParameter>("mix", 1.0f));
+    parameterHandler.addSliderParameter(mixParameterID, std::make_shared<SliderParameter>("mix", 0.5f));
     addParametersToParameterHandler(parameterHandler);
 }
 

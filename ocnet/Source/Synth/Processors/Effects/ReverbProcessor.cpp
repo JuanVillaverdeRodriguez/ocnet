@@ -10,12 +10,14 @@
 
 #include "ReverbProcessor.h"
 
-ReverbProcessor::ReverbProcessor(int id) : decayValue(1.0f), delayValue(1.0f), mixValue(1.0f), sampleRate(44100.0f), reverb(80, 10, 0.5, 0.5), isReverbActive(true)
+ReverbProcessor::ReverbProcessor(int id) 
+    : decayValue(0.5), delayValue(1.0f), mixValue(1.0f),
+        maxDecayValue(10.0f), maxDelayValue(100.0f), maxMixValue(1.0f),
+        sampleRate(44100.0f), reverb(40, 10, 0.5, 0.5), isReverbActive(true)
 {
     setId(id);
     noteIsOff = true;
     averageOutputValue = 0.0f;
-
 }
 
 ReverbProcessor::~ReverbProcessor()
@@ -70,6 +72,8 @@ void ReverbProcessor::processBlock(juce::AudioBuffer<float>& buffer)
 {
     isReverbActive = true;
 
+    reverb.setParameters(maxDelayValue*delayValue, maxDecayValue*decayValue, maxMixValue*mixValue);
+
     const int numChannels = buffer.getNumChannels();
     const int numSamples = buffer.getNumSamples();
 
@@ -120,9 +124,6 @@ void ReverbProcessor::processBlock(juce::AudioBuffer<float>& buffer)
 
     averageOutputValue = Utils::average(dataL, numSamples, true, 4);
 
-    /*if (Utils::median(dataL, 128, true) < 0.01) {
-        isReverbActive = false;
-    }*/
 }
 
 float ReverbProcessor::getNextSample(float currentSampleValue)

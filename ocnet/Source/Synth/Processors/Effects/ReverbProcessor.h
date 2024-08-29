@@ -229,6 +229,13 @@ private:
 			}
 		}
 
+		void setDiffusionValue(double diffusionMs) {
+			for (auto& step : steps) {
+				diffusionMs *= 0.5;
+				step.delayMsRange = diffusionMs;
+			}
+		}
+
 		void clear() {
 			for (auto& step : steps) step.clear();
 
@@ -273,6 +280,26 @@ private:
 			diffuser.configure(sampleRate);
 		}
 
+		void setParameters(float delay, float decay, float mix) {
+			dry = 1 - mix;
+			wet = mix;
+
+			//diffuser.setDiffusionValue(delay);
+			feedback.delayMs = delay;
+
+			// How long does our signal take to go around the feedback loop?
+			double typicalLoopMs = delay * 1.5;
+			// How many times will it do that during our RT60 period?
+			double loopsPerRt60 = decay / (typicalLoopMs * 0.001);
+			// This tells us how many dB to reduce per loop
+			double dbPerCycle = -60 / loopsPerRt60;
+
+			feedback.decayGain = std::pow(10, dbPerCycle * 0.05);
+
+		}
+
+		// Cuidado: Despues de llamar a este metodo, llamar a configure() de nuevo
+		// Llena de 0 todos los buffers
 		void clear() {
 			feedback.clear();
 			diffuser.clear();
@@ -302,6 +329,10 @@ private:
 	bool isReverbActive;
     float sampleRate;
 	float averageOutputValue;
+
+	float maxDecayValue;
+	float maxDelayValue;
+	float maxMixValue;
 
     std::shared_ptr<SliderParameter> mixParameter;
     juce::Array<float> mixModulationBuffer;

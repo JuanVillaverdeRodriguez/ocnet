@@ -38,8 +38,8 @@ void ReverbSubsection::attachParameters(ParameterHandler& parameterHandler)
 
 void ReverbSubsection::addParametersToParameterHandler(ParameterHandler& parameterHandler)
 {
-    parameterHandler.addSliderParameter(delayParameterID, std::make_shared<SliderParameter>("delay", 5.0f));
-    parameterHandler.addSliderParameter(decayParameterID, std::make_shared<SliderParameter>("decay", 5.0f));
+    parameterHandler.addSliderParameter(delayParameterID, std::make_shared<SliderParameter>("delay", 0.5));
+    parameterHandler.addSliderParameter(decayParameterID, std::make_shared<SliderParameter>("decay", 0.5));
 }
 
 void ReverbSubsection::subsectionResized()

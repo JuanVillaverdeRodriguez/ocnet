@@ -78,6 +78,10 @@ namespace Ocnet {
         if (type == "LFO") return LFO;
         if (type == "Sampler") return Sampler;
         if (type == "Reverb") return Reverb;
+        if (type == "Macro") return Macro;
+        if (type == "Randomizer") return Randomizer;
+        if (type == "Equalizer") return Equalizer;
+        if (type == "Delay") return Delay;
         return Unknown;
     }
     juce::String createSynthParameter(const juce::String& paramName)

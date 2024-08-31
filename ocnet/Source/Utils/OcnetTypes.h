@@ -26,6 +26,10 @@ namespace Ocnet {
         LFO,
         Sampler,
         Reverb,
+        Macro,
+        Randomizer,
+        Equalizer,
+        Delay,
         Unknown
     };
 }

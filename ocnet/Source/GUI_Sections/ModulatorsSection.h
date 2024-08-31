@@ -11,10 +11,12 @@
 #pragma once
 
 #include <JuceHeader.h>
+#include "../GUI_EventHandler.h"
 #include "../LookAndFeel_V4/OcnetLookAndFeel.h"
 #include "../GUI_Subsections/Modulators/EnvelopeSubsection.h"
-#include "../GUI_EventHandler.h"
 #include "../GUI_Subsections/Modulators/LFOSubsection.h"
+#include "../GUI_Subsections/Modulators/MacroSubsection.h"
+#include "../GUI_Subsections/Modulators/RandomizerSubsection.h"
 #include "Section.h"
 
 using namespace Ocnet;

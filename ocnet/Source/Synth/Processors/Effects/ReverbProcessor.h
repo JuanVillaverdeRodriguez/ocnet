@@ -15,7 +15,7 @@
 #include "../Source/SignalSmithLibrary/dsp/mix.h"
 #include "../../../SignalSmithLibrary/dsp/delay.h"
 
-using Delay = signalsmith::delay::Delay<double, signalsmith::delay::InterpolatorNearest>;
+using DelaySignalSmith = signalsmith::delay::Delay<double, signalsmith::delay::InterpolatorNearest>;
 
 
 class ReverbProcessor : public Effector {
@@ -45,7 +45,7 @@ private:
 		double decayGain = 0.85;
 
 		int delaySamples;
-		Delay delay;
+		DelaySignalSmith delay;
 
 		void configure(double sampleRate) {
 			delaySamples = delayMs * 0.001 * sampleRate;
@@ -72,7 +72,7 @@ private:
 		double decayGain = 0.85;
 
 		std::array<int, channels> delaySamples;
-		std::array<Delay, channels> delays;
+		std::array<DelaySignalSmith, channels> delays;
 
 		void configure(double sampleRate) {
 			double delaySamplesBase = delayMs * 0.001 * sampleRate;
@@ -108,7 +108,7 @@ private:
 		double decayGain = 0.85;
 
 		std::array<int, channels> delaySamples;
-		std::array<Delay, channels> delays;
+		std::array<DelaySignalSmith, channels> delays;
 
 		void configure(double sampleRate) {
 			double delaySamplesBase = delayMs * 0.001 * sampleRate;
@@ -174,7 +174,7 @@ private:
 		float delayMsRange = 50;
 
 		std::array<int, channels> delaySamples;
-		std::array<Delay, channels> delays;
+		std::array<DelaySignalSmith, channels> delays;
 		std::array<bool, channels> flipPolarity;
 
 		void configure(float sampleRate) {
@@ -308,28 +308,10 @@ private:
 		}
 
 		void process(juce::AudioBuffer<float>& audioBuffer, int sample) {
-			/*const int numChannels = buffer.getNumChannels();
-			const int numSamples = buffer.getNumSamples();
-
-			for (int channel = 0; channel < numChannels: channel++) {
-				auto* data = upSampledBlock.getChannelPointer(channel);
-
-				for (int sample = 0; sample < numSamples; sample++) {
-					for (auto& step : steps) {
-						samples = step.process(samples);
-					}
-				}
-			}
-
-			return samples;*/
-
 			for (auto& step : steps) {
 				step.process(audioBuffer, sample);
 			}
-			/*const int numChannels = audioBuffer.getNumChannels();
-			for (int channel = 0; channel < numChannels; channel++) {
 
-			}*/
 		}
 	};
 

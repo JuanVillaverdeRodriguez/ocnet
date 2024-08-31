@@ -11,6 +11,7 @@
 #include "EffectsSection.h"
 #include "../Utils/OcnetTypes.h"
 
+
 using namespace Ocnet;
 
 EffectsSection::EffectsSection(GUI_EventHandler& eventHandler) : eventHandler(eventHandler)
@@ -61,6 +62,15 @@ std::unique_ptr<Subsection>* EffectsSection::addEffect(int processorType, int id
             subsectionsVector.push_back(std::make_unique<ReverbSubsection>(id, eventHandler));
             break;
 
+        case Equalizer:
+            subsectionsVector.push_back(std::make_unique<EqualizerSubsection>(id, eventHandler));
+            break;
+
+        case Delay:
+            subsectionsVector.push_back(std::make_unique<DelaySubsection>(id, eventHandler));
+            break;
+
+
         default:
             return nullptr;
     }
@@ -78,6 +88,8 @@ void EffectsSection::buttonClicked(juce::Button* clickedButton)
         menu.addItem(1, "Distortion");
         menu.addItem(2, "Reverb");
         menu.addItem(3, "Filter");
+        menu.addItem(4, "Equalizer");
+        menu.addItem(5, "Delay");
 
         menu.showMenuAsync(juce::PopupMenu::Options().withTargetComponent(addEffectButton),
             [this](int result)
@@ -88,6 +100,10 @@ void EffectsSection::buttonClicked(juce::Button* clickedButton)
                     eventHandler.onAddEffect(Reverb);
                 else if (result == 3)
                     eventHandler.onAddEffect(Filter);
+                else if (result == 4)
+                    eventHandler.onAddEffect(Equalizer);
+                else if (result == 5)
+                    eventHandler.onAddEffect(Delay);
             });
     }
 

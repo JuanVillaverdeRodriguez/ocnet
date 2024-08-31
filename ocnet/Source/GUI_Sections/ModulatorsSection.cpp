@@ -30,8 +30,17 @@ std::unique_ptr<Subsection>* ModulatorsSection::addModulator(int processorType, 
         case Envelope:
             subsectionsVector.push_back(std::make_unique<EnvelopeSubsection>(numberOfEnvelopes, eventHandler));
             break;
+
         case LFO:
             subsectionsVector.push_back(std::make_unique<LFOSubsection>(numberOfEnvelopes, eventHandler));
+            break;
+
+        case Macro:
+            subsectionsVector.push_back(std::make_unique<MacroSubsection>(numberOfEnvelopes, eventHandler));
+            break;
+
+        case Randomizer:
+            subsectionsVector.push_back(std::make_unique<RandomizerSubsection>(numberOfEnvelopes, eventHandler));
             break;
 
         default:
@@ -88,6 +97,7 @@ void ModulatorsSection::buttonClicked(juce::Button* clickedButton)
         menu.addItem(1, "Envelope");
         menu.addItem(2, "LFO");
         menu.addItem(3, "Macro");
+        menu.addItem(4, "Randomizer");
 
         menu.showMenuAsync(juce::PopupMenu::Options().withTargetComponent(addModulatorButton),
             [this](int result)
@@ -97,8 +107,9 @@ void ModulatorsSection::buttonClicked(juce::Button* clickedButton)
                 else if (result == 2)
                     eventHandler.onAddModulator(LFO);
                 else if (result == 3)
-                    eventHandler.onAddModulator(LFO);
+                    eventHandler.onAddModulator(Macro);
+                else if (result == 4)
+                    eventHandler.onAddModulator(Randomizer);
             });
     }
-
 }

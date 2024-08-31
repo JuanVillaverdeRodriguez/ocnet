@@ -50,6 +50,18 @@ ParameterHandler::ParameterHandler()
     static juce::Identifier ReverbsIdentifier("Reverb");
     juce::ValueTree ReverbsNode(ReverbsIdentifier);
 
+    static juce::Identifier EqualizersIdentifier("Equalizer");
+    juce::ValueTree EqualizersNode(EqualizersIdentifier);
+
+    static juce::Identifier DelaysIdentifier("Delay");
+    juce::ValueTree DelaysNode(DelaysIdentifier);
+
+    static juce::Identifier MacrosIdentifier("Macro");
+    juce::ValueTree MacrosNode(MacrosIdentifier);
+
+    static juce::Identifier RandomizersIdentifier("Randomizer");
+    juce::ValueTree RandomizersNode(RandomizersIdentifier);
+
 
     rootNode.addChild(modulatorsNode, -1, nullptr);
     rootNode.addChild(oscillatorsNode, -1, nullptr);
@@ -58,13 +70,16 @@ ParameterHandler::ParameterHandler()
     effectsNode.addChild(filtersNode, -1, nullptr);
     effectsNode.addChild(distortionsNode, -1, nullptr);
     effectsNode.addChild(ReverbsNode, -1, nullptr);
+    effectsNode.addChild(EqualizersNode, -1, nullptr);
+    effectsNode.addChild(DelaysNode, -1, nullptr);
 
     oscillatorsNode.addChild(wavetableOscillatorsNode, -1, nullptr);
     oscillatorsNode.addChild(samplersNode, -1, nullptr);
 
     modulatorsNode.addChild(envelopesNode, -1, nullptr);
     modulatorsNode.addChild(LFOsNode, -1, nullptr);
-
+    modulatorsNode.addChild(MacrosNode, -1, nullptr);
+    modulatorsNode.addChild(RandomizersNode, -1, nullptr);
 
 }
 

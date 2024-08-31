@@ -110,6 +110,10 @@
       </GROUP>
       <GROUP id="{B172D91C-232C-204D-990B-B098D55147A4}" name="GUI_Subsections">
         <GROUP id="{92FB6D28-4C7B-1793-4DBB-E52D07FBB922}" name="Effects">
+          <FILE id="Zqc6Og" name="DelaySubsection.cpp" compile="1" resource="0"
+                file="Source/GUI_Subsections/Effects/DelaySubsection.cpp"/>
+          <FILE id="G4b6aE" name="DelaySubsection.h" compile="0" resource="0"
+                file="Source/GUI_Subsections/Effects/DelaySubsection.h"/>
           <FILE id="gS8vmO" name="DistortionSubsection.cpp" compile="1" resource="0"
                 file="Source/GUI_Subsections/Effects/DistortionSubsection.cpp"/>
           <FILE id="ED1sDC" name="DistortionSubsection.h" compile="0" resource="0"
@@ -118,6 +122,10 @@
                 file="Source/GUI_Subsections/Effects/EffectsSubsection.cpp"/>
           <FILE id="FqjLKo" name="EffectsSubsection.h" compile="0" resource="0"
                 file="Source/GUI_Subsections/Effects/EffectsSubsection.h"/>
+          <FILE id="KWDjBU" name="EqualizerSubsection.cpp" compile="1" resource="0"
+                file="Source/GUI_Subsections/Effects/EqualizerSubsection.cpp"/>
+          <FILE id="xElM9A" name="EqualizerSubsection.h" compile="0" resource="0"
+                file="Source/GUI_Subsections/Effects/EqualizerSubsection.h"/>
           <FILE id="w7Jqsp" name="FilterSubsection.cpp" compile="1" resource="0"
                 file="Source/GUI_Subsections/Effects/FilterSubsection.cpp"/>
           <FILE id="ePaVjz" name="FilterSubsection.h" compile="0" resource="0"
@@ -135,10 +143,18 @@
           <FILE id="pX3vrp" name="LFOSubsection.cpp" compile="1" resource="0"
                 file="Source/GUI_Subsections/Modulators/LFOSubsection.cpp"/>
           <FILE id="HmQUst" name="LFOSubsection.h" compile="0" resource="0" file="Source/GUI_Subsections/Modulators/LFOSubsection.h"/>
+          <FILE id="RTEheq" name="MacroSubsection.cpp" compile="1" resource="0"
+                file="Source/GUI_Subsections/Modulators/MacroSubsection.cpp"/>
+          <FILE id="pe6NIf" name="MacroSubsection.h" compile="0" resource="0"
+                file="Source/GUI_Subsections/Modulators/MacroSubsection.h"/>
           <FILE id="wO6sBV" name="ModulatorsSubsection.cpp" compile="1" resource="0"
                 file="Source/GUI_Subsections/Modulators/ModulatorsSubsection.cpp"/>
           <FILE id="PqTeAe" name="ModulatorsSubsection.h" compile="0" resource="0"
                 file="Source/GUI_Subsections/Modulators/ModulatorsSubsection.h"/>
+          <FILE id="jG9pWZ" name="RandomizerSubsection.cpp" compile="1" resource="0"
+                file="Source/GUI_Subsections/Modulators/RandomizerSubsection.cpp"/>
+          <FILE id="PiyH1n" name="RandomizerSubsection.h" compile="0" resource="0"
+                file="Source/GUI_Subsections/Modulators/RandomizerSubsection.h"/>
         </GROUP>
         <GROUP id="{3C75C2FB-65E8-33DF-3A3A-FDCFFB6A5E76}" name="Oscillators">
           <FILE id="cPYAIf" name="OscillatorsSubsection.cpp" compile="1" resource="0"

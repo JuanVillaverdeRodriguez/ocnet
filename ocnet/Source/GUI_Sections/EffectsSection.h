@@ -16,6 +16,8 @@
 #include "../GUI_Subsections/Effects/DistortionSubsection.h"
 #include "../GUI_Subsections/Effects/FilterSubsection.h"
 #include "../GUI_Subsections/Effects/ReverbSubsection.h"
+#include "../GUI_Subsections/Effects/EqualizerSubsection.h"
+#include "../GUI_Subsections/Effects/DelaySubsection.h"
 #include "../GUI_EventHandler.h"
 #include "Section.h"
 

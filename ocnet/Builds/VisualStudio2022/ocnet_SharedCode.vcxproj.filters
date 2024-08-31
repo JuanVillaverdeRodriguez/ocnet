@@ -829,10 +829,16 @@
     <ClCompile Include="..\..\Source\ParameterHandler\SliderParameter.cpp">
       <Filter>ocnet\Source\ParameterHandler</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Source\GUI_Subsections\Effects\DelaySubsection.cpp">
+      <Filter>ocnet\Source\GUI_Subsections\Effects</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\Source\GUI_Subsections\Effects\DistortionSubsection.cpp">
       <Filter>ocnet\Source\GUI_Subsections\Effects</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\GUI_Subsections\Effects\EffectsSubsection.cpp">
+      <Filter>ocnet\Source\GUI_Subsections\Effects</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\GUI_Subsections\Effects\EqualizerSubsection.cpp">
       <Filter>ocnet\Source\GUI_Subsections\Effects</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\GUI_Subsections\Effects\FilterSubsection.cpp">
@@ -847,7 +853,13 @@
     <ClCompile Include="..\..\Source\GUI_Subsections\Modulators\LFOSubsection.cpp">
       <Filter>ocnet\Source\GUI_Subsections\Modulators</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Source\GUI_Subsections\Modulators\MacroSubsection.cpp">
+      <Filter>ocnet\Source\GUI_Subsections\Modulators</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\Source\GUI_Subsections\Modulators\ModulatorsSubsection.cpp">
+      <Filter>ocnet\Source\GUI_Subsections\Modulators</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\GUI_Subsections\Modulators\RandomizerSubsection.cpp">
       <Filter>ocnet\Source\GUI_Subsections\Modulators</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\GUI_Subsections\Oscillators\OscillatorsSubsection.cpp">
@@ -3945,10 +3957,16 @@
     <ClInclude Include="..\..\Source\ParameterHandler\SliderParameter.h">
       <Filter>ocnet\Source\ParameterHandler</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Source\GUI_Subsections\Effects\DelaySubsection.h">
+      <Filter>ocnet\Source\GUI_Subsections\Effects</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\Source\GUI_Subsections\Effects\DistortionSubsection.h">
       <Filter>ocnet\Source\GUI_Subsections\Effects</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\GUI_Subsections\Effects\EffectsSubsection.h">
+      <Filter>ocnet\Source\GUI_Subsections\Effects</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\GUI_Subsections\Effects\EqualizerSubsection.h">
       <Filter>ocnet\Source\GUI_Subsections\Effects</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\GUI_Subsections\Effects\FilterSubsection.h">
@@ -3963,7 +3981,13 @@
     <ClInclude Include="..\..\Source\GUI_Subsections\Modulators\LFOSubsection.h">
       <Filter>ocnet\Source\GUI_Subsections\Modulators</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Source\GUI_Subsections\Modulators\MacroSubsection.h">
+      <Filter>ocnet\Source\GUI_Subsections\Modulators</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\Source\GUI_Subsections\Modulators\ModulatorsSubsection.h">
+      <Filter>ocnet\Source\GUI_Subsections\Modulators</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\GUI_Subsections\Modulators\RandomizerSubsection.h">
       <Filter>ocnet\Source\GUI_Subsections\Modulators</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\GUI_Subsections\Oscillators\OscillatorsSubsection.h">

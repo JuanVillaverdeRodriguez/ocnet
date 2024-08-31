@@ -13,9 +13,9 @@
 #include "../Effector.h"
 #include "../Source/SignalSmithLibrary/dsp/delay.h"
 #include "../Source/SignalSmithLibrary/dsp/mix.h"
+#include "../../../SignalSmithLibrary/dsp/delay.h"
 
 using Delay = signalsmith::delay::Delay<double, signalsmith::delay::InterpolatorNearest>;
-
 
 
 class ReverbProcessor : public Effector {
@@ -141,22 +141,47 @@ private:
 
 			return delayed;
 		}
+
+		void process(juce::AudioBuffer<float>& audioBuffer, int sample) {
+			Array delayed;
+			for (int c = 0; c < channels; ++c) {
+				delayed[c] = delays[c].read(delaySamples[c]);
+			}
+
+			// Mix using a Householder matrix
+			Array mixed = delayed;
+			signalsmith::mix::Householder<double, channels>::inPlace(mixed.data());
+
+			for (int c = 0; c < channels; ++c) {
+				double sum = audioBuffer.getReadPointer(c)[sample] + mixed[c] * decayGain;
+				delays[c].write(sum);
+			}
+
+			for (int c = 0; c < channels; ++c) {
+				delayed[c] = delays[c].read(delaySamples[c]);
+				audioBuffer.getWritePointer(c)[sample] = delayed[c];
+			}
+
+		}
 	};
+
+
+
 
 	template<int channels = 8>
 	struct DiffusionStep {
-		using Array = std::array<double, channels>;
-		double delayMsRange = 50;
+		using Array = std::array<float, channels>;
+		float delayMsRange = 50;
 
 		std::array<int, channels> delaySamples;
 		std::array<Delay, channels> delays;
 		std::array<bool, channels> flipPolarity;
 
-		void configure(double sampleRate) {
-			double delaySamplesRange = delayMsRange * 0.001 * sampleRate;
+		void configure(float sampleRate) {
+			float delaySamplesRange = delayMsRange * 0.001 * sampleRate;
 			for (int c = 0; c < channels; ++c) {
-				double rangeLow = delaySamplesRange * c / channels;
-				double rangeHigh = delaySamplesRange * (c + 1) / channels;
+				float rangeLow = delaySamplesRange * c / channels;
+				float rangeHigh = delaySamplesRange * (c + 1) / channels;
 				delaySamples[c] = randomInRange(rangeLow, rangeHigh);
 				delays[c].resize(delaySamples[c] + 1);
 				delays[c].reset();
@@ -169,7 +194,7 @@ private:
 			delaySamples.fill(0.0f);
 		}
 
-		Array process(Array input) {
+		/*Array process(Array input) {
 			// Delay
 			Array delayed;
 			for (int c = 0; c < channels; ++c) {
@@ -187,6 +212,36 @@ private:
 			}
 
 			return mixed;
+		}*/
+
+		inline void applyPolarity(Array& mixed) const {
+			for (int c = 0; c < channels; ++c) {
+				if (flipPolarity[c]) mixed[c] *= -1;
+			}
+		}
+
+		void process(juce::AudioBuffer<float>& audioBuffer, int sample) {
+			Array delayed;
+			float* writePointers[channels];
+			const float* readPointers[channels];
+
+			for (int c = 0; c < channels; ++c) {
+				readPointers[c] = audioBuffer.getReadPointer(c);
+				writePointers[c] = audioBuffer.getWritePointer(c);
+				delays[c].write(readPointers[c][sample]);  // Escribe el valor en el delay
+				delayed[c] = delays[c].read(delaySamples[c]);  // Luego lee el valor
+			}
+
+			// Hadamard matrix mixing
+			Array mixed = delayed;
+			signalsmith::mix::Hadamard<float, channels>::inPlace(mixed.data());
+
+			// Flip polarities if necessary
+			applyPolarity(mixed);
+
+			for (int c = 0; c < channels; ++c) {
+				writePointers[c][sample] = mixed[c];
+			}
 		}
 	};
 
@@ -251,6 +306,31 @@ private:
 			}
 			return samples;
 		}
+
+		void process(juce::AudioBuffer<float>& audioBuffer, int sample) {
+			/*const int numChannels = buffer.getNumChannels();
+			const int numSamples = buffer.getNumSamples();
+
+			for (int channel = 0; channel < numChannels: channel++) {
+				auto* data = upSampledBlock.getChannelPointer(channel);
+
+				for (int sample = 0; sample < numSamples; sample++) {
+					for (auto& step : steps) {
+						samples = step.process(samples);
+					}
+				}
+			}
+
+			return samples;*/
+
+			for (auto& step : steps) {
+				step.process(audioBuffer, sample);
+			}
+			/*const int numChannels = audioBuffer.getNumChannels();
+			for (int channel = 0; channel < numChannels; channel++) {
+
+			}*/
+		}
 	};
 
 	template<int channels = 8, int diffusionSteps = 4>
@@ -295,11 +375,10 @@ private:
 			double dbPerCycle = -60 / loopsPerRt60;
 
 			feedback.decayGain = std::pow(10, dbPerCycle * 0.05);
-
 		}
 
 		// Cuidado: Despues de llamar a este metodo, llamar a configure() de nuevo
-		// Llena de 0 todos los buffers
+		// Llena de 0s todos los buffers
 		void clear() {
 			feedback.clear();
 			diffuser.clear();
@@ -313,6 +392,24 @@ private:
 				output[c] = dry * input[c] + wet * longLasting[c];
 			}
 			return output;
+		}
+
+		void process(juce::AudioBuffer<float>& audioBuffer) {
+			juce::AudioBuffer<float> inputAudioBuffer;
+			inputAudioBuffer.makeCopyOf(audioBuffer);
+
+			const int numChannels = audioBuffer.getNumChannels();
+			const int numSamples = audioBuffer.getNumSamples();
+
+			for (int sample = 0; sample < numSamples; sample++) {
+				diffuser.process(audioBuffer, sample);
+				feedback.process(audioBuffer, sample);
+				Array output;
+				for (int c = 0; c < channels; ++c) {
+					audioBuffer.getWritePointer(c)[sample] = dry * inputAudioBuffer.getReadPointer(c)[sample] + wet * audioBuffer.getReadPointer(c)[sample];
+				}
+			}
+
 		}
 	};
 

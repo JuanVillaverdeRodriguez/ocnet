@@ -22,7 +22,7 @@ ReverbProcessor::ReverbProcessor(int id)
 
 ReverbProcessor::~ReverbProcessor()
 {
-    reverb.clear();
+    //reverb.clear();
 }
 
 void ReverbProcessor::prepareToPlay(juce::dsp::ProcessSpec spec)
@@ -70,60 +70,15 @@ void ReverbProcessor::syncParams(const ParameterHandler& parameterHandler)
 
 void ReverbProcessor::processBlock(juce::AudioBuffer<float>& buffer)
 {
-    isReverbActive = true;
-
     reverb.setParameters(maxDelayValue*delayValue, maxDecayValue*decayValue, maxMixValue*mixValue);
 
-    const int numChannels = buffer.getNumChannels();
-    const int numSamples = buffer.getNumSamples();
+    splitChannels(buffer, 8);
+    reverb.process(buffer);
+    mixChannels(buffer, 2);
 
     auto* dataL = buffer.getWritePointer(0);
-    auto* dataR = buffer.getWritePointer(1);
 
-    // Crear una matriz para almacenar las muestras de los 8 canales de la reverb
-    BasicReverb<8, 4>::Array reverbInput = { 0.0 };
-    BasicReverb<8, 4>::Array reverbOutput;
-
-    // Procesar bloque por bloque
-    for (int sample = 0; sample < numSamples; ++sample) {
-        // Expandir los 2 canales a 8 canales
-        for (int i = 0; i < 8; ++i) {
-            // Distribuir los canales del buffer en el arreglo
-            // Canales 0-3 se llenan con el canal izquierdo
-            // Canales 4-7 se llenan con el canal derecho
-            if (i < 4) {
-                reverbInput[i] = buffer.getReadPointer(0)[sample];
-            }
-            else {
-                reverbInput[i] = buffer.getReadPointer(1)[sample];
-            }
-        }
-
-        // Aplicar la reverberación
-        reverbOutput = reverb.process(reverbInput, numSamples);
-
-
-        // Mezclar los 8 canales de vuelta a 2 canales
-        float leftChannelOutput = 0.0f;
-        float rightChannelOutput = 0.0f;
-
-        // Los primeros 4 canales se mezclan en el canal izquierdo
-        for (int i = 0; i < 4; ++i) {
-            leftChannelOutput += static_cast<float>(reverbOutput[i]);
-        }
-
-        // Los últimos 4 canales se mezclan en el canal derecho
-        for (int i = 4; i < 8; ++i) {
-            rightChannelOutput += static_cast<float>(reverbOutput[i]);
-        }
-
-        // Escribir los datos procesados de vuelta en el buffer
-        dataL[sample] = leftChannelOutput / 4.0f;  // Normalizar al mezclar
-        dataR[sample] = rightChannelOutput / 4.0f; // Normalizar al mezclar
-    }
-
-    averageOutputValue = Utils::average(dataL, numSamples, true, 4);
-
+    averageOutputValue = Utils::average(dataL, buffer.getNumSamples(), true, 4);
 }
 
 float ReverbProcessor::getNextSample(float currentSampleValue)
@@ -139,14 +94,52 @@ bool ReverbProcessor::isActive()
     return (!noteIsOff || (noteIsOff && averageOutputValue > 0.00001));
 }
 
-void ReverbProcessor::splitChannels(juce::AudioBuffer<float>& inputBuffer, int numberOfOutputChannels)
+// Expandir de 2 canales a N canales
+void ReverbProcessor::splitChannels(juce::AudioBuffer<float>& buffer, int numberOfOutputChannels)
 {
-    inputBuffer.setSize(numberOfOutputChannels, inputBuffer.getNumSamples(), true, true, false);
+    const int numChannels = buffer.getNumChannels();
+    const int numSamples = buffer.getNumSamples();
+
+    buffer.setSize(numberOfOutputChannels, numSamples, true, true, false);
+
+    // Canales 0-3 se llenan con el canal izquierdo
+    // Canales 4-7 se llenan con el canal derecho
+    for (int sample = 0; sample < numSamples; ++sample) {
+        for (int i = 0; i < numberOfOutputChannels; ++i) {
+            if (i < 4) {
+                buffer.getWritePointer(i)[sample] = buffer.getReadPointer(0)[sample];
+            }
+            else {
+                buffer.getWritePointer(i)[sample] = buffer.getReadPointer(1)[sample];
+            }
+        }
+    }
 }
 
-void ReverbProcessor::mixChannels(juce::AudioBuffer<float>& inputBuffer, int numberOfOutputChannels)
+void ReverbProcessor::mixChannels(juce::AudioBuffer<float>&buffer, int numberOfOutputChannels)
 {
-    inputBuffer.setSize(numberOfOutputChannels, inputBuffer.getNumSamples(), true, true, false);
+    const int numChannels = buffer.getNumChannels();
+    const int numSamples = buffer.getNumSamples();
+
+
+    auto* leftChannelData = buffer.getWritePointer(0);
+    auto* rightChannelData = buffer.getWritePointer(1);
+
+    // Los primeros 4 canales se mezclan en el canal izquierdo
+    for (int sample = 0; sample < numSamples; sample++) {
+        for (int channel = 1; channel < 4; ++channel) {
+            leftChannelData[sample] += buffer.getReadPointer(channel)[sample];
+        }
+        leftChannelData[sample] /= 4.0f;
+
+        // Los últimos 4 canales se mezclan en el canal derecho
+        for (int channel = 5; channel < 8; ++channel) {
+            rightChannelData[sample] += buffer.getReadPointer(channel)[sample];
+        }
+        rightChannelData[sample] /= 4.0f;
+    }
+
+    buffer.setSize(numberOfOutputChannels, numSamples, true, true, false);
 }
 
 void ReverbProcessor::diffuseStep(juce::AudioBuffer<float>& inputBuffer)

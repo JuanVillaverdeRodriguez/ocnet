@@ -53,12 +53,15 @@ public:
     // Para cosas que deban hacere una vez la subseccion se ha creado completamente
     void onPostInitialization();
 
+    void setDesiredHeight(int newHeight);
+    int getDesiredHeight();
+
 private:
     int id;
     juce::String subType;
     juce::String type;
     bool bypassed;
-
+    int desiredHeight;
 
 protected:
     virtual void paintCalled(juce::Graphics& g) {};

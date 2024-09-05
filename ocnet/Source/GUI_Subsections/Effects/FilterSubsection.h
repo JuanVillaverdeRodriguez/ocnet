@@ -21,10 +21,20 @@ public:
     void attachParameters(ParameterHandler& parameterHandler) override;
     void addParametersToParameterHandler(ParameterHandler& parameterHandler) override;
     void subsectionResized() override;
+    void buttonClickedCalled(juce::Button* clickedButton) override;
 
 private:
-    juce::String freqParameterID;
+    OcnetLookAndFeel lookAndFeelButtons;
 
     std::unique_ptr<Knob1> freqCutKnob;
     std::unique_ptr<OcnetSliderAttachment> freqCutParameterAttachment;
+    juce::String freqParameterID;
+
+    std::unique_ptr<Knob1> resonanceKnob;
+    std::unique_ptr<OcnetSliderAttachment> resonanceParameterAttachment;
+    juce::String resonanceParameterID;
+
+    juce::TextButton highPassButton;
+    std::unique_ptr<ButtonParameterAttachment> highPassButtonAttachment;
+    juce::String highPassParameterID;
 };

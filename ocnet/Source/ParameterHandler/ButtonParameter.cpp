@@ -28,7 +28,7 @@ int ButtonParameter::getState()
 
 void ButtonParameter::setState(bool state)
 {
-    currentState = state == true ? 1 : 0;
+    currentState = state ? 1 : 0;
 
     tree.setProperty(parameterIdentifier, currentState, nullptr);
 }

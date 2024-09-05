@@ -259,10 +259,18 @@
                   resource="0" file="Source/Synth/Processors/Oscillators/WavetableOscillatorProcessor.h"/>
           </GROUP>
           <GROUP id="{E9BC3EE7-B3EF-6C8B-FB4D-C92AA9B0031D}" name="Effects">
+            <FILE id="kMaNGN" name="DelayProcessor.cpp" compile="1" resource="0"
+                  file="Source/Synth/Processors/Effects/DelayProcessor.cpp"/>
+            <FILE id="XWgDsH" name="DelayProcessor.h" compile="0" resource="0"
+                  file="Source/Synth/Processors/Effects/DelayProcessor.h"/>
             <FILE id="GAoXMY" name="DistortionProcessor.cpp" compile="1" resource="0"
                   file="Source/Synth/Processors/Effects/DistortionProcessor.cpp"/>
             <FILE id="LRD7wb" name="DistortionProcessor.h" compile="0" resource="0"
                   file="Source/Synth/Processors/Effects/DistortionProcessor.h"/>
+            <FILE id="bnWdlN" name="EqualizerProcessor.cpp" compile="1" resource="0"
+                  file="Source/Synth/Processors/Effects/EqualizerProcessor.cpp"/>
+            <FILE id="Ud9JIx" name="EqualizerProcessor.h" compile="0" resource="0"
+                  file="Source/Synth/Processors/Effects/EqualizerProcessor.h"/>
             <FILE id="q2c56E" name="FilterProcessor.cpp" compile="1" resource="0"
                   file="Source/Synth/Processors/Effects/FilterProcessor.cpp"/>
             <FILE id="xjstr3" name="FilterProcessor.h" compile="0" resource="0"
@@ -280,6 +288,14 @@
             <FILE id="oQKRKq" name="LFOProcessor.cpp" compile="1" resource="0"
                   file="Source/Synth/Processors/Modulators/LFOProcessor.cpp"/>
             <FILE id="KvHQZx" name="LFOProcessor.h" compile="0" resource="0" file="Source/Synth/Processors/Modulators/LFOProcessor.h"/>
+            <FILE id="XBukxe" name="MacroProcessor.cpp" compile="1" resource="0"
+                  file="Source/Synth/Processors/Modulators/MacroProcessor.cpp"/>
+            <FILE id="K7IJ9D" name="MacroProcessor.h" compile="0" resource="0"
+                  file="Source/Synth/Processors/Modulators/MacroProcessor.h"/>
+            <FILE id="ul24IQ" name="RandomizerProcessor.cpp" compile="1" resource="0"
+                  file="Source/Synth/Processors/Modulators/RandomizerProcessor.cpp"/>
+            <FILE id="srQLVS" name="RandomizerProcessor.h" compile="0" resource="0"
+                  file="Source/Synth/Processors/Modulators/RandomizerProcessor.h"/>
           </GROUP>
           <FILE id="N1n00d" name="Processor.cpp" compile="1" resource="0" file="Source/Synth/Processors/Processor.cpp"/>
           <FILE id="QOZrJm" name="Processor.h" compile="0" resource="0" file="Source/Synth/Processors/Processor.h"/>

@@ -11,7 +11,7 @@
 #include "Subsection.h"
 
 Subsection::Subsection(GUI_EventHandler& eventHandler, int id, const juce::String& type, const juce::String& subType) 
-    : eventHandler(eventHandler), defaultKnobSize(45), subType(subType), id(id), type(type)
+    : eventHandler(eventHandler), defaultKnobSize(45), subType(subType), id(id), type(type), desiredHeight(80)
 {
     bypassParameterID = createParameterID("bypass");
 
@@ -80,6 +80,16 @@ juce::String Subsection::getSubType()
 
 void Subsection::onPostInitialization()
 {
+}
+
+void Subsection::setDesiredHeight(int newHeight)
+{
+    desiredHeight = newHeight;
+}
+
+int Subsection::getDesiredHeight()
+{
+    return desiredHeight;
 }
 
 void Subsection::paint(juce::Graphics& g)

@@ -59,13 +59,13 @@ WavetableOscillatorSubsection::WavetableOscillatorSubsection(int id, GUI_EventHa
     waveTypeComboBox.addItem("Sine", 3);
     //waveTypeComboBox.setSelectedId(1); // Selecciona "Saw" por defecto
     waveTypeComboBox.setName(waveTypeParameterID);
+    addAndMakeVisible(waveTypeComboBox);
 
     // Configuración del ComboBox
     fmFromComboBox.addItem("None", 1);
     //fmFromComboBox.setSelectedId(1);
     fmFromComboBox.setName(fmFromParameterID);
 
-    addAndMakeVisible(waveTypeComboBox);
     addAndMakeVisible(fmFromComboBox);
 
     fmFromComboBox.addListener(this);

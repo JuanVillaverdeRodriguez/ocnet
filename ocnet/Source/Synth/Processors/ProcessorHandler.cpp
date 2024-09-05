@@ -14,6 +14,7 @@
 #include "Effects/FilterProcessor.h"
 #include "../../Utils/OcnetTypes.h"
 #include "Oscillators/SamplerProcessor.h"
+#include "Effects/EqualizerProcessor.h"
 
 // Porque usar lista en vez de vector:
 
@@ -271,6 +272,10 @@ void ProcessorHandler::addEffect(int processorType, int id, const ParameterHandl
 
         case Reverb:
             effectsProcessorsList.push_back(std::make_unique<ReverbProcessor>(id));
+            break;
+
+        case Equalizer:
+            effectsProcessorsList.push_back(std::make_unique<EqualizerProcessor>(id));
             break;
 
         default:

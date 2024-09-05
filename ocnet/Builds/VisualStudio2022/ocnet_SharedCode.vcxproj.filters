@@ -931,7 +931,13 @@
     <ClCompile Include="..\..\Source\Synth\Processors\Oscillators\WavetableOscillatorProcessor.cpp">
       <Filter>ocnet\Source\Synth\Processors\Oscillators</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Source\Synth\Processors\Effects\DelayProcessor.cpp">
+      <Filter>ocnet\Source\Synth\Processors\Effects</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\Source\Synth\Processors\Effects\DistortionProcessor.cpp">
+      <Filter>ocnet\Source\Synth\Processors\Effects</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Synth\Processors\Effects\EqualizerProcessor.cpp">
       <Filter>ocnet\Source\Synth\Processors\Effects</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\Synth\Processors\Effects\FilterProcessor.cpp">
@@ -944,6 +950,12 @@
       <Filter>ocnet\Source\Synth\Processors\Modulators</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\Synth\Processors\Modulators\LFOProcessor.cpp">
+      <Filter>ocnet\Source\Synth\Processors\Modulators</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Synth\Processors\Modulators\MacroProcessor.cpp">
+      <Filter>ocnet\Source\Synth\Processors\Modulators</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Synth\Processors\Modulators\RandomizerProcessor.cpp">
       <Filter>ocnet\Source\Synth\Processors\Modulators</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\Synth\Processors\Processor.cpp">
@@ -4068,7 +4080,13 @@
     <ClInclude Include="..\..\Source\Synth\Processors\Oscillators\WavetableOscillatorProcessor.h">
       <Filter>ocnet\Source\Synth\Processors\Oscillators</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Source\Synth\Processors\Effects\DelayProcessor.h">
+      <Filter>ocnet\Source\Synth\Processors\Effects</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\Source\Synth\Processors\Effects\DistortionProcessor.h">
+      <Filter>ocnet\Source\Synth\Processors\Effects</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Synth\Processors\Effects\EqualizerProcessor.h">
       <Filter>ocnet\Source\Synth\Processors\Effects</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\Synth\Processors\Effects\FilterProcessor.h">
@@ -4081,6 +4099,12 @@
       <Filter>ocnet\Source\Synth\Processors\Modulators</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\Synth\Processors\Modulators\LFOProcessor.h">
+      <Filter>ocnet\Source\Synth\Processors\Modulators</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Synth\Processors\Modulators\MacroProcessor.h">
+      <Filter>ocnet\Source\Synth\Processors\Modulators</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Synth\Processors\Modulators\RandomizerProcessor.h">
       <Filter>ocnet\Source\Synth\Processors\Modulators</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\Synth\Processors\Processor.h">

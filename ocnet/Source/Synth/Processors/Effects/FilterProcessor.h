@@ -35,10 +35,17 @@ public:
 
     void processBlock(juce::AudioBuffer<float>& buffer) override;
 private:
-    std::shared_ptr<SliderParameter> freqCutParameter;
 
+    std::shared_ptr<SliderParameter> freqCutParameter;
     juce::Array<float> freqCutModulationBuffer;
     float freqCutValue;
+
+    std::shared_ptr<SliderParameter> resonanceParameter;
+    juce::Array<float> resonanceModulationBuffer;
+    float resonanceValue;
+
+    std::shared_ptr<ButtonParameter> highPassParameter;
+    bool highPass;
 
     float samplingRate;
 

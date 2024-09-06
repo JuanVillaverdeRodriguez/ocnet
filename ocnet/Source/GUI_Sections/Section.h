@@ -23,7 +23,7 @@ public:
     void moveSubsection(int id, int positions);
     void deleteSubsection(int id);
     int sectionResized();
-    void showModulationTargets(bool shouldShow);
+    juce::Array<Knob1*> getAllKnobs();
 
     Subsection* getSubsectionWithID(int id);
 

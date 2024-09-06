@@ -30,6 +30,7 @@ public:
 
 
 
+
     HeaderSection* getHeaderSection() { return headerSection.get(); }
     FooterSection* getFooterSection() { return footerSection.get(); }
     OscillatorsSection* getOscillatorsSection() { return oscillatorsSection.get(); }

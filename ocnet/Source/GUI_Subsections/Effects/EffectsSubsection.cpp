@@ -48,3 +48,5 @@ void EffectsSubsection::resized()
 
     subsectionResized();
 }
+
+

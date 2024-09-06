@@ -68,14 +68,17 @@ int Section::sectionResized()
     return lastSubsectionPosition;
 }
 
-void Section::showModulationTargets(bool shouldShow)
+juce::Array<Knob1*> Section::getAllKnobs()
 {
+    juce::Array<Knob1*> knobs;
     auto& subsectionsVector = *getListOfSubsections();
 
     for (auto& subsection : subsectionsVector) {
-        subsection->showModulationTargets(shouldShow);
+        knobs.addArray(subsection->getAllKnobs());
     }
+    return knobs;
 }
+
 
 Subsection* Section::getSubsectionWithID(int id)
 {

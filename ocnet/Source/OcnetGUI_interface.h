@@ -52,10 +52,11 @@ public:
 
     void handleNoteOff(juce::MidiKeyboardState*, int midiChannel, int midiNoteNumber, float velocity);
 
-    void onDraggingModulationStarted() override;
+    void onDraggingModulationStarted(ModulatorsSubsection& modulator) override;
     void onDraggingModulationEnded() override;
 
 private:
+    juce::Array<Knob1*> getAllKnobs();
     void initialiseOscillators(juce::ValueTree& oscillatorsTree);
     void initialiseModulators(juce::ValueTree& modulatorsTree);
     void initialiseEffects(juce::ValueTree& effectsTree);

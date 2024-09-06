@@ -1,10 +1,10 @@
 #pragma once
 
 #include <JuceHeader.h>
-#include <../Source/GUI_Subsections/Subsection.h>
-#include <../Source/ParameterHandler/Parameter.h>
 #include "../GUI_EventHandler.h"
 #include "../LookAndFeel_V4/OcnetLookAndFeel.h"
+
+using namespace Ocnet;
 
 class Knob1 : public juce::Slider, public juce::DragAndDropTarget {
 public:

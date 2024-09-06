@@ -9,27 +9,18 @@
 */
 
 #include "DragZone.h"
+#include "../GUI_Subsections/Modulators/ModulatorsSubsection.h"
 
 DragZone::DragZone(GUI_EventHandler& eventHandler) : mouseHovering(false), eventHandler(eventHandler)
 {
     setSize(50, 50);       
 }
 
-void DragZone::setParentContainerAndComponent(juce::DragAndDropContainer& parentContainer2, Subsection& parentComponent2)
+void DragZone::setParentContainerAndComponent(juce::DragAndDropContainer& parentContainer2, ModulatorsSubsection& parentComponent2)
 {
     parentContainer = &parentContainer2;
     parentComponent = &parentComponent2;
 }
-/*
-void DragZone::mouseDown(const juce::MouseEvent& event)
-{
-    if (parentContainer != nullptr)
-    {
-        juce::var dragDescription = "LFO1"; // Descripción de lo que se está arrastrando
-        parentContainer->startDragging(dragDescription, parentComponent);
-        //parentComponent->startDraggingUI();
-    }
-}*/
 
 void DragZone::resized()
 {
@@ -80,7 +71,7 @@ void DragZone::mouseDown(const juce::MouseEvent& event)
             // Cambiar el cursor a una mano de arrastre
             setMouseCursor(juce::MouseCursor::DraggingHandCursor);
 
-            eventHandler.onDraggingModulationStarted();
+            eventHandler.onDraggingModulationStarted(*parentComponent);
             parentContainer->startDragging(dragDescription, parentComponent, dragImage, true);
         }
         else

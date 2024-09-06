@@ -11,16 +11,19 @@
 #pragma once
 
 #include <JuceHeader.h>
-#include "../GUI_Subsections/Subsection.h"
+#include "../Utils/OcnetTypes.h"
+#include "../GUI_EventHandler.h"
 
 using namespace Ocnet;
+
+class ModulatorsSubsection;
 
 class DragZone : public juce::Component, public juce::DragAndDropContainer
 {
 public:
     DragZone(GUI_EventHandler& eventHandler);
 
-    void setParentContainerAndComponent(juce::DragAndDropContainer& parentContainer, Subsection& parentComponent);
+    void setParentContainerAndComponent(juce::DragAndDropContainer& parentContainer, ModulatorsSubsection& parentComponent);
 
     void mouseDown(const juce::MouseEvent& event) override;
     void mouseUp(const juce::MouseEvent& event);
@@ -33,9 +36,7 @@ private:
 
     bool mouseHovering;
     juce::DragAndDropContainer* parentContainer;
-    Subsection* parentComponent;
+    ModulatorsSubsection* parentComponent;
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(DragZone)
-
-
 };

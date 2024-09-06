@@ -77,6 +77,16 @@ juce::String Subsection::getSubType()
     return subType;
 }
 
+juce::Array<Knob1*> Subsection::getAllKnobs()
+{
+    juce::Array<Knob1*> knobs;
+
+    for (auto& component : getChildren()) {
+        if (auto knob = dynamic_cast<Knob1*>(component))
+            knobs.add(knob);
+    }
+    return knobs;
+}
 
 void Subsection::onPostInitialization()
 {
@@ -92,14 +102,7 @@ int Subsection::getDesiredHeight()
     return desiredHeight;
 }
 
-void Subsection::showModulationTargets(bool shouldShow)
-{
-    for (auto component : getChildren()) {
-        if (auto knob = dynamic_cast<Knob1*>(component)) {
-            knob->showModulationTarget(shouldShow);
-        }
-    }
-}
+
 
 
 void Subsection::paint(juce::Graphics& g)

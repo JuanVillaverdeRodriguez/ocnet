@@ -51,13 +51,12 @@ public:
     // Obtiene el subtipo de la subseccion (Envelope, LFO, WavetableOscillator...)
     juce::String getSubType();
 
+    juce::Array<Knob1*> getAllKnobs();
     // Para cosas que deban hacere una vez la subseccion se ha creado completamente
     void onPostInitialization();
 
     void setDesiredHeight(int newHeight);
     int getDesiredHeight();
-
-    void showModulationTargets(bool shouldShow);
 
 private:
     int id;

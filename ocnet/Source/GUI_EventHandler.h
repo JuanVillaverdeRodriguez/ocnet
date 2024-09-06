@@ -13,7 +13,9 @@
 // Declaración adelantada de Subsection
 #include "JuceHeader.h"
 
+class ModulatorsSubsection;
 class Subsection;
+
 
 class GUI_EventHandler {
 public:
@@ -38,7 +40,7 @@ public:
 
     virtual void onSamplerSampleChanged(int samplerID, const juce::String& parameterID, const juce::String& sampleName) {};
 
-    virtual void onDraggingModulationStarted() {};
+    virtual void onDraggingModulationStarted(ModulatorsSubsection& modulator) {};
     virtual void onDraggingModulationEnded() {};
 private:
 

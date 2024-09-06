@@ -54,8 +54,8 @@ void ModulationBubble::resized()
     auto labelHeight = 15;
     auto bubbleArea = getBubbleArea();
 
-    // Adjust the position of the modulationLabel to ensure it's fully visible
-    auto labelX = getX() + bounds.getCentreX() - modulationLabel.getWidth() / 2;
+    //auto labelX = getX() + bounds.getCentreX() - modulationLabel.getWidth() / 2;
+    auto labelX = bounds.getX() - modulationLabel.getWidth() / 4;
     auto labelY = getY() + bubbleSize + 5;
 
     modulationLabel.setBounds(labelX, labelY, modulationLabel.getWidth(), labelHeight);

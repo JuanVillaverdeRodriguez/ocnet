@@ -130,6 +130,7 @@ Section* OcnetGUI::getSection(const juce::String& type)
         return getOscillatorsSection();
 }
 
+
 void OcnetGUI::editorIsShowing()
 {
     // Permitir que el componente del teclado reciba eventos de teclado

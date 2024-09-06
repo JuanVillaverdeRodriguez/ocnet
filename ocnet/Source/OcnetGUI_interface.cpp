@@ -224,6 +224,17 @@ void OcnetGUI_interface::initialiseModulators(juce::ValueTree& modulatorsTree)
     }
 }
 
+juce::Array<Knob1*> OcnetGUI_interface::getAllKnobs()
+{
+    juce::Array<Knob1*> knobs;
+
+    knobs.addArray(gui_->getOscillatorsSection()->getAllKnobs());
+    knobs.addArray(gui_->getModulatorsSection()->getAllKnobs());
+    knobs.addArray(gui_->getEffectsSection()->getAllKnobs());
+
+    return knobs;
+}
+
 void OcnetGUI_interface::initialiseOscillators(juce::ValueTree& oscillatorsTree)
 {
     for (int i = 0; oscillatorsTree.getChild(i).isValid(); ++i)
@@ -320,16 +331,20 @@ void OcnetGUI_interface::handleNoteOff(juce::MidiKeyboardState*, int midiChannel
     processor.noteOff(midiChannel, midiNoteNumber, velocity, true);
 }
 
-void OcnetGUI_interface::onDraggingModulationStarted()
+void OcnetGUI_interface::onDraggingModulationStarted(ModulatorsSubsection& modulator)
 {
-    gui_->getOscillatorsSection()->showModulationTargets(true);
-    gui_->getModulatorsSection()->showModulationTargets(true);
-    gui_->getEffectsSection()->showModulationTargets(true);
+    juce::Array<Knob1*> knobs = getAllKnobs();
+    for (auto& knob : knobs) {
+        juce::String modulationParameterID = modulator.getSubType() + juce::String("_") + juce::String(modulator.getId()) + juce::String("_modulationAmount_") + knob->getParameterID();
+        if (!modulator.isModulating(modulationParameterID))
+            knob->showModulationTarget(true);
+    }
 }
 
 void OcnetGUI_interface::onDraggingModulationEnded()
 {
-    gui_->getOscillatorsSection()->showModulationTargets(false);
-    gui_->getModulatorsSection()->showModulationTargets(false);
-    gui_->getEffectsSection()->showModulationTargets(false);
+    juce::Array<Knob1*> knobs = getAllKnobs();
+    for (auto& knob : knobs) {
+        knob->showModulationTarget(false);
+    }
 }

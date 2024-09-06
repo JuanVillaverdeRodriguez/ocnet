@@ -319,3 +319,17 @@ void OcnetGUI_interface::handleNoteOff(juce::MidiKeyboardState*, int midiChannel
     // Lógica cuando se libera una tecla
     processor.noteOff(midiChannel, midiNoteNumber, velocity, true);
 }
+
+void OcnetGUI_interface::onDraggingModulationStarted()
+{
+    gui_->getOscillatorsSection()->showModulationTargets(true);
+    gui_->getModulatorsSection()->showModulationTargets(true);
+    gui_->getEffectsSection()->showModulationTargets(true);
+}
+
+void OcnetGUI_interface::onDraggingModulationEnded()
+{
+    gui_->getOscillatorsSection()->showModulationTargets(false);
+    gui_->getModulatorsSection()->showModulationTargets(false);
+    gui_->getEffectsSection()->showModulationTargets(false);
+}

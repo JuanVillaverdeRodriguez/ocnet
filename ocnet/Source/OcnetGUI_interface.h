@@ -52,6 +52,9 @@ public:
 
     void handleNoteOff(juce::MidiKeyboardState*, int midiChannel, int midiNoteNumber, float velocity);
 
+    void onDraggingModulationStarted() override;
+    void onDraggingModulationEnded() override;
+
 private:
     void initialiseOscillators(juce::ValueTree& oscillatorsTree);
     void initialiseModulators(juce::ValueTree& modulatorsTree);

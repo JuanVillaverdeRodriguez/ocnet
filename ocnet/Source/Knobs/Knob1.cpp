@@ -75,11 +75,41 @@ void Knob1::showLabel(juce::Component& component, juce::Rectangle<int> bounds)
 	knobLabel.setBounds(bounds.getX(), bounds.getY() + 40, 45, 18);
 }
 
+void Knob1::paint(juce::Graphics& g)
+{
+	// Primero, llamamos al método paint() original de Slider para dibujar el knob
+	juce::Slider::paint(g);
+
+	if (shouldShowModulationTarget)
+	{
+		// Establecemos el color naranja
+		g.setColour(juce::Colours::orange.withAlpha(0.3f));
+
+		auto bounds = getLocalBounds().reduced(2).toFloat();
+		float cornerRadius = 10.0f; 
+
+		g.fillRoundedRectangle(bounds, cornerRadius);
+	}
+}
+
 void Knob1::showLabel(juce::Component& parentComp, juce::Component& attachToComp)
 {
 	juce::Rectangle<int> bounds = attachToComp.getBounds();
 
 	parentComp.addAndMakeVisible(knobLabel);
 	knobLabel.setBounds(bounds.getX(), bounds.getY() + 40, 45, 18);
+}
+
+void Knob1::showModulationTarget(bool shouldShow)
+{
+	shouldShowModulationTarget = shouldShow;
+	repaint();
+
+	//if (shouldShow) {
+		//modulationTargetBox.setBounds(getBounds().getX(), getBounds().getY(), getBounds().getWidth(), getBounds().getHeight());
+		//parentComp.addAndMakeVisible(modulationTargetBox);
+	//}
+	//else
+		//parentComp.removeChildComponent();
 }
 

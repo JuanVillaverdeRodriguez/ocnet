@@ -10,7 +10,8 @@
 
 #include "ModulatorsSubsection.h"
 
-ModulatorsSubsection::ModulatorsSubsection(GUI_EventHandler& eventHandler, int id, const juce::String& subtype) : Subsection(eventHandler, id, "Modulators", subtype)
+ModulatorsSubsection::ModulatorsSubsection(GUI_EventHandler& eventHandler, int id, const juce::String& subtype) : Subsection(eventHandler, id, "Modulators", subtype),
+dragZone(eventHandler)
 {
 
     this->addAndMakeVisible(dragZone);

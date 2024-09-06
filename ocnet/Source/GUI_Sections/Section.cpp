@@ -68,6 +68,15 @@ int Section::sectionResized()
     return lastSubsectionPosition;
 }
 
+void Section::showModulationTargets(bool shouldShow)
+{
+    auto& subsectionsVector = *getListOfSubsections();
+
+    for (auto& subsection : subsectionsVector) {
+        subsection->showModulationTargets(shouldShow);
+    }
+}
+
 Subsection* Section::getSubsectionWithID(int id)
 {
     auto& subsectionsVector = *getListOfSubsections();

@@ -10,7 +10,7 @@
 
 #include "DragZone.h"
 
-DragZone::DragZone() : mouseHovering(false)
+DragZone::DragZone(GUI_EventHandler& eventHandler) : mouseHovering(false), eventHandler(eventHandler)
 {
     setSize(50, 50);       
 }
@@ -80,6 +80,7 @@ void DragZone::mouseDown(const juce::MouseEvent& event)
             // Cambiar el cursor a una mano de arrastre
             setMouseCursor(juce::MouseCursor::DraggingHandCursor);
 
+            eventHandler.onDraggingModulationStarted();
             parentContainer->startDragging(dragDescription, parentComponent, dragImage, true);
         }
         else
@@ -92,6 +93,7 @@ void DragZone::mouseDown(const juce::MouseEvent& event)
 void DragZone::mouseUp(const juce::MouseEvent& event)
 {
     // Restaurar el cursor al predeterminado después de soltar el mouse
+    eventHandler.onDraggingModulationEnded();
     setMouseCursor(juce::MouseCursor::NormalCursor);
 }
 

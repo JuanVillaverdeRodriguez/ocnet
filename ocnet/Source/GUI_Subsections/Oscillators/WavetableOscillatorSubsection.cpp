@@ -156,3 +156,4 @@ void WavetableOscillatorSubsection::comboBoxChanged(juce::ComboBox* comboBoxThat
         eventHandler.onFmFromChanged(getIdAsString(), fmFromComboBox.getText());
     }
 }
+

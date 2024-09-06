@@ -18,7 +18,7 @@ using namespace Ocnet;
 class DragZone : public juce::Component, public juce::DragAndDropContainer
 {
 public:
-    DragZone();
+    DragZone(GUI_EventHandler& eventHandler);
 
     void setParentContainerAndComponent(juce::DragAndDropContainer& parentContainer, Subsection& parentComponent);
 
@@ -29,6 +29,8 @@ public:
     void resized() override;
     void paint(juce::Graphics& g) override;
 private:
+    GUI_EventHandler& eventHandler;
+
     bool mouseHovering;
     juce::DragAndDropContainer* parentContainer;
     Subsection* parentComponent;

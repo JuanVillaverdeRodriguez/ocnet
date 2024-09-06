@@ -29,6 +29,7 @@ public:
     void updateFMCombo(juce::Array<int> ids);
     void comboBoxChanged(juce::ComboBox* comboBoxThatHasChanged) override;
 
+
 private:
     juce::String volumeParameterID;
     juce::String panningParameterID;

@@ -15,6 +15,7 @@
 #include "../GUI_EventHandler.h"
 #include "../ParameterHandler/ButtonParameterAttachment.h"
 #include "../LookAndFeel_V4/OcnetLookAndFeel_SubsectionButtons.h"
+#include "../Knobs/Knob1.h"
 
 using namespace Ocnet;
 
@@ -55,6 +56,8 @@ public:
 
     void setDesiredHeight(int newHeight);
     int getDesiredHeight();
+
+    void showModulationTargets(bool shouldShow);
 
 private:
     int id;

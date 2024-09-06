@@ -22,11 +22,17 @@ public:
 	// Colocar la label en bounds
 	void showLabel(juce::Component& component, juce::Rectangle<int> bounds);
 
+	void paint(juce::Graphics& g) override;
+
 	// Colocar la label debajo de attachToComp
 	void showLabel(juce::Component& parentComp, juce::Component& attachToComp);
+	void showModulationTarget(bool shouldShow);
 
 private:
 	OcnetLookAndFeel lookAndFeel;
+	bool shouldShowModulationTarget = false;  // Bandera para mostrar el borde
+
+	juce::Rectangle<int> modulationTargetBox;
 
 	GUI_EventHandler& eventHandler;
 	juce::String parameterID;

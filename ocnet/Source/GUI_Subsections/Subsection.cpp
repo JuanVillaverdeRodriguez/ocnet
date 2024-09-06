@@ -92,6 +92,16 @@ int Subsection::getDesiredHeight()
     return desiredHeight;
 }
 
+void Subsection::showModulationTargets(bool shouldShow)
+{
+    for (auto component : getChildren()) {
+        if (auto knob = dynamic_cast<Knob1*>(component)) {
+            knob->showModulationTarget(shouldShow);
+        }
+    }
+}
+
+
 void Subsection::paint(juce::Graphics& g)
 {
     const float cornerRadius = 5.0f; // Radio para los bordes redondeados

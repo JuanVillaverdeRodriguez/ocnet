@@ -50,7 +50,7 @@ public:
 
     void addEffect(int processorType, int id, const ParameterHandler& parameterHandler);
     void addOscillator(int processorType, int id, const ParameterHandler& parameterHandler);
-    void addModulator(int processorType, int id, const ParameterHandler& parameterHandler);
+    void addModulator(int processorType, int id, const ParameterHandler& parameterHandler, int subID = -1);
 
     void setBypassed(int id, bool bypassed);
     void removeModulation(const juce::String& modulationID);

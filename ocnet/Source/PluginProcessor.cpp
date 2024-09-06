@@ -201,13 +201,10 @@ void OcnetAudioProcessor::setStateInformation (const void* data, int sizeInBytes
 juce::AudioProcessorValueTreeState::ParameterLayout OcnetAudioProcessor::createParameterLayout() {
     
     juce::AudioProcessorValueTreeState::ParameterLayout layout;
-    int maxNumberOfParams = 64;
+    int maxNumberOfMacros = 12;
 
-    //ADSR
-    //DBG("MAX MODULATORS: " + juce::String(maxNumberOfParams));
-
-    for (int i = 0; i < maxNumberOfParams; i++) {
-        layout.add(std::make_unique<juce::AudioParameterFloat>("param_" + juce::String(i), "Attack", juce::NormalisableRange<float>(0.f, 1.f, 0.01f, 1.f), 1.0f));
+    for (int i = 1; i < maxNumberOfMacros+1; i++) {
+        layout.add(std::make_unique<juce::AudioParameterFloat>("Macro_" + juce::String(i) + "_macro", "Value", juce::NormalisableRange<float>(0.f, 1.f, 0.01f, 1.f), 1.0f));
     }
 
     return layout;

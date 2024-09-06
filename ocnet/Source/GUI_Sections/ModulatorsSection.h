@@ -25,7 +25,7 @@ class ModulatorsSection : public Section, public juce::Button::Listener {
 public:
     ModulatorsSection(GUI_EventHandler& eventHandler);
 
-    std::unique_ptr<Subsection>* addModulator(int processorType, int numberOfEnvelopes, ParameterHandler& apvts);
+    std::unique_ptr<Subsection>* addModulator(int processorType, int numberOfEnvelopes, ParameterHandler& apvts, int subMenuID = -1);
 
     std::vector<std::unique_ptr<Subsection>>* getListOfSubsections() override;
 
@@ -36,7 +36,7 @@ public:
     void resized() override;
 
     void removeModulation(const juce::String modulationID);
-
+    juce::Array<int> getMacrosInUse();
 private:
     GUI_EventHandler& eventHandler;
     OcnetLookAndFeel lookAndFeel;

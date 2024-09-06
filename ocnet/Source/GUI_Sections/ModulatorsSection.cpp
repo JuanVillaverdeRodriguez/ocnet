@@ -23,7 +23,7 @@ ModulatorsSection::ModulatorsSection(GUI_EventHandler& eventHandler) : eventHand
     
 }
 
-std::unique_ptr<Subsection>* ModulatorsSection::addModulator(int processorType, int numberOfEnvelopes, ParameterHandler& parameterHandler)
+std::unique_ptr<Subsection>* ModulatorsSection::addModulator(int processorType, int numberOfEnvelopes, ParameterHandler& parameterHandler, int subMenuID)
 {
     switch (processorType)
     {
@@ -36,7 +36,7 @@ std::unique_ptr<Subsection>* ModulatorsSection::addModulator(int processorType, 
             break;
 
         case Macro:
-            subsectionsVector.push_back(std::make_unique<MacroSubsection>(numberOfEnvelopes, eventHandler));
+            subsectionsVector.push_back(std::make_unique<MacroSubsection>(numberOfEnvelopes, subMenuID, eventHandler));
             break;
 
         case Randomizer:
@@ -90,26 +90,52 @@ void ModulatorsSection::removeModulation(const juce::String modulationID)
     }
 }
 
+juce::Array<int> ModulatorsSection::getMacrosInUse()
+{
+    juce::Array<int> usedMacros;
+
+    for (auto& subsection : subsectionsVector) {
+        if (subsection->getSubType() == "Macro") {
+            if (auto macroSubsection = dynamic_cast<MacroSubsection*>(subsection.get())) {
+                usedMacros.add(macroSubsection->getMacroID());
+            }
+        }
+    }
+    return usedMacros;
+}
+
 void ModulatorsSection::buttonClicked(juce::Button* clickedButton)
 {
     if (clickedButton == &addModulatorButton) {
         juce::PopupMenu menu;
         menu.addItem(1, "Envelope");
         menu.addItem(2, "LFO");
-        menu.addItem(3, "Macro");
-        menu.addItem(4, "Randomizer");
+        menu.addItem(3, "Randomizer");
+
+        juce::Array<int> usedMacros = getMacrosInUse();
+        juce::PopupMenu subMenu;
+        const int macroBaseID = 100;
+        for (int i = 1; i <= 12; i++) {
+            if (usedMacros.contains(i))
+                subMenu.addItem(macroBaseID + i, "Macro " + juce::String(i), false);
+            else 
+                subMenu.addItem(macroBaseID + i, "Macro " + juce::String(i), true);
+        }
+        menu.addSubMenu("Macro", subMenu);
 
         menu.showMenuAsync(juce::PopupMenu::Options().withTargetComponent(addModulatorButton),
-            [this](int result)
+            [this, macroBaseID](int result)
             {
                 if (result == 1)
                     eventHandler.onAddModulator(Envelope);
                 else if (result == 2)
                     eventHandler.onAddModulator(LFO);
                 else if (result == 3)
-                    eventHandler.onAddModulator(Macro);
-                else if (result == 4)
                     eventHandler.onAddModulator(Randomizer);
+                else if (result >= macroBaseID && result < macroBaseID + 13) {
+                    int selectedMacro = result - macroBaseID;
+                    eventHandler.onAddModulator(Macro, selectedMacro); // Aquí llamas a tu evento de Macro
+                }
             });
     }
 }

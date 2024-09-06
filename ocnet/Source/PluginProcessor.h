@@ -63,9 +63,7 @@ public:
     juce::AudioProcessorValueTreeState::ParameterLayout
         createParameterLayout();
 
-    juce::AudioProcessorValueTreeState apvts { *this, nullptr, "Parameters", createParameterLayout() };
-
-    ParameterHandler parameterHandler;
+    ParameterHandler parameterHandler{ *this, [this]() { return createParameterLayout();} };
 
     //juce::AudioProcessorValueTreeState apvts;
 

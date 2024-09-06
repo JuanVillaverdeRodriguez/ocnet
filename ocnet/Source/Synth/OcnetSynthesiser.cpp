@@ -64,14 +64,14 @@ void OcnetSynthesiser::addOscillator(int processorID, int id)
     }
 }
 
-void OcnetSynthesiser::addModulator(int processorID, int id)
+void OcnetSynthesiser::addModulator(int processorID, int id, int subID)
 {
     for (int i = 0; i < getNumVoices(); i++) {
         if (auto voice = dynamic_cast<SynthVoice*>(getVoice(i))) {
             if (id == 0) {
                 hasMainEnvelope = true;
             }
-            voice->addModulator(processorID, id);
+            voice->addModulator(processorID, id, subID);
         }
     }
 }

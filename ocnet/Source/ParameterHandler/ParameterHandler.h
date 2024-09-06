@@ -15,9 +15,11 @@
 #include "SliderParameter.h"
 #include "ButtonParameter.h"
 
+class OcnetAudioProcessor;
+
 class ParameterHandler {
 public:
-    ParameterHandler();
+    ParameterHandler(juce::AudioProcessor& audioProcessor, const std::function<juce::AudioProcessorValueTreeState::ParameterLayout()>& func);
     ~ParameterHandler() = default;
 
     // Añadir parametros
@@ -33,6 +35,7 @@ public:
     std::shared_ptr<ComboBoxParameter>* getComboBoxParameter(const juce::String& parameterID);
     std::shared_ptr<SliderParameter>* getSliderParameter(const juce::String& parameterID);
     std::shared_ptr<ButtonParameter>* getButtonParameter(const juce::String& parameterID);
+
 
     // Elimina del arbol de parametros y del vector de parametros los parametros para un modulo.
     void deleteAttachedParameters(const juce::String& parameterOwnerType, const juce::String& ownerID);
@@ -60,7 +63,11 @@ public:
     void addParameter(const juce::String& parameterID, juce::var initialValue);
     juce::var getParameterValue(const juce::String& parameterID);
 
+    juce::AudioProcessorValueTreeState apvts;
+
 private:
+    void initializeValueTree();
+
     juce::ValueTree rootNode;
 
     // Listas de parametros

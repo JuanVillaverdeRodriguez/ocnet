@@ -11,77 +11,7 @@
 #include "ParameterHandler.h"
 #include "../Utils/Utils.h"
 
-ParameterHandler::ParameterHandler()
-{
-    static juce::Identifier rootIdentifier("Parameters");
-    juce::ValueTree rootNode(rootIdentifier);
 
-    this->rootNode = rootNode;
-    
-
-    static juce::Identifier modulatorsIndentifier("Modulators");
-    juce::ValueTree modulatorsNode(modulatorsIndentifier);
-
-    static juce::Identifier oscillatorsIdentifier("Oscillators");
-    juce::ValueTree oscillatorsNode(oscillatorsIdentifier);
-
-    static juce::Identifier effectsIdentifier("Effects");
-    juce::ValueTree effectsNode(effectsIdentifier);
-
-
-    static juce::Identifier envelopesIdentifier("Envelope");
-    juce::ValueTree envelopesNode(envelopesIdentifier);
-
-    static juce::Identifier distortionsIdentifier("Distortion");
-    juce::ValueTree distortionsNode(distortionsIdentifier);
-
-    static juce::Identifier filtersIndentifier("Filter");
-    juce::ValueTree filtersNode(filtersIndentifier);
-
-    static juce::Identifier wavetableOscillatorsIndentifier("WavetableOscillator");
-    juce::ValueTree wavetableOscillatorsNode(wavetableOscillatorsIndentifier);
-
-    static juce::Identifier samplersIdentifier("Sampler");
-    juce::ValueTree samplersNode(samplersIdentifier);
-
-    static juce::Identifier LFOsIdentifier("LFO");
-    juce::ValueTree LFOsNode(LFOsIdentifier);
-
-    static juce::Identifier ReverbsIdentifier("Reverb");
-    juce::ValueTree ReverbsNode(ReverbsIdentifier);
-
-    static juce::Identifier EqualizersIdentifier("Equalizer");
-    juce::ValueTree EqualizersNode(EqualizersIdentifier);
-
-    static juce::Identifier DelaysIdentifier("Delay");
-    juce::ValueTree DelaysNode(DelaysIdentifier);
-
-    static juce::Identifier MacrosIdentifier("Macro");
-    juce::ValueTree MacrosNode(MacrosIdentifier);
-
-    static juce::Identifier RandomizersIdentifier("Randomizer");
-    juce::ValueTree RandomizersNode(RandomizersIdentifier);
-
-
-    rootNode.addChild(modulatorsNode, -1, nullptr);
-    rootNode.addChild(oscillatorsNode, -1, nullptr);
-    rootNode.addChild(effectsNode, -1, nullptr);
-
-    effectsNode.addChild(filtersNode, -1, nullptr);
-    effectsNode.addChild(distortionsNode, -1, nullptr);
-    effectsNode.addChild(ReverbsNode, -1, nullptr);
-    effectsNode.addChild(EqualizersNode, -1, nullptr);
-    effectsNode.addChild(DelaysNode, -1, nullptr);
-
-    oscillatorsNode.addChild(wavetableOscillatorsNode, -1, nullptr);
-    oscillatorsNode.addChild(samplersNode, -1, nullptr);
-
-    modulatorsNode.addChild(envelopesNode, -1, nullptr);
-    modulatorsNode.addChild(LFOsNode, -1, nullptr);
-    modulatorsNode.addChild(MacrosNode, -1, nullptr);
-    modulatorsNode.addChild(RandomizersNode, -1, nullptr);
-
-}
 
 std::shared_ptr<SliderParameter> ParameterHandler::syncWithSliderParam(const juce::String& parameterID) const
 {
@@ -215,6 +145,12 @@ std::shared_ptr<ButtonParameter>* ParameterHandler::getButtonParameter(const juc
     if (it != buttonParametersMap.end())
         return &it->second;
     return nullptr;
+}
+
+ParameterHandler::ParameterHandler(juce::AudioProcessor& audioProcessor, const std::function<juce::AudioProcessorValueTreeState::ParameterLayout()>& createParameterLayout)
+    : apvts(audioProcessor, nullptr, "Parameters", createParameterLayout())
+{
+    initializeValueTree();
 }
 
 void ParameterHandler::addComboBoxParameter(const juce::String& parameterID, std::shared_ptr<ComboBoxParameter> parameter)
@@ -479,6 +415,76 @@ juce::var ParameterHandler::getParameterValue(const juce::String& parameterID)
     auto node = findNodeByName(rootNode, juce::Identifier(ownerID));
 
     return node.getProperty(juce::Identifier(parameterTag));
+}
+
+void ParameterHandler::initializeValueTree()
+{
+    static juce::Identifier rootIdentifier("Parameters");
+    juce::ValueTree rootNode(rootIdentifier);
+
+    this->rootNode = rootNode;
+
+    static juce::Identifier modulatorsIndentifier("Modulators");
+    juce::ValueTree modulatorsNode(modulatorsIndentifier);
+
+    static juce::Identifier oscillatorsIdentifier("Oscillators");
+    juce::ValueTree oscillatorsNode(oscillatorsIdentifier);
+
+    static juce::Identifier effectsIdentifier("Effects");
+    juce::ValueTree effectsNode(effectsIdentifier);
+
+
+    static juce::Identifier envelopesIdentifier("Envelope");
+    juce::ValueTree envelopesNode(envelopesIdentifier);
+
+    static juce::Identifier distortionsIdentifier("Distortion");
+    juce::ValueTree distortionsNode(distortionsIdentifier);
+
+    static juce::Identifier filtersIndentifier("Filter");
+    juce::ValueTree filtersNode(filtersIndentifier);
+
+    static juce::Identifier wavetableOscillatorsIndentifier("WavetableOscillator");
+    juce::ValueTree wavetableOscillatorsNode(wavetableOscillatorsIndentifier);
+
+    static juce::Identifier samplersIdentifier("Sampler");
+    juce::ValueTree samplersNode(samplersIdentifier);
+
+    static juce::Identifier LFOsIdentifier("LFO");
+    juce::ValueTree LFOsNode(LFOsIdentifier);
+
+    static juce::Identifier ReverbsIdentifier("Reverb");
+    juce::ValueTree ReverbsNode(ReverbsIdentifier);
+
+    static juce::Identifier EqualizersIdentifier("Equalizer");
+    juce::ValueTree EqualizersNode(EqualizersIdentifier);
+
+    static juce::Identifier DelaysIdentifier("Delay");
+    juce::ValueTree DelaysNode(DelaysIdentifier);
+
+    static juce::Identifier MacrosIdentifier("Macro");
+    juce::ValueTree MacrosNode(MacrosIdentifier);
+
+    static juce::Identifier RandomizersIdentifier("Randomizer");
+    juce::ValueTree RandomizersNode(RandomizersIdentifier);
+
+
+    rootNode.addChild(modulatorsNode, -1, nullptr);
+    rootNode.addChild(oscillatorsNode, -1, nullptr);
+    rootNode.addChild(effectsNode, -1, nullptr);
+
+    effectsNode.addChild(filtersNode, -1, nullptr);
+    effectsNode.addChild(distortionsNode, -1, nullptr);
+    effectsNode.addChild(ReverbsNode, -1, nullptr);
+    effectsNode.addChild(EqualizersNode, -1, nullptr);
+    effectsNode.addChild(DelaysNode, -1, nullptr);
+
+    oscillatorsNode.addChild(wavetableOscillatorsNode, -1, nullptr);
+    oscillatorsNode.addChild(samplersNode, -1, nullptr);
+
+    modulatorsNode.addChild(envelopesNode, -1, nullptr);
+    modulatorsNode.addChild(LFOsNode, -1, nullptr);
+    modulatorsNode.addChild(MacrosNode, -1, nullptr);
+    modulatorsNode.addChild(RandomizersNode, -1, nullptr);
 }
 
 std::tuple<juce::String, juce::String, juce::String> ParameterHandler::splitParameterID(const juce::String& input)

@@ -15,6 +15,7 @@
 #include "../../Utils/OcnetTypes.h"
 #include "Oscillators/SamplerProcessor.h"
 #include "Effects/EqualizerProcessor.h"
+#include "Modulators/MacroProcessor.h"
 
 // Porque usar lista en vez de vector:
 
@@ -306,7 +307,7 @@ void ProcessorHandler::addOscillator(int processorType, int id, const ParameterH
     oscillatorsProcessorsList.back()->syncParams(parameterHandler);
 }
 
-void ProcessorHandler::addModulator(int processorType, int id, const ParameterHandler& parameterHandler)
+void ProcessorHandler::addModulator(int processorType, int id, const ParameterHandler& parameterHandler, int subID)
 {
     switch (processorType)
     {
@@ -322,6 +323,9 @@ void ProcessorHandler::addModulator(int processorType, int id, const ParameterHa
             break;
         case LFO:
             modulatorProcessorsList.push_back(std::make_unique<LFOProcessor>(id));
+            break;
+        case Macro:
+            modulatorProcessorsList.push_back(std::make_unique<MacroProcessor>(id, subID));
             break;
 
         default:

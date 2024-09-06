@@ -21,12 +21,10 @@ OcnetGUI_interface::OcnetGUI_interface(OcnetAudioProcessor *processor) : process
     gui_ = std::make_unique<OcnetGUI>(*this, keyboardState);
 
 
-
-
     // Si no esta añadido, añadir un envelope principal
     if (!processor->getHasMainEnvelope()) {
         maxCurrentID = 0;
-        onAddModulator(Envelope);
+        onAddModulator(Envelope, -1);
     }
 }
 
@@ -56,14 +54,14 @@ void OcnetGUI_interface::onAddEffect(int processorType)
     maxCurrentID++;
 }
 
-void OcnetGUI_interface::onAddModulator(int processorType)
+void OcnetGUI_interface::onAddModulator(int processorType, int subMenuID)
 {
-    std::unique_ptr<Subsection>* subsection = gui_->getModulatorsSection()->addModulator(processorType, maxCurrentID, processor.parameterHandler);
+    std::unique_ptr<Subsection>* subsection = gui_->getModulatorsSection()->addModulator(processorType, maxCurrentID, processor.parameterHandler, subMenuID);
     if (subsection != nullptr) {
         gui_->getModulatorsSection()->addAndMakeVisible(**subsection);
         subsection->get()->addParamsToParameterHandler(processor.parameterHandler);
         subsection->get()->attachParams(processor.parameterHandler);
-        processor.addModulator(processorType, maxCurrentID);
+        processor.addModulator(processorType, maxCurrentID, subMenuID);
         maxCurrentID++;
     }
 }
@@ -208,7 +206,15 @@ void OcnetGUI_interface::initialiseModulators(juce::ValueTree& modulatorsTree)
         for (int j = 0; subTree.getChild(j).isValid(); ++j)
         {
             auto id = subTree.getChild(j).getType().toString();
-            auto subsection = gui_->getModulatorsSection()->addModulator(fromString(type), id.getIntValue(), processor.parameterHandler);
+            std::unique_ptr<Subsection>* subsection;
+            subsection = gui_->getModulatorsSection()->addModulator(fromString(type), id.getIntValue(), processor.parameterHandler);
+
+            /*if (fromString(type) == Macro) {
+                juce::Value macroID = subTree.getChild(j).getPropertyAsValue("macroID", nullptr);
+                subsection = gui_->getModulatorsSection()->addModulator(fromString(type), id.getIntValue(), processor.parameterHandler, macroID.getValue().toString().getIntValue());
+            }
+            else 
+                subsection = gui_->getModulatorsSection()->addModulator(fromString(type), id.getIntValue(), processor.parameterHandler);*/
 
             gui_->getModulatorsSection()->addAndMakeVisible(**subsection);
             subsection->get()->attachParams(processor.parameterHandler);
@@ -313,4 +319,3 @@ void OcnetGUI_interface::handleNoteOff(juce::MidiKeyboardState*, int midiChannel
     // Lógica cuando se libera una tecla
     processor.noteOff(midiChannel, midiNoteNumber, velocity, true);
 }
-

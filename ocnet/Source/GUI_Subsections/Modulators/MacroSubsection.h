@@ -12,22 +12,26 @@
 #include "../../Knobs/Knob1.h"
 #include "ModulatorsSubsection.h"
 #include <JuceHeader.h>
+#include "../../ParameterHandler/OcnetComboBoxAttachment.h"
 
 class MacroSubsection : public ModulatorsSubsection {
 public:
-    MacroSubsection(int id, GUI_EventHandler& eventHandler);
+    MacroSubsection(int id, int subMenuID, GUI_EventHandler& eventHandler);
     ~MacroSubsection() = default;
 
     void attachParameters(ParameterHandler& parameterHandler) override;
     void addParametersToParameterHandler(ParameterHandler& parameterHandler) override;
     void subsectionResized() override;
+    int getMacroID();
 
 private:
-    juce::String speedParameterID;
-
+    int selectedMacroID;
     std::unique_ptr<Knob1> macroKnob;
-    std::unique_ptr<OcnetSliderAttachment> macroParameterAttachment;
     juce::String macroParameterID;
+    juce::String selectedMacroParameterID;
+
+    using SliderAttachment = juce::AudioProcessorValueTreeState::SliderAttachment;
+    std::unique_ptr<SliderAttachment> macroParameterAttachment;
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(MacroSubsection)
 

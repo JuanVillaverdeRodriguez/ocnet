@@ -47,7 +47,7 @@ public:
 
     void addEffect(int processorType, int id);
     void addOscillator(int processorType, int id);
-    void addModulator(int processorType, int id);
+    void addModulator(int processorType, int id, int subID = -1);
 
     void setBypassed(int id, bool bypassed);
     void setFmFrom(int idFrom, int idTo);

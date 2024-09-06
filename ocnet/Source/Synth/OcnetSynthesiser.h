@@ -28,7 +28,7 @@ public:
 
     void addEffect(int processorID, int id);
     void addOscillator(int processorID, int id);
-    void addModulator(int processorID, int id);
+    void addModulator(int processorID, int id, int subID = -1);
 
     void setBypassed(int id, bool bypassed);
     void removeModulation(const juce::String& modulationID);

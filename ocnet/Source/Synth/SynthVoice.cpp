@@ -136,11 +136,10 @@ void SynthVoice::addOscillator(int processorType, int id)
 
 }
 
-void SynthVoice::addModulator(int processorType, int id)
+void SynthVoice::addModulator(int processorType, int id, int subID)
 {
-    processorhHandler.addModulator(processorType, id, *parameterHandler);
+    processorhHandler.addModulator(processorType, id, *parameterHandler, subID);
     processorhHandler.prepareToPlay(spec);
-
 }
 
 void SynthVoice::setBypassed(int id, bool bypassed)

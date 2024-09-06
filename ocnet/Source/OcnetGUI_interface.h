@@ -24,7 +24,8 @@ public:
 
     void onAddOscillator(int processorType) override;
     void onAddEffect(int processorType) override;
-    void onAddModulator(int processorType) override;
+
+    void onAddModulator(int processorType, int subMenuID) override; 
 
     void onConnectModulation(Subsection& modulator, juce::String& parameterID, bool recreateParameters) override;
 
@@ -50,8 +51,6 @@ public:
     void handleNoteOn(juce::MidiKeyboardState*, int midiChannel, int midiNoteNumber, float velocity);
 
     void handleNoteOff(juce::MidiKeyboardState*, int midiChannel, int midiNoteNumber, float velocity);
-
-
 
 private:
     void initialiseOscillators(juce::ValueTree& oscillatorsTree);

@@ -26,10 +26,7 @@ RandomizerSubsection::RandomizerSubsection(int id, GUI_EventHandler& eventHandle
     // Configuración del ComboBox
     modeComboBox.addItem("Perlin", 1);
     modeComboBox.addItem("Sample & Hold", 2);
-
-    //fmFromComboBox.setSelectedId(1);
     modeComboBox.setName(modeParameterID);
-
     addAndMakeVisible(modeComboBox);
 
 }

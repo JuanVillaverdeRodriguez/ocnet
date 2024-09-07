@@ -43,7 +43,7 @@
 
 using namespace Ocnet;
 
-ProcessorHandler::ProcessorHandler(const ParameterHandler& parameterHandler)
+ProcessorHandler::ProcessorHandler(const ParameterHandler& parameterHandler, ProcessorInfo& processorInfo) : processorInfo(processorInfo)
 {
     voiceId = 0;
     mainEnvelope = std::make_unique<EnvelopeProcessor>(0);
@@ -323,7 +323,7 @@ void ProcessorHandler::addModulator(int processorType, int id, const ParameterHa
             }
             break;
         case LFO:
-            modulatorProcessorsList.push_back(std::make_unique<LFOProcessor>(id));
+            modulatorProcessorsList.push_back(std::make_unique<LFOProcessor>(id, processorInfo));
             break;
         case Macro:
             modulatorProcessorsList.push_back(std::make_unique<MacroProcessor>(id, subID));

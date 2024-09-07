@@ -139,6 +139,7 @@
     </Bscmake>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\Source\ProcessorInfo.cpp"/>
     <ClCompile Include="..\..\Source\Tests\GUITest.cpp"/>
     <ClCompile Include="..\..\Source\Tests\InternalFilesTest.cpp"/>
     <ClCompile Include="..\..\Source\Tests\ModulationsTest.cpp"/>
@@ -2923,6 +2924,7 @@
     <ClCompile Include="..\..\JuceLibraryCode\include_juce_osc.cpp"/>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\Source\ProcessorInfo.h"/>
     <ClInclude Include="..\..\Source\SignalSmithLibrary\dsp\delay.h"/>
     <ClInclude Include="..\..\Source\SignalSmithLibrary\dsp\envelopes.h"/>
     <ClInclude Include="..\..\Source\SignalSmithLibrary\dsp\fft.h"/>

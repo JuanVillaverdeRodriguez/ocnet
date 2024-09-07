@@ -10,8 +10,8 @@
 
 #include "LFOProcessor.h"
 
-LFOProcessor::LFOProcessor(int id) 
-    : frequency(1.0f), phase(0.0f), sampleRate(44100.0f), phaseIncrement(0.0f), maxFreq(32)
+LFOProcessor::LFOProcessor(int id, ProcessorInfo& processorInfo)
+    : frequency(1.0f), phase(0.0f), sampleRate(44100.0f), phaseIncrement(0.0f), maxFreq(32), syncWithTempo(true), processorInfo(processorInfo)
 {
     setId(id);
 }
@@ -22,14 +22,26 @@ LFOProcessor::~LFOProcessor()
 
 float LFOProcessor::getNextSample(int sample)
 {
-    float value = std::sin(phase);
-    phase += phaseIncrement;
-    if (phase >= juce::MathConstants<float>::twoPi)
-        phase -= juce::MathConstants<float>::twoPi;
+    float value = 0.0f;
+
+    if (getNoteDivisionPPQ() != -1) {
+        auto relativePosition = fmod(processorInfo.ppqPositions[sample], getNoteDivisionPPQ());
+        
+        // cuanto mas grande sea el valor de la derecha del <, mas tiempo durara el pulso
+        if (processorInfo.info.isPlaying && relativePosition < (getNoteDivisionPPQ()/2))
+            value = 1.0f;
+    }
+    else {
+        value = std::sin(phase);
+        phase += phaseIncrement;
+        if (phase >= juce::MathConstants<float>::twoPi)
+            phase -= juce::MathConstants<float>::twoPi;
+    }
 
     addToModulationBuffer(value, sample); // Asignar el valor de la modulacion
 
     return value;
+
 }
 
 void LFOProcessor::startNote(int midiNoteNumber, float velocity, juce::SynthesiserSound* sound, int currentPitchWheelPosition)
@@ -48,6 +60,8 @@ void LFOProcessor::updateParameterValues()
         updateFrequency();
     }
 
+    selectedRate = tempoComboBoxParameter->getCurrentIndex();
+
     freqModulationBuffer = freqParameter->getModulationBuffer(getVoiceNumberId());
 }
 
@@ -60,10 +74,38 @@ void LFOProcessor::prepareToPlay(juce::dsp::ProcessSpec spec)
 void LFOProcessor::syncParams(const ParameterHandler& parameterHandler)
 {
     freqParameter = parameterHandler.syncWithSliderParam(juce::String("LFO_") + juce::String(getId()) + juce::String("_freq"));
+    tempoComboBoxParameter = parameterHandler.syncWithComboBoxParam(juce::String("LFO_") + juce::String(getId()) + juce::String("_tempo"));
 }
 
 void LFOProcessor::processBlock(juce::AudioBuffer<float>& buffer)
 {
+}
+
+float LFOProcessor::getNoteDivisionPPQ()
+{
+    switch (selectedRate) {
+        case Free: // Libre
+            return -1.0f;
+            break;
+        case WholeNote: // Redonda
+            return 4.0f;
+            break;
+        case HalfNote: // Blanca
+            return 2.0f;
+            break;
+        case QuarterNote: // Negra
+            return 1.0f;
+            break;
+        case EighthNote: // Corchea
+            return 0.5f;
+            break;
+        case SixteenthNote: // Semicorchea
+            return 0.25f;
+            break;
+        default:
+            return 0.0f;
+            break;
+    }
 }
 
 inline void LFOProcessor::updateFrequency() {

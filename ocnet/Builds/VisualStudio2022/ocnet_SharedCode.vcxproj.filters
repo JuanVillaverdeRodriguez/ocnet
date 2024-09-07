@@ -766,6 +766,9 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\Source\ProcessorInfo.cpp">
+      <Filter>ocnet\Source</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\Source\Tests\GUITest.cpp">
       <Filter>ocnet\Source\Tests</Filter>
     </ClCompile>
@@ -3873,6 +3876,9 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\Source\ProcessorInfo.h">
+      <Filter>ocnet\Source</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\Source\SignalSmithLibrary\dsp\delay.h">
       <Filter>ocnet\Source\SignalSmithLibrary\dsp</Filter>
     </ClInclude>

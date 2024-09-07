@@ -27,7 +27,7 @@ OcnetAudioProcessor::OcnetAudioProcessor()
 
     addSound(new SynthSound());
     for (int i = 0; i < numVoices; ++i)
-        addVoice(new SynthVoice(i, parameterHandler));
+        addVoice(new SynthVoice(i, parameterHandler, processorInfo));
 
 }
 
@@ -100,8 +100,9 @@ void OcnetAudioProcessor::changeProgramName (int index, const juce::String& newN
 //==============================================================================
 void OcnetAudioProcessor::prepareToPlay (double sampleRate, int samplesPerBlock)
 {
-    setCurrentPlaybackSampleRate(sampleRate);
+    processorInfo.prepare(sampleRate, samplesPerBlock);
 
+    setCurrentPlaybackSampleRate(sampleRate);
 
     for (int i = 0; i < getNumVoices(); i++) {
         if (auto voice = dynamic_cast<SynthVoice*>(getVoice(i))) {
@@ -159,6 +160,8 @@ void OcnetAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juce::
     // Limpiar el buffer
     for (auto i = totalNumInputChannels; i < totalNumOutputChannels; ++i)
         buffer.clear(i, 0, buffer.getNumSamples());
+
+    processorInfo.process(getPlayHead(), buffer.getNumSamples());
 
     // Procesar el bloque en cada voz
     renderNextBlock(buffer, midiMessages,  0, buffer.getNumSamples());

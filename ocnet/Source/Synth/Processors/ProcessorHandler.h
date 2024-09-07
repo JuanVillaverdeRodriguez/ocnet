@@ -22,7 +22,7 @@
 
 class ProcessorHandler {
 public:
-    ProcessorHandler(const ParameterHandler& parameterHandler);
+    ProcessorHandler(const ParameterHandler& parameterHandler, ProcessorInfo& processorInfo);
     ~ProcessorHandler();
 
     void releaseResources();
@@ -64,6 +64,7 @@ public:
     bool reverbIsActive();
 private:
 
+    ProcessorInfo& processorInfo;
 
     int voiceId;
 

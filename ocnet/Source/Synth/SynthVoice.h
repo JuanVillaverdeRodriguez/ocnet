@@ -21,7 +21,7 @@ class SynthVoice : public juce::SynthesiserVoice
 {
 
 public:
-    SynthVoice(int id, ParameterHandler& parameterHandler);
+    SynthVoice(int id, ParameterHandler& parameterHandler, ProcessorInfo& processorInfo);
     ~SynthVoice() override;
 
     bool canPlaySound(juce::SynthesiserSound* sound) override;

@@ -12,7 +12,7 @@
 #include "Processors/Oscillators/WavetableOscillatorProcessor.h"
 #include "Processors/Modulators/EnvelopeProcessor.h"
 
-SynthVoice::SynthVoice(int id, ParameterHandler& parameterHandler) : processorhHandler(parameterHandler) {
+SynthVoice::SynthVoice(int id, ParameterHandler& parameterHandler, ProcessorInfo& processorInfo) : processorhHandler(parameterHandler, processorInfo) {
     setVoiceNumberId(id);
     this->parameterHandler = &parameterHandler;
     spec = { 44100.0 ,512, 2 };

@@ -6,6 +6,9 @@
               pluginVSTCategory="kPlugCategSynth" pluginCharacteristicsValue="pluginIsSynth,pluginWantsMidiIn">
   <MAINGROUP id="Fay8LI" name="ocnet">
     <GROUP id="{B897E036-BD65-2195-C049-E6C429F0FF25}" name="Source">
+      <FILE id="FkK6yn" name="ProcessorInfo.cpp" compile="1" resource="0"
+            file="Source/ProcessorInfo.cpp"/>
+      <FILE id="CSeEkw" name="ProcessorInfo.h" compile="0" resource="0" file="Source/ProcessorInfo.h"/>
       <GROUP id="{88CCFDAB-B21E-D838-D657-9FD706067BEE}" name="SignalSmithLibrary">
         <GROUP id="{4B3BA1FD-7D1C-FE79-7F48-7FF9F7691907}" name="dsp">
           <FILE id="YRhQ87" name="delay.h" compile="0" resource="0" file="Source/SignalSmithLibrary/dsp/delay.h"/>

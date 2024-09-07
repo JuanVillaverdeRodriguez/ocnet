@@ -15,6 +15,7 @@
 #include "Synth/OcnetSynthesiser.h"
 #include "ParameterHandler/ParameterHandler.h"
 #include "Tests/WavetableOscillatorTest.h"
+#include "ProcessorInfo.h"
 
 static WavetableOscillatorTest wavetableOscillatorTest;
 
@@ -64,6 +65,8 @@ public:
         createParameterLayout();
 
     ParameterHandler parameterHandler{ *this, [this]() { return createParameterLayout();} };
+
+    ProcessorInfo processorInfo;
 
     //juce::AudioProcessorValueTreeState apvts;
 

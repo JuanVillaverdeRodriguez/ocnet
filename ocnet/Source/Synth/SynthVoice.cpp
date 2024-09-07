@@ -12,7 +12,7 @@
 #include "Processors/Oscillators/WavetableOscillatorProcessor.h"
 #include "Processors/Modulators/EnvelopeProcessor.h"
 
-SynthVoice::SynthVoice(int id, ParameterHandler& parameterHandler, ProcessorInfo& processorInfo) : processorhHandler(parameterHandler, processorInfo) {
+SynthVoice::SynthVoice(int id, ParameterHandler& parameterHandler, ProcessorInfo& processorInfo) : processorhHandler(parameterHandler, processorInfo), enabled(true) {
     setVoiceNumberId(id);
     this->parameterHandler = &parameterHandler;
     spec = { 44100.0 ,512, 2 };
@@ -167,5 +167,5 @@ juce::Array<float> SynthVoice::getSamplerSampleSamples(int samplerID)
 
 bool SynthVoice::isVoiceActiveOcnet()
 {
-    return isVoiceActive() || processorhHandler.reverbIsActive();
+    return (isVoiceActive() || processorhHandler.reverbIsActive()) && enabled;
 }

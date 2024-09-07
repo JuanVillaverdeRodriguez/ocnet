@@ -57,7 +57,13 @@ public:
 
     bool isVoiceActiveOcnet();
 
+    void disable() { enabled = false; }
+    void enable() { enabled = true; }
+    bool isEnabled() { return enabled; }
+
+
 private:
+    bool enabled;
     juce::dsp::ProcessSpec spec;
 
     ParameterHandler* parameterHandler;

@@ -118,3 +118,42 @@ juce::Array<float> OcnetSynthesiser::getSamplerSampleSamples(int samplerID)
         return voice->getSamplerSampleSamples(samplerID);
     }
 }
+
+void OcnetSynthesiser::setThisNumberOfVoices(int numberOfVoices)
+{
+    // Si el numero de voces que deben de estar activas es menor al de las voces actualmente activas, desactiva las que puedas
+    if (numberOfVoices != getNumberOfEnabledVoices()) {
+        if (numberOfVoices < getNumberOfEnabledVoices()) {
+            for (int i = 0; i < getNumVoices(); i++) {
+                if (auto voice = dynamic_cast<SynthVoice*>(getVoice(i))) {
+                    if (!voice->isVoiceActive()) {
+                        voice->disable();
+                    }
+                }
+            }
+        }
+        else { // Si es mayor al de las voces activas, activa algunas que esten desactivadas
+            for (int i = 0; i < getNumVoices(); i++) {
+                if (auto voice = dynamic_cast<SynthVoice*>(getVoice(i))) {
+                    if (!voice->isEnabled()) {
+                        voice->enable();
+                    }
+                }
+            }
+        }
+    }
+}
+
+int OcnetSynthesiser::getNumberOfEnabledVoices() {
+    int counter = 0;
+
+    for (int i = 0; i < getNumVoices(); i++) {
+        if (auto voice = dynamic_cast<SynthVoice*>(getVoice(i))) {
+            if (voice->isEnabled()) {
+                counter++;
+            }
+        }
+    }
+
+    return counter;
+}

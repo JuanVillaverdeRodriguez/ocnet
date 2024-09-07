@@ -12,6 +12,7 @@
 
 #include <JuceHeader.h>
 #include "../Knobs/Knob2.h"
+#include "../ParameterHandler/OcnetSliderAttachment.h"
 
 using namespace Ocnet;
 
@@ -29,12 +30,13 @@ public:
 private:
     GUI_EventHandler& eventHandler;
 
+    std::unique_ptr<Knob2> numVoicesKnob;
+    std::unique_ptr<OcnetSliderAttachment> numVoicesParameterAttachment;
+    juce::String numVoicesParameterID;
 
-
-    juce::Slider slider;
-
-    Knob2 numVoicesKnob;
-
+    std::unique_ptr<Knob2> glideKnob;
+    std::unique_ptr<OcnetSliderAttachment> glideParameterAttachment;
+    juce::String glideParameterID;
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(FooterSection)
 

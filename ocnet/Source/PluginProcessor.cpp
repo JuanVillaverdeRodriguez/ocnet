@@ -21,9 +21,10 @@ OcnetAudioProcessor::OcnetAudioProcessor()
                       #endif
                        .withOutput ("Output", juce::AudioChannelSet::stereo(), true)
                      #endif
-                       )
+                       ), paramsSynced(false)
 #endif
 {
+
 
     addSound(new SynthSound());
     for (int i = 0; i < numVoices; ++i)
@@ -161,6 +162,9 @@ void OcnetAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juce::
     for (auto i = totalNumInputChannels; i < totalNumOutputChannels; ++i)
         buffer.clear(i, 0, buffer.getNumSamples());
 
+    if (paramsSynced)  
+        updateSynthParameters();
+
     processorInfo.process(getPlayHead(), buffer.getNumSamples());
 
     // Procesar el bloque en cada voz
@@ -211,6 +215,31 @@ juce::AudioProcessorValueTreeState::ParameterLayout OcnetAudioProcessor::createP
     }
 
     return layout;
+}
+
+void OcnetAudioProcessor::updateSynthParameters()
+{
+    glideValue = glideParameter->getValue();
+    //glideModulationBuffer = glideParameter->getModulationBuffer(0);
+
+    numVoices = numVoicesParameter->getValue();
+    //numVoicesModulationBuffer = numVoicesParameter->getModulationBuffer(0);
+
+    setThisNumberOfVoices(numVoices);
+
+    /*if (numVoices != getNumberOfActiveVoices()) {
+        int voicesToDisable = 8 - numVoices;
+        disableThisNumberOfVoices(voicesToDisable);
+    }*/
+}
+
+void OcnetAudioProcessor::syncSynthParameters()
+{
+    paramsSynced = true;
+    numVoicesParameter = parameterHandler.syncWithSliderParam("Synth_-1_numVoices");
+    glideParameter = parameterHandler.syncWithSliderParam("Synth_-1_glide");
+
+
 }
 
 //==============================================================================

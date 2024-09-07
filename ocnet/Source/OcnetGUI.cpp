@@ -72,13 +72,12 @@ void OcnetGUI::visualizeEffectsSection()
 void OcnetGUI::addSynthParams(ParameterHandler& parameterHandler)
 {
     footerSection->addSynthParams(parameterHandler);
-
 }
 
 void OcnetGUI::attachSynthParams(ParameterHandler& parameterHandler)
 {
+    footerSection->attachSynthParams(parameterHandler);
 }
-
 
 void OcnetGUI::resized()
 {

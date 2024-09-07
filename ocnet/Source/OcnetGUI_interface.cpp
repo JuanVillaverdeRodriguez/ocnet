@@ -19,13 +19,15 @@ OcnetGUI_interface::OcnetGUI_interface(OcnetAudioProcessor *processor) : process
     keyboardState.addListener(this);
 
     gui_ = std::make_unique<OcnetGUI>(*this, keyboardState);
-
+    gui_->addSynthParams(processor->parameterHandler);
+    gui_->attachSynthParams(processor->parameterHandler);
 
     // Si no esta añadido, añadir un envelope principal
     if (!processor->getHasMainEnvelope()) {
         maxCurrentID = 0;
         onAddModulator(Envelope, -1);
     }
+
 }
 
 OcnetGUI_interface::~OcnetGUI_interface()
@@ -297,6 +299,8 @@ void OcnetGUI_interface::editorIsShowing()
 
     gui_->editorIsShowing();
     initialiseGUIFromTree(processor.parameterHandler.getRootTree());
+    processor.syncSynthParameters();
+
     //gui_->addSynthParams(processor.parameterHandler);
     //gui_->attachSynthParams(processor.parameterHandler);
 }

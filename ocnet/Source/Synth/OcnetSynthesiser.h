@@ -38,6 +38,10 @@ public:
 
     juce::Array<float> getSamplerSampleSamples(int samplerID);
 
+    void setThisNumberOfVoices(int numberOfVoicesToDisable);
+
+    int getNumberOfEnabledVoices();
+
 private:
     bool hasMainEnvelope = false;
 

@@ -86,6 +86,6 @@ namespace Ocnet {
     }
     juce::String createSynthParameter(const juce::String& paramName)
     {
-        return "";
+        return "Synth_-1_" + paramName;
     }
 }

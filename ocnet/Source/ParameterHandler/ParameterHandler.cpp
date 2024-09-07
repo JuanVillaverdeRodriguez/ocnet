@@ -433,7 +433,6 @@ void ParameterHandler::initializeValueTree()
     static juce::Identifier effectsIdentifier("Effects");
     juce::ValueTree effectsNode(effectsIdentifier);
 
-
     static juce::Identifier envelopesIdentifier("Envelope");
     juce::ValueTree envelopesNode(envelopesIdentifier);
 
@@ -467,10 +466,14 @@ void ParameterHandler::initializeValueTree()
     static juce::Identifier RandomizersIdentifier("Randomizer");
     juce::ValueTree RandomizersNode(RandomizersIdentifier);
 
+    static juce::Identifier SynthIdentifier("Synth");
+    juce::ValueTree SynthNode(SynthIdentifier);
 
     rootNode.addChild(modulatorsNode, -1, nullptr);
     rootNode.addChild(oscillatorsNode, -1, nullptr);
     rootNode.addChild(effectsNode, -1, nullptr);
+    rootNode.addChild(SynthNode, -1, nullptr);
+
 
     effectsNode.addChild(filtersNode, -1, nullptr);
     effectsNode.addChild(distortionsNode, -1, nullptr);

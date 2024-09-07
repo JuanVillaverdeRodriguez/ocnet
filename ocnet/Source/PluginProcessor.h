@@ -68,13 +68,22 @@ public:
 
     ProcessorInfo processorInfo;
 
+    void updateSynthParameters();
+    void syncSynthParameters();
+
     //juce::AudioProcessorValueTreeState apvts;
 
 
 private:
     //==============================================================================
     int numVoices = 8;
-
+    std::shared_ptr<SliderParameter> glideParameter;
+    std::shared_ptr<SliderParameter> numVoicesParameter;
+    juce::Array<float> glideModulationBuffer;
+    juce::Array<float> numVoicesModulationBuffer;
+    float glideValue;
+    int numVoicesValue;
+    bool paramsSynced;
     
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (OcnetAudioProcessor)
 };

@@ -16,6 +16,7 @@
 #include "Oscillators/SamplerProcessor.h"
 #include "Effects/EqualizerProcessor.h"
 #include "Modulators/MacroProcessor.h"
+#include "Modulators/RandomizerProcessor.h"
 
 // Porque usar lista en vez de vector:
 
@@ -327,7 +328,9 @@ void ProcessorHandler::addModulator(int processorType, int id, const ParameterHa
         case Macro:
             modulatorProcessorsList.push_back(std::make_unique<MacroProcessor>(id, subID));
             break;
-
+        case Randomizer:
+            modulatorProcessorsList.push_back(std::make_unique<RandomizerProcessor>(id));
+            break;
         default:
             return;
     }

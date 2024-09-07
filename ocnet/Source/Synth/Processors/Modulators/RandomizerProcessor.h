@@ -14,11 +14,11 @@
 #include "../Modulator.h"
 #include "../../../ParameterHandler/ParameterHandler.h"
 
-class RanzomizerProcessor : public Modulator {
+class RandomizerProcessor : public Modulator {
 public:
-    RanzomizerProcessor(int id);
-    ~RanzomizerProcessor() override;
-
+    RandomizerProcessor(int id);
+    ~RandomizerProcessor() override;
+    
     float getNextSample(int sample) override;
 
     void startNote(int midiNoteNumber, float velocity, juce::SynthesiserSound* sound, int currentPitchWheelPosition) override;
@@ -30,10 +30,26 @@ public:
 
 
 private:
+    float perlin(int sample);
+    float sampleAndHold(int sample);
+    float cosineInterpolation(float A, float B, float X);
+
+    int sampleAndHold_Counter;
+    float sampleAndHold_LastSampledValue;
+    float perlin_LastValue;
+
+
     juce::Array<float> freqModulationBuffer;
     std::shared_ptr<SliderParameter> freqParameter;
 
     void updateFrequency();
+    enum Mode {
+        Perlin,
+        SampleAndHold
+    };
+    std::shared_ptr<ComboBoxParameter> modeComboBoxParameter;
+
+    int selectedMode;
 
     float maxFreq;
 
@@ -42,6 +58,9 @@ private:
     float phaseIncrement;
     double sampleRate;
 
-    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(RanzomizerProcessor)
+    std::shared_ptr<ComboBoxParameter> waveTypeParameter;
+
+
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(RandomizerProcessor)
 
 };

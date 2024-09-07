@@ -288,8 +288,6 @@ void OcnetGUI_interface::attachModulationParameters(std::unique_ptr<Subsection>*
     }
 }
 
-
-
 void OcnetGUI_interface::editorIsShowing()
 {
 #if RUN_TESTS

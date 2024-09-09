@@ -66,7 +66,6 @@ public:
 
     ParameterHandler parameterHandler{ *this, [this]() { return createParameterLayout();} };
 
-    ProcessorInfo processorInfo;
 
     void updateSynthParameters();
     void syncSynthParameters();

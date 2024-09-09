@@ -21,10 +21,15 @@ void WavetableOscillatorTest::runTest()
     performanceTest(true);
 }
 
+void WavetableOscillatorTest::setProcessorInfo(ProcessorInfo& processorInfo)
+{
+    processorInfoRef = &processorInfo;
+}
+
 
 void WavetableOscillatorTest::performanceTest(bool compareWithNewwer)
 {
-    WavetableOscillatorProcessor oscProcessor(1);
+    WavetableOscillatorProcessor oscProcessor(1, *processorInfoRef);
 
     beginTest("Performance Test");
 

@@ -55,12 +55,14 @@ public:
     void samplerSampleChanged(int id, const juce::String& filename);
     juce::Array<float> getSamplerSampleSamples(int samplerID);
 
-    bool isVoiceActiveOcnet();
+    bool isVoiceActive() const override;
+    bool reverbIsPlaying();
 
     void disable() { enabled = false; }
     void enable() { enabled = true; }
     bool isEnabled() { return enabled; }
 
+    //bool hasStartedPlayingThisNoteButDidntStop(int midiNote);
 
 private:
     bool enabled;

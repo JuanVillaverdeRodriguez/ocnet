@@ -11,11 +11,11 @@
 #include "WavetableOscillatorProcessor.h"
 #include "../Source/Utils/Utils.h"
 
-WavetableOscillatorProcessor::WavetableOscillatorProcessor(int id)
+WavetableOscillatorProcessor::WavetableOscillatorProcessor(int id, ProcessorInfo& processorInfo)
     : unisonVoices(8), unisonDetune(0.20f), unisonSpread(0.15f), gen(rd()),
     maxUnisonDetuning(10), maxUnisonSpread(10), maxUnisonVoices(8),
     currentFrequency2NotesDown(0.0f), currentFrequency2NotesUp(0.0f), fmMod(1), fmModulatorOsc(nullptr), 
-    currentFMIndex(0.0f), transpose(0), lastTableChoice(0)
+    currentFMIndex(0.0f), transpose(0), lastTableChoice(0), legato(true), processorInfo(processorInfo), deltaPreviousNoteCurrentNoteInHertz(0.0f), prevNotePressedInHertz(0.0f), legatoDeltaCents(1), targetFrequency(0.0f), currentMidiNoteNumber(0)
 
 {
     setId(id);
@@ -81,6 +81,7 @@ WavetableOscillatorProcessor::WavetableOscillatorProcessor(int id)
     // Inicialización de unisonDetuneArray, unisonSpreadArrayL y R...
 }
 
+
 WavetableOscillatorProcessor::~WavetableOscillatorProcessor()
 {
     for (float* ptr : unisonVoiceCurrentIndexArray)
@@ -123,17 +124,36 @@ void WavetableOscillatorProcessor::syncParams(const ParameterHandler& parameterH
 
 void WavetableOscillatorProcessor::startNote(int midiNoteNumber, float velocity, juce::SynthesiserSound* sound, int currentPitchWheelPosition)
 {
-    auto frequency = juce::MidiMessage::getMidiNoteInHertz(midiNoteNumber + transpose);
+    currentMidiNoteNumber = midiNoteNumber;
+
+    double frequency = 0.0f;
+    float currentNotePressedInHertz = juce::MidiMessage::getMidiNoteInHertz(midiNoteNumber + transpose);
+
+    if (legato) {
+        targetFrequency = currentNotePressedInHertz;
+        prevNotePressedInHertz = juce::MidiMessage::getMidiNoteInHertz(processorInfo.midiInfo.previousMidiNotePressed);
+        prevNotePressedInHertz = processorInfo.midiInfo.previousLegatoFreq;
+        // Si no hay ninguna nota anterior o si no se esta tocando simultaneamente, no se aplica el legato.
+        if (prevNotePressedInHertz == 0.0f || !processorInfo.midiInfo.previousNoteIsBeingPlayed)
+            frequency = currentNotePressedInHertz;
+        else
+            frequency = prevNotePressedInHertz;
+    }
+    else {
+        frequency = currentNotePressedInHertz;
+    }
+
     currentFrequency = frequency;  // Almacenar la frecuencia actual
 
-    currentFrequency2NotesDown = juce::MidiMessage::getMidiNoteInHertz(midiNoteNumber - 2);
-    currentFrequency2NotesUp = juce::MidiMessage::getMidiNoteInHertz(midiNoteNumber + 2);
-
+    processorInfo.midiInfo.previousNoteIsBeingPlayed = true;
+    processorInfo.midiInfo.previousMidiNotePressed = midiNoteNumber;
+    processorInfo.midiInfo.previousLegatoFreq = frequency;
     setFrequency(static_cast<float>(frequency), sampleRate);
 }
 
 void WavetableOscillatorProcessor::stopNote(float velocity, bool allowTailOff)
 {
+
 }
 
 void WavetableOscillatorProcessor::updateParameterValues()
@@ -438,6 +458,9 @@ std::vector<WavetableStruct> WavetableOscillatorProcessor::createWaveTables(int 
 
 void WavetableOscillatorProcessor::processBlock(juce::AudioBuffer<float>& outputBuffer)
 {
+    if (legato)
+        updateLegato();
+
     int numSamples = outputBuffer.getNumSamples();
 
     const auto globalPanAngle = (panning + panningModulationBuffer[0]) * juce::MathConstants<float>::halfPi;
@@ -553,6 +576,28 @@ float WavetableOscillatorProcessor::getNextFMValue()
 float WavetableOscillatorProcessor::getCurrentFreq()
 {
     return currentFrequency;
+}
+
+void WavetableOscillatorProcessor::updateLegato()
+{
+    if (targetFrequency < currentFrequency) {
+        float newFreq = freqRelativeTo(currentFrequency, -legatoDeltaCents, true);
+
+        if (newFreq > targetFrequency) {
+            currentFrequency = newFreq;  // Almacenar la frecuencia actual
+            setFrequency(static_cast<float>(newFreq), sampleRate);
+        }
+    }
+    else if (targetFrequency > currentFrequency) {
+        float newFreq = freqRelativeTo(currentFrequency, legatoDeltaCents, true);
+
+        if (newFreq < targetFrequency) {
+            currentFrequency = newFreq;  // Almacenar la frecuencia actual
+            setFrequency(static_cast<float>(newFreq), sampleRate);
+        }
+    }
+
+    processorInfo.midiInfo.previousLegatoFreq = currentFrequency;
 }
 
 

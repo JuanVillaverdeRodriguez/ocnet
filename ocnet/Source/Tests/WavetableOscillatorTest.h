@@ -18,8 +18,11 @@ public:
     WavetableOscillatorTest();
     void runTest() override;
 
+    void setProcessorInfo(ProcessorInfo& processorInfo);
+
 private:
-    
+    ProcessorInfo* processorInfoRef;
+
     // Si el flag esta activado compara el processBlock actual con el processBlockTest
     void performanceTest(bool compareWithPrevious);
 };

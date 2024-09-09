@@ -16,12 +16,13 @@
 #include "../../../ParameterHandler/SliderParameter.h"
 #include <random>
 #include <immintrin.h> // Header para operaciones SSE
+#include "../../../ProcessorInfo.h"
 
 #define M_PI 3.14159265358979323846
 
 class WavetableOscillatorProcessor : public Processor {
 public:
-    WavetableOscillatorProcessor(int id);
+    WavetableOscillatorProcessor(int id, ProcessorInfo& processorInfo);
     ~WavetableOscillatorProcessor();
 
     void startNote(int midiNoteNumber, float velocity, juce::SynthesiserSound* sound, int currentPitchWheelPosition) override;
@@ -51,6 +52,16 @@ public:
     float getCurrentFreq() override;
 
 private:
+    ProcessorInfo& processorInfo;
+    float deltaPreviousNoteCurrentNoteInHertz;
+    float prevNotePressedInHertz;
+    void updateLegato();
+    int currentMidiNoteNumber;
+
+    int legatoDeltaCents;
+    float targetFrequency;
+
+    bool legato;
     int lastTableChoice;
     float currentFMIndex;
     float fmMod;

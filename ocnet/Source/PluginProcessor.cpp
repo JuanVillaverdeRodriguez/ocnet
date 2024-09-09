@@ -25,12 +25,17 @@ OcnetAudioProcessor::OcnetAudioProcessor()
 #endif
 {
 
+    wavetableOscillatorTest.setProcessorInfo(processorInfo);
+
+    setNoteStealingEnabled(true);
 
     addSound(new SynthSound());
     for (int i = 0; i < numVoices; ++i)
         addVoice(new SynthVoice(i, parameterHandler, processorInfo));
 
 }
+
+
 
 OcnetAudioProcessor::~OcnetAudioProcessor()
 {

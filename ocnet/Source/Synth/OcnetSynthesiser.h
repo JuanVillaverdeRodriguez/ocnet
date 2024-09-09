@@ -42,7 +42,29 @@ public:
 
     int getNumberOfEnabledVoices();
 
+    juce::SynthesiserVoice* findVoiceToSteal(juce::SynthesiserSound* soundToPlay,
+        int /*midiChannel*/, int midiNoteNumber) const override;
+
+    juce::SynthesiserVoice* findFreeVoice(juce::SynthesiserSound* soundToPlay,
+        int midiChannel,
+        int midiNoteNumber,
+        bool stealIfNoneAvailable) const override;
+
+    int getNewestMidiNote();
+
+    void noteOff(int midiChannel, int midiNoteNumber, float velocity, bool allowTailOff) override;
+    void noteOn(const int midiChannel,
+        const int midiNoteNumber,
+        const float velocity) override;
+
+    ProcessorInfo processorInfo;
+
+
 private:
+    bool shouldStealNotes;
+    juce::Array<int> notesThatDidntEnd;
+    mutable juce::CriticalSection stealLock;
+    mutable juce::Array<juce::SynthesiserVoice*> usableVoicesToStealArray;
     bool hasMainEnvelope = false;
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(OcnetSynthesiser)

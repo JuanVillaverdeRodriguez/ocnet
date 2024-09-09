@@ -293,7 +293,7 @@ void ProcessorHandler::addOscillator(int processorType, int id, const ParameterH
     switch (processorType)
     {
         case WavetableOscillator:
-            oscillatorsProcessorsList.push_back(std::make_unique<WavetableOscillatorProcessor>(id));
+            oscillatorsProcessorsList.push_back(std::make_unique<WavetableOscillatorProcessor>(id, processorInfo));
             break;
         case Sampler:
             oscillatorsProcessorsList.push_back(std::make_unique<SamplerProcessor>(id));

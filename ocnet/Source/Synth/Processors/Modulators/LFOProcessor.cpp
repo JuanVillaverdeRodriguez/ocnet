@@ -54,7 +54,7 @@ void LFOProcessor::stopNote(float velocity, bool allowTailOff)
 
 void LFOProcessor::updateParameterValues()
 {
-    float newFreq = freqParameter->getValue() * maxFreq;
+    float newFreq = freqParameter->getValue();
     if (newFreq != frequency) {
         frequency = newFreq;
         updateFrequency();

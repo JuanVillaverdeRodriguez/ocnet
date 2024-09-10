@@ -25,6 +25,7 @@ public:
     int sectionResized();
     juce::Array<Knob1*> getAllKnobs();
 
+
     Subsection* getSubsectionWithID(int id);
 
 protected:

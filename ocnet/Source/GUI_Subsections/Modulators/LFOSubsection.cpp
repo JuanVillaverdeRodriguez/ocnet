@@ -12,12 +12,14 @@
 
 LFOSubsection::LFOSubsection(int id, GUI_EventHandler& eventHandler) : ModulatorsSubsection(eventHandler, id, "LFO")
 {
+    setDesiredHeight(175);
+
     speedParameterID = createParameterID("freq");
     tempoComboParameterID = createParameterID("tempo");
 
     speedKnob = std::make_unique<Knob1>(speedParameterID, eventHandler, "Frequency");
 
-    speedKnob->setRange(0.0f, 1.0f, 0.01f);
+    speedKnob->setRange(1.0f, 20.0f, 0.01f);
 
     //speedKnob->setValue(0.5f);
 
@@ -31,6 +33,7 @@ LFOSubsection::LFOSubsection(int id, GUI_EventHandler& eventHandler) : Modulator
     tempoComboBox.addItem("1/16", 6);
     tempoComboBox.setName(tempoComboParameterID);
     addAndMakeVisible(tempoComboBox);
+    addAndMakeVisible(lfoGraph);
 }
 
 void LFOSubsection::attachParameters(ParameterHandler& parameterHandler)
@@ -41,7 +44,7 @@ void LFOSubsection::attachParameters(ParameterHandler& parameterHandler)
 
 void LFOSubsection::addParametersToParameterHandler(ParameterHandler& parameterHandler)
 {
-    parameterHandler.addSliderParameter(speedParameterID, std::make_shared<SliderParameter>("freq", 0.5f));
+    parameterHandler.addSliderParameter(speedParameterID, std::make_shared<SliderParameter>("freq", 1.0f));
     parameterHandler.addComboBoxParameter(tempoComboParameterID, std::make_shared<ComboBoxParameter>("tempo", juce::StringArray{ "Free", "1/1", "1/2", "1/4", "1/8", "1/16"}, 0));
 }
 
@@ -57,6 +60,9 @@ void LFOSubsection::subsectionResized()
 
     tempoComboBox.setBounds(posX, 20, defaultKnobSize * 2, defaultKnobSize - 10);
 
+    posX = 35 + 5;
+    lfoGraph.setBounds(posX, 75, area.getWidth() - 45, area.getHeight() - 80);
+
     int lastX = 0;
     for (auto& modulationBubble : modulationBubblesVector) {
         juce::Rectangle<int> globalBounds = this->getParentComponent()->getParentComponent()->getLocalArea(this, dragZone.getBounds());
@@ -64,4 +70,56 @@ void LFOSubsection::subsectionResized()
         modulationBubble->setBounds(globalBounds.getX() + lastX, globalBounds.getY(), defaultKnobSize - 25, defaultKnobSize - 25);
         lastX += modulationBubble->getBounds().getWidth() + 3;
     }
+}
+
+void LFOSubsection::paintCalled(juce::Graphics& g)
+{
+    lfoGraph.updateParams(speedKnob->getValue());
+    lfoGraph.repaint();
+}
+
+void LFOSubsection::LFOGraph::paint(juce::Graphics& g)
+{
+    const float cornerRadius = 5.0f; // Radio para los bordes redondeados
+    const float lineThickness = 3.0f;
+
+    // Dibujar fondo con esquinas redondeadas
+    juce::Path roundedRect;
+    roundedRect.addRoundedRectangle(0, 0, getWidth(), getHeight(), cornerRadius, cornerRadius, true, true, true, true);
+    g.setColour(Palette::Section);  // Color del fondo
+    g.fillPath(roundedRect);
+
+    // Área restringida para dibujar la onda
+    auto area = getLocalBounds();
+    juce::Rectangle<int> constrainedArea = juce::Rectangle<int>(area.getX() + lineThickness, area.getY() + lineThickness, area.getWidth() - (lineThickness * 2), area.getHeight() - (lineThickness * 2));
+
+    // Parámetros para la onda
+    float width = constrainedArea.getWidth();
+    float height = constrainedArea.getHeight();
+    float midY = constrainedArea.getY() + height / 2.0f;  // Punto medio vertical
+
+    juce::Path sineWavePath;
+
+    // Crear la trayectoria de la onda sinusoidal
+    float numCycles = freq;  // Solo un ciclo
+    float frequency = numCycles / width;  // Frecuencia para un ciclo completo
+    float amplitude = height / 2.0f;  // Amplitud de la onda (la mitad de la altura del área restringida)
+
+    sineWavePath.startNewSubPath(constrainedArea.getX(), midY);  // Iniciar la onda en el borde izquierdo
+
+    // Crear puntos de la onda
+    for (float x = 0; x < width; ++x)
+    {
+        float y = std::sin(x * juce::MathConstants<float>::twoPi * frequency) * amplitude;  // y = sin(x)
+        sineWavePath.lineTo(constrainedArea.getX() + x, midY - y);  // Dibujar la onda desde el medio
+    }
+
+    // Dibujar la onda sinusoidal
+    g.setColour(juce::Colours::white);  // Color de la onda
+    g.strokePath(sineWavePath, juce::PathStrokeType(2.0f));  // Grosor de la línea de la onda
+}
+
+void LFOSubsection::LFOGraph::updateParams(float freq)
+{
+    this->freq = freq;
 }

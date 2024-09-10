@@ -23,11 +23,22 @@ public:
     void attachParameters(ParameterHandler& parameterHandler) override;
     void addParametersToParameterHandler(ParameterHandler& parameterHandler) override;
     void subsectionResized() override;
+    void paintCalled(juce::Graphics& g) override;
 
 private:
+    struct LFOGraph : public juce::Component {
+    public:
+        void paint(juce::Graphics& g) override;
+        void updateParams(float freq);
+
+    private:
+        float freq;
+    };
+
+    LFOGraph lfoGraph;
+
     juce::String speedParameterID;
     juce::String tempoComboParameterID;
-
 
     std::unique_ptr<Knob1> speedKnob;
     std::unique_ptr<OcnetSliderAttachment> speedParameterAttachment;

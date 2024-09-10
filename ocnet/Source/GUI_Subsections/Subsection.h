@@ -58,6 +58,16 @@ public:
     void setDesiredHeight(int newHeight);
     int getDesiredHeight();
 
+    /*struct Graph : public juce::Component {
+    public:
+        void paint(juce::Graphics& g) override;
+
+    private:
+        float attack;
+        float decay;
+        float sustain;
+        float release;
+    };*/
 private:
     int id;
     juce::String subType;

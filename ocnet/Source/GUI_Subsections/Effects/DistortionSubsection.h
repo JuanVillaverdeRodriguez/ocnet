@@ -23,8 +23,20 @@ public:
     void attachParameters(ParameterHandler& parameterHandler) override;
     void addParametersToParameterHandler(ParameterHandler& parameterHandler) override;
     void subsectionResized() override;
+    void paintCalled(juce::Graphics& g) override;
 
 private:
+    struct DistortionGraph : public juce::Component {
+    public:
+        void paint(juce::Graphics& g) override;
+        void updateParams(float drive);
+
+    private:
+        float drive;
+    };
+
+    DistortionGraph distortionGraph;
+
     juce::String driveParameterID;
 
     std::unique_ptr<Knob1> driveKnob;

@@ -25,10 +25,10 @@ float LFOProcessor::getNextSample(int sample)
     float value = 0.0f;
 
     if (getNoteDivisionPPQ() != -1) {
-        auto relativePosition = fmod(processorInfo.ppqPositions[sample], getNoteDivisionPPQ());
+        auto relativePosition = fmod(processorInfo.hostInfo.ppqPositions[sample], getNoteDivisionPPQ());
         
         // cuanto mas grande sea el valor de la derecha del <, mas tiempo durara el pulso
-        if (processorInfo.info.isPlaying && relativePosition < (getNoteDivisionPPQ()/2))
+        if (processorInfo.hostInfo.info.isPlaying && relativePosition < (getNoteDivisionPPQ()/2))
             value = 1.0f;
     }
     else {

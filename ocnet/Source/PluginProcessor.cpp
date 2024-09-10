@@ -106,7 +106,7 @@ void OcnetAudioProcessor::changeProgramName (int index, const juce::String& newN
 //==============================================================================
 void OcnetAudioProcessor::prepareToPlay (double sampleRate, int samplesPerBlock)
 {
-    processorInfo.prepare(sampleRate, samplesPerBlock);
+    processorInfo.hostInfo.prepare(sampleRate, samplesPerBlock);
 
     setCurrentPlaybackSampleRate(sampleRate);
 
@@ -170,7 +170,7 @@ void OcnetAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juce::
     if (paramsSynced)  
         updateSynthParameters();
 
-    processorInfo.process(getPlayHead(), buffer.getNumSamples());
+    processorInfo.hostInfo.process(getPlayHead(), buffer.getNumSamples());
 
     // Procesar el bloque en cada voz
     renderNextBlock(buffer, midiMessages,  0, buffer.getNumSamples());

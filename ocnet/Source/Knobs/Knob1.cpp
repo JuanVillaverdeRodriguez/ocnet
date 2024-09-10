@@ -3,7 +3,7 @@
 #include <windows.h>
 #include "../GUI_Subsections/Modulators/EnvelopeSubsection.h"
 
-Knob1::Knob1(const juce::String& parameterID, GUI_EventHandler& eventHandler) : eventHandler(eventHandler), parameterID(parameterID) {
+Knob1::Knob1(const juce::String& parameterID, GUI_EventHandler& eventHandler) : eventHandler(eventHandler), parameterID(parameterID), shouldRepaintParent(false) {
 	auto [type, id, propertyName] = Utils::splitParameterID(parameterID);
 
 	this->propertyName = propertyName;
@@ -19,7 +19,7 @@ Knob1::Knob1(const juce::String& parameterID, GUI_EventHandler& eventHandler) : 
 	knobLabel.setColour(knobLabel.textColourId, Palette::Text);
 }
 
-Knob1::Knob1(const juce::String& parameterID, GUI_EventHandler& eventHandler, juce::String knobLabelText) : eventHandler(eventHandler), parameterID(parameterID)
+Knob1::Knob1(const juce::String& parameterID, GUI_EventHandler& eventHandler, juce::String knobLabelText) : eventHandler(eventHandler), parameterID(parameterID), shouldRepaintParent(false)
 {
 	auto [type, id, propertyName] = Utils::splitParameterID(parameterID);
 
@@ -111,5 +111,19 @@ void Knob1::showModulationTarget(bool shouldShow)
 	//}
 	//else
 		//parentComp.removeChildComponent();
+}
+
+void Knob1::sliderValueChanged(juce::Slider* sliderThatHasChanged)
+{
+	if (sliderThatHasChanged == this) {
+		if (shouldRepaintParent) {
+			this->getParentComponent()->repaint();
+		}
+	}
+}
+
+void Knob1::shouldRepaintParentWhenChanged(bool shouldIt)
+{
+	shouldRepaintParent = shouldIt;
 }
 

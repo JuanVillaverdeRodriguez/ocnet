@@ -6,9 +6,9 @@
 
 using namespace Ocnet;
 
-class Knob1 : public juce::Slider, public juce::DragAndDropTarget {
+class Knob1 : public juce::Slider, public juce::DragAndDropTarget, juce::Slider::Listener {
 public:
-	Knob1(const juce::String& parameterID, GUI_EventHandler &eventHandler);
+	Knob1(const juce::String& parameterID, GUI_EventHandler& eventHandler);
 	Knob1(const juce::String& parameterID, GUI_EventHandler& eventHandler, juce::String knobLabelText);
 	~Knob1();
 
@@ -28,7 +28,15 @@ public:
 	void showLabel(juce::Component& parentComp, juce::Component& attachToComp);
 	void showModulationTarget(bool shouldShow);
 
+	void sliderValueChanged(juce::Slider* slider) override;
+
+	// Si si establece en true, entonces se llamara al repaint() del padre cada vez que se cambia el valor del slider.
+	// Util para componentes visuales.
+	void shouldRepaintParentWhenChanged(bool shouldIt);
+
 private:
+	bool shouldRepaintParent;
+
 	OcnetLookAndFeel lookAndFeel;
 	bool shouldShowModulationTarget = false;  // Bandera para mostrar el borde
 

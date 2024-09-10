@@ -5,8 +5,6 @@ OcnetGUI::OcnetGUI(GUI_EventHandler& eventHandler, juce::MidiKeyboardState& keyb
     eventHandler(eventHandler),
     keyboardComponent(keyboardState, juce::MidiKeyboardComponent::horizontalKeyboard) 
 {
-
-
     headerSection = std::make_unique<HeaderSection>();
     footerSection = std::make_unique<FooterSection>(eventHandler);
     oscillatorsSection = std::make_unique<OscillatorsSection>(eventHandler);
@@ -77,6 +75,12 @@ void OcnetGUI::addSynthParams(ParameterHandler& parameterHandler)
 void OcnetGUI::attachSynthParams(ParameterHandler& parameterHandler)
 {
     footerSection->attachSynthParams(parameterHandler);
+}
+
+void OcnetGUI::paint(juce::Graphics& g)
+{
+    g.setColour(Palette::Section);
+    g.fillAll();
 }
 
 void OcnetGUI::resized()

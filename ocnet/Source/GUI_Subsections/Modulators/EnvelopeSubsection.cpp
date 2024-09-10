@@ -12,6 +12,8 @@
 
 EnvelopeSubsection::EnvelopeSubsection(int id, GUI_EventHandler& eventHandler) : ModulatorsSubsection(eventHandler, id, "Envelope")
 {
+    setDesiredHeight(175);
+
     // Significa que es el envelope principal, no se puede eliminar
     if (id == 0) {
         removeButton.setEnabled(false);
@@ -29,6 +31,11 @@ EnvelopeSubsection::EnvelopeSubsection(int id, GUI_EventHandler& eventHandler) :
     sustainKnob = std::make_unique<Knob1>(sustainParameterID, eventHandler, "Sustain");
     releaseKnob = std::make_unique<Knob1>(releaseParameterID, eventHandler, "Release");
 
+    attackKnob->shouldRepaintParentWhenChanged(true);
+    decayKnob->shouldRepaintParentWhenChanged(true);
+    sustainKnob->shouldRepaintParentWhenChanged(true);
+    releaseKnob->shouldRepaintParentWhenChanged(true);
+
     attackKnob->setRange(0.0f, 1.0f, 0.01f);
     decayKnob->setRange(0.0f, 1.0f, 0.01f);
     sustainKnob->setRange(0.0f, 1.0f, 0.01f);
@@ -43,6 +50,8 @@ EnvelopeSubsection::EnvelopeSubsection(int id, GUI_EventHandler& eventHandler) :
     this->addAndMakeVisible(*decayKnob);
     this->addAndMakeVisible(*sustainKnob);
     this->addAndMakeVisible(*releaseKnob);
+
+    this->addAndMakeVisible(envelopeGraph);
 
 }
 
@@ -63,6 +72,9 @@ void EnvelopeSubsection::subsectionResized()
     releaseKnob->setBounds(posX, 20, defaultKnobSize, defaultKnobSize);
     posX += defaultKnobSize;
 
+    posX = 35 + 5;
+    envelopeGraph.setBounds(posX, 75, area.getWidth() - 45, area.getHeight() - 80);
+
     attackKnob->showLabel(*this, *attackKnob);
     decayKnob->showLabel(*this, *decayKnob);
     sustainKnob->showLabel(*this, *sustainKnob);
@@ -76,6 +88,19 @@ void EnvelopeSubsection::subsectionResized()
         lastX += modulationBubble->getBounds().getWidth() + 3;
     }
 
+}
+
+void EnvelopeSubsection::paintCalled(juce::Graphics& g)
+{
+    envelopeGraph.updateParams(
+        attackKnob->getValue(), 
+        decayKnob->getValue(), 
+        sustainKnob->getValue(), 
+        releaseKnob->getValue()
+    );
+
+
+    envelopeGraph.repaint();
 }
 
 
@@ -102,3 +127,43 @@ void EnvelopeSubsection::addParametersToParameterHandler(ParameterHandler& param
     //parameterHandler.getSliderParameter(releaseParameterID)->get()->setValue(0.1f);
 }
 
+void EnvelopeSubsection::EnvelopeGraph::paint(juce::Graphics& g)
+{
+    // Definir las dimensiones del gráfico de ADSR
+//auto area = getLocalBounds().reduced(10); // Margen dentro del componente
+    const float cornerRadius = 5.0f; // Radio para los bordes redondeados
+    const float lineThickness = 3.0f;
+
+    juce::Path roundedRect;
+    roundedRect.addRoundedRectangle(0, 0, getWidth(), getHeight(), cornerRadius, cornerRadius, true, true, true, true);
+    g.setColour(Palette::Section);
+    g.fillPath(roundedRect);
+
+    auto area = getLocalBounds();
+    juce::Rectangle<int> constrainedArea = juce::Rectangle<int>(area.getX() + lineThickness, area.getY() + lineThickness, area.getWidth() - (lineThickness * 2), area.getHeight() - (lineThickness*2));
+
+    float width = constrainedArea.getWidth();
+    float height = constrainedArea.getHeight();
+
+    // Definir puntos iniciales y proporciones
+    juce::Point<float> start(constrainedArea.getX(), constrainedArea.getBottom()); // Inicio en el fondo (punto 0)
+    juce::Point<float> attackPoint(start.getX() + attack * width, constrainedArea.getY()); // Punto final del ataque (sube a la parte superior)
+    juce::Point<float> decayPoint(attackPoint.getX() + decay * width, constrainedArea.getBottom() - sustain * height); // Decae hasta el nivel de sustain
+    juce::Point<float> sustainPoint(decayPoint.getX(), decayPoint.getY()); // Mantiene sustain
+    juce::Point<float> releasePoint(sustainPoint.getX() + release * width, constrainedArea.getBottom()); // Baja hasta el fondo en release
+
+    // Dibujar líneas del ADSR
+    g.setColour(Palette::White); // Color de las líneas
+    g.drawLine(start.getX(), start.getY(), attackPoint.getX(), attackPoint.getY(), lineThickness); // Ataque
+    g.drawLine(attackPoint.getX(), attackPoint.getY(), decayPoint.getX(), decayPoint.getY(), lineThickness); // Decay
+    g.drawLine(decayPoint.getX(), decayPoint.getY(), sustainPoint.getX(), sustainPoint.getY(), lineThickness); // Sustain
+    g.drawLine(sustainPoint.getX(), sustainPoint.getY(), releasePoint.getX(), releasePoint.getY(), lineThickness); // Release
+}
+
+void EnvelopeSubsection::EnvelopeGraph::updateParams(float attack, float decay, float sustain, float release)
+{
+    this->attack = attack;
+    this->decay = decay;
+    this->sustain = sustain;
+    this->release = release;
+}

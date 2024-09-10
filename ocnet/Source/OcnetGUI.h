@@ -22,6 +22,9 @@ public:
     void addSynthParams(ParameterHandler& parameterHandler);
     void attachSynthParams(ParameterHandler& parameterHandler);
 
+    void paint(juce::Graphics& g) override;
+
+
     void clear();
 
     void resized() override;

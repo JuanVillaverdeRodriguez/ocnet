@@ -13,18 +13,6 @@
 #include "JuceHeader.h"
 
 struct HostInfo {
-
-};
-
-struct LegatoInfo {
-    int previousMidiNotePressed;
-    float previousLegatoFreq = 0.0f;
-    bool previousNoteIsBeingPlayed = true;
-    float glideValue;
-    bool legatoIsActive;
-};
-
-struct ProcessorInfo {
     void prepare(float sampleRate, int maxBlockSize) {
         samplesInMinute = sampleRate * 60;
         ppqPositions.resize(maxBlockSize);
@@ -53,6 +41,17 @@ struct ProcessorInfo {
     float samplesInMinute = 0.0f;
     juce::AudioPlayHead::CurrentPositionInfo info;
     std::vector<float> ppqPositions;
+};
 
+struct LegatoInfo {
+    int previousMidiNotePressed;
+    float previousLegatoFreq = 0.0f;
+    bool previousNoteIsBeingPlayed = true;
+    float glideValue;
+    bool legatoIsActive;
+};
+
+struct ProcessorInfo {
+    HostInfo hostInfo;
     LegatoInfo legatoInfo;
 };

@@ -29,6 +29,8 @@ public:
 private:
     OcnetLookAndFeel lookAndFeelEqButtons;
 
+
+
     juce::String driveParameterID;
 
     std::unique_ptr<Knob1> gainLKnob;

@@ -28,8 +28,23 @@ public:
     void attachParameters(ParameterHandler& parameterHandler);
     void addParametersToParameterHandler(ParameterHandler& parameterHandler) override;
     void subsectionResized() override;
+    void paintCalled(juce::Graphics& g) override;
 
 private:
+    struct EnvelopeGraph : public juce::Component {
+    public:
+        void paint(juce::Graphics& g) override;
+        void updateParams(float attack, float decay, float sustain, float release);
+
+    private:
+        float attack;
+        float decay;
+        float sustain;
+        float release;
+    };
+
+    EnvelopeGraph envelopeGraph;
+
     juce::String attackParameterID;
     juce::String decayParameterID;
     juce::String sustainParameterID;

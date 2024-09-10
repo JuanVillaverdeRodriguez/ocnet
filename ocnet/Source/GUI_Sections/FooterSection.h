@@ -12,11 +12,13 @@
 
 #include <JuceHeader.h>
 #include "../Knobs/Knob2.h"
+#include "../Knobs/Knob1.h"
 #include "../ParameterHandler/OcnetSliderAttachment.h"
+#include "../ParameterHandler/OcnetComboBoxAttachment.h"
 
 using namespace Ocnet;
 
-class FooterSection : public juce::Component {
+class FooterSection : public juce::Component, public juce::Button::Listener {
 public:
     FooterSection(GUI_EventHandler& eventHandler);
 
@@ -26,19 +28,29 @@ public:
 
     void addSynthParams(ParameterHandler& parameterHandler);
     void attachSynthParams(ParameterHandler& parameterHandler);
-
+    void buttonClicked(juce::Button* buttonClicked) override;
 private:
+    bool legato;
     GUI_EventHandler& eventHandler;
+    OcnetLookAndFeel lookAndFeelFooter;
+
 
     std::unique_ptr<Knob2> numVoicesKnob;
     std::unique_ptr<OcnetSliderAttachment> numVoicesParameterAttachment;
     juce::String numVoicesParameterID;
 
-    std::unique_ptr<Knob2> glideKnob;
+    std::unique_ptr<Knob1> glideKnob;
     std::unique_ptr<OcnetSliderAttachment> glideParameterAttachment;
     juce::String glideParameterID;
 
+    juce::TextButton legatoButton;
+    std::unique_ptr<ButtonParameterAttachment> legatoButtonAttachment;
+    juce::String legatoButtonParameterID;
+
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(FooterSection)
+
+
+
 
 
 };

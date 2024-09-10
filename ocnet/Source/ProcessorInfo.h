@@ -16,10 +16,12 @@ struct HostInfo {
 
 };
 
-struct MidiInfo{
+struct LegatoInfo {
     int previousMidiNotePressed;
     float previousLegatoFreq = 0.0f;
     bool previousNoteIsBeingPlayed = true;
+    float glideValue;
+    bool legatoIsActive;
 };
 
 struct ProcessorInfo {
@@ -52,5 +54,5 @@ struct ProcessorInfo {
     juce::AudioPlayHead::CurrentPositionInfo info;
     std::vector<float> ppqPositions;
 
-    MidiInfo midiInfo;
+    LegatoInfo legatoInfo;
 };

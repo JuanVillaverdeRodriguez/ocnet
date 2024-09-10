@@ -22,7 +22,7 @@
 
 class WavetableOscillatorProcessor : public Processor {
 public:
-    WavetableOscillatorProcessor(int id, ProcessorInfo& processorInfo);
+    WavetableOscillatorProcessor(int id, LegatoInfo& processorInfo);
     ~WavetableOscillatorProcessor();
 
     void startNote(int midiNoteNumber, float velocity, juce::SynthesiserSound* sound, int currentPitchWheelPosition) override;
@@ -52,7 +52,8 @@ public:
     float getCurrentFreq() override;
 
 private:
-    ProcessorInfo& processorInfo;
+    LegatoInfo& legatoInfo;
+
     float deltaPreviousNoteCurrentNoteInHertz;
     float prevNotePressedInHertz;
     void updateLegato();

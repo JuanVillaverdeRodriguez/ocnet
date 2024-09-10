@@ -90,7 +90,7 @@ void OcnetGUI::resized()
     auto keyboardSectionBounds = area.removeFromBottom(50);
 
     area = getLocalBounds();
-    auto footerSectionBounds = area.removeFromBottom(100);
+    auto footerSectionBounds = area.removeFromBottom(105);
 
     area = getLocalBounds();
     auto oscillatorsSectionViewportBounds = area.removeFromLeft(headerSectionBounds.getWidth()).withTrimmedTop(headerSectionBounds.getHeight()).withTrimmedBottom(footerSectionBounds.getHeight());

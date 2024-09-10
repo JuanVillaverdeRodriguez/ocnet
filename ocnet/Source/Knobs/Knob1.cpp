@@ -97,7 +97,7 @@ void Knob1::showLabel(juce::Component& parentComp, juce::Component& attachToComp
 	juce::Rectangle<int> bounds = attachToComp.getBounds();
 
 	parentComp.addAndMakeVisible(knobLabel);
-	knobLabel.setBounds(bounds.getX(), bounds.getY() + 40, 45, 18);
+	knobLabel.setBounds(bounds.getX(), bounds.getY() + 40, attachToComp.getWidth(), 18);
 }
 
 void Knob1::showModulationTarget(bool shouldShow)

@@ -78,6 +78,7 @@ private:
     int numVoices = 8;
     std::shared_ptr<SliderParameter> glideParameter;
     std::shared_ptr<SliderParameter> numVoicesParameter;
+    std::shared_ptr<ButtonParameter> legatoParameter;
     juce::Array<float> glideModulationBuffer;
     juce::Array<float> numVoicesModulationBuffer;
     float glideValue;

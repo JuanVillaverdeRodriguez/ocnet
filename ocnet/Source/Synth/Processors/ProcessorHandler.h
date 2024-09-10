@@ -63,7 +63,6 @@ public:
     // Busca si algun reverb esta funcionando.
     bool reverbIsActive();
 private:
-
     ProcessorInfo& processorInfo;
 
     int voiceId;

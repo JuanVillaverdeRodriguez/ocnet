@@ -297,8 +297,8 @@ void OcnetSynthesiser::noteOff(int midiChannel, int midiNoteNumber, float veloci
                         noteOn(midiChannel, newerNote, 1.0f);
                     }
 
-                    if (midiNoteNumber == processorInfo.midiInfo.previousMidiNotePressed)
-                        processorInfo.midiInfo.previousNoteIsBeingPlayed = false;
+                    if (midiNoteNumber == processorInfo.legatoInfo.previousMidiNotePressed)
+                        processorInfo.legatoInfo.previousNoteIsBeingPlayed = false;
                 }
             }
         }

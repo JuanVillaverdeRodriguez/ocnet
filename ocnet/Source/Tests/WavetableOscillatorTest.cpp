@@ -29,7 +29,7 @@ void WavetableOscillatorTest::setProcessorInfo(ProcessorInfo& processorInfo)
 
 void WavetableOscillatorTest::performanceTest(bool compareWithNewwer)
 {
-    WavetableOscillatorProcessor oscProcessor(1, *processorInfoRef);
+    WavetableOscillatorProcessor oscProcessor(1, processorInfoRef->legatoInfo);
 
     beginTest("Performance Test");
 

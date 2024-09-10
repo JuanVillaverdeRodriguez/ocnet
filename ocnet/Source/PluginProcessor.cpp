@@ -224,11 +224,13 @@ juce::AudioProcessorValueTreeState::ParameterLayout OcnetAudioProcessor::createP
 
 void OcnetAudioProcessor::updateSynthParameters()
 {
-    glideValue = glideParameter->getValue();
+    processorInfo.legatoInfo.glideValue = glideParameter->getValue() == 0.0f ? 0.01 : glideParameter->getValue();
     //glideModulationBuffer = glideParameter->getModulationBuffer(0);
 
     numVoices = numVoicesParameter->getValue();
     //numVoicesModulationBuffer = numVoicesParameter->getModulationBuffer(0);
+
+    processorInfo.legatoInfo.legatoIsActive = legatoParameter->getState();
 
     setThisNumberOfVoices(numVoices);
 
@@ -243,8 +245,7 @@ void OcnetAudioProcessor::syncSynthParameters()
     paramsSynced = true;
     numVoicesParameter = parameterHandler.syncWithSliderParam("Synth_-1_numVoices");
     glideParameter = parameterHandler.syncWithSliderParam("Synth_-1_glide");
-
-
+    legatoParameter = parameterHandler.syncWithButtonParam("Synth_-1_legato");
 }
 
 //==============================================================================

@@ -14,6 +14,7 @@
 #include "../../../View/GUI_Elements/Knobs/Knob1.h"
 #include "EffectsSubsection.h"
 #include "../../../Model/ParameterHandler/OcnetSliderAttachment.h"
+#include "../../../Model/ParameterHandler/OcnetComboBoxAttachment.h"
 
 class DistortionSubsection : public EffectsSubsection {
 public:
@@ -38,11 +39,14 @@ private:
     DistortionGraph distortionGraph;
 
     juce::String driveParameterID;
+    juce::String distortionTypeParameterID;
 
     std::unique_ptr<Knob1> driveKnob;
 
     std::unique_ptr<OcnetSliderAttachment> driveParameterAttachment;
 
+    juce::ComboBox distortionTypeComboBox;
+    std::unique_ptr<OcnetComboBoxAttachment> distortionTypeParameterAttachment;
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(DistortionSubsection)
 

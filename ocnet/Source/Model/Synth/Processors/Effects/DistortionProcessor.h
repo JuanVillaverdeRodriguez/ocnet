@@ -31,9 +31,21 @@ public:
     void syncParams(const ParameterHandler& parameterHandler) override;
 
 private:
+    void processSoftClipping(juce::dsp::AudioBlock<float>& upSampledBlock);
+    void processHardClipping(juce::dsp::AudioBlock<float>& upSampledBlock);
+
     int signum(float x) { return (x > 0) - (x < 0); }
-    // Soft clipping: f(x) = sgn(x) * (1 - exp(-|x|))
-    float softClip(float x, float drive) { return signum(x) * (1 - std::exp(-std::fabs(x*drive))); }
+
+    float softClip(float x, float drive) { return std::tanh(x * drive); }
+    float hardClip(float x, float drive) { 
+        float input = x * drive;
+        if (input >= 1.0f)
+            return 1.0f;
+        else if (input <= 1.0f)
+            return -1.0f;
+        else
+            return input;
+    }
 
     std::shared_ptr<SliderParameter> driveParameter;
 
@@ -42,6 +54,14 @@ private:
 
     juce::Array<float> driveModulationBuffer;
     float driveValue;
+
+    enum DistortionType {
+        Soft,
+        Hard
+    };
+
+    std::shared_ptr<ComboBoxParameter> distortionTypeParameter;
+    int distortionTypeChoice;
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(DistortionProcessor)
 

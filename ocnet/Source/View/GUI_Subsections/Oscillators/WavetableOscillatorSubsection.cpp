@@ -37,7 +37,6 @@ WavetableOscillatorSubsection::WavetableOscillatorSubsection(int id, GUI_EventHa
     this->addAndMakeVisible(*transposeKnob);
 
 
-
     volumeKnob->setRange(0.0f, 1.0f, 0.01f); // Quizas mejor seria volumeKnob.setRange(0, 1, 0.01f)?;
     panningKnob->setRange(0.0f, 1.0f, 0.01f); // Quizas mejor seria volumeKnob.setRange(0, 1, 0.01f)?;
     numVoicesKnob->setRange(0, 8, 1); // Quizas mejor seria volumeKnob.setRange(0, 1, 0.01f)?;
@@ -147,7 +146,6 @@ void WavetableOscillatorSubsection::updateFMCombo(juce::Array<int> ids)
     }
 
     fmFromComboBox.setSelectedItemIndex(selectedIndex);
-
 }
 
 void WavetableOscillatorSubsection::comboBoxChanged(juce::ComboBox* comboBoxThatHasChanged)

@@ -10,7 +10,7 @@
 
 #include "DistortionProcessor.h"
 
-DistortionProcessor::DistortionProcessor(int id) : oversampler(2, 3, juce::dsp::Oversampling<float>::FilterType::filterHalfBandFIREquiripple, true)
+DistortionProcessor::DistortionProcessor(int id) : oversampler(2, 2, juce::dsp::Oversampling<float>::FilterType::filterHalfBandFIREquiripple, true)
 {
     setId(id);
 }
@@ -31,6 +31,8 @@ void DistortionProcessor::updateParameterValues()
 {
     driveValue = driveParameter->getValue();
     driveModulationBuffer = driveParameter->getModulationBuffer(getVoiceNumberId());
+
+    distortionTypeChoice = distortionTypeParameter->getCurrentIndex();
 }
 
 void DistortionProcessor::prepareToPlay(juce::dsp::ProcessSpec spec)
@@ -45,38 +47,62 @@ float DistortionProcessor::getNextSample(int sample)
 
 float DistortionProcessor::getNextSample(float currentSampleValue)
 {
-    float newValue = driveValue + driveModulationBuffer[currentSampleValue];
-    if (newValue < 0.0f)
-        newValue = 0.0f;
-
-    return softClip(currentSampleValue, newValue);
+    return 0.0f;
 }
 
 void DistortionProcessor::processBlock(juce::AudioBuffer<float>& buffer)
 {
-
     juce::dsp::AudioBlock<float> block(buffer);
     juce::dsp::AudioBlock<float> upSampledBlock(buffer);
 
     upSampledBlock = oversampler.processSamplesUp(block);
-    int numSamples = upSampledBlock.getNumSamples();
-    int numChannels = upSampledBlock.getNumChannels();
 
-
-    for (int channel = 0; channel < numChannels; ++channel) {
-        auto* data = upSampledBlock.getChannelPointer(channel);
-
-        for (int sample = 0; sample < numSamples; ++sample) {
-            data[sample] = getNextSample(data[sample]);
-        }
-    }
+    if (distortionTypeChoice == Soft)
+        processSoftClipping(upSampledBlock);
+    else if (distortionTypeChoice == Hard)
+        processHardClipping(upSampledBlock);
 
     oversampler.processSamplesDown(block);
-
 }
 
 void DistortionProcessor::syncParams(const ParameterHandler& parameterHandler)
 {
     driveParameter = parameterHandler.syncWithSliderParam(juce::String("Distortion_") + juce::String(getId()) + juce::String("_drive"));
+    distortionTypeParameter = parameterHandler.syncWithComboBoxParam(juce::String("Distortion_") + juce::String(getId()) + juce::String("_distortionType"));
+}
 
+void DistortionProcessor::processSoftClipping(juce::dsp::AudioBlock<float>& upSampledBlock)
+{
+    int numSamples = upSampledBlock.getNumSamples();
+    int numChannels = upSampledBlock.getNumChannels();
+
+    for (int channel = 0; channel < numChannels; ++channel) {
+        auto* data = upSampledBlock.getChannelPointer(channel);
+
+        for (int sample = 0; sample < numSamples; ++sample) {
+            float newValue = driveValue + driveModulationBuffer[data[sample]];
+            if (newValue < 0.0f)
+                newValue = 0.0f;
+
+            data[sample] = softClip(data[sample], newValue);
+        }
+    }
+}
+
+void DistortionProcessor::processHardClipping(juce::dsp::AudioBlock<float>& upSampledBlock)
+{
+    int numSamples = upSampledBlock.getNumSamples();
+    int numChannels = upSampledBlock.getNumChannels();
+
+    for (int channel = 0; channel < numChannels; ++channel) {
+        auto* data = upSampledBlock.getChannelPointer(channel);
+
+        for (int sample = 0; sample < numSamples; ++sample) {
+            float newValue = driveValue + driveModulationBuffer[data[sample]];
+            if (newValue < 0.0f)
+                newValue = 0.0f;
+
+            data[sample] = hardClip(data[sample], newValue);
+        }
+    }
 }

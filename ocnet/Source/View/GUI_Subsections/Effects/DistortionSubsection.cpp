@@ -13,13 +13,19 @@
 DistortionSubsection::DistortionSubsection(int id, GUI_EventHandler& eventHandler) : EffectsSubsection(eventHandler, id, "Distortion")
 {
     driveParameterID = createParameterID("Distortion", getId(), "drive");
-
+    distortionTypeParameterID = createParameterID("distortionType");
     driveKnob = std::make_unique<Knob1>(driveParameterID, eventHandler, "Drive");
 
     this->addAndMakeVisible(*driveKnob);
 
     driveKnob->setRange(0.0f, 10.0f, 0.01f); // Quizas mejor seria volumeKnob.setRange(0, 1, 0.01f)?;
     addAndMakeVisible(distortionGraph);
+
+    distortionTypeComboBox.addItem("Soft Clipping", 1);
+    distortionTypeComboBox.addItem("Hard Clipping", 2);
+    //waveTypeComboBox.setSelectedId(1); // Selecciona "Saw" por defecto
+    distortionTypeComboBox.setName(distortionTypeParameterID);
+    addAndMakeVisible(distortionTypeComboBox);
 }
 
 void DistortionSubsection::subsectionResized()
@@ -34,7 +40,9 @@ void DistortionSubsection::subsectionResized()
     posX += defaultKnobSize;
 
     distortionGraph.setBounds(posX, 20+5, 100, defaultKnobSize);
-    posX += defaultKnobSize;
+    posX += 100+5;
+
+    distortionTypeComboBox.setBounds(posX, area.getHeight() - defaultKnobSize, defaultKnobSize * 2, defaultKnobSize - 10);
 
     driveKnob->showLabel(*this, *driveKnob);
     mixKnob->showLabel(*this, *mixKnob);
@@ -49,10 +57,12 @@ void DistortionSubsection::paintCalled(juce::Graphics& g)
 void DistortionSubsection::attachParameters(ParameterHandler& parameterHandler)
 {
     driveParameterAttachment = std::make_unique<OcnetSliderAttachment>(*driveKnob, *parameterHandler.getSliderParameter(driveParameterID)->get());
+    distortionTypeParameterAttachment = std::make_unique<OcnetComboBoxAttachment>(distortionTypeComboBox, *parameterHandler.getComboBoxParameter(distortionTypeParameterID)->get());
 }
 
 void DistortionSubsection::addParametersToParameterHandler(ParameterHandler& parameterHandler)
 {
+    parameterHandler.addComboBoxParameter(distortionTypeParameterID, std::make_shared<ComboBoxParameter>("distortionType", juce::StringArray{ "Soft Clipping", "Hard Clipping"}, 0));
     parameterHandler.addSliderParameter(driveParameterID, std::make_shared<SliderParameter>("drive", 5.0f));
 }
 

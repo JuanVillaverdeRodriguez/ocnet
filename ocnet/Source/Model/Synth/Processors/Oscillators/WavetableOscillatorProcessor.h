@@ -105,7 +105,6 @@ private:
     int waveTypeIndexChoice;
     int fmFromIndexChoice;
 
-
     bool isPrepared;
     float sampleRate = 0.0f;
     WavetableStruct* wavetable;
@@ -129,7 +128,6 @@ private:
     std::shared_ptr<SliderParameter> unisonNumVoicesParameter;
     std::shared_ptr<SliderParameter> unisonDetuneParameter;
     std::shared_ptr<SliderParameter> transposeParameter;
-
 
     std::shared_ptr<ComboBoxParameter> waveTypeParameter;
     std::shared_ptr<ComboBoxParameter> fmFromParameter;

@@ -29,22 +29,17 @@ public:
     void processBlock(juce::AudioBuffer<float>& buffer) override;
 
     void syncParams(const ParameterHandler& parameterHandler) override;
-
 private:
     void processSoftClipping(juce::dsp::AudioBlock<float>& upSampledBlock);
     void processHardClipping(juce::dsp::AudioBlock<float>& upSampledBlock);
 
     int signum(float x) { return (x > 0) - (x < 0); }
 
-    float softClip(float x, float drive) { return std::tanh(x * drive); }
+    float softClip(float x, float drive) { 
+        return juce::dsp::FastMathApproximations::tanh(x * drive); 
+    }
     float hardClip(float x, float drive) { 
-        float input = x * drive;
-        if (input >= 1.0f)
-            return 1.0f;
-        else if (input <= 1.0f)
-            return -1.0f;
-        else
-            return input;
+        return juce::jlimit(-1.0f, 1.0f, x * drive);
     }
 
     std::shared_ptr<SliderParameter> driveParameter;

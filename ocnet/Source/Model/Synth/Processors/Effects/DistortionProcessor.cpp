@@ -81,8 +81,8 @@ void DistortionProcessor::processSoftClipping(juce::dsp::AudioBlock<float>& upSa
 
         for (int sample = 0; sample < numSamples; ++sample) {
             float newValue = driveValue + driveModulationBuffer[data[sample]];
-            if (newValue < 0.0f)
-                newValue = 0.0f;
+            newValue = juce::jmax(0.0f, newValue);
+
 
             data[sample] = softClip(data[sample], newValue);
         }
@@ -99,8 +99,7 @@ void DistortionProcessor::processHardClipping(juce::dsp::AudioBlock<float>& upSa
 
         for (int sample = 0; sample < numSamples; ++sample) {
             float newValue = driveValue + driveModulationBuffer[data[sample]];
-            if (newValue < 0.0f)
-                newValue = 0.0f;
+            newValue = juce::jmax(0.0f, newValue); 
 
             data[sample] = hardClip(data[sample], newValue);
         }

@@ -6,24 +6,281 @@
               pluginVSTCategory="kPlugCategSynth" pluginCharacteristicsValue="pluginIsSynth,pluginWantsMidiIn">
   <MAINGROUP id="Fay8LI" name="ocnet">
     <GROUP id="{B897E036-BD65-2195-C049-E6C429F0FF25}" name="Source">
-      <FILE id="FkK6yn" name="ProcessorInfo.cpp" compile="1" resource="0"
-            file="Source/ProcessorInfo.cpp"/>
-      <FILE id="CSeEkw" name="ProcessorInfo.h" compile="0" resource="0" file="Source/ProcessorInfo.h"/>
-      <GROUP id="{88CCFDAB-B21E-D838-D657-9FD706067BEE}" name="SignalSmithLibrary">
-        <GROUP id="{4B3BA1FD-7D1C-FE79-7F48-7FF9F7691907}" name="dsp">
-          <FILE id="YRhQ87" name="delay.h" compile="0" resource="0" file="Source/SignalSmithLibrary/dsp/delay.h"/>
-          <FILE id="SmSvZ3" name="envelopes.h" compile="0" resource="0" file="Source/SignalSmithLibrary/dsp/envelopes.h"/>
-          <FILE id="tzNqZK" name="fft.h" compile="0" resource="0" file="Source/SignalSmithLibrary/dsp/fft.h"/>
-          <FILE id="lglm6B" name="filters.h" compile="0" resource="0" file="Source/SignalSmithLibrary/dsp/filters.h"/>
-          <FILE id="FDjgxv" name="LICENSE.txt" compile="0" resource="1" file="Source/SignalSmithLibrary/dsp/LICENSE.txt"/>
-          <FILE id="h5IzRV" name="mix.h" compile="0" resource="0" file="Source/SignalSmithLibrary/dsp/mix.h"/>
-          <FILE id="XkDkJY" name="perf.h" compile="0" resource="0" file="Source/SignalSmithLibrary/dsp/perf.h"/>
-          <FILE id="ketX11" name="rates.h" compile="0" resource="0" file="Source/SignalSmithLibrary/dsp/rates.h"/>
-          <FILE id="GlxFVX" name="README.md" compile="0" resource="1" file="Source/SignalSmithLibrary/dsp/README.md"/>
-          <FILE id="Dqnj30" name="spectral.h" compile="0" resource="0" file="Source/SignalSmithLibrary/dsp/spectral.h"/>
-          <FILE id="zzOpi7" name="windows.h" compile="0" resource="0" file="Source/SignalSmithLibrary/dsp/windows.h"/>
-          <FILE id="LYVtVG" name="common.h" compile="0" resource="0" file="Source/SignalSmithLibrary/dsp/common.h"/>
-          <FILE id="iiaLJd" name="curves.h" compile="0" resource="0" file="Source/SignalSmithLibrary/dsp/curves.h"/>
+      <GROUP id="{A0E28663-79D9-65D2-F937-87D0CF28AB86}" name="Libraries">
+        <GROUP id="{391D3F7C-2F66-E8D7-9037-0E984F93F6F8}" name="SignalSmithLibrary">
+          <GROUP id="{AB3C3E0D-874B-FF00-FBEF-67FAB4880F40}" name="dsp">
+            <FILE id="bfkODL" name="common.h" compile="0" resource="0" file="Source/Libraries/SignalSmithLibrary/dsp/common.h"/>
+            <FILE id="xqKVby" name="curves.h" compile="0" resource="0" file="Source/Libraries/SignalSmithLibrary/dsp/curves.h"/>
+            <FILE id="dgLtEk" name="delay.h" compile="0" resource="0" file="Source/Libraries/SignalSmithLibrary/dsp/delay.h"/>
+            <FILE id="ICRq04" name="envelopes.h" compile="0" resource="0" file="Source/Libraries/SignalSmithLibrary/dsp/envelopes.h"/>
+            <FILE id="ZIzgjf" name="fft.h" compile="0" resource="0" file="Source/Libraries/SignalSmithLibrary/dsp/fft.h"/>
+            <FILE id="ncdUzi" name="filters.h" compile="0" resource="0" file="Source/Libraries/SignalSmithLibrary/dsp/filters.h"/>
+            <FILE id="o6PfYE" name="LICENSE.txt" compile="0" resource="1" file="Source/Libraries/SignalSmithLibrary/dsp/LICENSE.txt"/>
+            <FILE id="eDWVyR" name="mix.h" compile="0" resource="0" file="Source/Libraries/SignalSmithLibrary/dsp/mix.h"/>
+            <FILE id="Pkozge" name="perf.h" compile="0" resource="0" file="Source/Libraries/SignalSmithLibrary/dsp/perf.h"/>
+            <FILE id="vujyQX" name="rates.h" compile="0" resource="0" file="Source/Libraries/SignalSmithLibrary/dsp/rates.h"/>
+            <FILE id="g0Xqg2" name="README.md" compile="0" resource="1" file="Source/Libraries/SignalSmithLibrary/dsp/README.md"/>
+            <FILE id="fjj9d7" name="spectral.h" compile="0" resource="0" file="Source/Libraries/SignalSmithLibrary/dsp/spectral.h"/>
+            <FILE id="uko63o" name="windows.h" compile="0" resource="0" file="Source/Libraries/SignalSmithLibrary/dsp/windows.h"/>
+          </GROUP>
+        </GROUP>
+      </GROUP>
+      <GROUP id="{CEAAE2AE-A003-CB11-F242-9FE81F96DD68}" name="Controller">
+        <FILE id="kgzGuC" name="OcnetGUI_interface.cpp" compile="1" resource="0"
+              file="Source/Controller/OcnetGUI_interface.cpp"/>
+        <FILE id="oHcWfv" name="OcnetGUI_interface.h" compile="0" resource="0"
+              file="Source/Controller/OcnetGUI_interface.h"/>
+        <FILE id="jyfH25" name="PluginEditor.cpp" compile="1" resource="0"
+              file="Source/Controller/PluginEditor.cpp"/>
+        <FILE id="sai1CT" name="PluginEditor.h" compile="0" resource="0" file="Source/Controller/PluginEditor.h"/>
+        <FILE id="XulXO2" name="GUI_EventHandler.h" compile="0" resource="0"
+              file="Source/Controller/GUI_EventHandler.h"/>
+      </GROUP>
+      <GROUP id="{2906B504-312D-7B03-AEA8-FD0E7B0999EB}" name="View">
+        <FILE id="v1Sj04" name="OcnetGUI.cpp" compile="1" resource="0" file="Source/View/OcnetGUI.cpp"/>
+        <FILE id="eunNHi" name="OcnetGUI.h" compile="0" resource="0" file="Source/View/OcnetGUI.h"/>
+        <GROUP id="{A8633C04-BAF0-C482-E4B8-B30DCE05F41B}" name="LookAndFeel_V4">
+          <FILE id="nMFwTE" name="OcnetLookAndFeel.h" compile="0" resource="0"
+                file="Source/View/LookAndFeel_V4/OcnetLookAndFeel.h"/>
+          <FILE id="OZPNhY" name="OcnetLookAndFeel_BypassButton.h" compile="0"
+                resource="0" file="Source/View/LookAndFeel_V4/OcnetLookAndFeel_BypassButton.h"/>
+          <FILE id="KUmbNf" name="OcnetLookAndFeel_SubsectionButtons.h" compile="0"
+                resource="0" file="Source/View/LookAndFeel_V4/OcnetLookAndFeel_SubsectionButtons.h"/>
+        </GROUP>
+        <GROUP id="{F52BF096-D323-543B-BB6D-EE7A16831A24}" name="GUI_Elements">
+          <GROUP id="{D1FB8716-B72B-9C3A-806E-2AB43BF841E8}" name="ModulatorDragZone">
+            <FILE id="musihX" name="DragZone.cpp" compile="1" resource="0" file="Source/View/GUI_Elements/ModulatorDragZone/DragZone.cpp"/>
+            <FILE id="ciniAm" name="DragZone.h" compile="0" resource="0" file="Source/View/GUI_Elements/ModulatorDragZone/DragZone.h"/>
+          </GROUP>
+          <GROUP id="{77CDA29C-0EEE-C6C3-8028-01ECB25B99CB}" name="Knobs">
+            <FILE id="iGWAQo" name="Knob1.cpp" compile="1" resource="0" file="Source/View/GUI_Elements/Knobs/Knob1.cpp"/>
+            <FILE id="gTkRf6" name="Knob1.h" compile="0" resource="0" file="Source/View/GUI_Elements/Knobs/Knob1.h"/>
+            <FILE id="XB5pct" name="Knob2.cpp" compile="1" resource="0" file="Source/View/GUI_Elements/Knobs/Knob2.cpp"/>
+            <FILE id="Qcw8XN" name="Knob2.h" compile="0" resource="0" file="Source/View/GUI_Elements/Knobs/Knob2.h"/>
+            <FILE id="cZHOQB" name="ModulationBubble.cpp" compile="1" resource="0"
+                  file="Source/View/GUI_Elements/Knobs/ModulationBubble.cpp"/>
+            <FILE id="s0ydj6" name="ModulationBubble.h" compile="0" resource="0"
+                  file="Source/View/GUI_Elements/Knobs/ModulationBubble.h"/>
+          </GROUP>
+          <GROUP id="{4FBC0092-4CD5-9394-32A7-0AEEBF7CB059}" name="ComboBoxes">
+            <FILE id="yoU2vY" name="OcnetComboBox.cpp" compile="1" resource="0"
+                  file="Source/View/GUI_Elements/ComboBoxes/OcnetComboBox.cpp"/>
+            <FILE id="yQTKNH" name="OcnetComboBox.h" compile="0" resource="0" file="Source/View/GUI_Elements/ComboBoxes/OcnetComboBox.h"/>
+          </GROUP>
+        </GROUP>
+        <GROUP id="{B172D91C-232C-204D-990B-B098D55147A4}" name="GUI_Subsections">
+          <FILE id="kZz48w" name="Subsection.cpp" compile="1" resource="0" file="Source/View/GUI_Subsections/Subsection.cpp"/>
+          <FILE id="qXtaUN" name="Subsection.h" compile="0" resource="0" file="Source/View/GUI_Subsections/Subsection.h"/>
+          <GROUP id="{92FB6D28-4C7B-1793-4DBB-E52D07FBB922}" name="Effects">
+            <FILE id="nu4XrO" name="DelaySubsection.cpp" compile="1" resource="0"
+                  file="Source/View/GUI_Subsections/Effects/DelaySubsection.cpp"/>
+            <FILE id="m0MV0N" name="DelaySubsection.h" compile="0" resource="0"
+                  file="Source/View/GUI_Subsections/Effects/DelaySubsection.h"/>
+            <FILE id="ggVTLi" name="DistortionSubsection.cpp" compile="1" resource="0"
+                  file="Source/View/GUI_Subsections/Effects/DistortionSubsection.cpp"/>
+            <FILE id="RXOG1R" name="DistortionSubsection.h" compile="0" resource="0"
+                  file="Source/View/GUI_Subsections/Effects/DistortionSubsection.h"/>
+            <FILE id="saolcr" name="EffectsSubsection.cpp" compile="1" resource="0"
+                  file="Source/View/GUI_Subsections/Effects/EffectsSubsection.cpp"/>
+            <FILE id="FlZMIh" name="EffectsSubsection.h" compile="0" resource="0"
+                  file="Source/View/GUI_Subsections/Effects/EffectsSubsection.h"/>
+            <FILE id="OeNb6b" name="EqualizerSubsection.cpp" compile="1" resource="0"
+                  file="Source/View/GUI_Subsections/Effects/EqualizerSubsection.cpp"/>
+            <FILE id="Q2gVuG" name="EqualizerSubsection.h" compile="0" resource="0"
+                  file="Source/View/GUI_Subsections/Effects/EqualizerSubsection.h"/>
+            <FILE id="saO3QY" name="FilterSubsection.cpp" compile="1" resource="0"
+                  file="Source/View/GUI_Subsections/Effects/FilterSubsection.cpp"/>
+            <FILE id="Za5lEi" name="FilterSubsection.h" compile="0" resource="0"
+                  file="Source/View/GUI_Subsections/Effects/FilterSubsection.h"/>
+            <FILE id="cbnDK8" name="ReverbSubsection.cpp" compile="1" resource="0"
+                  file="Source/View/GUI_Subsections/Effects/ReverbSubsection.cpp"/>
+            <FILE id="ydFnbF" name="ReverbSubsection.h" compile="0" resource="0"
+                  file="Source/View/GUI_Subsections/Effects/ReverbSubsection.h"/>
+          </GROUP>
+          <GROUP id="{52A041BF-AD4F-4C01-D669-48DDF46103E9}" name="Modulators">
+            <FILE id="geTvvL" name="MacroSubsection.h" compile="0" resource="0"
+                  file="Source/View/GUI_Subsections/Modulators/MacroSubsection.h"/>
+            <FILE id="RPAFLR" name="ModulatorsSubsection.cpp" compile="1" resource="0"
+                  file="Source/View/GUI_Subsections/Modulators/ModulatorsSubsection.cpp"/>
+            <FILE id="t6FBpn" name="ModulatorsSubsection.h" compile="0" resource="0"
+                  file="Source/View/GUI_Subsections/Modulators/ModulatorsSubsection.h"/>
+            <FILE id="PRkfFV" name="RandomizerSubsection.cpp" compile="1" resource="0"
+                  file="Source/View/GUI_Subsections/Modulators/RandomizerSubsection.cpp"/>
+            <FILE id="KEpBhY" name="RandomizerSubsection.h" compile="0" resource="0"
+                  file="Source/View/GUI_Subsections/Modulators/RandomizerSubsection.h"/>
+            <FILE id="F4uF95" name="EnvelopeSubsection.cpp" compile="1" resource="0"
+                  file="Source/View/GUI_Subsections/Modulators/EnvelopeSubsection.cpp"/>
+            <FILE id="UTI98G" name="EnvelopeSubsection.h" compile="0" resource="0"
+                  file="Source/View/GUI_Subsections/Modulators/EnvelopeSubsection.h"/>
+            <FILE id="HbcsZr" name="LFOSubsection.cpp" compile="1" resource="0"
+                  file="Source/View/GUI_Subsections/Modulators/LFOSubsection.cpp"/>
+            <FILE id="yGsEJD" name="LFOSubsection.h" compile="0" resource="0" file="Source/View/GUI_Subsections/Modulators/LFOSubsection.h"/>
+            <FILE id="uvXMh7" name="MacroSubsection.cpp" compile="1" resource="0"
+                  file="Source/View/GUI_Subsections/Modulators/MacroSubsection.cpp"/>
+          </GROUP>
+          <GROUP id="{3C75C2FB-65E8-33DF-3A3A-FDCFFB6A5E76}" name="Oscillators">
+            <FILE id="VOD6jL" name="WavetableOscillatorSubsection.cpp" compile="1"
+                  resource="0" file="Source/View/GUI_Subsections/Oscillators/WavetableOscillatorSubsection.cpp"/>
+            <FILE id="SSQr2T" name="WavetableOscillatorSubsection.h" compile="0"
+                  resource="0" file="Source/View/GUI_Subsections/Oscillators/WavetableOscillatorSubsection.h"/>
+            <FILE id="hv2wx1" name="OscillatorsSubsection.cpp" compile="1" resource="0"
+                  file="Source/View/GUI_Subsections/Oscillators/OscillatorsSubsection.cpp"/>
+            <FILE id="BeQrvC" name="OscillatorsSubsection.h" compile="0" resource="0"
+                  file="Source/View/GUI_Subsections/Oscillators/OscillatorsSubsection.h"/>
+            <FILE id="MmFHNi" name="SamplerSubsection.cpp" compile="1" resource="0"
+                  file="Source/View/GUI_Subsections/Oscillators/SamplerSubsection.cpp"/>
+            <FILE id="ZJKU12" name="SamplerSubsection.h" compile="0" resource="0"
+                  file="Source/View/GUI_Subsections/Oscillators/SamplerSubsection.h"/>
+          </GROUP>
+        </GROUP>
+        <GROUP id="{0CFAC4A2-8953-FE87-2F35-5E3903C2974E}" name="GUI_Sections">
+          <FILE id="vIA5Ab" name="Section.cpp" compile="1" resource="0" file="Source/View/GUI_Sections/Section.cpp"/>
+          <FILE id="xUeT3p" name="Section.h" compile="0" resource="0" file="Source/View/GUI_Sections/Section.h"/>
+          <GROUP id="{7DF2814D-0A87-F2C5-8591-068EF35C064B}" name="Oscillators">
+            <FILE id="NZyEtK" name="OscillatorsSection.cpp" compile="1" resource="0"
+                  file="Source/View/GUI_Sections/Oscillators/OscillatorsSection.cpp"/>
+            <FILE id="AsmmQ9" name="OscillatorsSection.h" compile="0" resource="0"
+                  file="Source/View/GUI_Sections/Oscillators/OscillatorsSection.h"/>
+          </GROUP>
+          <GROUP id="{700D5E87-982D-892F-126B-202D37C3744F}" name="Modulators">
+            <FILE id="EpKWhd" name="ModulatorsSection.h" compile="0" resource="0"
+                  file="Source/View/GUI_Sections/Modulators/ModulatorsSection.h"/>
+            <FILE id="qUF7xU" name="ModulatorsSection.cpp" compile="1" resource="0"
+                  file="Source/View/GUI_Sections/Modulators/ModulatorsSection.cpp"/>
+          </GROUP>
+          <GROUP id="{3ABCBEAE-0F7A-3D38-88AA-CB14A3F5C7B6}" name="Header">
+            <FILE id="vIlXKw" name="HeaderSection.cpp" compile="1" resource="0"
+                  file="Source/View/GUI_Sections/Header/HeaderSection.cpp"/>
+            <FILE id="AF9rDf" name="HeaderSection.h" compile="0" resource="0" file="Source/View/GUI_Sections/Header/HeaderSection.h"/>
+          </GROUP>
+          <GROUP id="{75269CF2-71D1-BA07-B701-0764760C4874}" name="Footer">
+            <FILE id="wbFWvm" name="FooterSection.cpp" compile="1" resource="0"
+                  file="Source/View/GUI_Sections/Footer/FooterSection.cpp"/>
+            <FILE id="lykGaL" name="FooterSection.h" compile="0" resource="0" file="Source/View/GUI_Sections/Footer/FooterSection.h"/>
+          </GROUP>
+          <GROUP id="{881E77DD-C5D2-2F22-2594-8CCD84BC26FD}" name="Effects">
+            <FILE id="i78e8V" name="EffectsSection.cpp" compile="1" resource="0"
+                  file="Source/View/GUI_Sections/Effects/EffectsSection.cpp"/>
+            <FILE id="sZVqhr" name="EffectsSection.h" compile="0" resource="0"
+                  file="Source/View/GUI_Sections/Effects/EffectsSection.h"/>
+          </GROUP>
+        </GROUP>
+      </GROUP>
+      <GROUP id="{7FA47596-7514-BA2B-18E4-2637F67DB937}" name="Model">
+        <FILE id="UnVdna" name="OcnetSynthesiser.cpp" compile="1" resource="0"
+              file="Source/Model/OcnetSynthesiser.cpp"/>
+        <FILE id="mLbGCG" name="OcnetSynthesiser.h" compile="0" resource="0"
+              file="Source/Model/OcnetSynthesiser.h"/>
+        <FILE id="u23Gvu" name="PluginProcessor.cpp" compile="1" resource="0"
+              file="Source/Model/PluginProcessor.cpp"/>
+        <FILE id="rGcPSm" name="PluginProcessor.h" compile="0" resource="0"
+              file="Source/Model/PluginProcessor.h"/>
+        <FILE id="AATVTh" name="ProcessorInfo.cpp" compile="1" resource="0"
+              file="Source/Model/ProcessorInfo.cpp"/>
+        <FILE id="mud2lY" name="ProcessorInfo.h" compile="0" resource="0" file="Source/Model/ProcessorInfo.h"/>
+        <GROUP id="{F3B0B463-C0DE-0D39-E0FD-236DC0836EDE}" name="Synth">
+          <FILE id="VPwfPh" name="SynthSound.h" compile="0" resource="0" file="Source/Model/Synth/SynthSound.h"/>
+          <FILE id="C84bgs" name="SynthVoice.cpp" compile="1" resource="0" file="Source/Model/Synth/SynthVoice.cpp"/>
+          <FILE id="SmtXBg" name="SynthVoice.h" compile="0" resource="0" file="Source/Model/Synth/SynthVoice.h"/>
+          <GROUP id="{E55E5413-BAED-13DF-5573-AF7ABCF50AC1}" name="Processors">
+            <FILE id="bH9NWS" name="Processor.cpp" compile="1" resource="0" file="Source/Model/Synth/Processors/Processor.cpp"/>
+            <FILE id="CxhIOK" name="Processor.h" compile="0" resource="0" file="Source/Model/Synth/Processors/Processor.h"/>
+            <FILE id="ijuPMh" name="ProcessorHandler.cpp" compile="1" resource="0"
+                  file="Source/Model/Synth/Processors/ProcessorHandler.cpp"/>
+            <FILE id="ZFL2OQ" name="ProcessorHandler.h" compile="0" resource="0"
+                  file="Source/Model/Synth/Processors/ProcessorHandler.h"/>
+            <GROUP id="{F42BDE12-C9CD-9A85-C66D-85900EFF7C78}" name="Oscillators">
+              <FILE id="SWU7iF" name="SamplerProcessor.cpp" compile="1" resource="0"
+                    file="Source/Model/Synth/Processors/Oscillators/SamplerProcessor.cpp"/>
+              <FILE id="S1quGR" name="SamplerProcessor.h" compile="0" resource="0"
+                    file="Source/Model/Synth/Processors/Oscillators/SamplerProcessor.h"/>
+              <FILE id="xDUGvL" name="WavetableOscillatorProcessor.cpp" compile="1"
+                    resource="0" file="Source/Model/Synth/Processors/Oscillators/WavetableOscillatorProcessor.cpp"/>
+              <FILE id="mh2wbL" name="WavetableOscillatorProcessor.h" compile="0"
+                    resource="0" file="Source/Model/Synth/Processors/Oscillators/WavetableOscillatorProcessor.h"/>
+            </GROUP>
+            <GROUP id="{E9BC3EE7-B3EF-6C8B-FB4D-C92AA9B0031D}" name="Effects">
+              <FILE id="ov7I9f" name="Effector.cpp" compile="1" resource="0" file="../../Nueva carpeta/ocnet/ocnet/Source/Synth/Processors/Effector.cpp"/>
+              <FILE id="fiGndI" name="Effector.h" compile="0" resource="0" file="../../Nueva carpeta/ocnet/ocnet/Source/Synth/Processors/Effector.h"/>
+              <FILE id="htYYSu" name="DelayProcessor.h" compile="0" resource="0"
+                    file="Source/Model/Synth/Processors/Effects/DelayProcessor.h"/>
+              <FILE id="KVR6LC" name="DistortionProcessor.cpp" compile="1" resource="0"
+                    file="Source/Model/Synth/Processors/Effects/DistortionProcessor.cpp"/>
+              <FILE id="jKcO5n" name="DistortionProcessor.h" compile="0" resource="0"
+                    file="Source/Model/Synth/Processors/Effects/DistortionProcessor.h"/>
+              <FILE id="EAUTUv" name="EqualizerProcessor.cpp" compile="1" resource="0"
+                    file="Source/Model/Synth/Processors/Effects/EqualizerProcessor.cpp"/>
+              <FILE id="GAOGPr" name="EqualizerProcessor.h" compile="0" resource="0"
+                    file="Source/Model/Synth/Processors/Effects/EqualizerProcessor.h"/>
+              <FILE id="fyEBzH" name="FilterProcessor.cpp" compile="1" resource="0"
+                    file="Source/Model/Synth/Processors/Effects/FilterProcessor.cpp"/>
+              <FILE id="rmXkyw" name="FilterProcessor.h" compile="0" resource="0"
+                    file="Source/Model/Synth/Processors/Effects/FilterProcessor.h"/>
+              <FILE id="FCVxUQ" name="ReverbProcessor.cpp" compile="1" resource="0"
+                    file="Source/Model/Synth/Processors/Effects/ReverbProcessor.cpp"/>
+              <FILE id="nOuOJ2" name="ReverbProcessor.h" compile="0" resource="0"
+                    file="Source/Model/Synth/Processors/Effects/ReverbProcessor.h"/>
+              <FILE id="aQP5g9" name="DelayProcessor.cpp" compile="1" resource="0"
+                    file="Source/Model/Synth/Processors/Effects/DelayProcessor.cpp"/>
+            </GROUP>
+            <GROUP id="{56F0D0BF-3FB3-CBB3-8460-81F27FB410F7}" name="Modulators">
+              <FILE id="tSpZGB" name="Modulator.h" compile="0" resource="0" file="Source/Model/Synth/Processors/Modulators/Modulator.h"/>
+              <FILE id="OACT8H" name="RandomizerProcessor.cpp" compile="1" resource="0"
+                    file="Source/Model/Synth/Processors/Modulators/RandomizerProcessor.cpp"/>
+              <FILE id="K3s1tH" name="RandomizerProcessor.h" compile="0" resource="0"
+                    file="Source/Model/Synth/Processors/Modulators/RandomizerProcessor.h"/>
+              <FILE id="BaktTg" name="EnvelopeProcessor.cpp" compile="1" resource="0"
+                    file="Source/Model/Synth/Processors/Modulators/EnvelopeProcessor.cpp"/>
+              <FILE id="d5iIzD" name="EnvelopeProcessor.h" compile="0" resource="0"
+                    file="Source/Model/Synth/Processors/Modulators/EnvelopeProcessor.h"/>
+              <FILE id="w9LoY7" name="LFOProcessor.cpp" compile="1" resource="0"
+                    file="Source/Model/Synth/Processors/Modulators/LFOProcessor.cpp"/>
+              <FILE id="mnxlta" name="LFOProcessor.h" compile="0" resource="0" file="Source/Model/Synth/Processors/Modulators/LFOProcessor.h"/>
+              <FILE id="uXeH1w" name="MacroProcessor.cpp" compile="1" resource="0"
+                    file="Source/Model/Synth/Processors/Modulators/MacroProcessor.cpp"/>
+              <FILE id="Cu66hC" name="MacroProcessor.h" compile="0" resource="0"
+                    file="Source/Model/Synth/Processors/Modulators/MacroProcessor.h"/>
+              <FILE id="orbrjG" name="Modulator.cpp" compile="1" resource="0" file="Source/Model/Synth/Processors/Modulators/Modulator.cpp"/>
+            </GROUP>
+          </GROUP>
+        </GROUP>
+        <GROUP id="{3886D1F5-0388-AA25-2786-5DDC6F87D140}" name="ParameterHandler">
+          <FILE id="wwGRLp" name="OcnetSliderAttachment.h" compile="0" resource="0"
+                file="Source/Model/ParameterHandler/OcnetSliderAttachment.h"/>
+          <FILE id="bwnqAL" name="Parameter.cpp" compile="1" resource="0" file="Source/Model/ParameterHandler/Parameter.cpp"/>
+          <FILE id="kTtmMM" name="Parameter.h" compile="0" resource="0" file="Source/Model/ParameterHandler/Parameter.h"/>
+          <FILE id="GDvSQj" name="ParameterHandler.cpp" compile="1" resource="0"
+                file="Source/Model/ParameterHandler/ParameterHandler.cpp"/>
+          <FILE id="byfrzB" name="ParameterHandler.h" compile="0" resource="0"
+                file="Source/Model/ParameterHandler/ParameterHandler.h"/>
+          <FILE id="k6ZXzH" name="SliderParameter.cpp" compile="1" resource="0"
+                file="Source/Model/ParameterHandler/SliderParameter.cpp"/>
+          <FILE id="dtflKl" name="SliderParameter.h" compile="0" resource="0"
+                file="Source/Model/ParameterHandler/SliderParameter.h"/>
+          <FILE id="yAUZua" name="ButtonParameter.cpp" compile="1" resource="0"
+                file="Source/Model/ParameterHandler/ButtonParameter.cpp"/>
+          <FILE id="xnvYjL" name="ButtonParameter.h" compile="0" resource="0"
+                file="Source/Model/ParameterHandler/ButtonParameter.h"/>
+          <FILE id="bEQ7jc" name="ButtonParameterAttachment.cpp" compile="1"
+                resource="0" file="Source/Model/ParameterHandler/ButtonParameterAttachment.cpp"/>
+          <FILE id="oF46RH" name="ButtonParameterAttachment.h" compile="0" resource="0"
+                file="Source/Model/ParameterHandler/ButtonParameterAttachment.h"/>
+          <FILE id="N5STT6" name="ComboBoxParameter.cpp" compile="1" resource="0"
+                file="Source/Model/ParameterHandler/ComboBoxParameter.cpp"/>
+          <FILE id="AqpcF8" name="ComboBoxParameter.h" compile="0" resource="0"
+                file="Source/Model/ParameterHandler/ComboBoxParameter.h"/>
+          <FILE id="gjmgUI" name="Modulation.cpp" compile="1" resource="0" file="Source/Model/ParameterHandler/Modulation.cpp"/>
+          <FILE id="U8QjE6" name="Modulation.h" compile="0" resource="0" file="Source/Model/ParameterHandler/Modulation.h"/>
+          <FILE id="CFYJfl" name="OcnetComboBoxAttachment.cpp" compile="1" resource="0"
+                file="Source/Model/ParameterHandler/OcnetComboBoxAttachment.cpp"/>
+          <FILE id="y8G8qx" name="OcnetComboBoxAttachment.h" compile="0" resource="0"
+                file="Source/Model/ParameterHandler/OcnetComboBoxAttachment.h"/>
+          <FILE id="iWPR1C" name="OcnetParameter.cpp" compile="1" resource="0"
+                file="Source/Model/ParameterHandler/OcnetParameter.cpp"/>
+          <FILE id="JZq1T7" name="OcnetParameter.h" compile="0" resource="0"
+                file="Source/Model/ParameterHandler/OcnetParameter.h"/>
+          <FILE id="oDtYXl" name="OcnetSliderAttachment.cpp" compile="1" resource="0"
+                file="Source/Model/ParameterHandler/OcnetSliderAttachment.cpp"/>
         </GROUP>
       </GROUP>
       <GROUP id="{F591502B-D252-AF77-BD88-02035A3602DE}" name="Tests">
@@ -54,285 +311,12 @@
         <FILE id="mxnTHM" name="AddAutomationIcon_NotHovering.png" compile="0"
               resource="1" file="Source/Images/AddAutomationIcon_NotHovering.png"/>
       </GROUP>
-      <GROUP id="{F52BF096-D323-543B-BB6D-EE7A16831A24}" name="GUI_Others">
-        <FILE id="NLeDeZ" name="ModulationBubble.cpp" compile="1" resource="0"
-              file="Source/GUI_Others/ModulationBubble.cpp"/>
-        <FILE id="sCF83h" name="ModulationBubble.h" compile="0" resource="0"
-              file="Source/GUI_Others/ModulationBubble.h"/>
-        <FILE id="nSHmOY" name="OcnetComboBox.cpp" compile="1" resource="0"
-              file="Source/GUI_Others/OcnetComboBox.cpp"/>
-        <FILE id="PHfgfX" name="OcnetComboBox.h" compile="0" resource="0" file="Source/GUI_Others/OcnetComboBox.h"/>
-      </GROUP>
-      <FILE id="iKKaEz" name="GUI_EventHandler.cpp" compile="1" resource="0"
-            file="Source/GUI_EventHandler.cpp"/>
-      <FILE id="HqJyAK" name="GUI_EventHandler.h" compile="0" resource="0"
-            file="Source/GUI_EventHandler.h"/>
       <GROUP id="{AC61CD02-1871-C974-9052-E0D68D806941}" name="Utils">
         <FILE id="MG2jiv" name="OcnetTypes.cpp" compile="1" resource="0" file="Source/Utils/OcnetTypes.cpp"/>
         <FILE id="IkHEG1" name="OcnetTypes.h" compile="0" resource="0" file="Source/Utils/OcnetTypes.h"/>
         <FILE id="tfNesW" name="Utils.cpp" compile="1" resource="0" file="Source/Utils/Utils.cpp"/>
         <FILE id="d3i0oc" name="Utils.h" compile="0" resource="0" file="Source/Utils/Utils.h"/>
       </GROUP>
-      <GROUP id="{3886D1F5-0388-AA25-2786-5DDC6F87D140}" name="ParameterHandler">
-        <FILE id="YcHYEi" name="ButtonParameter.cpp" compile="1" resource="0"
-              file="Source/ParameterHandler/ButtonParameter.cpp"/>
-        <FILE id="MNdQVQ" name="ButtonParameter.h" compile="0" resource="0"
-              file="Source/ParameterHandler/ButtonParameter.h"/>
-        <FILE id="Mpxf2v" name="ButtonParameterAttachment.cpp" compile="1"
-              resource="0" file="Source/ParameterHandler/ButtonParameterAttachment.cpp"/>
-        <FILE id="jUlWAD" name="ButtonParameterAttachment.h" compile="0" resource="0"
-              file="Source/ParameterHandler/ButtonParameterAttachment.h"/>
-        <FILE id="cHO19z" name="ComboBoxParameter.cpp" compile="1" resource="0"
-              file="Source/ParameterHandler/ComboBoxParameter.cpp"/>
-        <FILE id="itv5y7" name="ComboBoxParameter.h" compile="0" resource="0"
-              file="Source/ParameterHandler/ComboBoxParameter.h"/>
-        <FILE id="t35nWS" name="Modulation.cpp" compile="1" resource="0" file="Source/ParameterHandler/Modulation.cpp"/>
-        <FILE id="Tkg4D3" name="Modulation.h" compile="0" resource="0" file="Source/ParameterHandler/Modulation.h"/>
-        <FILE id="B3Vyrw" name="OcnetComboBoxAttachment.cpp" compile="1" resource="0"
-              file="Source/ParameterHandler/OcnetComboBoxAttachment.cpp"/>
-        <FILE id="gBhCn4" name="OcnetComboBoxAttachment.h" compile="0" resource="0"
-              file="Source/ParameterHandler/OcnetComboBoxAttachment.h"/>
-        <FILE id="olE2Ss" name="OcnetParameter.cpp" compile="1" resource="0"
-              file="Source/ParameterHandler/OcnetParameter.cpp"/>
-        <FILE id="hkO8RO" name="OcnetParameter.h" compile="0" resource="0"
-              file="Source/ParameterHandler/OcnetParameter.h"/>
-        <FILE id="Cqe1Zd" name="OcnetSliderAttachment.cpp" compile="1" resource="0"
-              file="Source/ParameterHandler/OcnetSliderAttachment.cpp"/>
-        <FILE id="z1qTkN" name="OcnetSliderAttachment.h" compile="0" resource="0"
-              file="Source/ParameterHandler/OcnetSliderAttachment.h"/>
-        <FILE id="Xy1vaw" name="Parameter.cpp" compile="1" resource="0" file="Source/ParameterHandler/Parameter.cpp"/>
-        <FILE id="tT6DKv" name="Parameter.h" compile="0" resource="0" file="Source/ParameterHandler/Parameter.h"/>
-        <FILE id="ULBX8J" name="ParameterHandler.cpp" compile="1" resource="0"
-              file="Source/ParameterHandler/ParameterHandler.cpp"/>
-        <FILE id="O9uNYn" name="ParameterHandler.h" compile="0" resource="0"
-              file="Source/ParameterHandler/ParameterHandler.h"/>
-        <FILE id="mblaid" name="SliderParameter.cpp" compile="1" resource="0"
-              file="Source/ParameterHandler/SliderParameter.cpp"/>
-        <FILE id="p6hWc4" name="SliderParameter.h" compile="0" resource="0"
-              file="Source/ParameterHandler/SliderParameter.h"/>
-      </GROUP>
-      <GROUP id="{B172D91C-232C-204D-990B-B098D55147A4}" name="GUI_Subsections">
-        <GROUP id="{92FB6D28-4C7B-1793-4DBB-E52D07FBB922}" name="Effects">
-          <FILE id="Zqc6Og" name="DelaySubsection.cpp" compile="1" resource="0"
-                file="Source/GUI_Subsections/Effects/DelaySubsection.cpp"/>
-          <FILE id="G4b6aE" name="DelaySubsection.h" compile="0" resource="0"
-                file="Source/GUI_Subsections/Effects/DelaySubsection.h"/>
-          <FILE id="gS8vmO" name="DistortionSubsection.cpp" compile="1" resource="0"
-                file="Source/GUI_Subsections/Effects/DistortionSubsection.cpp"/>
-          <FILE id="ED1sDC" name="DistortionSubsection.h" compile="0" resource="0"
-                file="Source/GUI_Subsections/Effects/DistortionSubsection.h"/>
-          <FILE id="X0GpDU" name="EffectsSubsection.cpp" compile="1" resource="0"
-                file="Source/GUI_Subsections/Effects/EffectsSubsection.cpp"/>
-          <FILE id="FqjLKo" name="EffectsSubsection.h" compile="0" resource="0"
-                file="Source/GUI_Subsections/Effects/EffectsSubsection.h"/>
-          <FILE id="KWDjBU" name="EqualizerSubsection.cpp" compile="1" resource="0"
-                file="Source/GUI_Subsections/Effects/EqualizerSubsection.cpp"/>
-          <FILE id="xElM9A" name="EqualizerSubsection.h" compile="0" resource="0"
-                file="Source/GUI_Subsections/Effects/EqualizerSubsection.h"/>
-          <FILE id="w7Jqsp" name="FilterSubsection.cpp" compile="1" resource="0"
-                file="Source/GUI_Subsections/Effects/FilterSubsection.cpp"/>
-          <FILE id="ePaVjz" name="FilterSubsection.h" compile="0" resource="0"
-                file="Source/GUI_Subsections/Effects/FilterSubsection.h"/>
-          <FILE id="PN5R2Z" name="ReverbSubsection.cpp" compile="1" resource="0"
-                file="Source/GUI_Subsections/Effects/ReverbSubsection.cpp"/>
-          <FILE id="nzUN91" name="ReverbSubsection.h" compile="0" resource="0"
-                file="Source/GUI_Subsections/Effects/ReverbSubsection.h"/>
-        </GROUP>
-        <GROUP id="{52A041BF-AD4F-4C01-D669-48DDF46103E9}" name="Modulators">
-          <FILE id="BIptSF" name="EnvelopeSubsection.cpp" compile="1" resource="0"
-                file="Source/GUI_Subsections/Modulators/EnvelopeSubsection.cpp"/>
-          <FILE id="fQkPwv" name="EnvelopeSubsection.h" compile="0" resource="0"
-                file="Source/GUI_Subsections/Modulators/EnvelopeSubsection.h"/>
-          <FILE id="pX3vrp" name="LFOSubsection.cpp" compile="1" resource="0"
-                file="Source/GUI_Subsections/Modulators/LFOSubsection.cpp"/>
-          <FILE id="HmQUst" name="LFOSubsection.h" compile="0" resource="0" file="Source/GUI_Subsections/Modulators/LFOSubsection.h"/>
-          <FILE id="RTEheq" name="MacroSubsection.cpp" compile="1" resource="0"
-                file="Source/GUI_Subsections/Modulators/MacroSubsection.cpp"/>
-          <FILE id="pe6NIf" name="MacroSubsection.h" compile="0" resource="0"
-                file="Source/GUI_Subsections/Modulators/MacroSubsection.h"/>
-          <FILE id="wO6sBV" name="ModulatorsSubsection.cpp" compile="1" resource="0"
-                file="Source/GUI_Subsections/Modulators/ModulatorsSubsection.cpp"/>
-          <FILE id="PqTeAe" name="ModulatorsSubsection.h" compile="0" resource="0"
-                file="Source/GUI_Subsections/Modulators/ModulatorsSubsection.h"/>
-          <FILE id="jG9pWZ" name="RandomizerSubsection.cpp" compile="1" resource="0"
-                file="Source/GUI_Subsections/Modulators/RandomizerSubsection.cpp"/>
-          <FILE id="PiyH1n" name="RandomizerSubsection.h" compile="0" resource="0"
-                file="Source/GUI_Subsections/Modulators/RandomizerSubsection.h"/>
-        </GROUP>
-        <GROUP id="{3C75C2FB-65E8-33DF-3A3A-FDCFFB6A5E76}" name="Oscillators">
-          <FILE id="cPYAIf" name="OscillatorsSubsection.cpp" compile="1" resource="0"
-                file="Source/GUI_Subsections/Oscillators/OscillatorsSubsection.cpp"/>
-          <FILE id="xagz08" name="OscillatorsSubsection.h" compile="0" resource="0"
-                file="Source/GUI_Subsections/Oscillators/OscillatorsSubsection.h"/>
-          <FILE id="cnGrgN" name="SamplerSubsection.cpp" compile="1" resource="0"
-                file="Source/GUI_Subsections/Oscillators/SamplerSubsection.cpp"/>
-          <FILE id="Ns1GOr" name="SamplerSubsection.h" compile="0" resource="0"
-                file="Source/GUI_Subsections/Oscillators/SamplerSubsection.h"/>
-          <FILE id="tA03u8" name="WavetableOscillatorSubsection.cpp" compile="1"
-                resource="0" file="Source/GUI_Subsections/Oscillators/WavetableOscillatorSubsection.cpp"/>
-          <FILE id="uSBclJ" name="WavetableOscillatorSubsection.h" compile="0"
-                resource="0" file="Source/GUI_Subsections/Oscillators/WavetableOscillatorSubsection.h"/>
-        </GROUP>
-        <FILE id="uKCpxl" name="Subsection.cpp" compile="1" resource="0" file="Source/GUI_Subsections/Subsection.cpp"/>
-        <FILE id="whsOBA" name="Subsection.h" compile="0" resource="0" file="Source/GUI_Subsections/Subsection.h"/>
-      </GROUP>
-      <GROUP id="{A8633C04-BAF0-C482-E4B8-B30DCE05F41B}" name="LookAndFeel_V4">
-        <GROUP id="{C1BE0E62-38E6-C3FF-428E-1E59FEA204F4}" name="ComboBoxes"/>
-        <GROUP id="{67EFEA9B-FC75-1AE2-877F-325690E23758}" name="Sliders"/>
-        <GROUP id="{41104744-B5A8-D348-BB32-A144067CC82D}" name="Buttons"/>
-        <FILE id="QbAx0j" name="OcnetLookAndFeel.h" compile="0" resource="0"
-              file="Source/LookAndFeel_V4/OcnetLookAndFeel.h"/>
-        <FILE id="GXmelY" name="OcnetLookAndFeel_SubsectionButtons.h" compile="0"
-              resource="0" file="Source/LookAndFeel_V4/OcnetLookAndFeel_SubsectionButtons.h"/>
-        <FILE id="C10fQB" name="OcnetLookAndFeel_BypassButton.h" compile="0"
-              resource="0" file="Source/LookAndFeel_V4/OcnetLookAndFeel_BypassButton.h"/>
-      </GROUP>
-      <GROUP id="{0CFAC4A2-8953-FE87-2F35-5E3903C2974E}" name="GUI_Sections">
-        <FILE id="f56ft7" name="Section.cpp" compile="1" resource="0" file="Source/GUI_Sections/Section.cpp"/>
-        <FILE id="RiU5wy" name="Section.h" compile="0" resource="0" file="Source/GUI_Sections/Section.h"/>
-        <FILE id="vRk8If" name="ModulatorsSection.cpp" compile="1" resource="0"
-              file="Source/GUI_Sections/ModulatorsSection.cpp"/>
-        <FILE id="FMEYsp" name="ModulatorsSection.h" compile="0" resource="0"
-              file="Source/GUI_Sections/ModulatorsSection.h"/>
-        <FILE id="FcTmUC" name="EffectsSection.cpp" compile="1" resource="0"
-              file="Source/GUI_Sections/EffectsSection.cpp"/>
-        <FILE id="uCHeE5" name="EffectsSection.h" compile="0" resource="0"
-              file="Source/GUI_Sections/EffectsSection.h"/>
-        <FILE id="YE9sTw" name="FooterSection.cpp" compile="1" resource="0"
-              file="Source/GUI_Sections/FooterSection.cpp"/>
-        <FILE id="ZZvFuK" name="FooterSection.h" compile="0" resource="0" file="Source/GUI_Sections/FooterSection.h"/>
-        <FILE id="maquIo" name="HeaderSection.cpp" compile="1" resource="0"
-              file="Source/GUI_Sections/HeaderSection.cpp"/>
-        <FILE id="laaWpm" name="HeaderSection.h" compile="0" resource="0" file="Source/GUI_Sections/HeaderSection.h"/>
-        <FILE id="RS2Cdd" name="SectionSeparators.cpp" compile="1" resource="0"
-              file="Source/GUI_Sections/SectionSeparators.cpp"/>
-        <FILE id="iMpRKY" name="SectionSeparators.h" compile="0" resource="0"
-              file="Source/GUI_Sections/SectionSeparators.h"/>
-        <FILE id="Ez6FzM" name="OscillatorsSection.cpp" compile="1" resource="0"
-              file="Source/GUI_Sections/OscillatorsSection.cpp"/>
-        <FILE id="ferNER" name="OscillatorsSection.h" compile="0" resource="0"
-              file="Source/GUI_Sections/OscillatorsSection.h"/>
-      </GROUP>
-      <FILE id="zzKHiV" name="OcnetGUI.cpp" compile="1" resource="0" file="Source/OcnetGUI.cpp"/>
-      <FILE id="qxmDCK" name="OcnetGUI.h" compile="0" resource="0" file="Source/OcnetGUI.h"/>
-      <FILE id="AeJIJI" name="OcnetGUI_interface.cpp" compile="1" resource="0"
-            file="Source/OcnetGUI_interface.cpp"/>
-      <FILE id="bQXL1R" name="OcnetGUI_interface.h" compile="0" resource="0"
-            file="Source/OcnetGUI_interface.h"/>
-      <GROUP id="{F3B0B463-C0DE-0D39-E0FD-236DC0836EDE}" name="Synth">
-        <GROUP id="{5F20FB59-C677-638D-CBE6-FA2860D9D990}" name="ProcessorBlocks">
-          <FILE id="KIxqNP" name="HouseholderMatrix.cpp" compile="1" resource="0"
-                file="Source/Synth/ProcessorBlocks/HouseholderMatrix.cpp"/>
-          <FILE id="EPjRLs" name="HouseholderMatrix.h" compile="0" resource="0"
-                file="Source/Synth/ProcessorBlocks/HouseholderMatrix.h"/>
-          <FILE id="lLhM65" name="MultiChannelAllpassDelay.cpp" compile="1" resource="0"
-                file="Source/Synth/ProcessorBlocks/MultiChannelAllpassDelay.cpp"/>
-          <FILE id="zojvWR" name="MultiChannelAllpassDelay.h" compile="0" resource="0"
-                file="Source/Synth/ProcessorBlocks/MultiChannelAllpassDelay.h"/>
-          <FILE id="YW0AO9" name="MultiChannelAllpassInvertPolarity.cpp" compile="1"
-                resource="0" file="Source/Synth/ProcessorBlocks/MultiChannelAllpassInvertPolarity.cpp"/>
-          <FILE id="lGvyFa" name="MultiChannelAllpassInvertPolarity.h" compile="0"
-                resource="0" file="Source/Synth/ProcessorBlocks/MultiChannelAllpassInvertPolarity.h"/>
-          <FILE id="ErLKt7" name="MultiChannelAllpassMixingMatrix.cpp" compile="1"
-                resource="0" file="Source/Synth/ProcessorBlocks/MultiChannelAllpassMixingMatrix.cpp"/>
-          <FILE id="QdUGz1" name="MultiChannelAllpassMixingMatrix.h" compile="0"
-                resource="0" file="Source/Synth/ProcessorBlocks/MultiChannelAllpassMixingMatrix.h"/>
-          <FILE id="H6DNbq" name="MultiChannelFeedback.cpp" compile="1" resource="0"
-                file="Source/Synth/ProcessorBlocks/MultiChannelFeedback.cpp"/>
-          <FILE id="CRKwK2" name="MultiChannelFeedback.h" compile="0" resource="0"
-                file="Source/Synth/ProcessorBlocks/MultiChannelFeedback.h"/>
-        </GROUP>
-        <GROUP id="{E55E5413-BAED-13DF-5573-AF7ABCF50AC1}" name="Processors">
-          <FILE id="Byhm0i" name="Effector.cpp" compile="1" resource="0" file="Source/Synth/Processors/Effector.cpp"/>
-          <FILE id="HCxoze" name="Effector.h" compile="0" resource="0" file="Source/Synth/Processors/Effector.h"/>
-          <FILE id="L04Fxe" name="Modulator.cpp" compile="1" resource="0" file="Source/Synth/Processors/Modulator.cpp"/>
-          <FILE id="OCMYGv" name="Modulator.h" compile="0" resource="0" file="Source/Synth/Processors/Modulator.h"/>
-          <FILE id="e7zpmr" name="ProcessorHandler.cpp" compile="1" resource="0"
-                file="Source/Synth/Processors/ProcessorHandler.cpp"/>
-          <FILE id="fas4ma" name="ProcessorHandler.h" compile="0" resource="0"
-                file="Source/Synth/Processors/ProcessorHandler.h"/>
-          <GROUP id="{F42BDE12-C9CD-9A85-C66D-85900EFF7C78}" name="Oscillators">
-            <FILE id="SC1RqH" name="SamplerProcessor.cpp" compile="1" resource="0"
-                  file="Source/Synth/Processors/Oscillators/SamplerProcessor.cpp"/>
-            <FILE id="sNs4Ta" name="SamplerProcessor.h" compile="0" resource="0"
-                  file="Source/Synth/Processors/Oscillators/SamplerProcessor.h"/>
-            <FILE id="R44Eph" name="WavetableOscillatorProcessor.cpp" compile="1"
-                  resource="0" file="Source/Synth/Processors/Oscillators/WavetableOscillatorProcessor.cpp"/>
-            <FILE id="SsHFrw" name="WavetableOscillatorProcessor.h" compile="0"
-                  resource="0" file="Source/Synth/Processors/Oscillators/WavetableOscillatorProcessor.h"/>
-          </GROUP>
-          <GROUP id="{E9BC3EE7-B3EF-6C8B-FB4D-C92AA9B0031D}" name="Effects">
-            <FILE id="kMaNGN" name="DelayProcessor.cpp" compile="1" resource="0"
-                  file="Source/Synth/Processors/Effects/DelayProcessor.cpp"/>
-            <FILE id="XWgDsH" name="DelayProcessor.h" compile="0" resource="0"
-                  file="Source/Synth/Processors/Effects/DelayProcessor.h"/>
-            <FILE id="GAoXMY" name="DistortionProcessor.cpp" compile="1" resource="0"
-                  file="Source/Synth/Processors/Effects/DistortionProcessor.cpp"/>
-            <FILE id="LRD7wb" name="DistortionProcessor.h" compile="0" resource="0"
-                  file="Source/Synth/Processors/Effects/DistortionProcessor.h"/>
-            <FILE id="bnWdlN" name="EqualizerProcessor.cpp" compile="1" resource="0"
-                  file="Source/Synth/Processors/Effects/EqualizerProcessor.cpp"/>
-            <FILE id="Ud9JIx" name="EqualizerProcessor.h" compile="0" resource="0"
-                  file="Source/Synth/Processors/Effects/EqualizerProcessor.h"/>
-            <FILE id="q2c56E" name="FilterProcessor.cpp" compile="1" resource="0"
-                  file="Source/Synth/Processors/Effects/FilterProcessor.cpp"/>
-            <FILE id="xjstr3" name="FilterProcessor.h" compile="0" resource="0"
-                  file="Source/Synth/Processors/Effects/FilterProcessor.h"/>
-            <FILE id="ohIxzt" name="ReverbProcessor.cpp" compile="1" resource="0"
-                  file="Source/Synth/Processors/Effects/ReverbProcessor.cpp"/>
-            <FILE id="D4CCkg" name="ReverbProcessor.h" compile="0" resource="0"
-                  file="Source/Synth/Processors/Effects/ReverbProcessor.h"/>
-          </GROUP>
-          <GROUP id="{56F0D0BF-3FB3-CBB3-8460-81F27FB410F7}" name="Modulators">
-            <FILE id="a06LBG" name="EnvelopeProcessor.cpp" compile="1" resource="0"
-                  file="Source/Synth/Processors/Modulators/EnvelopeProcessor.cpp"/>
-            <FILE id="XeNtgA" name="EnvelopeProcessor.h" compile="0" resource="0"
-                  file="Source/Synth/Processors/Modulators/EnvelopeProcessor.h"/>
-            <FILE id="oQKRKq" name="LFOProcessor.cpp" compile="1" resource="0"
-                  file="Source/Synth/Processors/Modulators/LFOProcessor.cpp"/>
-            <FILE id="KvHQZx" name="LFOProcessor.h" compile="0" resource="0" file="Source/Synth/Processors/Modulators/LFOProcessor.h"/>
-            <FILE id="XBukxe" name="MacroProcessor.cpp" compile="1" resource="0"
-                  file="Source/Synth/Processors/Modulators/MacroProcessor.cpp"/>
-            <FILE id="K7IJ9D" name="MacroProcessor.h" compile="0" resource="0"
-                  file="Source/Synth/Processors/Modulators/MacroProcessor.h"/>
-            <FILE id="ul24IQ" name="RandomizerProcessor.cpp" compile="1" resource="0"
-                  file="Source/Synth/Processors/Modulators/RandomizerProcessor.cpp"/>
-            <FILE id="srQLVS" name="RandomizerProcessor.h" compile="0" resource="0"
-                  file="Source/Synth/Processors/Modulators/RandomizerProcessor.h"/>
-          </GROUP>
-          <FILE id="N1n00d" name="Processor.cpp" compile="1" resource="0" file="Source/Synth/Processors/Processor.cpp"/>
-          <FILE id="QOZrJm" name="Processor.h" compile="0" resource="0" file="Source/Synth/Processors/Processor.h"/>
-        </GROUP>
-        <GROUP id="{4A9F1CA4-B01E-EC61-DC4B-9F84457822C7}" name="Oscillator">
-          <FILE id="olJNoU" name="WavetableTypes.h" compile="0" resource="0"
-                file="Source/Synth/Oscillator/WavetableTypes.h"/>
-        </GROUP>
-        <FILE id="jC3Xay" name="OcnetSynthesiser.cpp" compile="1" resource="0"
-              file="Source/Synth/OcnetSynthesiser.cpp"/>
-        <FILE id="FUaeIR" name="OcnetSynthesiser.h" compile="0" resource="0"
-              file="Source/Synth/OcnetSynthesiser.h"/>
-        <FILE id="uwdQrN" name="SynthSound.h" compile="0" resource="0" file="Source/Synth/SynthSound.h"/>
-        <FILE id="wzcXey" name="SynthVoice.cpp" compile="1" resource="0" file="Source/Synth/SynthVoice.cpp"/>
-        <FILE id="SNJRtb" name="SynthVoice.h" compile="0" resource="0" file="Source/Synth/SynthVoice.h"/>
-      </GROUP>
-      <GROUP id="{E271F7C7-47CA-46E4-1FD4-7F8AD6D9FE83}" name="Knobs">
-        <FILE id="j1vnw2" name="DragZone.cpp" compile="1" resource="0" file="Source/Knobs/DragZone.cpp"/>
-        <FILE id="ptmhY6" name="DragZone.h" compile="0" resource="0" file="Source/Knobs/DragZone.h"/>
-        <FILE id="cqEOg6" name="Knob1.cpp" compile="1" resource="0" file="Source/Knobs/Knob1.cpp"/>
-        <FILE id="CnyiZ3" name="Knob1.h" compile="0" resource="0" file="Source/Knobs/Knob1.h"/>
-        <FILE id="ovWlmJ" name="Knob2.cpp" compile="1" resource="0" file="Source/Knobs/Knob2.cpp"/>
-        <FILE id="ejSiGi" name="Knob2.h" compile="0" resource="0" file="Source/Knobs/Knob2.h"/>
-        <FILE id="Yd7K7R" name="OcnetComboBox.cpp" compile="1" resource="0"
-              file="Source/Knobs/OcnetComboBox.cpp"/>
-        <FILE id="PPuc6m" name="OcnetComboBox.h" compile="0" resource="0" file="Source/Knobs/OcnetComboBox.h"/>
-      </GROUP>
-      <FILE id="yGLvQj" name="PluginProcessor.cpp" compile="1" resource="0"
-            file="Source/PluginProcessor.cpp"/>
-      <FILE id="aIKcr7" name="PluginProcessor.h" compile="0" resource="0"
-            file="Source/PluginProcessor.h"/>
-      <FILE id="XtJAib" name="PluginEditor.cpp" compile="1" resource="0"
-            file="Source/PluginEditor.cpp"/>
-      <FILE id="PY1HNR" name="PluginEditor.h" compile="0" resource="0" file="Source/PluginEditor.h"/>
     </GROUP>
   </MAINGROUP>
   <MODULES>

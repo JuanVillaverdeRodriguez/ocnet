@@ -2,11 +2,86 @@
 
 <Project ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="ocnet\Source\SignalSmithLibrary\dsp">
-      <UniqueIdentifier>{134987D7-4E9F-660B-8DA9-B87D4C8E1EFE}</UniqueIdentifier>
+    <Filter Include="ocnet\Source\Libraries\SignalSmithLibrary\dsp">
+      <UniqueIdentifier>{41906437-0B7C-4CD4-8D2F-E00F64343088}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ocnet\Source\SignalSmithLibrary">
-      <UniqueIdentifier>{7989C138-88C1-6CF8-D6B4-7BA5AC6AF367}</UniqueIdentifier>
+    <Filter Include="ocnet\Source\Libraries\SignalSmithLibrary">
+      <UniqueIdentifier>{B4302B40-5C9D-4333-1E7C-CFFB687D6531}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ocnet\Source\Libraries">
+      <UniqueIdentifier>{765376E8-B4D7-ABF6-1612-A60A4D8264B3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ocnet\Source\Controller">
+      <UniqueIdentifier>{3CE7E21F-DCAE-87E7-8385-583FB43B9F90}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ocnet\Source\View\LookAndFeel_V4">
+      <UniqueIdentifier>{185C9CEB-FA62-677A-4EBA-362D5C1B76BE}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ocnet\Source\View\GUI_Elements\ModulatorDragZone">
+      <UniqueIdentifier>{90E6DB62-DAFC-E956-6C5D-45345ACBD8C5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ocnet\Source\View\GUI_Elements\Knobs">
+      <UniqueIdentifier>{2D93EF01-4E44-E17C-C559-1C352DF9C53A}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ocnet\Source\View\GUI_Elements\ComboBoxes">
+      <UniqueIdentifier>{4C3C294A-76C7-6264-4124-10DEAAC6C92B}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ocnet\Source\View\GUI_Elements">
+      <UniqueIdentifier>{BE1150EF-0F74-27C5-439D-D2100819C1A1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ocnet\Source\View\GUI_Subsections\Effects">
+      <UniqueIdentifier>{EDDDAFDF-22DC-D5BF-AE00-C00D06411999}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ocnet\Source\View\GUI_Subsections\Modulators">
+      <UniqueIdentifier>{D6715CBF-04DC-DA78-7F62-141BCC8A5D71}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ocnet\Source\View\GUI_Subsections\Oscillators">
+      <UniqueIdentifier>{18F0F63E-914F-198C-FDAF-722D95EDCC49}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ocnet\Source\View\GUI_Subsections">
+      <UniqueIdentifier>{DFA7B3A1-D1C7-D8E8-252A-EACD2A4360FF}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ocnet\Source\View\GUI_Sections\Oscillators">
+      <UniqueIdentifier>{CADA55A6-EC55-7C33-4E82-9D165167E9EE}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ocnet\Source\View\GUI_Sections\Modulators">
+      <UniqueIdentifier>{5B6387F2-C695-D30C-9C13-58944FD44B9A}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ocnet\Source\View\GUI_Sections\Header">
+      <UniqueIdentifier>{7EFD6F75-9073-C184-1117-A25A7862B555}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ocnet\Source\View\GUI_Sections\Footer">
+      <UniqueIdentifier>{FBDC4563-1F8B-4A53-A057-25FFE49FB8E3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ocnet\Source\View\GUI_Sections\Effects">
+      <UniqueIdentifier>{4D125874-39EC-74A3-843C-A669A1F06D2E}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ocnet\Source\View\GUI_Sections">
+      <UniqueIdentifier>{42122547-30B9-12C1-28B6-0865BFD08B7C}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ocnet\Source\View">
+      <UniqueIdentifier>{F7D69FA0-DFE3-1A7D-9D7D-125CBA9B8FCF}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ocnet\Source\Model\Synth\Processors\Oscillators">
+      <UniqueIdentifier>{97A44528-BF63-A549-513F-BFB99F5791A2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ocnet\Source\Model\Synth\Processors\Effects">
+      <UniqueIdentifier>{B450A3BF-5597-7CDF-6F3F-EEE5B4A75A0A}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ocnet\Source\Model\Synth\Processors\Modulators">
+      <UniqueIdentifier>{6B2C51AA-E82A-4790-B352-A4C48D00CF1A}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ocnet\Source\Model\Synth\Processors">
+      <UniqueIdentifier>{C353D39A-07B3-1C5B-5958-469832367C62}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ocnet\Source\Model\Synth">
+      <UniqueIdentifier>{59431745-3012-F8EC-3D8E-A254849EF769}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ocnet\Source\Model\ParameterHandler">
+      <UniqueIdentifier>{B6FC6857-934A-E62F-A0CB-A6D534C44767}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ocnet\Source\Model">
+      <UniqueIdentifier>{9F8CD3AE-1FE2-2088-D1FE-1322A0433024}</UniqueIdentifier>
     </Filter>
     <Filter Include="ocnet\Source\Tests">
       <UniqueIdentifier>{1842D821-9FBA-73EE-4A20-5F7F88B6CD2D}</UniqueIdentifier>
@@ -14,56 +89,8 @@
     <Filter Include="ocnet\Source\Images">
       <UniqueIdentifier>{513C8AB7-DBD9-A17A-6D72-C6F30BEE3DCD}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ocnet\Source\GUI_Others">
-      <UniqueIdentifier>{ECA39C60-32A0-51A3-7D12-0D563E30C188}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ocnet\Source\Utils">
       <UniqueIdentifier>{49F13C8E-AC01-BB31-93E4-10188FD27542}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ocnet\Source\ParameterHandler">
-      <UniqueIdentifier>{1448AEC1-050E-FCAA-19B9-8523D8F7AE9B}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ocnet\Source\GUI_Subsections\Effects">
-      <UniqueIdentifier>{77BD22E6-9D29-E507-D44C-6BAA0A417B0C}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ocnet\Source\GUI_Subsections\Modulators">
-      <UniqueIdentifier>{C9A44F08-A6B9-6423-DF4D-0F909B1EA85A}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ocnet\Source\GUI_Subsections\Oscillators">
-      <UniqueIdentifier>{287CB96A-EC13-CF92-50F4-E2F4EFEC7B28}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ocnet\Source\GUI_Subsections">
-      <UniqueIdentifier>{FBBC2E83-66DB-735D-EE44-8F190E26BB79}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ocnet\Source\LookAndFeel_V4">
-      <UniqueIdentifier>{F33B6161-2CBD-9DBF-39F8-798D94E33BC1}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ocnet\Source\GUI_Sections">
-      <UniqueIdentifier>{7C0D2F38-407C-899E-B41F-6A4B67787C16}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ocnet\Source\Synth\ProcessorBlocks">
-      <UniqueIdentifier>{A3D033D3-D562-1F18-5725-D892B38EFBF1}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ocnet\Source\Synth\Processors\Oscillators">
-      <UniqueIdentifier>{ADB46FFD-A68A-24C6-4017-BCEE730E47CC}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ocnet\Source\Synth\Processors\Effects">
-      <UniqueIdentifier>{7EEA6972-FB8F-ABE8-E356-88E06600C98D}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ocnet\Source\Synth\Processors\Modulators">
-      <UniqueIdentifier>{8642A2BB-B2D7-FB6E-05DB-B6C2AF82E847}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ocnet\Source\Synth\Processors">
-      <UniqueIdentifier>{609C4306-DF54-5CB2-2E06-B5FFAD7045C7}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ocnet\Source\Synth\Oscillator">
-      <UniqueIdentifier>{02BE70E3-AF16-7DD3-A381-05A59130FD90}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ocnet\Source\Synth">
-      <UniqueIdentifier>{B9BE1447-B856-2913-DC96-09D75E4DC0A3}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ocnet\Source\Knobs">
-      <UniqueIdentifier>{33C4AA2E-1BEC-9802-6AF7-3E589E1E9222}</UniqueIdentifier>
     </Filter>
     <Filter Include="ocnet\Source">
       <UniqueIdentifier>{34B1B502-9665-D164-97B8-270C725E7094}</UniqueIdentifier>
@@ -766,8 +793,179 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\Source\ProcessorInfo.cpp">
-      <Filter>ocnet\Source</Filter>
+    <ClCompile Include="..\..\Source\Controller\OcnetGUI_interface.cpp">
+      <Filter>ocnet\Source\Controller</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Controller\PluginEditor.cpp">
+      <Filter>ocnet\Source\Controller</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\View\OcnetGUI.cpp">
+      <Filter>ocnet\Source\View</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\View\GUI_Elements\ModulatorDragZone\DragZone.cpp">
+      <Filter>ocnet\Source\View\GUI_Elements\ModulatorDragZone</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\View\GUI_Elements\Knobs\Knob1.cpp">
+      <Filter>ocnet\Source\View\GUI_Elements\Knobs</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\View\GUI_Elements\Knobs\Knob2.cpp">
+      <Filter>ocnet\Source\View\GUI_Elements\Knobs</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\View\GUI_Elements\Knobs\ModulationBubble.cpp">
+      <Filter>ocnet\Source\View\GUI_Elements\Knobs</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\View\GUI_Elements\ComboBoxes\OcnetComboBox.cpp">
+      <Filter>ocnet\Source\View\GUI_Elements\ComboBoxes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\View\GUI_Subsections\Subsection.cpp">
+      <Filter>ocnet\Source\View\GUI_Subsections</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\View\GUI_Subsections\Effects\DelaySubsection.cpp">
+      <Filter>ocnet\Source\View\GUI_Subsections\Effects</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\View\GUI_Subsections\Effects\DistortionSubsection.cpp">
+      <Filter>ocnet\Source\View\GUI_Subsections\Effects</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\View\GUI_Subsections\Effects\EffectsSubsection.cpp">
+      <Filter>ocnet\Source\View\GUI_Subsections\Effects</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\View\GUI_Subsections\Effects\EqualizerSubsection.cpp">
+      <Filter>ocnet\Source\View\GUI_Subsections\Effects</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\View\GUI_Subsections\Effects\FilterSubsection.cpp">
+      <Filter>ocnet\Source\View\GUI_Subsections\Effects</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\View\GUI_Subsections\Effects\ReverbSubsection.cpp">
+      <Filter>ocnet\Source\View\GUI_Subsections\Effects</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\View\GUI_Subsections\Modulators\ModulatorsSubsection.cpp">
+      <Filter>ocnet\Source\View\GUI_Subsections\Modulators</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\View\GUI_Subsections\Modulators\RandomizerSubsection.cpp">
+      <Filter>ocnet\Source\View\GUI_Subsections\Modulators</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\View\GUI_Subsections\Modulators\EnvelopeSubsection.cpp">
+      <Filter>ocnet\Source\View\GUI_Subsections\Modulators</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\View\GUI_Subsections\Modulators\LFOSubsection.cpp">
+      <Filter>ocnet\Source\View\GUI_Subsections\Modulators</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\View\GUI_Subsections\Modulators\MacroSubsection.cpp">
+      <Filter>ocnet\Source\View\GUI_Subsections\Modulators</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\View\GUI_Subsections\Oscillators\WavetableOscillatorSubsection.cpp">
+      <Filter>ocnet\Source\View\GUI_Subsections\Oscillators</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\View\GUI_Subsections\Oscillators\OscillatorsSubsection.cpp">
+      <Filter>ocnet\Source\View\GUI_Subsections\Oscillators</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\View\GUI_Subsections\Oscillators\SamplerSubsection.cpp">
+      <Filter>ocnet\Source\View\GUI_Subsections\Oscillators</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\View\GUI_Sections\Section.cpp">
+      <Filter>ocnet\Source\View\GUI_Sections</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\View\GUI_Sections\Oscillators\OscillatorsSection.cpp">
+      <Filter>ocnet\Source\View\GUI_Sections\Oscillators</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\View\GUI_Sections\Modulators\ModulatorsSection.cpp">
+      <Filter>ocnet\Source\View\GUI_Sections\Modulators</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\View\GUI_Sections\Header\HeaderSection.cpp">
+      <Filter>ocnet\Source\View\GUI_Sections\Header</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\View\GUI_Sections\Footer\FooterSection.cpp">
+      <Filter>ocnet\Source\View\GUI_Sections\Footer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\View\GUI_Sections\Effects\EffectsSection.cpp">
+      <Filter>ocnet\Source\View\GUI_Sections\Effects</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Model\OcnetSynthesiser.cpp">
+      <Filter>ocnet\Source\Model</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Model\PluginProcessor.cpp">
+      <Filter>ocnet\Source\Model</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Model\ProcessorInfo.cpp">
+      <Filter>ocnet\Source\Model</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Model\Synth\SynthVoice.cpp">
+      <Filter>ocnet\Source\Model\Synth</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Model\Synth\Processors\Processor.cpp">
+      <Filter>ocnet\Source\Model\Synth\Processors</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Model\Synth\Processors\ProcessorHandler.cpp">
+      <Filter>ocnet\Source\Model\Synth\Processors</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Model\Synth\Processors\Oscillators\SamplerProcessor.cpp">
+      <Filter>ocnet\Source\Model\Synth\Processors\Oscillators</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Model\Synth\Processors\Oscillators\WavetableOscillatorProcessor.cpp">
+      <Filter>ocnet\Source\Model\Synth\Processors\Oscillators</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\Nueva carpeta\ocnet\ocnet\Source\Synth\Processors\Effector.cpp">
+      <Filter>ocnet\Source\Model\Synth\Processors\Effects</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Model\Synth\Processors\Effects\DistortionProcessor.cpp">
+      <Filter>ocnet\Source\Model\Synth\Processors\Effects</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Model\Synth\Processors\Effects\EqualizerProcessor.cpp">
+      <Filter>ocnet\Source\Model\Synth\Processors\Effects</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Model\Synth\Processors\Effects\FilterProcessor.cpp">
+      <Filter>ocnet\Source\Model\Synth\Processors\Effects</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Model\Synth\Processors\Effects\ReverbProcessor.cpp">
+      <Filter>ocnet\Source\Model\Synth\Processors\Effects</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Model\Synth\Processors\Effects\DelayProcessor.cpp">
+      <Filter>ocnet\Source\Model\Synth\Processors\Effects</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Model\Synth\Processors\Modulators\RandomizerProcessor.cpp">
+      <Filter>ocnet\Source\Model\Synth\Processors\Modulators</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Model\Synth\Processors\Modulators\EnvelopeProcessor.cpp">
+      <Filter>ocnet\Source\Model\Synth\Processors\Modulators</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Model\Synth\Processors\Modulators\LFOProcessor.cpp">
+      <Filter>ocnet\Source\Model\Synth\Processors\Modulators</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Model\Synth\Processors\Modulators\MacroProcessor.cpp">
+      <Filter>ocnet\Source\Model\Synth\Processors\Modulators</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Model\Synth\Processors\Modulators\Modulator.cpp">
+      <Filter>ocnet\Source\Model\Synth\Processors\Modulators</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Model\ParameterHandler\Parameter.cpp">
+      <Filter>ocnet\Source\Model\ParameterHandler</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Model\ParameterHandler\ParameterHandler.cpp">
+      <Filter>ocnet\Source\Model\ParameterHandler</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Model\ParameterHandler\SliderParameter.cpp">
+      <Filter>ocnet\Source\Model\ParameterHandler</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Model\ParameterHandler\ButtonParameter.cpp">
+      <Filter>ocnet\Source\Model\ParameterHandler</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Model\ParameterHandler\ButtonParameterAttachment.cpp">
+      <Filter>ocnet\Source\Model\ParameterHandler</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Model\ParameterHandler\ComboBoxParameter.cpp">
+      <Filter>ocnet\Source\Model\ParameterHandler</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Model\ParameterHandler\Modulation.cpp">
+      <Filter>ocnet\Source\Model\ParameterHandler</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Model\ParameterHandler\OcnetComboBoxAttachment.cpp">
+      <Filter>ocnet\Source\Model\ParameterHandler</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Model\ParameterHandler\OcnetParameter.cpp">
+      <Filter>ocnet\Source\Model\ParameterHandler</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Model\ParameterHandler\OcnetSliderAttachment.cpp">
+      <Filter>ocnet\Source\Model\ParameterHandler</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\Tests\GUITest.cpp">
       <Filter>ocnet\Source\Tests</Filter>
@@ -787,206 +985,11 @@
     <ClCompile Include="..\..\Source\Tests\WavetableOscillatorTest.cpp">
       <Filter>ocnet\Source\Tests</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Source\GUI_Others\ModulationBubble.cpp">
-      <Filter>ocnet\Source\GUI_Others</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\GUI_Others\OcnetComboBox.cpp">
-      <Filter>ocnet\Source\GUI_Others</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\GUI_EventHandler.cpp">
-      <Filter>ocnet\Source</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\Source\Utils\OcnetTypes.cpp">
       <Filter>ocnet\Source\Utils</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\Utils\Utils.cpp">
       <Filter>ocnet\Source\Utils</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\ParameterHandler\ButtonParameter.cpp">
-      <Filter>ocnet\Source\ParameterHandler</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\ParameterHandler\ButtonParameterAttachment.cpp">
-      <Filter>ocnet\Source\ParameterHandler</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\ParameterHandler\ComboBoxParameter.cpp">
-      <Filter>ocnet\Source\ParameterHandler</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\ParameterHandler\Modulation.cpp">
-      <Filter>ocnet\Source\ParameterHandler</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\ParameterHandler\OcnetComboBoxAttachment.cpp">
-      <Filter>ocnet\Source\ParameterHandler</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\ParameterHandler\OcnetParameter.cpp">
-      <Filter>ocnet\Source\ParameterHandler</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\ParameterHandler\OcnetSliderAttachment.cpp">
-      <Filter>ocnet\Source\ParameterHandler</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\ParameterHandler\Parameter.cpp">
-      <Filter>ocnet\Source\ParameterHandler</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\ParameterHandler\ParameterHandler.cpp">
-      <Filter>ocnet\Source\ParameterHandler</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\ParameterHandler\SliderParameter.cpp">
-      <Filter>ocnet\Source\ParameterHandler</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\GUI_Subsections\Effects\DelaySubsection.cpp">
-      <Filter>ocnet\Source\GUI_Subsections\Effects</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\GUI_Subsections\Effects\DistortionSubsection.cpp">
-      <Filter>ocnet\Source\GUI_Subsections\Effects</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\GUI_Subsections\Effects\EffectsSubsection.cpp">
-      <Filter>ocnet\Source\GUI_Subsections\Effects</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\GUI_Subsections\Effects\EqualizerSubsection.cpp">
-      <Filter>ocnet\Source\GUI_Subsections\Effects</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\GUI_Subsections\Effects\FilterSubsection.cpp">
-      <Filter>ocnet\Source\GUI_Subsections\Effects</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\GUI_Subsections\Effects\ReverbSubsection.cpp">
-      <Filter>ocnet\Source\GUI_Subsections\Effects</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\GUI_Subsections\Modulators\EnvelopeSubsection.cpp">
-      <Filter>ocnet\Source\GUI_Subsections\Modulators</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\GUI_Subsections\Modulators\LFOSubsection.cpp">
-      <Filter>ocnet\Source\GUI_Subsections\Modulators</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\GUI_Subsections\Modulators\MacroSubsection.cpp">
-      <Filter>ocnet\Source\GUI_Subsections\Modulators</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\GUI_Subsections\Modulators\ModulatorsSubsection.cpp">
-      <Filter>ocnet\Source\GUI_Subsections\Modulators</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\GUI_Subsections\Modulators\RandomizerSubsection.cpp">
-      <Filter>ocnet\Source\GUI_Subsections\Modulators</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\GUI_Subsections\Oscillators\OscillatorsSubsection.cpp">
-      <Filter>ocnet\Source\GUI_Subsections\Oscillators</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\GUI_Subsections\Oscillators\SamplerSubsection.cpp">
-      <Filter>ocnet\Source\GUI_Subsections\Oscillators</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\GUI_Subsections\Oscillators\WavetableOscillatorSubsection.cpp">
-      <Filter>ocnet\Source\GUI_Subsections\Oscillators</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\GUI_Subsections\Subsection.cpp">
-      <Filter>ocnet\Source\GUI_Subsections</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\GUI_Sections\Section.cpp">
-      <Filter>ocnet\Source\GUI_Sections</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\GUI_Sections\ModulatorsSection.cpp">
-      <Filter>ocnet\Source\GUI_Sections</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\GUI_Sections\EffectsSection.cpp">
-      <Filter>ocnet\Source\GUI_Sections</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\GUI_Sections\FooterSection.cpp">
-      <Filter>ocnet\Source\GUI_Sections</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\GUI_Sections\HeaderSection.cpp">
-      <Filter>ocnet\Source\GUI_Sections</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\GUI_Sections\SectionSeparators.cpp">
-      <Filter>ocnet\Source\GUI_Sections</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\GUI_Sections\OscillatorsSection.cpp">
-      <Filter>ocnet\Source\GUI_Sections</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\OcnetGUI.cpp">
-      <Filter>ocnet\Source</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\OcnetGUI_interface.cpp">
-      <Filter>ocnet\Source</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\Synth\ProcessorBlocks\HouseholderMatrix.cpp">
-      <Filter>ocnet\Source\Synth\ProcessorBlocks</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\Synth\ProcessorBlocks\MultiChannelAllpassDelay.cpp">
-      <Filter>ocnet\Source\Synth\ProcessorBlocks</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\Synth\ProcessorBlocks\MultiChannelAllpassInvertPolarity.cpp">
-      <Filter>ocnet\Source\Synth\ProcessorBlocks</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\Synth\ProcessorBlocks\MultiChannelAllpassMixingMatrix.cpp">
-      <Filter>ocnet\Source\Synth\ProcessorBlocks</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\Synth\ProcessorBlocks\MultiChannelFeedback.cpp">
-      <Filter>ocnet\Source\Synth\ProcessorBlocks</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\Synth\Processors\Effector.cpp">
-      <Filter>ocnet\Source\Synth\Processors</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\Synth\Processors\Modulator.cpp">
-      <Filter>ocnet\Source\Synth\Processors</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\Synth\Processors\ProcessorHandler.cpp">
-      <Filter>ocnet\Source\Synth\Processors</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\Synth\Processors\Oscillators\SamplerProcessor.cpp">
-      <Filter>ocnet\Source\Synth\Processors\Oscillators</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\Synth\Processors\Oscillators\WavetableOscillatorProcessor.cpp">
-      <Filter>ocnet\Source\Synth\Processors\Oscillators</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\Synth\Processors\Effects\DelayProcessor.cpp">
-      <Filter>ocnet\Source\Synth\Processors\Effects</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\Synth\Processors\Effects\DistortionProcessor.cpp">
-      <Filter>ocnet\Source\Synth\Processors\Effects</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\Synth\Processors\Effects\EqualizerProcessor.cpp">
-      <Filter>ocnet\Source\Synth\Processors\Effects</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\Synth\Processors\Effects\FilterProcessor.cpp">
-      <Filter>ocnet\Source\Synth\Processors\Effects</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\Synth\Processors\Effects\ReverbProcessor.cpp">
-      <Filter>ocnet\Source\Synth\Processors\Effects</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\Synth\Processors\Modulators\EnvelopeProcessor.cpp">
-      <Filter>ocnet\Source\Synth\Processors\Modulators</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\Synth\Processors\Modulators\LFOProcessor.cpp">
-      <Filter>ocnet\Source\Synth\Processors\Modulators</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\Synth\Processors\Modulators\MacroProcessor.cpp">
-      <Filter>ocnet\Source\Synth\Processors\Modulators</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\Synth\Processors\Modulators\RandomizerProcessor.cpp">
-      <Filter>ocnet\Source\Synth\Processors\Modulators</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\Synth\Processors\Processor.cpp">
-      <Filter>ocnet\Source\Synth\Processors</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\Synth\OcnetSynthesiser.cpp">
-      <Filter>ocnet\Source\Synth</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\Synth\SynthVoice.cpp">
-      <Filter>ocnet\Source\Synth</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\Knobs\DragZone.cpp">
-      <Filter>ocnet\Source\Knobs</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\Knobs\Knob1.cpp">
-      <Filter>ocnet\Source\Knobs</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\Knobs\Knob2.cpp">
-      <Filter>ocnet\Source\Knobs</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\Knobs\OcnetComboBox.cpp">
-      <Filter>ocnet\Source\Knobs</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\PluginProcessor.cpp">
-      <Filter>ocnet\Source</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\PluginEditor.cpp">
-      <Filter>ocnet\Source</Filter>
     </ClCompile>
     <ClCompile Include="..\..\JuceLibraryCode\modules\juce_audio_basics\audio_play_head\juce_AudioPlayHead.cpp">
       <Filter>JUCE Modules\juce_audio_basics\audio_play_head</Filter>
@@ -3876,41 +3879,227 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\Source\ProcessorInfo.h">
-      <Filter>ocnet\Source</Filter>
+    <ClInclude Include="..\..\Source\Libraries\SignalSmithLibrary\dsp\common.h">
+      <Filter>ocnet\Source\Libraries\SignalSmithLibrary\dsp</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Source\SignalSmithLibrary\dsp\delay.h">
-      <Filter>ocnet\Source\SignalSmithLibrary\dsp</Filter>
+    <ClInclude Include="..\..\Source\Libraries\SignalSmithLibrary\dsp\curves.h">
+      <Filter>ocnet\Source\Libraries\SignalSmithLibrary\dsp</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Source\SignalSmithLibrary\dsp\envelopes.h">
-      <Filter>ocnet\Source\SignalSmithLibrary\dsp</Filter>
+    <ClInclude Include="..\..\Source\Libraries\SignalSmithLibrary\dsp\delay.h">
+      <Filter>ocnet\Source\Libraries\SignalSmithLibrary\dsp</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Source\SignalSmithLibrary\dsp\fft.h">
-      <Filter>ocnet\Source\SignalSmithLibrary\dsp</Filter>
+    <ClInclude Include="..\..\Source\Libraries\SignalSmithLibrary\dsp\envelopes.h">
+      <Filter>ocnet\Source\Libraries\SignalSmithLibrary\dsp</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Source\SignalSmithLibrary\dsp\filters.h">
-      <Filter>ocnet\Source\SignalSmithLibrary\dsp</Filter>
+    <ClInclude Include="..\..\Source\Libraries\SignalSmithLibrary\dsp\fft.h">
+      <Filter>ocnet\Source\Libraries\SignalSmithLibrary\dsp</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Source\SignalSmithLibrary\dsp\mix.h">
-      <Filter>ocnet\Source\SignalSmithLibrary\dsp</Filter>
+    <ClInclude Include="..\..\Source\Libraries\SignalSmithLibrary\dsp\filters.h">
+      <Filter>ocnet\Source\Libraries\SignalSmithLibrary\dsp</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Source\SignalSmithLibrary\dsp\perf.h">
-      <Filter>ocnet\Source\SignalSmithLibrary\dsp</Filter>
+    <ClInclude Include="..\..\Source\Libraries\SignalSmithLibrary\dsp\mix.h">
+      <Filter>ocnet\Source\Libraries\SignalSmithLibrary\dsp</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Source\SignalSmithLibrary\dsp\rates.h">
-      <Filter>ocnet\Source\SignalSmithLibrary\dsp</Filter>
+    <ClInclude Include="..\..\Source\Libraries\SignalSmithLibrary\dsp\perf.h">
+      <Filter>ocnet\Source\Libraries\SignalSmithLibrary\dsp</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Source\SignalSmithLibrary\dsp\spectral.h">
-      <Filter>ocnet\Source\SignalSmithLibrary\dsp</Filter>
+    <ClInclude Include="..\..\Source\Libraries\SignalSmithLibrary\dsp\rates.h">
+      <Filter>ocnet\Source\Libraries\SignalSmithLibrary\dsp</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Source\SignalSmithLibrary\dsp\windows.h">
-      <Filter>ocnet\Source\SignalSmithLibrary\dsp</Filter>
+    <ClInclude Include="..\..\Source\Libraries\SignalSmithLibrary\dsp\spectral.h">
+      <Filter>ocnet\Source\Libraries\SignalSmithLibrary\dsp</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Source\SignalSmithLibrary\dsp\common.h">
-      <Filter>ocnet\Source\SignalSmithLibrary\dsp</Filter>
+    <ClInclude Include="..\..\Source\Libraries\SignalSmithLibrary\dsp\windows.h">
+      <Filter>ocnet\Source\Libraries\SignalSmithLibrary\dsp</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Source\SignalSmithLibrary\dsp\curves.h">
-      <Filter>ocnet\Source\SignalSmithLibrary\dsp</Filter>
+    <ClInclude Include="..\..\Source\Controller\OcnetGUI_interface.h">
+      <Filter>ocnet\Source\Controller</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Controller\PluginEditor.h">
+      <Filter>ocnet\Source\Controller</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Controller\GUI_EventHandler.h">
+      <Filter>ocnet\Source\Controller</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\View\OcnetGUI.h">
+      <Filter>ocnet\Source\View</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\View\LookAndFeel_V4\OcnetLookAndFeel.h">
+      <Filter>ocnet\Source\View\LookAndFeel_V4</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\View\LookAndFeel_V4\OcnetLookAndFeel_BypassButton.h">
+      <Filter>ocnet\Source\View\LookAndFeel_V4</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\View\LookAndFeel_V4\OcnetLookAndFeel_SubsectionButtons.h">
+      <Filter>ocnet\Source\View\LookAndFeel_V4</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\View\GUI_Elements\ModulatorDragZone\DragZone.h">
+      <Filter>ocnet\Source\View\GUI_Elements\ModulatorDragZone</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\View\GUI_Elements\Knobs\Knob1.h">
+      <Filter>ocnet\Source\View\GUI_Elements\Knobs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\View\GUI_Elements\Knobs\Knob2.h">
+      <Filter>ocnet\Source\View\GUI_Elements\Knobs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\View\GUI_Elements\Knobs\ModulationBubble.h">
+      <Filter>ocnet\Source\View\GUI_Elements\Knobs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\View\GUI_Elements\ComboBoxes\OcnetComboBox.h">
+      <Filter>ocnet\Source\View\GUI_Elements\ComboBoxes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\View\GUI_Subsections\Subsection.h">
+      <Filter>ocnet\Source\View\GUI_Subsections</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\View\GUI_Subsections\Effects\DelaySubsection.h">
+      <Filter>ocnet\Source\View\GUI_Subsections\Effects</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\View\GUI_Subsections\Effects\DistortionSubsection.h">
+      <Filter>ocnet\Source\View\GUI_Subsections\Effects</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\View\GUI_Subsections\Effects\EffectsSubsection.h">
+      <Filter>ocnet\Source\View\GUI_Subsections\Effects</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\View\GUI_Subsections\Effects\EqualizerSubsection.h">
+      <Filter>ocnet\Source\View\GUI_Subsections\Effects</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\View\GUI_Subsections\Effects\FilterSubsection.h">
+      <Filter>ocnet\Source\View\GUI_Subsections\Effects</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\View\GUI_Subsections\Effects\ReverbSubsection.h">
+      <Filter>ocnet\Source\View\GUI_Subsections\Effects</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\View\GUI_Subsections\Modulators\MacroSubsection.h">
+      <Filter>ocnet\Source\View\GUI_Subsections\Modulators</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\View\GUI_Subsections\Modulators\ModulatorsSubsection.h">
+      <Filter>ocnet\Source\View\GUI_Subsections\Modulators</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\View\GUI_Subsections\Modulators\RandomizerSubsection.h">
+      <Filter>ocnet\Source\View\GUI_Subsections\Modulators</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\View\GUI_Subsections\Modulators\EnvelopeSubsection.h">
+      <Filter>ocnet\Source\View\GUI_Subsections\Modulators</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\View\GUI_Subsections\Modulators\LFOSubsection.h">
+      <Filter>ocnet\Source\View\GUI_Subsections\Modulators</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\View\GUI_Subsections\Oscillators\WavetableOscillatorSubsection.h">
+      <Filter>ocnet\Source\View\GUI_Subsections\Oscillators</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\View\GUI_Subsections\Oscillators\OscillatorsSubsection.h">
+      <Filter>ocnet\Source\View\GUI_Subsections\Oscillators</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\View\GUI_Subsections\Oscillators\SamplerSubsection.h">
+      <Filter>ocnet\Source\View\GUI_Subsections\Oscillators</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\View\GUI_Sections\Section.h">
+      <Filter>ocnet\Source\View\GUI_Sections</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\View\GUI_Sections\Oscillators\OscillatorsSection.h">
+      <Filter>ocnet\Source\View\GUI_Sections\Oscillators</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\View\GUI_Sections\Modulators\ModulatorsSection.h">
+      <Filter>ocnet\Source\View\GUI_Sections\Modulators</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\View\GUI_Sections\Header\HeaderSection.h">
+      <Filter>ocnet\Source\View\GUI_Sections\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\View\GUI_Sections\Footer\FooterSection.h">
+      <Filter>ocnet\Source\View\GUI_Sections\Footer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\View\GUI_Sections\Effects\EffectsSection.h">
+      <Filter>ocnet\Source\View\GUI_Sections\Effects</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Model\OcnetSynthesiser.h">
+      <Filter>ocnet\Source\Model</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Model\PluginProcessor.h">
+      <Filter>ocnet\Source\Model</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Model\ProcessorInfo.h">
+      <Filter>ocnet\Source\Model</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Model\Synth\SynthSound.h">
+      <Filter>ocnet\Source\Model\Synth</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Model\Synth\SynthVoice.h">
+      <Filter>ocnet\Source\Model\Synth</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Model\Synth\Processors\Processor.h">
+      <Filter>ocnet\Source\Model\Synth\Processors</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Model\Synth\Processors\ProcessorHandler.h">
+      <Filter>ocnet\Source\Model\Synth\Processors</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Model\Synth\Processors\Oscillators\SamplerProcessor.h">
+      <Filter>ocnet\Source\Model\Synth\Processors\Oscillators</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Model\Synth\Processors\Oscillators\WavetableOscillatorProcessor.h">
+      <Filter>ocnet\Source\Model\Synth\Processors\Oscillators</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\Nueva carpeta\ocnet\ocnet\Source\Synth\Processors\Effector.h">
+      <Filter>ocnet\Source\Model\Synth\Processors\Effects</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Model\Synth\Processors\Effects\DelayProcessor.h">
+      <Filter>ocnet\Source\Model\Synth\Processors\Effects</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Model\Synth\Processors\Effects\DistortionProcessor.h">
+      <Filter>ocnet\Source\Model\Synth\Processors\Effects</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Model\Synth\Processors\Effects\EqualizerProcessor.h">
+      <Filter>ocnet\Source\Model\Synth\Processors\Effects</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Model\Synth\Processors\Effects\FilterProcessor.h">
+      <Filter>ocnet\Source\Model\Synth\Processors\Effects</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Model\Synth\Processors\Effects\ReverbProcessor.h">
+      <Filter>ocnet\Source\Model\Synth\Processors\Effects</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Model\Synth\Processors\Modulators\Modulator.h">
+      <Filter>ocnet\Source\Model\Synth\Processors\Modulators</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Model\Synth\Processors\Modulators\RandomizerProcessor.h">
+      <Filter>ocnet\Source\Model\Synth\Processors\Modulators</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Model\Synth\Processors\Modulators\EnvelopeProcessor.h">
+      <Filter>ocnet\Source\Model\Synth\Processors\Modulators</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Model\Synth\Processors\Modulators\LFOProcessor.h">
+      <Filter>ocnet\Source\Model\Synth\Processors\Modulators</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Model\Synth\Processors\Modulators\MacroProcessor.h">
+      <Filter>ocnet\Source\Model\Synth\Processors\Modulators</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Model\ParameterHandler\OcnetSliderAttachment.h">
+      <Filter>ocnet\Source\Model\ParameterHandler</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Model\ParameterHandler\Parameter.h">
+      <Filter>ocnet\Source\Model\ParameterHandler</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Model\ParameterHandler\ParameterHandler.h">
+      <Filter>ocnet\Source\Model\ParameterHandler</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Model\ParameterHandler\SliderParameter.h">
+      <Filter>ocnet\Source\Model\ParameterHandler</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Model\ParameterHandler\ButtonParameter.h">
+      <Filter>ocnet\Source\Model\ParameterHandler</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Model\ParameterHandler\ButtonParameterAttachment.h">
+      <Filter>ocnet\Source\Model\ParameterHandler</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Model\ParameterHandler\ComboBoxParameter.h">
+      <Filter>ocnet\Source\Model\ParameterHandler</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Model\ParameterHandler\Modulation.h">
+      <Filter>ocnet\Source\Model\ParameterHandler</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Model\ParameterHandler\OcnetComboBoxAttachment.h">
+      <Filter>ocnet\Source\Model\ParameterHandler</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Model\ParameterHandler\OcnetParameter.h">
+      <Filter>ocnet\Source\Model\ParameterHandler</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\Tests\GUITest.h">
       <Filter>ocnet\Source\Tests</Filter>
@@ -3930,221 +4119,11 @@
     <ClInclude Include="..\..\Source\Tests\WavetableOscillatorTest.h">
       <Filter>ocnet\Source\Tests</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Source\GUI_Others\ModulationBubble.h">
-      <Filter>ocnet\Source\GUI_Others</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\GUI_Others\OcnetComboBox.h">
-      <Filter>ocnet\Source\GUI_Others</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\GUI_EventHandler.h">
-      <Filter>ocnet\Source</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\Source\Utils\OcnetTypes.h">
       <Filter>ocnet\Source\Utils</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\Utils\Utils.h">
       <Filter>ocnet\Source\Utils</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\ParameterHandler\ButtonParameter.h">
-      <Filter>ocnet\Source\ParameterHandler</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\ParameterHandler\ButtonParameterAttachment.h">
-      <Filter>ocnet\Source\ParameterHandler</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\ParameterHandler\ComboBoxParameter.h">
-      <Filter>ocnet\Source\ParameterHandler</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\ParameterHandler\Modulation.h">
-      <Filter>ocnet\Source\ParameterHandler</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\ParameterHandler\OcnetComboBoxAttachment.h">
-      <Filter>ocnet\Source\ParameterHandler</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\ParameterHandler\OcnetParameter.h">
-      <Filter>ocnet\Source\ParameterHandler</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\ParameterHandler\OcnetSliderAttachment.h">
-      <Filter>ocnet\Source\ParameterHandler</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\ParameterHandler\Parameter.h">
-      <Filter>ocnet\Source\ParameterHandler</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\ParameterHandler\ParameterHandler.h">
-      <Filter>ocnet\Source\ParameterHandler</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\ParameterHandler\SliderParameter.h">
-      <Filter>ocnet\Source\ParameterHandler</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\GUI_Subsections\Effects\DelaySubsection.h">
-      <Filter>ocnet\Source\GUI_Subsections\Effects</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\GUI_Subsections\Effects\DistortionSubsection.h">
-      <Filter>ocnet\Source\GUI_Subsections\Effects</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\GUI_Subsections\Effects\EffectsSubsection.h">
-      <Filter>ocnet\Source\GUI_Subsections\Effects</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\GUI_Subsections\Effects\EqualizerSubsection.h">
-      <Filter>ocnet\Source\GUI_Subsections\Effects</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\GUI_Subsections\Effects\FilterSubsection.h">
-      <Filter>ocnet\Source\GUI_Subsections\Effects</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\GUI_Subsections\Effects\ReverbSubsection.h">
-      <Filter>ocnet\Source\GUI_Subsections\Effects</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\GUI_Subsections\Modulators\EnvelopeSubsection.h">
-      <Filter>ocnet\Source\GUI_Subsections\Modulators</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\GUI_Subsections\Modulators\LFOSubsection.h">
-      <Filter>ocnet\Source\GUI_Subsections\Modulators</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\GUI_Subsections\Modulators\MacroSubsection.h">
-      <Filter>ocnet\Source\GUI_Subsections\Modulators</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\GUI_Subsections\Modulators\ModulatorsSubsection.h">
-      <Filter>ocnet\Source\GUI_Subsections\Modulators</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\GUI_Subsections\Modulators\RandomizerSubsection.h">
-      <Filter>ocnet\Source\GUI_Subsections\Modulators</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\GUI_Subsections\Oscillators\OscillatorsSubsection.h">
-      <Filter>ocnet\Source\GUI_Subsections\Oscillators</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\GUI_Subsections\Oscillators\SamplerSubsection.h">
-      <Filter>ocnet\Source\GUI_Subsections\Oscillators</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\GUI_Subsections\Oscillators\WavetableOscillatorSubsection.h">
-      <Filter>ocnet\Source\GUI_Subsections\Oscillators</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\GUI_Subsections\Subsection.h">
-      <Filter>ocnet\Source\GUI_Subsections</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\LookAndFeel_V4\OcnetLookAndFeel.h">
-      <Filter>ocnet\Source\LookAndFeel_V4</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\LookAndFeel_V4\OcnetLookAndFeel_SubsectionButtons.h">
-      <Filter>ocnet\Source\LookAndFeel_V4</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\LookAndFeel_V4\OcnetLookAndFeel_BypassButton.h">
-      <Filter>ocnet\Source\LookAndFeel_V4</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\GUI_Sections\Section.h">
-      <Filter>ocnet\Source\GUI_Sections</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\GUI_Sections\ModulatorsSection.h">
-      <Filter>ocnet\Source\GUI_Sections</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\GUI_Sections\EffectsSection.h">
-      <Filter>ocnet\Source\GUI_Sections</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\GUI_Sections\FooterSection.h">
-      <Filter>ocnet\Source\GUI_Sections</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\GUI_Sections\HeaderSection.h">
-      <Filter>ocnet\Source\GUI_Sections</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\GUI_Sections\SectionSeparators.h">
-      <Filter>ocnet\Source\GUI_Sections</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\GUI_Sections\OscillatorsSection.h">
-      <Filter>ocnet\Source\GUI_Sections</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\OcnetGUI.h">
-      <Filter>ocnet\Source</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\OcnetGUI_interface.h">
-      <Filter>ocnet\Source</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\Synth\ProcessorBlocks\HouseholderMatrix.h">
-      <Filter>ocnet\Source\Synth\ProcessorBlocks</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\Synth\ProcessorBlocks\MultiChannelAllpassDelay.h">
-      <Filter>ocnet\Source\Synth\ProcessorBlocks</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\Synth\ProcessorBlocks\MultiChannelAllpassInvertPolarity.h">
-      <Filter>ocnet\Source\Synth\ProcessorBlocks</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\Synth\ProcessorBlocks\MultiChannelAllpassMixingMatrix.h">
-      <Filter>ocnet\Source\Synth\ProcessorBlocks</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\Synth\ProcessorBlocks\MultiChannelFeedback.h">
-      <Filter>ocnet\Source\Synth\ProcessorBlocks</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\Synth\Processors\Effector.h">
-      <Filter>ocnet\Source\Synth\Processors</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\Synth\Processors\Modulator.h">
-      <Filter>ocnet\Source\Synth\Processors</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\Synth\Processors\ProcessorHandler.h">
-      <Filter>ocnet\Source\Synth\Processors</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\Synth\Processors\Oscillators\SamplerProcessor.h">
-      <Filter>ocnet\Source\Synth\Processors\Oscillators</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\Synth\Processors\Oscillators\WavetableOscillatorProcessor.h">
-      <Filter>ocnet\Source\Synth\Processors\Oscillators</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\Synth\Processors\Effects\DelayProcessor.h">
-      <Filter>ocnet\Source\Synth\Processors\Effects</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\Synth\Processors\Effects\DistortionProcessor.h">
-      <Filter>ocnet\Source\Synth\Processors\Effects</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\Synth\Processors\Effects\EqualizerProcessor.h">
-      <Filter>ocnet\Source\Synth\Processors\Effects</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\Synth\Processors\Effects\FilterProcessor.h">
-      <Filter>ocnet\Source\Synth\Processors\Effects</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\Synth\Processors\Effects\ReverbProcessor.h">
-      <Filter>ocnet\Source\Synth\Processors\Effects</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\Synth\Processors\Modulators\EnvelopeProcessor.h">
-      <Filter>ocnet\Source\Synth\Processors\Modulators</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\Synth\Processors\Modulators\LFOProcessor.h">
-      <Filter>ocnet\Source\Synth\Processors\Modulators</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\Synth\Processors\Modulators\MacroProcessor.h">
-      <Filter>ocnet\Source\Synth\Processors\Modulators</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\Synth\Processors\Modulators\RandomizerProcessor.h">
-      <Filter>ocnet\Source\Synth\Processors\Modulators</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\Synth\Processors\Processor.h">
-      <Filter>ocnet\Source\Synth\Processors</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\Synth\Oscillator\WavetableTypes.h">
-      <Filter>ocnet\Source\Synth\Oscillator</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\Synth\OcnetSynthesiser.h">
-      <Filter>ocnet\Source\Synth</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\Synth\SynthSound.h">
-      <Filter>ocnet\Source\Synth</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\Synth\SynthVoice.h">
-      <Filter>ocnet\Source\Synth</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\Knobs\DragZone.h">
-      <Filter>ocnet\Source\Knobs</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\Knobs\Knob1.h">
-      <Filter>ocnet\Source\Knobs</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\Knobs\Knob2.h">
-      <Filter>ocnet\Source\Knobs</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\Knobs\OcnetComboBox.h">
-      <Filter>ocnet\Source\Knobs</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\PluginProcessor.h">
-      <Filter>ocnet\Source</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\PluginEditor.h">
-      <Filter>ocnet\Source</Filter>
     </ClInclude>
     <ClInclude Include="..\..\JuceLibraryCode\modules\juce_audio_basics\audio_play_head\juce_AudioPlayHead.h">
       <Filter>JUCE Modules\juce_audio_basics\audio_play_head</Filter>
@@ -8063,11 +8042,11 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\..\Source\SignalSmithLibrary\dsp\LICENSE.txt">
-      <Filter>ocnet\Source\SignalSmithLibrary\dsp</Filter>
+    <None Include="..\..\Source\Libraries\SignalSmithLibrary\dsp\LICENSE.txt">
+      <Filter>ocnet\Source\Libraries\SignalSmithLibrary\dsp</Filter>
     </None>
-    <None Include="..\..\Source\SignalSmithLibrary\dsp\README.md">
-      <Filter>ocnet\Source\SignalSmithLibrary\dsp</Filter>
+    <None Include="..\..\Source\Libraries\SignalSmithLibrary\dsp\README.md">
+      <Filter>ocnet\Source\Libraries\SignalSmithLibrary\dsp</Filter>
     </None>
     <None Include="..\..\Source\Images\AddAutomationIcon_Hovering.png">
       <Filter>ocnet\Source\Images</Filter>

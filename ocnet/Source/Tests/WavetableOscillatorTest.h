@@ -11,7 +11,7 @@
 #pragma once
 
 #include "JuceHeader.h"
-#include "../Synth/Processors/Oscillators/WavetableOscillatorProcessor.h"
+#include "../Model/Synth/Processors/Oscillators/WavetableOscillatorProcessor.h"
 
 class WavetableOscillatorTest : public juce::UnitTest {
 public:

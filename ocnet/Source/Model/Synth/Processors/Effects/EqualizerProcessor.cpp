@@ -119,8 +119,6 @@ void EqualizerProcessor::processBlock(juce::AudioBuffer<float>& buffer)
     leftChain.process(leftContext);
     rightChain.process(rightContext);
 
-
-
 }
 
 float EqualizerProcessor::getNextSample(float currentSampleValue)

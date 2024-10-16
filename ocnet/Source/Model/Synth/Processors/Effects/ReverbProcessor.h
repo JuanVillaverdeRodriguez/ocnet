@@ -114,26 +114,31 @@ private:
 		float delayMsRange = 50;
 
 		std::array<int, channels> delaySamples;
-		std::array<DelaySignalSmith, channels> delays;
+		std::array<std::vector<float>, channels> delayBuffers;
+		std::array<int, channels> writeIndices;
 		std::array<bool, channels> flipPolarity;
 
 		void configure(float sampleRate) {
-			float delaySamplesRange = delayMsRange * 0.001 * sampleRate;
+			float delaySamplesRange = delayMsRange * 0.001f * sampleRate;
 			for (int c = 0; c < channels; ++c) {
 				float rangeLow = delaySamplesRange * c / channels;
 				float rangeHigh = delaySamplesRange * (c + 1) / channels;
-				delaySamples[c] = randomInRange(rangeLow, rangeHigh);
-				delays[c].resize(delaySamples[c] + 1);
-				delays[c].reset();
+				delaySamples[c] = static_cast<int>(randomInRange(rangeLow, rangeHigh));
+
+				int bufferSize = delaySamples[c] + 1;
+				delayBuffers[c].resize(bufferSize, 0.0f);
+				writeIndices[c] = 0;
+
 				flipPolarity[c] = rand() % 2;
 			}
 		}
 
-
 		void clear() {
-			delaySamples.fill(0.0f);
+			for (auto& buffer : delayBuffers) {
+				std::fill(buffer.begin(), buffer.end(), 0.0f);
+			}
+			writeIndices.fill(0);
 		}
-
 
 		inline void applyPolarity(Array& mixed) const {
 			for (int c = 0; c < channels; ++c) {
@@ -149,15 +154,31 @@ private:
 			for (int c = 0; c < channels; ++c) {
 				readPointers[c] = audioBuffer.getReadPointer(c);
 				writePointers[c] = audioBuffer.getWritePointer(c);
-				delays[c].write(readPointers[c][sample]);  // Escribe el valor en el delay
-				delayed[c] = delays[c].read(delaySamples[c]);  // Luego lee el valor
+
+				// Escribe el valor en el buffer de delay
+				delayBuffers[c][writeIndices[c]] = readPointers[c][sample];
+
+				// Calcula el índice de lectura
+				int bufferSize = static_cast<int>(delayBuffers[c].size());
+				int readIndex = writeIndices[c] - delaySamples[c];
+				if (readIndex < 0)
+					readIndex += bufferSize;
+
+				// Lee el valor retrasado
+				delayed[c] = delayBuffers[c][readIndex];
+
+				// Actualiza el índice de escritura
+				//writeIndices[c] = (writeIndices[c] + 1) % bufferSize;
+				writeIndices[c]++;
+				if (writeIndices[c] >= bufferSize)
+					writeIndices[c] = 0;
 			}
 
-			// Hadamard matrix mixing
+			// Mezcla Hadamard
 			Array mixed = delayed;
 			signalsmith::mix::Hadamard<float, channels>::inPlace(mixed.data());
 
-			// Flip polarities if necessary
+			// Invierte polaridades si es necesario
 			applyPolarity(mixed);
 
 			for (int c = 0; c < channels; ++c) {
@@ -165,7 +186,6 @@ private:
 			}
 		}
 	};
-
 	template<int channels = 8, int stepCount = 4>
 	struct DiffuserHalfLengths {
 		using Array = std::array<float, channels>;

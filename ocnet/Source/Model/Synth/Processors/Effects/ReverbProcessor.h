@@ -14,7 +14,7 @@
 #include <random>
 #include "../../../../Libraries/SignalSmithLibrary/dsp/mix.h"
 #include "../../../../Libraries/SignalSmithLibrary/dsp/delay.h"
-#include <immintrin.h> // Necesario para las instrucciones SIMD
+#include <immintrin.h> //SIMD
 
 using DelaySignalSmith = signalsmith::delay::Delay<float, signalsmith::delay::InterpolatorLinear>;
 
@@ -302,8 +302,6 @@ private:
 
     void splitChannels(juce::AudioBuffer<float>& inputBuffer, int numberOfOutputChannels);
     void mixChannels(juce::AudioBuffer<float>& inputBuffer, int numberOfOutputChannels);
-    void diffuseStep(juce::AudioBuffer<float>& inputBuffer);
-    void feedbackStep(juce::AudioBuffer<float>& inputBuffer);
 
 	bool noteIsOff;
 	bool isReverbActive;

@@ -72,13 +72,13 @@ void ReverbProcessor::processBlock(juce::AudioBuffer<float>& buffer)
 {
     reverb.setParameters(maxDelayValue*delayValue, maxDecayValue*decayValue, maxMixValue*mixValue);
 
-    splitChannels(buffer, 6);
-    reverb.processBuffer(buffer);
-    mixChannels(buffer, 2);
+    splitChannels(buffer, 6); // Dividir los canales de 2 a N
+    reverb.processBuffer(buffer); // Procesar reverberacion
+    mixChannels(buffer, 2); // Unir los N canales a 2
 
     auto* dataL = buffer.getWritePointer(0);
 
-    averageOutputValue = Utils::average(dataL, buffer.getNumSamples(), true, 8);
+    averageOutputValue = Utils::average(dataL, buffer.getNumSamples(), true, 16);
 }
 
 float ReverbProcessor::getNextSample(float currentSampleValue)
@@ -140,12 +140,4 @@ void ReverbProcessor::mixChannels(juce::AudioBuffer<float>&buffer, int numberOfO
     }
 
     buffer.setSize(numberOfOutputChannels, numSamples, true, true, false);
-}
-
-void ReverbProcessor::diffuseStep(juce::AudioBuffer<float>& inputBuffer)
-{
-}
-
-void ReverbProcessor::feedbackStep(juce::AudioBuffer<float>& inputBuffer)
-{
 }

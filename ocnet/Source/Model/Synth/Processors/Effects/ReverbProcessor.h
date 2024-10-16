@@ -148,15 +148,10 @@ private:
 
 		void process(juce::AudioBuffer<float>& audioBuffer, int sample) {
 			Array delayed;
-			float* writePointers[channels];
-			const float* readPointers[channels];
 
 			for (int c = 0; c < channels; ++c) {
-				readPointers[c] = audioBuffer.getReadPointer(c);
-				writePointers[c] = audioBuffer.getWritePointer(c);
-
 				// Escribe el valor en el buffer de delay
-				delayBuffers[c][writeIndices[c]] = readPointers[c][sample];
+				delayBuffers[c][writeIndices[c]] = audioBuffer.getReadPointer(c)[sample];
 
 				// Calcula el índice de lectura
 				int bufferSize = static_cast<int>(delayBuffers[c].size());
@@ -182,7 +177,7 @@ private:
 			applyPolarity(mixed);
 
 			for (int c = 0; c < channels; ++c) {
-				writePointers[c][sample] = mixed[c];
+				audioBuffer.getWritePointer(c)[sample] = mixed[c];
 			}
 		}
 	};

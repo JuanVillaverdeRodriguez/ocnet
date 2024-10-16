@@ -200,7 +200,7 @@ private:
         }
     };
 
-    template<int channels = 8, int stepCount = 4>
+    template<int channels = 8, int stepCount = 3>
     struct DiffuserHalfLengths {
         using Array = std::array<float, channels>;
 
@@ -236,7 +236,7 @@ private:
         }
     };
 
-    template<int channels = 8, int diffusionSteps = 4>
+    template<int channels = 8, int diffusionSteps = 3>
     struct BasicReverb {
         using Array = std::array<float, channels>;
 
@@ -298,7 +298,7 @@ private:
     };
     //===================================================================================
 
-	BasicReverb<8, 4> reverb;
+	BasicReverb<6, 3> reverb;
 
     void splitChannels(juce::AudioBuffer<float>& inputBuffer, int numberOfOutputChannels);
     void mixChannels(juce::AudioBuffer<float>& inputBuffer, int numberOfOutputChannels);

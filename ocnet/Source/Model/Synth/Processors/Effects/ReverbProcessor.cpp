@@ -72,13 +72,13 @@ void ReverbProcessor::processBlock(juce::AudioBuffer<float>& buffer)
 {
     reverb.setParameters(maxDelayValue*delayValue, maxDecayValue*decayValue, maxMixValue*mixValue);
 
-    splitChannels(buffer, 8);
+    splitChannels(buffer, 6);
     reverb.processBuffer(buffer);
     mixChannels(buffer, 2);
 
     auto* dataL = buffer.getWritePointer(0);
 
-    averageOutputValue = Utils::average(dataL, buffer.getNumSamples(), true, 4);
+    averageOutputValue = Utils::average(dataL, buffer.getNumSamples(), true, 8);
 }
 
 float ReverbProcessor::getNextSample(float currentSampleValue)
@@ -106,7 +106,7 @@ void ReverbProcessor::splitChannels(juce::AudioBuffer<float>& buffer, int number
     // Canales 4-7 se llenan con el canal derecho
     for (int sample = 0; sample < numSamples; ++sample) {
         for (int i = 0; i < numberOfOutputChannels; ++i) {
-            if (i < 4) {
+            if (i < numberOfOutputChannels/2) {
                 buffer.getWritePointer(i)[sample] = buffer.getReadPointer(0)[sample];
             }
             else {
@@ -127,16 +127,16 @@ void ReverbProcessor::mixChannels(juce::AudioBuffer<float>&buffer, int numberOfO
 
     // Los primeros 4 canales se mezclan en el canal izquierdo
     for (int sample = 0; sample < numSamples; sample++) {
-        for (int channel = 1; channel < 4; ++channel) {
+        for (int channel = 1; channel < numChannels/2; ++channel) {
             leftChannelData[sample] += buffer.getReadPointer(channel)[sample];
         }
-        leftChannelData[sample] /= 4.0f;
+        leftChannelData[sample] /= (numChannels/2);
 
         // Los últimos 4 canales se mezclan en el canal derecho
-        for (int channel = 5; channel < 8; ++channel) {
+        for (int channel = (numChannels / 2)+1; channel < numChannels; ++channel) {
             rightChannelData[sample] += buffer.getReadPointer(channel)[sample];
         }
-        rightChannelData[sample] /= 4.0f;
+        rightChannelData[sample] /= (numChannels / 2);
     }
 
     buffer.setSize(numberOfOutputChannels, numSamples, true, true, false);

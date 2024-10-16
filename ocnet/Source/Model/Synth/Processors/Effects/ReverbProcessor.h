@@ -76,7 +76,7 @@ private:
             Array delayed;
             Array mixed;
 
-            #pragma omp for
+            #pragma omp for simd
             for (int c = 0; c < channels; ++c) { // Leer retrasos y mezclar en un solo bucle
                 int bufferSize = static_cast<int>(delayBuffers[c].size());
                 int readIndex = writeIndices[c] - delaySamples[c];
@@ -91,7 +91,7 @@ private:
             signalsmith::mix::Householder<float, channels>::inPlace(mixed.data());
 
             // Escribir en buffers de delay y preparar salida
-            #pragma omp for
+            #pragma omp for simd
             for (int c = 0; c < channels; ++c) {
                 float sum = input[c] + mixed[c] * decayGain;
                 delayBuffers[c][writeIndices[c]] = sum;
@@ -112,7 +112,7 @@ private:
             for (int sample = 0; sample < numSamples; ++sample) {
                 Array input;
 
-                #pragma omp for
+                #pragma omp for simd
                 for (int c = 0; c < channels; c+=2) {
                     input[c] = audioBuffer.getReadPointer(c)[sample];
                     input[c+1] = audioBuffer.getReadPointer(c+1)[sample];
@@ -120,7 +120,7 @@ private:
 
                 Array delayed = process(input);
 
-                #pragma omp for
+                #pragma omp for simd
                 for (int c = 0; c < channels; c+=2) {
                     audioBuffer.getWritePointer(c)[sample] = delayed[c];
                     audioBuffer.getWritePointer(c+1)[sample] = delayed[c+1];

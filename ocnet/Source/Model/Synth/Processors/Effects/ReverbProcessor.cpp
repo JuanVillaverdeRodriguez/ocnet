@@ -78,7 +78,7 @@ void ReverbProcessor::processBlock(juce::AudioBuffer<float>& buffer)
 
     auto* dataL = buffer.getWritePointer(0);
 
-    averageOutputValue = Utils::average(dataL, buffer.getNumSamples(), true, 16);
+    averageOutputValue = Utils::average(dataL, buffer.getNumSamples(), true, 32);
 }
 
 float ReverbProcessor::getNextSample(float currentSampleValue)
@@ -104,6 +104,7 @@ void ReverbProcessor::splitChannels(juce::AudioBuffer<float>& buffer, int number
 
     // Canales 0-3 se llenan con el canal izquierdo
     // Canales 4-7 se llenan con el canal derecho
+    #pragma omp parallel for
     for (int sample = 0; sample < numSamples; ++sample) {
         for (int i = 0; i < numberOfOutputChannels; ++i) {
             if (i < numberOfOutputChannels/2) {
@@ -129,6 +130,8 @@ void ReverbProcessor::mixChannels(juce::AudioBuffer<float>&buffer, int numberOfO
     auto* rightChannelData = buffer.getWritePointer(1);
 
     // La primera mitad de los N canales se mezclan en el canal izquierdo
+
+    #pragma omp parallel for
     for (int sample = 0; sample < numSamples; sample++) {
         for (int channel = 1; channel < numChannels/2; ++channel) {
             leftChannelData[sample] += buffer.getReadPointer(channel)[sample];

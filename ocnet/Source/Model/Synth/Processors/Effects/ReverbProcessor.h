@@ -76,8 +76,9 @@ private:
             Array delayed;
             Array mixed;
 
-            // Leer retrasos y mezclar en un solo bucle
-            for (int c = 0; c < channels; ++c) {
+            #pragma omp parallel  // Crear un bloque de paralelización persistente
+            #pragma omp for
+            for (int c = 0; c < channels; ++c) { // Leer retrasos y mezclar en un solo bucle
                 int bufferSize = static_cast<int>(delayBuffers[c].size());
                 int readIndex = writeIndices[c] - delaySamples[c];
                 if (readIndex < 0)
@@ -91,6 +92,7 @@ private:
             signalsmith::mix::Householder<float, channels>::inPlace(mixed.data());
 
             // Escribir en buffers de delay y preparar salida
+            #pragma omp for
             for (int c = 0; c < channels; ++c) {
                 float sum = input[c] + mixed[c] * decayGain;
                 delayBuffers[c][writeIndices[c]] = sum;

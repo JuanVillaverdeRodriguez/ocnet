@@ -15,6 +15,7 @@
 #include "../../../../Libraries/SignalSmithLibrary/dsp/mix.h"
 #include "../../../../Libraries/SignalSmithLibrary/dsp/delay.h"
 #include <immintrin.h> //SIMD
+#include <omp.h>
 
 using DelaySignalSmith = signalsmith::delay::Delay<float, signalsmith::delay::InterpolatorLinear>;
 
@@ -108,17 +109,21 @@ private:
 
             for (int sample = 0; sample < numSamples; ++sample) {
                 Array input;
-                for (int c = 0; c < channels; ++c) {
+
+                for (int c = 0; c < channels; c+=2) {
                     input[c] = audioBuffer.getReadPointer(c)[sample];
+                    input[c+1] = audioBuffer.getReadPointer(c+1)[sample];
                 }
 
                 Array delayed = process(input);
 
-                for (int c = 0; c < channels; ++c) {
+                for (int c = 0; c < channels; c+=2) {
                     audioBuffer.getWritePointer(c)[sample] = delayed[c];
+                    audioBuffer.getWritePointer(c+1)[sample] = delayed[c+1];
                 }
             }
         }
+
     };
 
     template<int channels = 8>
@@ -154,18 +159,20 @@ private:
         }
 
         inline void applyPolarity(Array& mixed) const {
-            for (int c = 0; c < channels; ++c) {
+            for (int c = 0; c < channels; c+=2) {
                 if (flipPolarity[c]) mixed[c] = -mixed[c];
+                if (flipPolarity[c+1]) mixed[c+1] = -mixed[c+1];
             }
         }
 
         void processBuffer(juce::AudioBuffer<float>& audioBuffer) {
             const int numSamples = audioBuffer.getNumSamples();
 
+            #pragma omp parallel  // Crear un bloque de paralelización persistente
             for (int sample = 0; sample < numSamples; ++sample) {
                 Array delayed;
 
-                // Procesamiento por canal
+                #pragma omp for // Paralelizar solo dentro de la región paralela
                 for (int c = 0; c < channels; ++c) {
                     // Escribe el valor en el buffer de delay
                     delayBuffers[c][writeIndices[c]] = audioBuffer.getReadPointer(c)[sample];
@@ -193,8 +200,9 @@ private:
                 applyPolarity(mixed);
 
                 // Escribe la salida
-                for (int c = 0; c < channels; ++c) {
+                for (int c = 0; c < channels; c+=2) {
                     audioBuffer.getWritePointer(c)[sample] = mixed[c];
+                    audioBuffer.getWritePointer(c+1)[sample] = mixed[c+1];
                 }
             }
         }
@@ -286,6 +294,8 @@ private:
             feedback.processBuffer(audioBuffer);
 
             // Mezcla Dry/Wet
+
+            #pragma omp parallel for
             for (int c = 0; c < channels; ++c) {
                 float* writePtr = audioBuffer.getWritePointer(c);
                 const float* readPtr = inputBuffer.getReadPointer(c);

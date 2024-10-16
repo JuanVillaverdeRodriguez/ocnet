@@ -12,6 +12,7 @@
 
 #include "Effector.h"
 #include "../../../ParameterHandler/SliderParameter.h"
+#include <omp.h>
 
 class DistortionProcessor : public Effector {
 public:

@@ -118,6 +118,9 @@ void ReverbProcessor::splitChannels(juce::AudioBuffer<float>& buffer, int number
 
 void ReverbProcessor::mixChannels(juce::AudioBuffer<float>&buffer, int numberOfOutputChannels)
 {
+    // El numero de canales debe de ser par
+    //jassert(numberOfOutputChannels % 2 == 0);
+
     const int numChannels = buffer.getNumChannels();
     const int numSamples = buffer.getNumSamples();
 
@@ -125,7 +128,7 @@ void ReverbProcessor::mixChannels(juce::AudioBuffer<float>&buffer, int numberOfO
     auto* leftChannelData = buffer.getWritePointer(0);
     auto* rightChannelData = buffer.getWritePointer(1);
 
-    // Los primeros 4 canales se mezclan en el canal izquierdo
+    // La primera mitad de los N canales se mezclan en el canal izquierdo
     for (int sample = 0; sample < numSamples; sample++) {
         for (int channel = 1; channel < numChannels/2; ++channel) {
             leftChannelData[sample] += buffer.getReadPointer(channel)[sample];

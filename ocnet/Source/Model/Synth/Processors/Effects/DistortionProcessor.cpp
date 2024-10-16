@@ -76,6 +76,7 @@ void DistortionProcessor::processSoftClipping(juce::dsp::AudioBlock<float>& upSa
     int numSamples = upSampledBlock.getNumSamples();
     int numChannels = upSampledBlock.getNumChannels();
 
+    #pragma omp parallel for
     for (int channel = 0; channel < numChannels; ++channel) {
         auto* data = upSampledBlock.getChannelPointer(channel);
 
@@ -93,6 +94,7 @@ void DistortionProcessor::processHardClipping(juce::dsp::AudioBlock<float>& upSa
     int numSamples = upSampledBlock.getNumSamples();
     int numChannels = upSampledBlock.getNumChannels();
 
+    #pragma omp parallel for
     for (int channel = 0; channel < numChannels; ++channel) {
         auto* data = upSampledBlock.getChannelPointer(channel);
 

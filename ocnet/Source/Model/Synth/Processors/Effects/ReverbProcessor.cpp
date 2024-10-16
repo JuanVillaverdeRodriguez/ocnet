@@ -73,7 +73,7 @@ void ReverbProcessor::processBlock(juce::AudioBuffer<float>& buffer)
     reverb.setParameters(maxDelayValue*delayValue, maxDecayValue*decayValue, maxMixValue*mixValue);
 
     splitChannels(buffer, 8);
-    reverb.process(buffer);
+    reverb.processBuffer(buffer);
     mixChannels(buffer, 2);
 
     auto* dataL = buffer.getWritePointer(0);

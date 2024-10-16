@@ -36,275 +36,266 @@ public:
 
 private:
     //===================================================================================
-	static float randomInRange(float low, float high) {
-		float unitRand = rand() / float(RAND_MAX);
-		return low + unitRand * (high - low);
-	}
+    static float randomInRange(float low, float high) {
+        static std::mt19937 rng{ std::random_device{}() };
+        std::uniform_real_distribution<float> dist(low, high);
+        return dist(rng);
+    }
 
-	template<int channels = 8>
-	struct MultiChannelMixedFeedback {
-		using Array = std::array<float, channels>;
-		float delayMs = 150;
-		float decayGain = 0.85;
+    template<int channels = 8>
+    struct MultiChannelMixedFeedback {
+        using Array = std::array<float, channels>;
+        float delayMs = 150.0f;
+        float decayGain = 0.85f;
 
-		std::array<int, channels> delaySamples;
-		std::array<DelaySignalSmith, channels> delays;
+        std::array<int, channels> delaySamples;
+        std::array<std::vector<float>, channels> delayBuffers;
+        std::array<int, channels> writeIndices;
 
-		void configure(float sampleRate) {
-			float delaySamplesBase = delayMs * 0.001 * sampleRate;
-			for (int c = 0; c < channels; ++c) {
-				float r = c * 1.0 / channels;
-				delaySamples[c] = std::pow(2, r) * delaySamplesBase;
-				delays[c].resize(delaySamples[c] + 1);
-				delays[c].reset();
-			}
-		}
+        void configure(float sampleRate) {
+            float delaySamplesBase = delayMs * 0.001f * sampleRate;
+            for (int c = 0; c < channels; ++c) {
+                float r = static_cast<float>(c) / channels;
+                delaySamples[c] = static_cast<int>(std::pow(2.0f, r) * delaySamplesBase);
 
-		void clear() {
-			delaySamples.fill(0.0f);
-		}
+                int bufferSize = delaySamples[c] + 1;
+                delayBuffers[c].resize(bufferSize, 0.0f);
+                writeIndices[c] = 0;
+            }
+        }
 
-		Array process(Array input) {
-			Array delayed;
-			for (int c = 0; c < channels; ++c) {
-				delayed[c] = delays[c].read(delaySamples[c]);
-			}
+        void clear() {
+            for (auto& buffer : delayBuffers) {
+                std::fill(buffer.begin(), buffer.end(), 0.0f);
+            }
+            writeIndices.fill(0);
+        }
 
-			// Mix using a Householder matrix
-			Array mixed = delayed;
-			signalsmith::mix::Householder<float, channels>::inPlace(mixed.data());
+        Array process(const Array& input) {
+            Array delayed;
+            Array mixed;
 
-			for (int c = 0; c < channels; ++c) {
-				float sum = input[c] + mixed[c] * decayGain;
-				delays[c].write(sum);
-			}
+            // Leer retrasos y mezclar en un solo bucle
+            for (int c = 0; c < channels; ++c) {
+                int bufferSize = static_cast<int>(delayBuffers[c].size());
+                int readIndex = writeIndices[c] - delaySamples[c];
+                if (readIndex < 0)
+                    readIndex += bufferSize;
 
-			return delayed;
-		}
+                delayed[c] = delayBuffers[c][readIndex];
+            }
 
-		void process(juce::AudioBuffer<float>& audioBuffer, int sample) {
-			Array delayed;
-			for (int c = 0; c < channels; ++c) {
-				delayed[c] = delays[c].read(delaySamples[c]);
-			}
+            // Mezcla usando una matriz de Householder
+            mixed = delayed;
+            signalsmith::mix::Householder<float, channels>::inPlace(mixed.data());
 
-			// Mix using a Householder matrix
-			Array mixed = delayed;
-			signalsmith::mix::Householder<float, channels>::inPlace(mixed.data());
+            // Escribir en buffers de delay y preparar salida
+            for (int c = 0; c < channels; ++c) {
+                float sum = input[c] + mixed[c] * decayGain;
+                delayBuffers[c][writeIndices[c]] = sum;
 
-			for (int c = 0; c < channels; ++c) {
-				float sum = audioBuffer.getReadPointer(c)[sample] + mixed[c] * decayGain;
-				delays[c].write(sum);
-			}
+                // Incrementar índice de escritura
+                writeIndices[c]++;
+                if (writeIndices[c] >= delayBuffers[c].size())
+                    writeIndices[c] = 0;
+            }
 
-			for (int c = 0; c < channels; ++c) {
-				delayed[c] = delays[c].read(delaySamples[c]);
-				audioBuffer.getWritePointer(c)[sample] = delayed[c];
-			}
+            return delayed;
+        }
 
-		}
-	};
+        void processBuffer(juce::AudioBuffer<float>& audioBuffer) {
+            const int numSamples = audioBuffer.getNumSamples();
 
+            for (int sample = 0; sample < numSamples; ++sample) {
+                Array input;
+                for (int c = 0; c < channels; ++c) {
+                    input[c] = audioBuffer.getReadPointer(c)[sample];
+                }
 
+                Array delayed = process(input);
 
+                for (int c = 0; c < channels; ++c) {
+                    audioBuffer.getWritePointer(c)[sample] = delayed[c];
+                }
+            }
+        }
+    };
 
-	template<int channels = 8>
-	struct DiffusionStep {
-		using Array = std::array<float, channels>;
-		float delayMsRange = 50;
+    template<int channels = 8>
+    struct DiffusionStep {
+        using Array = std::array<float, channels>;
+        float delayMsRange = 50.0f;
 
-		std::array<int, channels> delaySamples;
-		std::array<std::vector<float>, channels> delayBuffers;
-		std::array<int, channels> writeIndices;
-		std::array<bool, channels> flipPolarity;
+        std::array<int, channels> delaySamples;
+        std::array<std::vector<float>, channels> delayBuffers;
+        std::array<int, channels> writeIndices;
+        std::array<bool, channels> flipPolarity;
 
-		void configure(float sampleRate) {
-			float delaySamplesRange = delayMsRange * 0.001f * sampleRate;
-			for (int c = 0; c < channels; ++c) {
-				float rangeLow = delaySamplesRange * c / channels;
-				float rangeHigh = delaySamplesRange * (c + 1) / channels;
-				delaySamples[c] = static_cast<int>(randomInRange(rangeLow, rangeHigh));
+        void configure(float sampleRate) {
+            float delaySamplesRange = delayMsRange * 0.001f * sampleRate;
+            for (int c = 0; c < channels; ++c) {
+                float rangeLow = delaySamplesRange * c / channels;
+                float rangeHigh = delaySamplesRange * (c + 1) / channels;
+                delaySamples[c] = static_cast<int>(randomInRange(rangeLow, rangeHigh));
 
-				int bufferSize = delaySamples[c] + 1;
-				delayBuffers[c].resize(bufferSize, 0.0f);
-				writeIndices[c] = 0;
+                int bufferSize = delaySamples[c] + 1;
+                delayBuffers[c].resize(bufferSize, 0.0f);
+                writeIndices[c] = 0;
 
-				flipPolarity[c] = rand() % 2;
-			}
-		}
+                flipPolarity[c] = rand() % 2;
+            }
+        }
 
-		void clear() {
-			for (auto& buffer : delayBuffers) {
-				std::fill(buffer.begin(), buffer.end(), 0.0f);
-			}
-			writeIndices.fill(0);
-		}
+        void clear() {
+            for (auto& buffer : delayBuffers) {
+                std::fill(buffer.begin(), buffer.end(), 0.0f);
+            }
+            writeIndices.fill(0);
+        }
 
-		inline void applyPolarity(Array& mixed) const {
-			for (int c = 0; c < channels; ++c) {
-				if (flipPolarity[c]) mixed[c] *= -1;
-			}
-		}
+        inline void applyPolarity(Array& mixed) const {
+            for (int c = 0; c < channels; ++c) {
+                if (flipPolarity[c]) mixed[c] = -mixed[c];
+            }
+        }
 
-		void process(juce::AudioBuffer<float>& audioBuffer, int sample) {
-			Array delayed;
+        void processBuffer(juce::AudioBuffer<float>& audioBuffer) {
+            const int numSamples = audioBuffer.getNumSamples();
 
-			for (int c = 0; c < channels; ++c) {
-				// Escribe el valor en el buffer de delay
-				delayBuffers[c][writeIndices[c]] = audioBuffer.getReadPointer(c)[sample];
+            for (int sample = 0; sample < numSamples; ++sample) {
+                Array delayed;
 
-				// Calcula el índice de lectura
-				int bufferSize = static_cast<int>(delayBuffers[c].size());
-				int readIndex = writeIndices[c] - delaySamples[c];
-				if (readIndex < 0)
-					readIndex += bufferSize;
+                // Procesamiento por canal
+                for (int c = 0; c < channels; ++c) {
+                    // Escribe el valor en el buffer de delay
+                    delayBuffers[c][writeIndices[c]] = audioBuffer.getReadPointer(c)[sample];
 
-				// Lee el valor retrasado
-				delayed[c] = delayBuffers[c][readIndex];
+                    // Calcula el índice de lectura
+                    int bufferSize = static_cast<int>(delayBuffers[c].size());
+                    int readIndex = writeIndices[c] - delaySamples[c];
+                    if (readIndex < 0)
+                        readIndex += bufferSize;
 
-				// Actualiza el índice de escritura
-				//writeIndices[c] = (writeIndices[c] + 1) % bufferSize;
-				writeIndices[c]++;
-				if (writeIndices[c] >= bufferSize)
-					writeIndices[c] = 0;
-			}
+                    // Lee el valor retrasado
+                    delayed[c] = delayBuffers[c][readIndex];
 
-			// Mezcla Hadamard
-			Array mixed = delayed;
-			signalsmith::mix::Hadamard<float, channels>::inPlace(mixed.data());
+                    // Actualiza el índice de escritura
+                    writeIndices[c]++;
+                    if (writeIndices[c] >= bufferSize)
+                        writeIndices[c] = 0;
+                }
 
-			// Invierte polaridades si es necesario
-			applyPolarity(mixed);
+                // Mezcla Hadamard
+                Array mixed = delayed;
+                signalsmith::mix::Hadamard<float, channels>::inPlace(mixed.data());
 
-			for (int c = 0; c < channels; ++c) {
-				audioBuffer.getWritePointer(c)[sample] = mixed[c];
-			}
-		}
-	};
-	template<int channels = 8, int stepCount = 4>
-	struct DiffuserHalfLengths {
-		using Array = std::array<float, channels>;
+                // Invierte polaridades si es necesario
+                applyPolarity(mixed);
 
-		using Step = DiffusionStep<channels>;
-		std::array<Step, stepCount> steps;
+                // Escribe la salida
+                for (int c = 0; c < channels; ++c) {
+                    audioBuffer.getWritePointer(c)[sample] = mixed[c];
+                }
+            }
+        }
+    };
 
-		DiffuserHalfLengths(float diffusionMs) {
-			for (auto& step : steps) {
-				diffusionMs *= 0.5;
-				step.delayMsRange = diffusionMs;
-			}
-		}
+    template<int channels = 8, int stepCount = 4>
+    struct DiffuserHalfLengths {
+        using Array = std::array<float, channels>;
 
-		void setDiffusionValue(float diffusionMs) {
-			for (auto& step : steps) {
-				diffusionMs *= 0.5;
-				step.delayMsRange = diffusionMs;
-			}
-		}
+        using Step = DiffusionStep<channels>;
+        std::array<Step, stepCount> steps;
 
-		void clear() {
-			for (auto& step : steps) step.clear();
+        DiffuserHalfLengths(float diffusionMs) {
+            setDiffusionValue(diffusionMs);
+        }
 
-		}
+        void setDiffusionValue(float diffusionMs) {
+            float currentDiffusion = diffusionMs;
+            for (auto& step : steps) {
+                step.delayMsRange = currentDiffusion;
+                currentDiffusion *= 0.5f;
+            }
+        }
 
-		void configure(float sampleRate) {
-			for (auto& step : steps) step.configure(sampleRate);
-		}
+        void clear() {
+            for (auto& step : steps)
+                step.clear();
+        }
 
-		Array process(Array samples) {
-			for (auto& step : steps) {
-				samples = step.process(samples);
-			}
-			return samples;
-		}
+        void configure(float sampleRate) {
+            for (auto& step : steps)
+                step.configure(sampleRate);
+        }
 
-		void process(juce::AudioBuffer<float>& audioBuffer, int sample) {
-			for (auto& step : steps) {
-				step.process(audioBuffer, sample);
-			}
+        void processBuffer(juce::AudioBuffer<float>& audioBuffer) {
+            for (auto& step : steps) {
+                step.processBuffer(audioBuffer);
+            }
+        }
+    };
 
-		}
-	};
+    template<int channels = 8, int diffusionSteps = 4>
+    struct BasicReverb {
+        using Array = std::array<float, channels>;
 
-	template<int channels = 8, int diffusionSteps = 4>
-	struct BasicReverb {
-		using Array = std::array<float, channels>;
+        MultiChannelMixedFeedback<channels> feedback;
+        DiffuserHalfLengths<channels, diffusionSteps> diffuser;
+        float dry = 0.0f;
+        float wet = 1.0f;
 
-		MultiChannelMixedFeedback<channels> feedback;
-		DiffuserHalfLengths<channels, diffusionSteps> diffuser;
-		float dry, wet;
+        BasicReverb(float roomSizeMs, float rt60, float dryMix = 0.0f, float wetMix = 1.0f)
+            : diffuser(roomSizeMs), dry(dryMix), wet(wetMix) {
+            setParameters(roomSizeMs, rt60, wetMix);
+        }
 
-		BasicReverb(float roomSizeMs, float rt60, float dry = 0, float wet = 1) : diffuser(roomSizeMs), dry(dry), wet(wet) {
-			feedback.delayMs = roomSizeMs;
+        void configure(float sampleRate) {
+            feedback.configure(sampleRate);
+            diffuser.configure(sampleRate);
+        }
 
-			// How long does our signal take to go around the feedback loop?
-			float typicalLoopMs = roomSizeMs * 1.5;
-			// How many times will it do that during our RT60 period?
-			float loopsPerRt60 = rt60 / (typicalLoopMs * 0.001);
-			// This tells us how many dB to reduce per loop
-			float dbPerCycle = -60 / loopsPerRt60;
+        void setParameters(float delay, float decay, float mix) {
+            dry = 1.0f - mix;
+            wet = mix;
 
-			feedback.decayGain = std::pow(10, dbPerCycle * 0.05);
+            feedback.delayMs = delay;
 
-		}
+            // Cálculo de ganancia de decaimiento
+            float typicalLoopMs = delay * 1.5f;
+            float loopsPerRt60 = decay / (typicalLoopMs * 0.001f);
+            float dbPerCycle = -60.0f / loopsPerRt60;
 
-		void configure(float sampleRate) {
-			feedback.configure(sampleRate);
-			diffuser.configure(sampleRate);
-		}
+            feedback.decayGain = std::pow(10.0f, dbPerCycle * 0.05f);
+        }
 
-		void setParameters(float delay, float decay, float mix) {
-			dry = 1 - mix;
-			wet = mix;
+        void clear() {
+            feedback.clear();
+            diffuser.clear();
+        }
 
-			//diffuser.setDiffusionValue(delay);
-			feedback.delayMs = delay;
+        void processBuffer(juce::AudioBuffer<float>& audioBuffer) {
+            const int numSamples = audioBuffer.getNumSamples();
+            juce::AudioBuffer<float> inputBuffer;
+            inputBuffer.makeCopyOf(audioBuffer);
 
-			// How long does our signal take to go around the feedback loop?
-			float typicalLoopMs = delay * 1.5;
-			// How many times will it do that during our RT60 period?
-			float loopsPerRt60 = decay / (typicalLoopMs * 0.001);
-			// This tells us how many dB to reduce per loop
-			float dbPerCycle = -60 / loopsPerRt60;
+            // Procesar difusión
+            diffuser.processBuffer(audioBuffer);
 
-			feedback.decayGain = std::pow(10, dbPerCycle * 0.05);
-		}
+            // Procesar feedback
+            feedback.processBuffer(audioBuffer);
 
-		// Cuidado: Despues de llamar a este metodo, llamar a configure() de nuevo
-		// Llena de 0s todos los buffers
-		void clear() {
-			feedback.clear();
-			diffuser.clear();
-		}
+            // Mezcla Dry/Wet
+            for (int c = 0; c < channels; ++c) {
+                float* writePtr = audioBuffer.getWritePointer(c);
+                const float* readPtr = inputBuffer.getReadPointer(c);
 
-		Array process(Array input, int numSamples) {
-			Array diffuse = diffuser.process(input);
-			Array longLasting = feedback.process(diffuse);
-			Array output;
-			for (int c = 0; c < channels; ++c) {
-				output[c] = dry * input[c] + wet * longLasting[c];
-			}
-			return output;
-		}
-
-		void process(juce::AudioBuffer<float>& audioBuffer) {
-			juce::AudioBuffer<float> inputAudioBuffer;
-			inputAudioBuffer.makeCopyOf(audioBuffer);
-
-			const int numChannels = audioBuffer.getNumChannels();
-			const int numSamples = audioBuffer.getNumSamples();
-
-			for (int sample = 0; sample < numSamples; sample++) {
-				diffuser.process(audioBuffer, sample);
-				feedback.process(audioBuffer, sample);
-				Array output;
-				for (int c = 0; c < channels; ++c) {
-					audioBuffer.getWritePointer(c)[sample] = dry * inputAudioBuffer.getReadPointer(c)[sample] + wet * audioBuffer.getReadPointer(c)[sample];
-				}
-			}
-
-		}
-	};
+                for (int sample = 0; sample < numSamples; ++sample) {
+                    writePtr[sample] = dry * readPtr[sample] + wet * writePtr[sample];
+                }
+            }
+        }
+    };
     //===================================================================================
 
 	BasicReverb<8, 4> reverb;

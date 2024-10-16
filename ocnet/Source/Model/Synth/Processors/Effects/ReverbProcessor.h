@@ -76,7 +76,6 @@ private:
             Array delayed;
             Array mixed;
 
-            #pragma omp parallel  // Crear un bloque de paralelización persistente
             #pragma omp for
             for (int c = 0; c < channels; ++c) { // Leer retrasos y mezclar en un solo bucle
                 int bufferSize = static_cast<int>(delayBuffers[c].size());
@@ -109,9 +108,11 @@ private:
         void processBuffer(juce::AudioBuffer<float>& audioBuffer) {
             const int numSamples = audioBuffer.getNumSamples();
 
+            #pragma omp parallel  // Crear un bloque de paralelización persistente
             for (int sample = 0; sample < numSamples; ++sample) {
                 Array input;
 
+                #pragma omp for
                 for (int c = 0; c < channels; c+=2) {
                     input[c] = audioBuffer.getReadPointer(c)[sample];
                     input[c+1] = audioBuffer.getReadPointer(c+1)[sample];
@@ -119,6 +120,7 @@ private:
 
                 Array delayed = process(input);
 
+                #pragma omp for
                 for (int c = 0; c < channels; c+=2) {
                     audioBuffer.getWritePointer(c)[sample] = delayed[c];
                     audioBuffer.getWritePointer(c+1)[sample] = delayed[c+1];

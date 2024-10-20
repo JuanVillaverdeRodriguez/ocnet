@@ -63,28 +63,6 @@ void ProcessorHandler::processBlock(juce::AudioBuffer<float>& outputBuffer)
     }
 
     mainEnvelope->processBlock(outputBuffer);
-
-    // Procesar efectos
-    for (auto& processor : effectsProcessorsList) {
-        if (!processor->isBypassed()) {
-            processor->processBlock(outputBuffer);
-        }
-    }
-
-    int numSamples = outputBuffer.getNumSamples();
-    int numChannels = outputBuffer.getNumChannels();
-
-    // Aplicar el envelope principal
-
-    /*for (int channel = 0; channel < numChannels; ++channel) {
-        auto* buffer = outputBuffer.getWritePointer(channel);
-        for (int sample = 0; sample < numSamples; ++sample) {
-            buffer[sample] *= mainEnvelope->getNextSample(sample);
-        }
-    }*/
-
-    
-
 }
 
 void ProcessorHandler::startNote(int midiNoteNumber, float velocity, juce::SynthesiserSound* sound, int currentPitchWheelPosition)
@@ -98,11 +76,6 @@ void ProcessorHandler::startNote(int midiNoteNumber, float velocity, juce::Synth
     for (auto& processor : modulatorProcessorsList) {
         processor->startNote(midiNoteNumber, velocity, sound, currentPitchWheelPosition);
     }
-
-    for (auto& processor : effectsProcessorsList) {
-        processor->startNote(midiNoteNumber, velocity, sound, currentPitchWheelPosition);
-    }
-
 }
 
 void ProcessorHandler::stopNote(float velocity, bool allowTailOff)
@@ -116,11 +89,6 @@ void ProcessorHandler::stopNote(float velocity, bool allowTailOff)
     for (auto& processor : modulatorProcessorsList) {
         processor->stopNote(velocity, allowTailOff);
     }
-
-    for (auto& processor : effectsProcessorsList) {
-        processor->stopNote(velocity, allowTailOff);
-    }
-
 }
 
 bool ProcessorHandler::canClearNote()
@@ -140,10 +108,6 @@ void ProcessorHandler::prepareToPlay(juce::dsp::ProcessSpec spec)
         processor->prepareToPlay(spec);
     }
 
-    for (auto& processor : effectsProcessorsList) {
-        processor->prepareToPlay(spec);
-    }
-
 }
 
 void ProcessorHandler::updateParameterValues()
@@ -158,9 +122,6 @@ void ProcessorHandler::updateParameterValues()
         processor->updateParameterValues();
     }
 
-    for (auto& processor : effectsProcessorsList) {
-        processor->updateParameterValues();
-    }
 }
 void ProcessorHandler::connectModulation(const ParameterHandler& parameterHandler, int processorModulatorID, std::shared_ptr<SliderParameter> parameter, const juce::String& parameterID) {
     DBG("ProcessorHandler::connectModulation(int processorModulatorID, std::shared_ptr<Parameter2> parameter)");
@@ -187,10 +148,6 @@ void ProcessorHandler::setVoiceNumberId(int id)
     }
 
     for (auto& processor : oscillatorsProcessorsList) {
-        processor->setVoiceNumberId(id);
-    }
-
-    for (auto& processor : effectsProcessorsList) {
         processor->setVoiceNumberId(id);
     }
 }
@@ -239,53 +196,16 @@ void ProcessorHandler::deleteProcessor(int processorID)
         ),
         oscillatorsProcessorsList.end()
     );
-
-    // Buscar el processor dentro del vector de efectos
-    effectsProcessorsList.erase(
-        std::remove_if(effectsProcessorsList.begin(), effectsProcessorsList.end(),
-            [&processorID](const std::unique_ptr<Effector>& effector) {
-                return effector->getId() == processorID;
-            }
-        ),
-        effectsProcessorsList.end()
-    );
 }
 
 void ProcessorHandler::moveProcessor(int processorID, int positions)
 {
-    // Encontrar la posicion en la lista
-    int initIndex = Utils::findElementPositionByID(effectsProcessorsList, processorID);
 
-    // Mueve el elemento
-    Utils::moveElement(effectsProcessorsList, initIndex, positions);
 }
 
 void ProcessorHandler::addEffect(int processorType, int id, const ParameterHandler& parameterHandler)
 {
-    switch (processorType)
-    {
-        case Filter:
-            effectsProcessorsList.push_back(std::make_unique<FilterProcessor>(id));
-            break;
 
-        case Distortion:
-            effectsProcessorsList.push_back(std::make_unique<DistortionProcessor>(id));
-            break;
-
-        case Reverb:
-            effectsProcessorsList.push_back(std::make_unique<ReverbProcessor>(id));
-            break;
-
-        case Equalizer:
-            effectsProcessorsList.push_back(std::make_unique<EqualizerProcessor>(id));
-            break;
-
-        default:
-            return;
-    }
-
-    effectsProcessorsList.back()->setVoiceNumberId(voiceId);
-    effectsProcessorsList.back()->syncParams(parameterHandler);
 }
 
 void ProcessorHandler::addOscillator(int processorType, int id, const ParameterHandler& parameterHandler)
@@ -342,14 +262,7 @@ void ProcessorHandler::addModulator(int processorType, int id, const ParameterHa
 void ProcessorHandler::setBypassed(int id, bool bypassed)
 {
     std::unique_ptr<Processor>* oscillator = nullptr;
-    std::unique_ptr<Effector>* effector = nullptr;
     std::unique_ptr<Modulator>* modulator = nullptr;
-
-    effector = Utils::findElementByID(effectsProcessorsList, id);
-    if (effector) {
-        effector->get()->setBypassed(bypassed);
-        return;
-    }
 
     oscillator = Utils::findElementByID(oscillatorsProcessorsList, id);
     if (oscillator) {
@@ -409,12 +322,6 @@ juce::Array<float> ProcessorHandler::getSamplerSampleSamples(int samplerID)
 
 bool ProcessorHandler::reverbIsActive()
 {
-    for (auto& effect : effectsProcessorsList) {    
-        if (auto reverb = dynamic_cast<ReverbProcessor*>(effect.get())) {
-            if (reverb->isActive())
-                return true;
-        }
-    }
     return false;
 }
 

@@ -18,6 +18,7 @@ Modulator::Modulator()
 void Modulator::updateModulationValue() {
     for (auto& modulation : modulationsVector) {
         modulation->updateModulationBuffer(modulationBuffer, getVoiceNumberId());
+        modulation->updateModulationBuffer(modulationBuffer, 8);
     }
     modulationBuffer.clearQuick();
 }

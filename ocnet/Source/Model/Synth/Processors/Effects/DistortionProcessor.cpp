@@ -10,7 +10,7 @@
 
 #include "DistortionProcessor.h"
 
-DistortionProcessor::DistortionProcessor(int id) : oversampler(2, 2, juce::dsp::Oversampling<float>::FilterType::filterHalfBandPolyphaseIIR, true)
+DistortionProcessor::DistortionProcessor(int id) : oversampler(2, 4, juce::dsp::Oversampling<float>::FilterType::filterHalfBandPolyphaseIIR, true)
 {
     setId(id);
 }
@@ -30,8 +30,7 @@ void DistortionProcessor::stopNote(float velocity, bool allowTailOff)
 void DistortionProcessor::updateParameterValues()
 {
     driveValue = driveParameter->getValue();
-    driveModulationBuffer = driveParameter->getModulationBuffer(getVoiceNumberId());
-
+    driveModulationBuffer = driveParameter->getModulationBuffer(8);
     distortionTypeChoice = distortionTypeParameter->getCurrentIndex();
 }
 

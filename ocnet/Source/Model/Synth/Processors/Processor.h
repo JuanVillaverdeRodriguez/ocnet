@@ -28,7 +28,6 @@ public:
     virtual void setFmFrom(std::unique_ptr<Processor>* modulator) {};
     virtual float getNextFMValue() { return 0.0f; };
 
-
     void setVoiceNumberId(int id) { voiceId = id; }
     int getVoiceNumberId() { return voiceId; }
 
@@ -40,6 +39,7 @@ public:
     virtual float getCurrentFreq() { return 0.0f; }
 
     virtual void loadAudioFile(const juce::String& filename) {};
+
 private:
     int voiceId;
     int id;

@@ -68,7 +68,6 @@ private:
 
     std::vector<std::unique_ptr<Processor>> oscillatorsProcessorsList;
     std::vector<std::unique_ptr<Modulator>> modulatorProcessorsList;
-    std::vector<std::unique_ptr<Effector>> effectsProcessorsList;;
 
     std::unique_ptr<EnvelopeProcessor> mainEnvelope;
 

@@ -26,7 +26,6 @@ public:
 
     void moveProcessor(int id, int positions);
 
-    void addEffect(int processorID, int id);
     void addOscillator(int processorID, int id);
     void addModulator(int processorID, int id, int subID = -1);
 
@@ -60,7 +59,13 @@ public:
     ProcessorInfo processorInfo;
 
 
+protected:
+    virtual void deleteEffect(int processorID) = 0 {};
+    virtual void moveEffect(int id, int positions) = 0 {};
+    virtual void bypassEffect(int id, bool bypassed) = 0 {};
 private:
+    std::vector<std::unique_ptr<Effector>> effectsProcessorsList;
+
     bool shouldStealNotes;
     juce::Array<int> notesThatDidntEnd;
     mutable juce::CriticalSection stealLock;

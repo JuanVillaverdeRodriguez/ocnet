@@ -38,6 +38,6 @@ private:
     juce::Identifier parameterIdentifier;
     juce::ValueTree tree;
 
-    juce::Array<float> modulations[8];
+    juce::Array<float> modulations[9]; // 8 voces + 1 para los efectos...
 
 };

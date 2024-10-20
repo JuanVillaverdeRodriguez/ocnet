@@ -126,7 +126,6 @@ void SynthVoice::addEffect(int processorType, int id)
 {
     processorhHandler.addEffect(processorType, id, *parameterHandler);
     processorhHandler.prepareToPlay(spec);
-
 }
 
 void SynthVoice::addOscillator(int processorType, int id)

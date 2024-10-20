@@ -9,6 +9,8 @@
 #include "PluginProcessor.h"
 #include "../Controller/PluginEditor.h"
 #include <windows.h>
+#include "Synth/Processors/Effects/FilterProcessor.h"
+#include "Synth/Processors/Effects/EqualizerProcessor.h"
 
 //==============================================================================
 
@@ -21,7 +23,7 @@ OcnetAudioProcessor::OcnetAudioProcessor()
                       #endif
                        .withOutput ("Output", juce::AudioChannelSet::stereo(), true)
                      #endif
-                       ), paramsSynced(false)
+                       ), paramsSynced(false), allowProcessBlock(true)
 #endif
 {
 
@@ -106,6 +108,10 @@ void OcnetAudioProcessor::changeProgramName (int index, const juce::String& newN
 //==============================================================================
 void OcnetAudioProcessor::prepareToPlay (double sampleRate, int samplesPerBlock)
 {
+    procesSpec.maximumBlockSize = samplesPerBlock;
+    procesSpec.numChannels = 2;
+    procesSpec.sampleRate = sampleRate;
+
     processorInfo.hostInfo.prepare(sampleRate, samplesPerBlock);
 
     setCurrentPlaybackSampleRate(sampleRate);
@@ -163,6 +169,7 @@ void OcnetAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juce::
     auto totalNumInputChannels = getTotalNumInputChannels();
     auto totalNumOutputChannels = getTotalNumOutputChannels();
 
+
     // Limpiar el buffer
     for (auto i = totalNumInputChannels; i < totalNumOutputChannels; ++i)
         buffer.clear(i, 0, buffer.getNumSamples());
@@ -172,9 +179,44 @@ void OcnetAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juce::
 
     processorInfo.hostInfo.process(getPlayHead(), buffer.getNumSamples());
 
-    // Procesar el bloque en cada voz
-    renderNextBlock(buffer, midiMessages,  0, buffer.getNumSamples());
+    renderNextBlock(buffer, midiMessages,  0, buffer.getNumSamples()); // Procesar voces (moduladores y osciladores)
 
+    updateEffectsParameters();
+    processEffects(buffer); // Aplicar efectos
+
+}
+
+void OcnetAudioProcessor::deleteEffect(int processorID)
+{
+    // Buscar el processor dentro del vector de efectos
+    effectsProcessorsList.erase(
+        std::remove_if(effectsProcessorsList.begin(), effectsProcessorsList.end(),
+            [&processorID](const std::unique_ptr<Effector>& effector) {
+                return effector->getId() == processorID;
+            }
+        ),
+        effectsProcessorsList.end()
+    );
+}
+
+void OcnetAudioProcessor::moveEffect(int id, int positions)
+{
+    // Encontrar la posicion en la lista
+    int initIndex = Utils::findElementPositionByID(effectsProcessorsList, id);
+
+    // Mueve el elemento
+    Utils::moveElement(effectsProcessorsList, initIndex, positions);
+}
+
+void OcnetAudioProcessor::bypassEffect(int id, bool bypassed)
+{
+    std::unique_ptr<Effector>* effector = nullptr;
+
+    effector = Utils::findElementByID(effectsProcessorsList, id);
+    if (effector) {
+        effector->get()->setBypassed(bypassed);
+        return;
+    }
 }
 
 //==============================================================================
@@ -248,6 +290,56 @@ void OcnetAudioProcessor::syncSynthParameters()
     legatoParameter = parameterHandler.syncWithButtonParam("Synth_-1_legato");
 }
 
+void OcnetAudioProcessor::processEffects(juce::AudioBuffer<float>& buffer)
+{
+    for (auto& processor : effectsProcessorsList) {
+        if (!processor->isBypassed()) {
+            processor->processBlock(buffer);
+        }
+    }
+}
+
+void OcnetAudioProcessor::updateEffectsParameters()
+{
+    for (auto& processor : effectsProcessorsList) {
+        processor->updateParameterValues();
+    }
+}
+
+void OcnetAudioProcessor::addEffect(int processorType, int id)
+{
+    std::unique_ptr<Effector> newEffect;
+
+    switch (processorType)
+    {
+    case Filter:
+        newEffect = std::make_unique<FilterProcessor>(id);
+        break;
+
+    case Distortion:
+        newEffect = std::make_unique<DistortionProcessor>(id);
+        break;
+
+    case Reverb:
+        newEffect = std::make_unique<ReverbProcessor>(id);
+        break;
+
+    case Equalizer:
+        newEffect = std::make_unique<EqualizerProcessor>(id);
+        break;
+
+    default:
+        return;
+    }
+
+    // Configurar antes de añadir a la lista
+    newEffect->setVoiceNumberId(8); // Los efectos usan una voz reservada monofonica
+    newEffect->syncParams(parameterHandler);
+    newEffect->prepareToPlay(procesSpec);
+
+    // Añadir el efecto una vez este preparado
+    effectsProcessorsList.push_back(std::move(newEffect));
+}
 //==============================================================================
 // This creates new instances of the plugin..
 juce::AudioProcessor* JUCE_CALLTYPE createPluginFilter()

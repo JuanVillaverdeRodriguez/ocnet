@@ -36,6 +36,8 @@ public:
 
     void processBlock (juce::AudioBuffer<float>&, juce::MidiBuffer&) override;
 
+
+
     //==============================================================================
     juce::AudioProcessorEditor* createEditor() override;
     bool hasEditor() const override;
@@ -69,12 +71,20 @@ public:
 
     void updateSynthParameters();
     void syncSynthParameters();
-
-    //juce::AudioProcessorValueTreeState apvts;
-
-
+    void addEffect(int processorType, int id);
+protected:
+    void deleteEffect(int processorID) override;
+    void moveEffect(int id, int positions) override;
+    void bypassEffect(int id, bool bypassed) override;
 private:
     //==============================================================================
+    void processEffects(juce::AudioBuffer<float>& buffer);
+    juce::dsp::ProcessSpec procesSpec;
+
+    void updateEffectsParameters();
+    bool allowProcessBlock;
+    std::vector<std::unique_ptr<Effector>> effectsProcessorsList;
+
     int numVoices = 8;
     std::shared_ptr<SliderParameter> glideParameter;
     std::shared_ptr<SliderParameter> numVoicesParameter;

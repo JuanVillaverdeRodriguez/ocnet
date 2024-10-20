@@ -34,6 +34,8 @@ void OcnetSynthesiser::deleteProcessor(int processorID)
             voice->deleteProcessor(processorID);
         }
     }
+
+    deleteEffect(processorID);
 }
 
 void OcnetSynthesiser::moveProcessor(int id, int positions)
@@ -43,16 +45,8 @@ void OcnetSynthesiser::moveProcessor(int id, int positions)
             voice->moveProcessor(id, positions);
         }
     }
-}
 
-void OcnetSynthesiser::addEffect(int processorID, int id)
-{
-    for (int i = 0; i < getNumVoices(); i++) {
-        if (auto voice = dynamic_cast<SynthVoice*>(getVoice(i))) {
-
-            voice->addEffect(processorID, id);
-        }
-    }
+    moveEffect(id, positions);
 }
 
 void OcnetSynthesiser::addOscillator(int processorID, int id)
@@ -83,6 +77,8 @@ void OcnetSynthesiser::setBypassed(int id, bool bypassed)
             voice->setBypassed(id, bypassed);
         }
     }
+
+    bypassEffect(id, bypassed);
 }
 
 void OcnetSynthesiser::removeModulation(const juce::String& modulationID)
@@ -331,3 +327,4 @@ void OcnetSynthesiser::noteOn(const int midiChannel, const int midiNoteNumber, c
         }
     }
 }
+

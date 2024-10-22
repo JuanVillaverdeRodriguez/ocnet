@@ -16,6 +16,7 @@
 #include <random>
 #include <immintrin.h> // Header para operaciones SSE
 #include "../../../ProcessorInfo.h"
+#include "../../../../Values/FloatValue.h"
 
 #define M_PI 3.14159265358979323846
 
@@ -73,23 +74,9 @@ private:
     float currentFMIndex;
     float fmMod;
 
-    int unisonVoices;
-    juce::Array<float> unisonVoicesModulationBuffer;
-
-    float unisonDetune;
-    juce::Array<float> unisonDetuneModulationBuffer;
-
-    float fmAmount;
-    juce::Array<float> fmAmountModulationBuffer;
-
-    int transpose;
-    juce::Array<float> transposeModulationBuffer;
-
     float unisonSpread;
 
-    //juce::Array<std::vector<float>> unisonVoiceCurrentIndexArray; // Cambiado a std::vector<float>
     juce::Array<float*> unisonVoiceCurrentIndexArray;
-
     juce::Array<float> unisonDetuneArray; // Guarda el incremento en vez de la frecuenia
     juce::Array<float> unisonSpreadArrayL;
     juce::Array<float> unisonSpreadArrayR;
@@ -101,9 +88,6 @@ private:
     float currentFrequency;
 
     std::unique_ptr<Processor>* fmModulatorOsc;
-
-    int waveTypeIndexChoice;
-    int fmFromIndexChoice;
 
     bool isPrepared;
     float sampleRate = 0.0f;
@@ -117,33 +101,39 @@ private:
 
     juce::dsp::Gain<float> gain;
 
-    std::vector<WavetableStruct>* tables;
+    // Tables
+    std::vector<WavetableStruct>* tables; // Pointer to current tableStruct
     std::vector<WavetableStruct> sawWaveTables;
     std::vector<WavetableStruct> squareWaveTables;
     std::vector<WavetableStruct> sineWaveTables;
 
+    // Random
+    std::random_device rd;
+    std::mt19937 gen;
+    std::uniform_real_distribution<> phaseRandomnes;
+
+    // Parameters
     std::shared_ptr<SliderParameter> gainParameter;
     std::shared_ptr<SliderParameter> panningParameter;
     std::shared_ptr<SliderParameter> fmAmountParameter;
     std::shared_ptr<SliderParameter> unisonNumVoicesParameter;
     std::shared_ptr<SliderParameter> unisonDetuneParameter;
     std::shared_ptr<SliderParameter> transposeParameter;
-
     std::shared_ptr<ComboBoxParameter> waveTypeParameter;
     std::shared_ptr<ComboBoxParameter> fmFromParameter;
 
-    float oscGain;
-    juce::Array<float> oscGainModulationBuffer;
+    // Values
+    juce::LinearSmoothedValue<float> gainValue;
+    juce::LinearSmoothedValue<float> panValue;
+    juce::LinearSmoothedValue<float> fmAmountValue;
+    juce::LinearSmoothedValue<float> detuneValue;
+    int unisonVoices;
+    int transpose;
+    int waveTypeIndexChoice;
+    int fmFromIndexChoice;
 
-    float panning;
-    juce::Array<float> panningModulationBuffer;
+    juce::LinearSmoothedValue<float> fmValue;
 
-    std::random_device rd;
-    std::mt19937 gen;
-    std::uniform_real_distribution<> phaseRandomnes;
-
-    float currentFrequency2NotesDown;
-    float currentFrequency2NotesUp;
 
     float getUnisonDeltaFromFrequency(float frequency, float sampleRate);
     float freqRelativeTo(float relativeFreq, float notes, bool cents);

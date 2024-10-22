@@ -54,7 +54,7 @@ public:
             }
         }
         else {
-            if (initIndex == listSize - 1) // El último elemento no se puede mover más para adelante
+            if (initIndex == listSize - 1) // El Ãºltimo elemento no se puede mover mÃ¡s para adelante
                 return;
 
             std::rotate(elementsVector.begin() + (initIndex), elementsVector.begin() + (initIndex + 1), elementsVector.begin() + ((initIndex + 1) + positions));

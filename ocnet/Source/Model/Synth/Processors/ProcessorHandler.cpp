@@ -18,29 +18,6 @@
 #include "Modulators/MacroProcessor.h"
 #include "Modulators/RandomizerProcessor.h"
 
-// Porque usar lista en vez de vector:
-
-// Añadir un elemento es O(1)
-// Eliminarlo es O(n), pero tampoco vamos a tener miles de objetos en la lista
-// Podria ser O(1) si el id de cada processor coincidiese con la posicion
-// No hace falta acceso aleatorio a los elementos (se va a recorrer siempre)
-
-// Porque en parameterHandler tenemos:?
-// Envelopes
-//  0
-//  1
-//  2
-// LFOs
-//  0
-//  1
-//  2
-// Oscillators
-//  0
-//  1
-//  2
-// Porque es mas rapido obtener los parametros (se hace todo el rato)
-// Problema: Complica el ProcessorHandler
-
 using namespace Ocnet;
 
 ProcessorHandler::ProcessorHandler(const ParameterHandler& parameterHandler, ProcessorInfo& processorInfo) : processorInfo(processorInfo)

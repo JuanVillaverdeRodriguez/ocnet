@@ -6,6 +6,10 @@
               pluginVSTCategory="kPlugCategSynth" pluginCharacteristicsValue="pluginIsSynth,pluginWantsMidiIn">
   <MAINGROUP id="Fay8LI" name="ocnet">
     <GROUP id="{B897E036-BD65-2195-C049-E6C429F0FF25}" name="Source">
+      <GROUP id="{B8C0DE9E-DB65-7974-96D1-71C2A9CB4ACA}" name="Values">
+        <FILE id="EHKnJY" name="FloatValue.cpp" compile="1" resource="0" file="Source/Values/FloatValue.cpp"/>
+        <FILE id="w4tdeF" name="FloatValue.h" compile="0" resource="0" file="Source/Values/FloatValue.h"/>
+      </GROUP>
       <GROUP id="{A0E28663-79D9-65D2-F937-87D0CF28AB86}" name="Libraries">
         <GROUP id="{391D3F7C-2F66-E8D7-9037-0E984F93F6F8}" name="SignalSmithLibrary">
           <GROUP id="{AB3C3E0D-874B-FF00-FBEF-67FAB4880F40}" name="dsp">

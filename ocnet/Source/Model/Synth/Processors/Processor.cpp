@@ -17,8 +17,6 @@ Processor::Processor()
     bypassed = false;
 }
 
-
-
 void Processor::setBypassed(bool bypassed)
 {
     this->bypassed = bypassed;

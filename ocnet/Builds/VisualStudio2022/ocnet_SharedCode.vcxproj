@@ -139,6 +139,7 @@
     </Bscmake>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\Source\Values\FloatValue.cpp"/>
     <ClCompile Include="..\..\Source\Controller\OcnetGUI_interface.cpp"/>
     <ClCompile Include="..\..\Source\Controller\PluginEditor.cpp"/>
     <ClCompile Include="..\..\Source\View\OcnetGUI.cpp"/>
@@ -2916,6 +2917,7 @@
     <ClCompile Include="..\..\JuceLibraryCode\include_juce_osc.cpp"/>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\Source\Values\FloatValue.h"/>
     <ClInclude Include="..\..\Source\Libraries\SignalSmithLibrary\dsp\common.h"/>
     <ClInclude Include="..\..\Source\Libraries\SignalSmithLibrary\dsp\curves.h"/>
     <ClInclude Include="..\..\Source\Libraries\SignalSmithLibrary\dsp\delay.h"/>

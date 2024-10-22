@@ -11,7 +11,7 @@
 #include "SliderParameter.h"
 #include "Modulation.h"
 
-SliderParameter::SliderParameter(const juce::String& parameterID) : parameterID(parameterID), value(0.0f)
+SliderParameter::SliderParameter(const juce::String& parameterID) : parameterID(parameterID), value(0.0f), arraySize(0)
 {
     //auto [type, ownerID, parameterTag] = Utils::splitParameterID(parameterID);
     parameterIdentifier = juce::Identifier(parameterID);
@@ -46,10 +46,12 @@ juce::Array<float> SliderParameter::getModulationBuffer(int voice)
 // Permitiria hacer mas de un get en cada audioBuffer para el mismo parametro
 void SliderParameter::setModulationBuffer(juce::Array<float> newModulationBuffer, int voice)
 {
-    int arraySize = newModulationBuffer.size();
+    arraySize = newModulationBuffer.size();
 
+    //float newModulationValue = 0.0f;
     for (int i = 0; i < arraySize; i++) {
-        modulations[voice].set(i, modulations[voice][i] + newModulationBuffer[i]);
+        //newModulationValue = juce::jlimit(0.0f, 1.0f, modulations[voice][i] + newModulationBuffer[i]);
+        modulations[voice].set(i, newModulationBuffer[i]);
     }
 }
 
@@ -66,4 +68,9 @@ void SliderParameter::addTreeListener(juce::ValueTree tree)
 
 void SliderParameter::valueTreePropertyChanged(juce::ValueTree& treeWhosePropertyHasChanged, const juce::Identifier& property)
 {
+}
+
+float SliderParameter::getModulatedValue(int voice, float min, float max)
+{
+    return juce::jlimit(min, max, (modulations[voice][arraySize-1] * max) + value );
 }

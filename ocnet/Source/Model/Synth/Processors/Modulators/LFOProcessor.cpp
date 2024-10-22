@@ -11,7 +11,7 @@
 #include "LFOProcessor.h"
 
 LFOProcessor::LFOProcessor(int id, ProcessorInfo& processorInfo)
-    : frequency(1.0f), phase(0.0f), sampleRate(44100.0f), phaseIncrement(0.0f), maxFreq(32), syncWithTempo(true), processorInfo(processorInfo)
+    : frequency(1.0f), phase(0.0f), sampleRate(44100.0f), maxFreq(32), syncWithTempo(true), processorInfo(processorInfo)
 {
     setId(id);
 }
@@ -33,7 +33,7 @@ float LFOProcessor::getNextSample(int sample)
     }
     else {
         value = std::sin(phase);
-        phase += phaseIncrement;
+        phase += phaseValue.getNextValue(); 
         if (phase >= juce::MathConstants<float>::twoPi)
             phase -= juce::MathConstants<float>::twoPi;
     }
@@ -54,20 +54,19 @@ void LFOProcessor::stopNote(float velocity, bool allowTailOff)
 
 void LFOProcessor::updateParameterValues()
 {
-    float newFreq = freqParameter->getValue();
+    float newFreq = freqParameter->getModulatedValue(getVoiceNumberId());
     if (newFreq != frequency) {
         frequency = newFreq;
         updateFrequency();
     }
 
     selectedRate = tempoComboBoxParameter->getCurrentIndex();
-
-    freqModulationBuffer = freqParameter->getModulationBuffer(getVoiceNumberId());
 }
 
 void LFOProcessor::prepareToPlay(juce::dsp::ProcessSpec spec)
 {
     sampleRate = spec.sampleRate;
+    phaseValue.reset(sampleRate, 0.0005);   
     updateFrequency();
 }
 
@@ -109,5 +108,5 @@ float LFOProcessor::getNoteDivisionPPQ()
 }
 
 inline void LFOProcessor::updateFrequency() {
-    phaseIncrement = juce::MathConstants<float>::twoPi * frequency / sampleRate;
+    phaseValue.setTargetValue(juce::MathConstants<float>::twoPi * frequency / sampleRate);
 }

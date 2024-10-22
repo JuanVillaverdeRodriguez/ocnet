@@ -31,20 +31,17 @@ public:
 
     void processBlock(juce::AudioBuffer<float>& buffer) override;
 private:
-    juce::Array<float> attackModulationBuffer;
-    juce::Array<float> decayModulationBuffer;
-    juce::Array<float> sustainModulationBuffer;
-    juce::Array<float> releaseModulationBuffer;
-
-    //Parameter2* attackParameter;
-    //Parameter2* decayParameter;
-    //Parameter2* sustainParameter;
-    //Parameter2* releaseParameter;
-
     std::shared_ptr<SliderParameter> attackParameter;
     std::shared_ptr<SliderParameter> decayParameter;
     std::shared_ptr<SliderParameter> sustainParameter;
     std::shared_ptr<SliderParameter> releaseParameter;
+
+    juce::LinearSmoothedValue<float> gainValue;
+
+    juce::LinearSmoothedValue<float> attackValue;
+    juce::LinearSmoothedValue<float> decayValue;
+    juce::LinearSmoothedValue<float> sustainValue;
+    juce::LinearSmoothedValue<float> releaseValue;
 
     juce::ADSR adsr;
     juce::ADSR::Parameters adsrParams;

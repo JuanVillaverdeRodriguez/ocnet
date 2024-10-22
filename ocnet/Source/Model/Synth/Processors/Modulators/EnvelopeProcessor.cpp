@@ -53,21 +53,15 @@ void EnvelopeProcessor::stopNote(float velocity, bool allowTailOff)
 
 void EnvelopeProcessor::updateParameterValues()
 {
-    adsrParams.attack = attackParameter->getValue();
-    adsrParams.decay = decayParameter->getValue();
-    adsrParams.sustain = sustainParameter->getValue();
-    adsrParams.release = releaseParameter->getValue();
+    attackValue.setTargetValue(attackParameter->getModulatedValue(getVoiceNumberId()));
+    decayValue.setTargetValue(decayParameter->getModulatedValue(getVoiceNumberId()));
+    sustainValue.setTargetValue(sustainParameter->getModulatedValue(getVoiceNumberId()));
+    releaseValue.setTargetValue(releaseParameter->getModulatedValue(getVoiceNumberId()));
 
-    attackModulationBuffer = attackParameter->getModulationBuffer(getVoiceNumberId());
-    decayModulationBuffer = decayParameter->getModulationBuffer(getVoiceNumberId());
-    sustainModulationBuffer = sustainParameter->getModulationBuffer(getVoiceNumberId());
-    releaseModulationBuffer = releaseParameter->getModulationBuffer(getVoiceNumberId());
-
-    //DBG(juce::String(adsrParams.attack));
-    //DBG(juce::String(adsrParams.decay));
-    //DBG(juce::String(adsrParams.sustain));
-    //DBG(juce::String(adsrParams.release));
-
+    adsrParams.attack = attackValue.getTargetValue();
+    adsrParams.decay = decayValue.getTargetValue();
+    adsrParams.sustain = sustainValue.getTargetValue();
+    adsrParams.release = releaseValue.getTargetValue();
     adsr.setParameters(adsrParams);
 }
 
@@ -75,6 +69,12 @@ void EnvelopeProcessor::prepareToPlay(juce::dsp::ProcessSpec spec)
 {
     adsr.setSampleRate(spec.sampleRate);
     adsr.setParameters(adsrParams);
+    gainValue.reset(spec.sampleRate, 0.005);
+
+    attackValue.reset(spec.sampleRate, 0.0005);
+    decayValue.reset(spec.sampleRate, 0.0005);
+    sustainValue.reset(spec.sampleRate, 0.0005);
+    releaseValue.reset(spec.sampleRate, 0.0005);
 }
 
 bool EnvelopeProcessor::isActive()
@@ -89,13 +89,17 @@ void EnvelopeProcessor::processBlock(juce::AudioBuffer<float>& outputBuffer)
     auto* leftChannelBuffer = outputBuffer.getWritePointer(0);
     auto* rightChannelBuffer = outputBuffer.getWritePointer(1);
 
+    float nextValue = 0.0f;
     for (int sample = 0; sample < numSamples; ++sample) {
-
-        float nextSample = getNextSample(sample);
-
-        leftChannelBuffer[sample] *= nextSample;
-        rightChannelBuffer[sample] *= nextSample;
+        nextValue = getNextSample(sample);
     }
+    gainValue.setTargetValue(nextValue);
+
+    for (int sample = 0; sample < numSamples; ++sample) {
+        nextValue = gainValue.getNextValue();
+        leftChannelBuffer[sample] *= nextValue;
+        rightChannelBuffer[sample] *= nextValue;
+    } 
 }
 
 void EnvelopeProcessor::syncParams(const ParameterHandler& parameterHandler)

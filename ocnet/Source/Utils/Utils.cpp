@@ -47,7 +47,7 @@ std::tuple<juce::String, juce::String> Utils::splitParameterModulationID(const j
 float Utils::average(float* values, int numValues, bool inAbsoluteValue, int loopIncrement)
 {
     if (numValues <= 0) {
-        return 0.0f; // Evitar división por cero o procesamiento innecesario
+        return 0.0f; // Evitar divisiÃ³n por cero o procesamiento innecesario
     }
 
     float sum = 0.0f;

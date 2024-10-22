@@ -24,6 +24,7 @@ public:
     void syncParams(const ParameterHandler& parameterHandler, const juce::String& parameterID);
 
     juce::String getModulationID();
+    void setToZero(int voice);
 
 private:
     juce::Array<float> modulation;

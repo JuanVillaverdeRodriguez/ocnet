@@ -2,6 +2,9 @@
 
 <Project ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
+    <Filter Include="ocnet\Source\Values">
+      <UniqueIdentifier>{5B865164-7F43-34A1-A88E-3174BF3DC257}</UniqueIdentifier>
+    </Filter>
     <Filter Include="ocnet\Source\Libraries\SignalSmithLibrary\dsp">
       <UniqueIdentifier>{41906437-0B7C-4CD4-8D2F-E00F64343088}</UniqueIdentifier>
     </Filter>
@@ -793,6 +796,9 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\Source\Values\FloatValue.cpp">
+      <Filter>ocnet\Source\Values</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\Source\Controller\OcnetGUI_interface.cpp">
       <Filter>ocnet\Source\Controller</Filter>
     </ClCompile>
@@ -3879,6 +3885,9 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\Source\Values\FloatValue.h">
+      <Filter>ocnet\Source\Values</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\Source\Libraries\SignalSmithLibrary\dsp\common.h">
       <Filter>ocnet\Source\Libraries\SignalSmithLibrary\dsp</Filter>
     </ClInclude>

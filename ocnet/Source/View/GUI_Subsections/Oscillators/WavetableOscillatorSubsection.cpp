@@ -23,10 +23,10 @@ WavetableOscillatorSubsection::WavetableOscillatorSubsection(int id, GUI_EventHa
 
     volumeKnob = std::make_unique<Knob1>(volumeParameterID, eventHandler, "Level");
     panningKnob = std::make_unique<Knob1>(panningParameterID, eventHandler, "Pan");
-    numVoicesKnob = std::make_unique<Knob1>(panningParameterID, eventHandler, "Voices");
-    detuneAmountKnob = std::make_unique<Knob1>(panningParameterID, eventHandler, "Detune");
-    fmAmountKnob = std::make_unique<Knob1>(panningParameterID, eventHandler, "FM");
-    transposeKnob = std::make_unique<Knob1>(panningParameterID, eventHandler, "Transpose");
+    numVoicesKnob = std::make_unique<Knob1>(numVoicesParameterID, eventHandler, "Voices");
+    detuneAmountKnob = std::make_unique<Knob1>(detuneAmountParameterID, eventHandler, "Detune");
+    fmAmountKnob = std::make_unique<Knob1>(fmAmountParameterID, eventHandler, "FM");
+    transposeKnob = std::make_unique<Knob1>(transposeParameterID, eventHandler, "Transpose");
 
 
     this->addAndMakeVisible(*volumeKnob);

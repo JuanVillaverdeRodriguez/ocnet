@@ -13,6 +13,9 @@
 #include "Synth/Processors/Effects/EqualizerProcessor.h"
 
 //==============================================================================
+std::mutex 
+
+; // Declarar el mutex
 
 OcnetAudioProcessor::OcnetAudioProcessor()
 #ifndef JucePlugin_PreferredChannelConfigurations
@@ -28,7 +31,7 @@ OcnetAudioProcessor::OcnetAudioProcessor()
 {
 
     wavetableOscillatorTest.setProcessorInfo(processorInfo);
-
+    
     setNoteStealingEnabled(true);
 
     addSound(new SynthSound());
@@ -332,12 +335,12 @@ void OcnetAudioProcessor::addEffect(int processorType, int id)
         return;
     }
 
-    // Configurar antes de añadir a la lista
+    // Configurar antes de aÃ±adir a la lista
     newEffect->setVoiceNumberId(8); // Los efectos usan una voz reservada monofonica
     newEffect->syncParams(parameterHandler);
     newEffect->prepareToPlay(procesSpec);
 
-    // Añadir el efecto una vez este preparado
+    // AÃ±adir el efecto una vez este preparado
     effectsProcessorsList.push_back(std::move(newEffect));
 }
 //==============================================================================

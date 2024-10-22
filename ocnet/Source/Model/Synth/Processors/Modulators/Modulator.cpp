@@ -45,7 +45,8 @@ void Modulator::removeModulation(const juce::String& modulationID)
 
     modulationsVector.erase(
         std::remove_if(modulationsVector.begin(), modulationsVector.end(),
-            [&modulationID](const std::shared_ptr<Modulation>& modulation) {
+            [&modulationID, this](const std::shared_ptr<Modulation>& modulation) {
+                modulation->setToZero(getVoiceNumberId());
                 return modulation->getModulationID() == modulationID;
             }
         ),

@@ -48,16 +48,6 @@ private:
 
     float getNoteDivisionPPQ();
 
-    /*struct Rate {
-        const float Free = 1.1f;
-        const float WholeNote = 1.1f;
-        const float HalfNote = 1.1f;
-        const float QuarterNote = 1.1f;
-        const float EighthNote = 1.1f;
-        const float SixteenthNote = 1.1f;
-    };*/
-
-    juce::Array<float> freqModulationBuffer;
     std::shared_ptr<SliderParameter> freqParameter;
 
     void updateFrequency();
@@ -66,8 +56,10 @@ private:
 
     float frequency;
     float phase;
-    float phaseIncrement;
     double sampleRate;
+
+    juce::LinearSmoothedValue<float> phaseValue;
+
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(LFOProcessor)
 

@@ -12,14 +12,12 @@
 #include "../Source/Utils/Utils.h"
 
 WavetableOscillatorProcessor::WavetableOscillatorProcessor(int id, LegatoInfo& legatoInfo)
-    : unisonVoices(8), unisonDetune(0.20f), unisonSpread(0.15f), gen(rd()),
-    maxUnisonDetuning(10), maxUnisonSpread(10), maxUnisonVoices(8),
-    currentFrequency2NotesDown(0.0f), currentFrequency2NotesUp(0.0f), fmMod(1), fmModulatorOsc(nullptr), 
+    : unisonVoices(8), detuneValue(0.20f), unisonSpread(0.15f), gen(rd()),
+    maxUnisonDetuning(10), maxUnisonSpread(10), maxUnisonVoices(8), fmMod(1), fmModulatorOsc(nullptr), 
     currentFMIndex(0.0f), transpose(0), lastTableChoice(0), legato(true), legatoInfo(legatoInfo), deltaPreviousNoteCurrentNoteInHertz(0.0f), prevNotePressedInHertz(0.0f), legatoDeltaCents(1), targetFrequency(0.0f), currentMidiNoteNumber(0)
 
 {
     setId(id);
-
     currentFrequency = 0.0f;
 
     waveTypeIndexChoice = 0;
@@ -34,7 +32,6 @@ WavetableOscillatorProcessor::WavetableOscillatorProcessor(int id, LegatoInfo& l
     tableSize = (*tables)[0].waveTable.getNumSamples() - 1;
     phaseRandomnes = std::uniform_real_distribution<>(0, tableSize);
 
-    oscGain = 1.0f;
     isPrepared = false;
     sampleRate = 0.0f;
     tableDelta = 0.0f;
@@ -157,26 +154,14 @@ void WavetableOscillatorProcessor::stopNote(float velocity, bool allowTailOff)
 
 void WavetableOscillatorProcessor::updateParameterValues()
 {
-    oscGain = gainParameter->getValue();
-    oscGainModulationBuffer = gainParameter->getModulationBuffer(getVoiceNumberId());
-
-    panning = panningParameter->getValue();
-    panningModulationBuffer = panningParameter->getModulationBuffer(getVoiceNumberId());
-
-    unisonDetune = unisonDetuneParameter->getValue();
-    unisonDetuneModulationBuffer = unisonDetuneParameter->getModulationBuffer(getVoiceNumberId());
-
-    unisonVoices = unisonNumVoicesParameter->getValue();
-    unisonVoicesModulationBuffer = unisonNumVoicesParameter->getModulationBuffer(getVoiceNumberId());
-
-    fmAmount = fmAmountParameter->getValue();
-    fmAmountModulationBuffer = fmAmountParameter->getModulationBuffer(getVoiceNumberId());
-
+    gainValue.setTargetValue(gainParameter->getModulatedValue(getVoiceNumberId()));
+    panValue.setTargetValue(panningParameter->getModulatedValue(getVoiceNumberId()));
+    detuneValue.setTargetValue(unisonDetuneParameter->getModulatedValue(getVoiceNumberId()));
+    fmAmountValue.setTargetValue(fmAmountParameter->getModulatedValue(getVoiceNumberId()));
+    unisonVoices = unisonNumVoicesParameter->getModulatedValue(getVoiceNumberId(), 0, 8);
     fmFromIndexChoice = fmFromParameter->getCurrentIndex();
     waveTypeIndexChoice = waveTypeParameter->getCurrentIndex();
-
-    transpose = transposeParameter->getValue();
-    transposeModulationBuffer = transposeParameter->getModulationBuffer(getVoiceNumberId());
+    transpose = transposeParameter->getModulatedValue(getVoiceNumberId());
 
     if (waveTypeIndexChoice == 0) {
         tables = &sawWaveTables;
@@ -192,15 +177,16 @@ void WavetableOscillatorProcessor::updateParameterValues()
         setFrequency(currentFrequency, sampleRate);
         lastTableChoice = waveTypeIndexChoice;
     }
-
-
-    //DBG(juce::String("TIPO DE ONDA SELECIONADA: ") + juce::String(waveTypeIndexChoice));
 }
 
 void WavetableOscillatorProcessor::prepareToPlay(juce::dsp::ProcessSpec spec)
 {
     sampleRate = spec.sampleRate;
     gain.prepare(spec);
+    gainValue.reset(sampleRate, 0.0005);
+    panValue.reset(sampleRate, 0.0005);
+    fmAmountValue.reset(sampleRate, 0.0005);
+    detuneValue.reset(sampleRate, 0.0005);
     DBG(juce::String(spec.sampleRate));
 }
 
@@ -462,41 +448,36 @@ void WavetableOscillatorProcessor::processBlock(juce::AudioBuffer<float>& output
 
     int numSamples = outputBuffer.getNumSamples();
 
-    const auto globalPanAngle = (panning + panningModulationBuffer[0]) * juce::MathConstants<float>::halfPi;
-    const auto globalPanningLeft = std::cos(globalPanAngle);
-    const auto globalPanningRight = std::sin(globalPanAngle);
-
-    const float newGainValue = oscGain + oscGainModulationBuffer[0];
-    newGainValue < 0.0f ? gain.setGainLinear(0.0f) : gain.setGainLinear(newGainValue);
-
-    const float globalGainLeft = globalPanningLeft * gain.getGainLinear();;
-    const float globalGainRight = globalPanningRight * gain.getGainLinear();;
-
-    float gainLeft;
-    float gainRight;
-
     auto* leftChannelBuffer = outputBuffer.getWritePointer(0);
     auto* rightChannelBuffer = outputBuffer.getWritePointer(1);
 
     float finalDelta = 0.0f;
+    float gainLeft;
+    float gainRight;
 
     for (int unisonVoice = 0; unisonVoice < unisonVoices; unisonVoice++) {
-        float newVoiceDelta = unisonVoices == 1 ? tableDelta : getUnisonDeltaFromFrequency(freqRelativeTo(currentFrequency, unisonDetuneArray[unisonVoice] * unisonDetune, false), sampleRate);
-        float* newCurrentIndex = unisonVoiceCurrentIndexArray[unisonVoice];
-
-        if (unisonVoices > 1) {
-            gainLeft = globalGainLeft * unisonSpreadArrayL[unisonVoice];
-            gainRight = globalGainRight * unisonSpreadArrayR[unisonVoice];
-        }
-        else {
-            gainLeft = globalGainLeft;
-            gainRight = globalGainRight;
-        }
-
         for (int sample = 0; sample < numSamples; ++sample) {
+            float newVoiceDelta = unisonVoices == 1 ? tableDelta : getUnisonDeltaFromFrequency(freqRelativeTo(currentFrequency, unisonDetuneArray[unisonVoice] * detuneValue.getNextValue(), false), sampleRate);
+            float* newCurrentIndex = unisonVoiceCurrentIndexArray[unisonVoice];
+
+            float globalPanAngle = (panValue.getNextValue() * juce::MathConstants<float>::halfPi);
+            float globalPanningLeft = std::cos(globalPanAngle);
+            float globalPanningRight = std::sin(globalPanAngle);
+
+            float newGainValue = gainValue.getNextValue();
+
+            if (unisonVoices > 1) {
+                gainLeft = globalPanningLeft * newGainValue * unisonSpreadArrayL[unisonVoice];
+                gainRight = globalPanningRight * newGainValue * unisonSpreadArrayR[unisonVoice];
+            }
+            else {
+                gainLeft = globalPanningLeft * newGainValue;
+                gainRight = globalPanningRight * newGainValue;
+            }
+
             if (fmModulatorOsc != nullptr) {
                 float fmValue = fmModulatorOsc->get()->getNextFMValue();
-                float newFreq = freqRelativeTo(currentFrequency, fmValue * 1200 * fmAmount, true);
+                float newFreq = freqRelativeTo(currentFrequency, fmAmountValue.getNextValue() * 1200 * fmValue, true);
                 if (newFreq < 0.0f)
                     newFreq = 0.0f;
                 finalDelta = unisonVoices == 1 ? setFrequency(newFreq, sampleRate) : newVoiceDelta + setFrequency(newFreq, sampleRate);
@@ -515,37 +496,7 @@ void WavetableOscillatorProcessor::processBlock(juce::AudioBuffer<float>& output
 
 void WavetableOscillatorProcessor::processBlockTest(juce::AudioBuffer<float>& outputBuffer)
 {
-    int numSamples = outputBuffer.getNumSamples();
 
-    const auto globalPanAngle = (panning + panningModulationBuffer[0]) * juce::MathConstants<float>::halfPi;
-    const auto globalPanningLeft = std::cos(globalPanAngle);
-    const auto globalPanningRight = std::sin(globalPanAngle);
-
-    const float newGainValue = oscGain + oscGainModulationBuffer[0];
-    newGainValue < 0.0f ? gain.setGainLinear(0.0f) : gain.setGainLinear(newGainValue);
-
-    float gainLeft = globalPanningLeft * gain.getGainLinear();;
-    float gainRight = globalPanningRight * gain.getGainLinear();;
-
-    auto* leftChannelBuffer = outputBuffer.getWritePointer(0);
-    auto* rightChannelBuffer = outputBuffer.getWritePointer(1);
-
-    for (int unisonVoice = 0; unisonVoice < unisonVoices; unisonVoice++) {
-        float newVoiceDelta = unisonVoices == 1 ? tableDelta : getUnisonDeltaFromFrequency(freqRelativeTo(currentFrequency, unisonDetuneArray[unisonVoice] * unisonDetune, false), sampleRate);
-        float* newCurrentIndex = unisonVoiceCurrentIndexArray[unisonVoice];
-
-        if (unisonVoices > 1) {
-            gainLeft *= unisonSpreadArrayL[unisonVoice];
-            gainRight *= unisonSpreadArrayR[unisonVoice];
-        }
-
-        for (int sample = 0; sample < numSamples; ++sample) {
-            float nextSample = getNextSample(newVoiceDelta, newCurrentIndex);
-
-            leftChannelBuffer[sample] += nextSample * gainLeft;
-            rightChannelBuffer[sample] += nextSample * gainRight;
-        }
-    }
 }
 
 void WavetableOscillatorProcessor::setFmFrom(std::unique_ptr<Processor>* modulator)

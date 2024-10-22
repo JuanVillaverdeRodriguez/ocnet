@@ -40,3 +40,9 @@ juce::String Modulation::getModulationID()
 {
     return modulationID;
 }
+
+void Modulation::setToZero(int voice)
+{
+    modulation.fill(0.0f);
+    sliderToModulate->setModulationBuffer(modulation, voice);
+}

@@ -13,7 +13,7 @@
 #include "JuceHeader.h"
 #include <juce_core/juce_core.h>
 
-// Cuando se añada algo aqui, añadir tambien la conversion a string en Utils.h
+// Cuando se aÃ±ada algo aqui, aÃ±adir tambien la conversion a string en Utils.h
 namespace Ocnet {
 #define RUN_TESTS 0
 

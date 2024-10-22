@@ -27,6 +27,8 @@ SamplerProcessor::~SamplerProcessor()
 void SamplerProcessor::prepareToPlay(juce::dsp::ProcessSpec spec)
 {
     mTransportSource.prepareToPlay(spec.maximumBlockSize, spec.sampleRate);
+    gainValue.reset(spec.sampleRate, 0.0005);
+    panValue.reset(spec.sampleRate, 0.0005);
 }
 
 void SamplerProcessor::startNote(int midiNoteNumber, float velocity, juce::SynthesiserSound* sound, int currentPitchWheelPosition)
@@ -42,11 +44,8 @@ void SamplerProcessor::stopNote(float velocity, bool allowTailOff)
 
 void SamplerProcessor::updateParameterValues()
 {
-    oscGain = gainParameter->getValue();
-    oscGainModulationBuffer = gainParameter->getModulationBuffer(getVoiceNumberId());
-
-    panning = panningParameter->getValue();
-    panningModulationBuffer = panningParameter->getModulationBuffer(getVoiceNumberId());
+    gainValue.setCurrentAndTargetValue(gainParameter->getModulatedValue(getVoiceNumberId()));
+    panValue.setCurrentAndTargetValue(panningParameter->getModulatedValue(getVoiceNumberId()));
 }
 
 float SamplerProcessor::getNextSample(int sample)
@@ -62,20 +61,20 @@ void SamplerProcessor::syncParams(const ParameterHandler& parameterHandler)
 
 void SamplerProcessor::processBlock(juce::AudioBuffer<float>& buffer)
 {
-    const auto globalPanAngle = (panning + panningModulationBuffer[0]) * juce::MathConstants<float>::halfPi;
-    const auto globalPanningLeft = std::cos(globalPanAngle);
-    const auto globalPanningRight = std::sin(globalPanAngle);
-
     auto* leftChannelBuffer = buffer.getWritePointer(0);
     auto* rightChannelBuffer = buffer.getWritePointer(1);
 
     juce::AudioSourceChannelInfo bufferToFill(&buffer, 0, buffer.getNumSamples());
-    mTransportSource.setGain(oscGain);
+    //mTransportSource.setGain(gainValue.getTargetValue());
     mTransportSource.getNextAudioBlock(bufferToFill);
 
     for (int i = 0; i < buffer.getNumSamples(); i++) {
-        leftChannelBuffer[i] *= globalPanningLeft;
-        rightChannelBuffer[i] *= globalPanningRight;
+        float globalPanAngle = panValue.getNextValue() * juce::MathConstants<float>::halfPi;
+        float globalPanningLeft = std::cos(globalPanAngle);
+        float globalPanningRight = std::sin(globalPanAngle);
+
+        leftChannelBuffer[i] *= globalPanningLeft * gainValue.getNextValue();
+        rightChannelBuffer[i] *= globalPanningRight * gainValue.getNextValue();
     }
 }
 

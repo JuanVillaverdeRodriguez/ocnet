@@ -38,12 +38,13 @@ private:
 
 
     std::shared_ptr<SliderParameter> gainParameter;
-    float oscGain;
     juce::Array<float> oscGainModulationBuffer;
 
     std::shared_ptr<SliderParameter> panningParameter;
-    float panning;
     juce::Array<float> panningModulationBuffer;
+
+    juce::LinearSmoothedValue<float> gainValue;
+    juce::LinearSmoothedValue<float> panValue;
 
     //juce::String samplesDirectoryName;
     int currentSample;

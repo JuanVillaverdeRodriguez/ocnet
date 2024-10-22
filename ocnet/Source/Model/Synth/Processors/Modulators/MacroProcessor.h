@@ -30,9 +30,10 @@ public:
 
 
 private:
-    float macroValue;
     int selectedMacro;
     const ParameterHandler* parameterHandler;
+
+    juce::LinearSmoothedValue<float> macroValue;
 
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(MacroProcessor)

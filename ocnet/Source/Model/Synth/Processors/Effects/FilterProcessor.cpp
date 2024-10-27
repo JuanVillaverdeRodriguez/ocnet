@@ -23,6 +23,8 @@ FilterProcessor::~FilterProcessor()
 void FilterProcessor::prepareToPlay(juce::dsp::ProcessSpec spec)
 {
     samplingRate = spec.sampleRate;
+    freqCutValue.reset(samplingRate, 0.0005);
+    a1.reset(samplingRate, 0.0005);
 }
 
 void FilterProcessor::startNote(int midiNoteNumber, float velocity, juce::SynthesiserSound* sound, int currentPitchWheelPosition)
@@ -35,15 +37,12 @@ void FilterProcessor::stopNote(float velocity, bool allowTailOff)
 
 void FilterProcessor::updateParameterValues()
 {
-    freqCutValue = freqCutParameter->getValue();
-    freqCutModulationBuffer = freqCutParameter->getModulationBuffer(getVoiceNumberId());
+    freqCutValue.setTargetValue(freqCutParameter->getModulatedValue(8, 20.0f, 20000.0f));
 
     resonanceValue = resonanceParameter->getValue();
-    resonanceModulationBuffer = resonanceParameter->getModulationBuffer(getVoiceNumberId());
+    resonanceModulationBuffer = resonanceParameter->getModulationBuffer(8);
 
     highPass = highPassParameter->getState();
-
-    //DBG(juce::String(freqCutModulationBuffer[0]*20000.0f));
 }
 
 float FilterProcessor::getNextSample(int sample)
@@ -71,17 +70,17 @@ void FilterProcessor::processBlock(juce::AudioBuffer<float>& buffer)
     int numSamples = buffer.getNumSamples();
     int numChannels = buffer.getNumChannels();
 
-
-    const auto tan = std::tan(M_PI * (freqCutValue + (freqCutModulationBuffer[0] * 20000.0f)) / samplingRate);
-    const auto a1 = (tan - 1.f) / (tan + 1.f);
+    const float tan = std::tan(M_PI * (freqCutValue.getTargetValue()) / samplingRate);
+    a1.setTargetValue((tan - 1.f) / (tan + 1.f));
 
     for (int channel = 0; channel < numChannels; ++channel) {
         auto* data = buffer.getWritePointer(channel);
 
         for (int sample = 0; sample < numSamples; ++sample) {
+
             const auto inputSample = data[sample];  //Se obtiene el valor crudo del sample actual
-            const auto allPassFilteredSample = a1 * inputSample + dnBuffer[channel]; // Se filtra el sample
-            dnBuffer[channel] = inputSample - a1 * allPassFilteredSample;
+            const auto allPassFilteredSample = a1.getNextValue() * inputSample + dnBuffer[channel]; // Se filtra el sample
+            dnBuffer[channel] = inputSample - a1.getNextValue() * allPassFilteredSample;
             const auto filterOutput = 0.5f * (inputSample + passInt * allPassFilteredSample);
             data[sample] = filterOutput;
         }

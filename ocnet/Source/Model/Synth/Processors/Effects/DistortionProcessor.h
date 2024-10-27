@@ -48,9 +48,6 @@ private:
     juce::dsp::Oversampling<float> oversampler;
 
 
-    juce::Array<float> driveModulationBuffer;
-    float driveValue;
-
     enum DistortionType {
         Soft,
         Hard
@@ -58,6 +55,8 @@ private:
 
     std::shared_ptr<ComboBoxParameter> distortionTypeParameter;
     int distortionTypeChoice;
+
+    juce::LinearSmoothedValue<float> driveValue;
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(DistortionProcessor)
 

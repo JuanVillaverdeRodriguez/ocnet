@@ -31,7 +31,6 @@ public:
     void valueTreePropertyChanged(juce::ValueTree& treeWhosePropertyHasChanged, const juce::Identifier& property) override;
 
     float getModulatedValue(int voice, float min = 0.0f, float max = 1.0f);
-
 private:
     juce::String parameterID;
     int arraySize;

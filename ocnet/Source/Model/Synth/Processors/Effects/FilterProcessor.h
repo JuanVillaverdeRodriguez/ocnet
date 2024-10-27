@@ -38,7 +38,6 @@ private:
 
     std::shared_ptr<SliderParameter> freqCutParameter;
     juce::Array<float> freqCutModulationBuffer;
-    float freqCutValue;
 
     std::shared_ptr<SliderParameter> resonanceParameter;
     juce::Array<float> resonanceModulationBuffer;
@@ -50,6 +49,11 @@ private:
     float samplingRate;
 
     std::vector<float> dnBuffer;
+
+    juce::LinearSmoothedValue<float> freqCutValue;
+    juce::LinearSmoothedValue<float> a1;
+
+
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(FilterProcessor)
 

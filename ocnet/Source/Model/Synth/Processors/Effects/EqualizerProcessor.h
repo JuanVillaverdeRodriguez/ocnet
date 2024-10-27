@@ -37,28 +37,28 @@ private:
 	std::shared_ptr<SliderParameter> gainLParameter;
 	std::shared_ptr<SliderParameter> gainMParameter;
 	std::shared_ptr<SliderParameter> gainHParameter;
-	juce::Array<float> gainModulationBuffer;
-	float gainLValue;
-	float gainMValue;
-	float gainHValue;
 
+	juce::LinearSmoothedValue<float> gainLValue;
+	juce::LinearSmoothedValue<float> gainMValue;
+	juce::LinearSmoothedValue<float> gainHValue;
 
 	std::shared_ptr<SliderParameter> cutOffLParameter;
 	std::shared_ptr<SliderParameter> cutOffMParameter;
 	std::shared_ptr<SliderParameter> cutOffHParameter;
-	juce::Array<float> cutOffModulationBuffer;
-	float cutOffLValue;
-	float cutOffMValue;
-	float cutOffHValue;
+
+	juce::LinearSmoothedValue<float> cutOffLValue;
+	juce::LinearSmoothedValue<float> cutOffMValue;
+	juce::LinearSmoothedValue<float> cutOffHValue;
 
 
 	std::shared_ptr<SliderParameter> resonanceLParameter;
 	std::shared_ptr<SliderParameter> resonanceMParameter;
 	std::shared_ptr<SliderParameter> resonanceHParameter;
-	juce::Array<float> resonanceModulationBuffer;
-	float resonanceLValue;
-	float resonanceMValue;
-	float resonanceHValue;
+
+	juce::LinearSmoothedValue<float> resonanceLValue;
+	juce::LinearSmoothedValue<float> resonanceMValue;
+	juce::LinearSmoothedValue<float> resonanceHValue;
+
 
 	std::shared_ptr<ButtonParameter> lowFreqParameter;
 	std::shared_ptr<ButtonParameter> midFreqParameter;

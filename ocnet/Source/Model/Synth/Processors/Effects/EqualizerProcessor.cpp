@@ -32,6 +32,17 @@ void EqualizerProcessor::prepareToPlay(juce::dsp::ProcessSpec spec)
     leftChain.prepare(monoSpec);
     rightChain.prepare(monoSpec);
 
+    gainLValue.reset(sampleRate, 0.0005);
+    gainMValue.reset(sampleRate, 0.0005);
+    gainHValue.reset(sampleRate, 0.0005);
+
+    cutOffLValue.reset(sampleRate, 0.0005);
+    cutOffMValue.reset(sampleRate, 0.0005);
+    cutOffHValue.reset(sampleRate, 0.0005);
+
+    resonanceLValue.reset(sampleRate, 0.0005);
+    resonanceMValue.reset(sampleRate, 0.0005);
+    resonanceHValue.reset(sampleRate, 0.0005);
 }
 
 void EqualizerProcessor::startNote(int midiNoteNumber, float velocity, juce::SynthesiserSound* sound, int currentPitchWheelPosition)
@@ -44,32 +55,17 @@ void EqualizerProcessor::stopNote(float velocity, bool allowTailOff)
 
 void EqualizerProcessor::updateParameterValues()
 {
-    gainLValue = gainLParameter->getValue();
-    gainModulationBuffer = gainLParameter->getModulationBuffer(getVoiceNumberId());
+    gainLValue.setTargetValue(gainLParameter->getModulatedValue(8, -24.0f, 24.0f));
+    cutOffLValue.setTargetValue(cutOffLParameter->getModulatedValue(8, 20.0f, 20000.0f));
+    resonanceLValue.setTargetValue(resonanceLParameter->getModulatedValue(8, 0.0f, 10.0f));
 
-    cutOffLValue = cutOffLParameter->getValue();
-    cutOffModulationBuffer = cutOffLParameter->getModulationBuffer(getVoiceNumberId());
+    gainMValue.setTargetValue(gainLParameter->getModulatedValue(8, -24.0f, 24.0f));
+    cutOffMValue.setTargetValue(cutOffMParameter->getModulatedValue(8, 20.0f, 20000.0f));
+    resonanceMValue.setTargetValue(resonanceMParameter->getModulatedValue(8, 0.0f, 10.0f));
 
-    resonanceLValue = resonanceLParameter->getValue();
-    resonanceModulationBuffer = resonanceLParameter->getModulationBuffer(getVoiceNumberId());
-
-    gainMValue = gainMParameter->getValue();
-    gainModulationBuffer = gainMParameter->getModulationBuffer(getVoiceNumberId());
-
-    cutOffMValue = cutOffMParameter->getValue();
-    cutOffModulationBuffer = cutOffMParameter->getModulationBuffer(getVoiceNumberId());
-
-    resonanceMValue = resonanceMParameter->getValue();
-    resonanceModulationBuffer = resonanceMParameter->getModulationBuffer(getVoiceNumberId());
-
-    gainHValue = gainHParameter->getValue();
-    gainModulationBuffer = gainHParameter->getModulationBuffer(getVoiceNumberId());
-
-    cutOffHValue = cutOffHParameter->getValue();
-    cutOffModulationBuffer = cutOffHParameter->getModulationBuffer(getVoiceNumberId());
-
-    resonanceHValue = resonanceHParameter->getValue();
-    resonanceModulationBuffer = resonanceHParameter->getModulationBuffer(getVoiceNumberId());
+    gainHValue.setTargetValue(gainLParameter->getModulatedValue(8, -24.0f, 24.0f));
+    cutOffHValue.setTargetValue(cutOffHParameter->getModulatedValue(8, 20.0f, 20000.0f));
+    resonanceHValue.setTargetValue(resonanceHParameter->getModulatedValue(8, 0.0f, 10.0f));
 
     selectedLowCutSlope = selectedLowCutSlopeParameter->getCurrentIndex();
     selectedHighCutSlope = selectedHighCutSlopeParameter->getCurrentIndex();
@@ -133,7 +129,7 @@ bool EqualizerProcessor::isActive()
 
 void EqualizerProcessor::updateLowCutCoeffs()
 {
-    auto cutCoefficients = juce::dsp::FilterDesign<float>::designIIRHighpassHighOrderButterworthMethod(cutOffLValue, sampleRate, 2 * (selectedLowCutSlope + 1));
+    auto cutCoefficients = juce::dsp::FilterDesign<float>::designIIRHighpassHighOrderButterworthMethod(cutOffLValue.getTargetValue(), sampleRate, 2 * (selectedLowCutSlope + 1));
 
     auto& leftLowCut = leftChain.get<ChainPositions::LowCut>();
     auto& rightLowCut = rightChain.get<ChainPositions::LowCut>();
@@ -144,7 +140,7 @@ void EqualizerProcessor::updateLowCutCoeffs()
 
 void EqualizerProcessor::updatePeekCoeffs()
 {
-    auto peakCoefficients = juce::dsp::IIR::Coefficients<float>::makePeakFilter(sampleRate, cutOffMValue, resonanceMValue, juce::Decibels::decibelsToGain(gainMValue));
+    auto peakCoefficients = juce::dsp::IIR::Coefficients<float>::makePeakFilter(sampleRate, cutOffMValue.getTargetValue(), resonanceMValue.getTargetValue(), juce::Decibels::decibelsToGain(gainMValue.getTargetValue()));
 
     *leftChain.get<ChainPositions::Peak>().coefficients = *peakCoefficients;
     *rightChain.get<ChainPositions::Peak>().coefficients = *peakCoefficients;
@@ -152,7 +148,7 @@ void EqualizerProcessor::updatePeekCoeffs()
 
 void EqualizerProcessor::updateHighCutCoeffs()
 {
-    auto cutCoefficients = juce::dsp::FilterDesign<float>::designIIRLowpassHighOrderButterworthMethod(cutOffHValue, sampleRate, 2 * (selectedHighCutSlope + 1));
+    auto cutCoefficients = juce::dsp::FilterDesign<float>::designIIRLowpassHighOrderButterworthMethod(cutOffHValue.getTargetValue(), sampleRate, 2 * (selectedHighCutSlope + 1));
 
     auto& leftHighCut = leftChain.get<ChainPositions::HighCut>();
     auto& rightHighCut = rightChain.get<ChainPositions::HighCut>();

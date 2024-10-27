@@ -161,7 +161,7 @@ void WavetableOscillatorProcessor::updateParameterValues()
     unisonVoices = unisonNumVoicesParameter->getModulatedValue(getVoiceNumberId(), 0, 8);
     fmFromIndexChoice = fmFromParameter->getCurrentIndex();
     waveTypeIndexChoice = waveTypeParameter->getCurrentIndex();
-    transpose = transposeParameter->getModulatedValue(getVoiceNumberId());
+    transpose = transposeParameter->getModulatedValue(getVoiceNumberId(), -24, 24);
 
     if (waveTypeIndexChoice == 0) {
         tables = &sawWaveTables;

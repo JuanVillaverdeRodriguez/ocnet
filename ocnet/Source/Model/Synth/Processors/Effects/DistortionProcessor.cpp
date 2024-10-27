@@ -29,14 +29,14 @@ void DistortionProcessor::stopNote(float velocity, bool allowTailOff)
 
 void DistortionProcessor::updateParameterValues()
 {
-    driveValue = driveParameter->getValue();
-    driveModulationBuffer = driveParameter->getModulationBuffer(8);
+    driveValue.setTargetValue(driveParameter->getModulatedValue(8, 0.0f, 10.0f));
     distortionTypeChoice = distortionTypeParameter->getCurrentIndex();
 }
 
 void DistortionProcessor::prepareToPlay(juce::dsp::ProcessSpec spec)
 {
     oversampler.initProcessing(spec.sampleRate);
+    driveValue.reset(spec.sampleRate, 0.0005);
 }
 
 float DistortionProcessor::getNextSample(int sample)
@@ -80,7 +80,7 @@ void DistortionProcessor::processSoftClipping(juce::dsp::AudioBlock<float>& upSa
         auto* data = upSampledBlock.getChannelPointer(channel);
 
         for (int sample = 0; sample < numSamples; ++sample) {
-            float newValue = driveValue + driveModulationBuffer[data[sample]];
+            float newValue = driveValue.getNextValue();
             newValue = juce::jmax(0.0f, newValue);
         
             data[sample] = softClip(data[sample], newValue);
@@ -98,7 +98,7 @@ void DistortionProcessor::processHardClipping(juce::dsp::AudioBlock<float>& upSa
         auto* data = upSampledBlock.getChannelPointer(channel);
 
         for (int sample = 0; sample < numSamples; ++sample) {
-            float newValue = driveValue + driveModulationBuffer[data[sample]];
+            float newValue = driveValue.getNextValue();
             newValue = juce::jmax(0.0f, newValue); 
 
             data[sample] = hardClip(data[sample], newValue);

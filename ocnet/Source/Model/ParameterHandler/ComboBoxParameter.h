@@ -12,7 +12,7 @@
 
 #include "JuceHeader.h"
 
-class ComboBoxParameter : public juce::ValueTree::Listener 
+class ComboBoxParameter : public juce::ValueTree::Listener
 {
 public:
     ComboBoxParameter(const juce::String& parameterID, juce::StringArray choices, int defaultOptionIndex = 0);

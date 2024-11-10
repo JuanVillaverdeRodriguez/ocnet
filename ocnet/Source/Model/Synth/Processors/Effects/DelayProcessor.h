@@ -31,16 +31,34 @@ private:
 	float maxDecayValue;
 	float maxDelayValue;
 	float maxMixValue;
+	void setMaxDelayTime(float newMaxDelay);
+	void updateDelayLineSize();
+	void setDelayTime(size_t channel, float newValue);
+	void updateDelayTime() noexcept;
+
+	float delayTimeLeft;
+	float delayTimeRight;
+	int delayTimeLeftSamples;
+	int delayTimeRightSamples;
 
 	std::shared_ptr<SliderParameter> mixParameter;
-	juce::Array<float> mixModulationBuffer;
-	float mixValue;
+	juce::LinearSmoothedValue<float> mixValue;
+
 
 	std::shared_ptr<SliderParameter> delayParameter;
-	juce::Array<float> delayModulationBuffer;
-	float delayValue;
+	juce::LinearSmoothedValue<float> delayValueLeft;
+	juce::LinearSmoothedValue<float> delayValueRight;
+
 
 	std::shared_ptr<SliderParameter> decayParameter;
-	juce::Array<float> decayModulationBuffer;
-	float decayValue;
+	juce::LinearSmoothedValue<float> decayValue;
+
+
+	juce::dsp::DelayLine<float> delayBuffer;
+
+	float sampleRate;
+
+	juce::AudioBuffer<float> inputBuffer;
+
+
 };

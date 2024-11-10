@@ -11,6 +11,7 @@
 #include <windows.h>
 #include "Synth/Processors/Effects/FilterProcessor.h"
 #include "Synth/Processors/Effects/EqualizerProcessor.h"
+#include "Synth/Processors/Effects/DelayProcessor.h"
 
 //==============================================================================
 std::mutex 
@@ -329,6 +330,10 @@ void OcnetAudioProcessor::addEffect(int processorType, int id)
 
     case Equalizer:
         newEffect = std::make_unique<EqualizerProcessor>(id);
+        break;
+
+    case Delay:
+        newEffect = std::make_unique<DelayProcessor>(id);
         break;
 
     default:

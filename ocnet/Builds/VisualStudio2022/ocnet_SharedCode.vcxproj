@@ -177,7 +177,7 @@
     <ClCompile Include="..\..\Source\Model\Synth\Processors\ProcessorHandler.cpp"/>
     <ClCompile Include="..\..\Source\Model\Synth\Processors\Oscillators\SamplerProcessor.cpp"/>
     <ClCompile Include="..\..\Source\Model\Synth\Processors\Oscillators\WavetableOscillatorProcessor.cpp"/>
-    <ClCompile Include="..\..\..\..\Nueva carpeta\ocnet\ocnet\Source\Synth\Processors\Effector.cpp"/>
+    <ClCompile Include="..\..\Source\Model\Synth\Processors\Effects\Effector.cpp"/>
     <ClCompile Include="..\..\Source\Model\Synth\Processors\Effects\DistortionProcessor.cpp"/>
     <ClCompile Include="..\..\Source\Model\Synth\Processors\Effects\EqualizerProcessor.cpp"/>
     <ClCompile Include="..\..\Source\Model\Synth\Processors\Effects\FilterProcessor.cpp"/>
@@ -2971,7 +2971,7 @@
     <ClInclude Include="..\..\Source\Model\Synth\Processors\ProcessorHandler.h"/>
     <ClInclude Include="..\..\Source\Model\Synth\Processors\Oscillators\SamplerProcessor.h"/>
     <ClInclude Include="..\..\Source\Model\Synth\Processors\Oscillators\WavetableOscillatorProcessor.h"/>
-    <ClInclude Include="..\..\..\..\Nueva carpeta\ocnet\ocnet\Source\Synth\Processors\Effector.h"/>
+    <ClInclude Include="..\..\Source\Model\Synth\Processors\Effects\Effector.h"/>
     <ClInclude Include="..\..\Source\Model\Synth\Processors\Effects\DelayProcessor.h"/>
     <ClInclude Include="..\..\Source\Model\Synth\Processors\Effects\DistortionProcessor.h"/>
     <ClInclude Include="..\..\Source\Model\Synth\Processors\Effects\EqualizerProcessor.h"/>

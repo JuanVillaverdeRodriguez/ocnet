@@ -910,7 +910,7 @@
     <ClCompile Include="..\..\Source\Model\Synth\Processors\Oscillators\WavetableOscillatorProcessor.cpp">
       <Filter>ocnet\Source\Model\Synth\Processors\Oscillators</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\Nueva carpeta\ocnet\ocnet\Source\Synth\Processors\Effector.cpp">
+    <ClCompile Include="..\..\Source\Model\Synth\Processors\Effects\Effector.cpp">
       <Filter>ocnet\Source\Model\Synth\Processors\Effects</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\Model\Synth\Processors\Effects\DistortionProcessor.cpp">
@@ -4047,7 +4047,7 @@
     <ClInclude Include="..\..\Source\Model\Synth\Processors\Oscillators\WavetableOscillatorProcessor.h">
       <Filter>ocnet\Source\Model\Synth\Processors\Oscillators</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\Nueva carpeta\ocnet\ocnet\Source\Synth\Processors\Effector.h">
+    <ClInclude Include="..\..\Source\Model\Synth\Processors\Effects\Effector.h">
       <Filter>ocnet\Source\Model\Synth\Processors\Effects</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\Model\Synth\Processors\Effects\DelayProcessor.h">

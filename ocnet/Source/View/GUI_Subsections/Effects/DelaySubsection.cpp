@@ -13,29 +13,37 @@
 DelaySubsection::DelaySubsection(int id, GUI_EventHandler& eventHandler)
     : eventHandler(eventHandler), EffectsSubsection(eventHandler, id, "Delay")
 {
-    delayParameterID = createParameterID("delay");
+    delayLeftParameterID = createParameterID("delayLeft");
+    delayRightParameterID = createParameterID("delayRight");
     decayParameterID = createParameterID("decay");
 
-    delayKnob = std::make_unique<Knob1>(delayParameterID, eventHandler, "Delay");
+
+    delayLeftKnob = std::make_unique<Knob1>(delayLeftParameterID, eventHandler, "DelayLeft");
+    delayRightKnob = std::make_unique<Knob1>(delayRightParameterID, eventHandler, "DelayRight");
     decayKnob = std::make_unique<Knob1>(decayParameterID, eventHandler, "Decay");
 
-    addAndMakeVisible(*delayKnob);
+
+    addAndMakeVisible(*delayLeftKnob);
+    addAndMakeVisible(*delayRightKnob);
     addAndMakeVisible(*decayKnob);
 
-    delayKnob->setRange(0.0f, 1.0f, 0.01f);
+    delayLeftKnob->setRange(0.0f, 1.0f, 0.01f);
+    delayRightKnob->setRange(0.0f, 1.0f, 0.01f);
     decayKnob->setRange(0.0f, 1.0f, 0.01f);
 }
 
 
 void DelaySubsection::attachParameters(ParameterHandler& parameterHandler)
 {
-    delayParameterAttachment = std::make_unique<OcnetSliderAttachment>(*delayKnob, *parameterHandler.getSliderParameter(delayParameterID)->get());
+    delayLeftParameterAttachment = std::make_unique<OcnetSliderAttachment>(*delayLeftKnob, *parameterHandler.getSliderParameter(delayLeftParameterID)->get());
+    delayRightParameterAttachment = std::make_unique<OcnetSliderAttachment>(*delayRightKnob, *parameterHandler.getSliderParameter(delayRightParameterID)->get());
     decayParameterAttachment = std::make_unique<OcnetSliderAttachment>(*decayKnob, *parameterHandler.getSliderParameter(decayParameterID)->get());
 }
 
 void DelaySubsection::addParametersToParameterHandler(ParameterHandler& parameterHandler)
 {
-    parameterHandler.addSliderParameter(delayParameterID, std::make_shared<SliderParameter>("delay", 0.5));
+    parameterHandler.addSliderParameter(delayLeftParameterID, std::make_shared<SliderParameter>("delayLeft", 0.5));
+    parameterHandler.addSliderParameter(delayRightParameterID, std::make_shared<SliderParameter>("delayRight", 0.5));
     parameterHandler.addSliderParameter(decayParameterID, std::make_shared<SliderParameter>("decay", 0.5));
 }
 
@@ -47,14 +55,17 @@ void DelaySubsection::subsectionResized()
     mixKnob->setBounds(posX, 20, defaultKnobSize, defaultKnobSize);
     posX += defaultKnobSize;
 
-    delayKnob->setBounds(posX, 20, defaultKnobSize, defaultKnobSize);
+    delayLeftKnob->setBounds(posX, 20, defaultKnobSize, defaultKnobSize);
+    posX += defaultKnobSize;
+
+    delayRightKnob->setBounds(posX, 20, defaultKnobSize, defaultKnobSize);
     posX += defaultKnobSize;
 
     decayKnob->setBounds(posX, 20, defaultKnobSize, defaultKnobSize);
     posX += defaultKnobSize;
 
     mixKnob->showLabel(*this, *mixKnob);
-    delayKnob->showLabel(*this, *delayKnob);
+    delayLeftKnob->showLabel(*this, *delayLeftKnob);
+    delayRightKnob->showLabel(*this, *delayRightKnob);
     decayKnob->showLabel(*this, *decayKnob);
-
 }

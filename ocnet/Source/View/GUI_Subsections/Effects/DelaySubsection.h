@@ -27,15 +27,17 @@ public:
 private:
     GUI_EventHandler& eventHandler;
 
-    std::unique_ptr<Knob1> delayKnob;
-    std::unique_ptr<OcnetSliderAttachment> delayParameterAttachment;
-    juce::String delayParameterID;
+    std::unique_ptr<Knob1> delayLeftKnob;
+    std::unique_ptr<OcnetSliderAttachment> delayLeftParameterAttachment;
+    juce::String delayLeftParameterID;
 
     std::unique_ptr<Knob1> decayKnob;
     std::unique_ptr<OcnetSliderAttachment> decayParameterAttachment;
     juce::String decayParameterID;
 
+    std::unique_ptr<Knob1> delayRightKnob;
+    std::unique_ptr<OcnetSliderAttachment> delayRightParameterAttachment;
+    juce::String delayRightParameterID;
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(DelaySubsection)
-
 };

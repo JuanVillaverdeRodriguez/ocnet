@@ -282,16 +282,22 @@ void OcnetSynthesiser::noteOff(int midiChannel, int midiNoteNumber, float veloci
                     voice->setKeyDown(false);
 
                     if (!(voice->isSustainPedalDown() || voice->isSostenutoPedalDown())) {
-                        notesThatDidntEnd.remove(notesThatDidntEnd.indexOf(voice->getCurrentlyPlayingNote()));
+                        if (processorInfo.legatoInfo.legatoIsActive) {
+                            notesThatDidntEnd.remove(notesThatDidntEnd.indexOf(voice->getCurrentlyPlayingNote()));
+                        }
                         stopVoice(voice, velocity, allowTailOff);
                     }
 
                     // Si hay notas que quedan pendientes, cambia la voz a reproducir la ultima de esas voces
-                    if (!notesThatDidntEnd.isEmpty()) {
-                        int newerNote = notesThatDidntEnd.getLast();
-                        notesThatDidntEnd.removeLast();
-                        noteOn(midiChannel, newerNote, 1.0f);
+
+                    if (processorInfo.legatoInfo.legatoIsActive) {
+                        if (!notesThatDidntEnd.isEmpty()) {
+                            int newerNote = notesThatDidntEnd.getLast();
+                            notesThatDidntEnd.removeLast();
+                            noteOn(midiChannel, newerNote, 1.0f);
+                        }
                     }
+
 
                     if (midiNoteNumber == processorInfo.legatoInfo.previousMidiNotePressed)
                         processorInfo.legatoInfo.previousNoteIsBeingPlayed = false;
@@ -299,7 +305,9 @@ void OcnetSynthesiser::noteOff(int midiChannel, int midiNoteNumber, float veloci
             }
         }
         else {
-            notesThatDidntEnd.remove(notesThatDidntEnd.indexOf(midiNoteNumber));
+            if (processorInfo.legatoInfo.legatoIsActive) {
+                notesThatDidntEnd.remove(notesThatDidntEnd.indexOf(midiNoteNumber));
+            }
         }
     }
 }
@@ -312,13 +320,17 @@ void OcnetSynthesiser::noteOn(const int midiChannel, const int midiNoteNumber, c
     {
         if (sound->appliesToNote(midiNoteNumber) && sound->appliesToChannel(midiChannel))
         {
-            notesThatDidntEnd.add(midiNoteNumber);
+            if (processorInfo.legatoInfo.legatoIsActive) {
+                notesThatDidntEnd.add(midiNoteNumber);
+            }
 
             // If hitting a note that's still ringing, stop it first (it could be
             // still playing because of the sustain or sostenuto pedal).
             for (auto* voice : voices)
                 if (voice->getCurrentlyPlayingNote() == midiNoteNumber && voice->isPlayingChannel(midiChannel)) {
-                    notesThatDidntEnd.remove(notesThatDidntEnd.indexOf(midiNoteNumber));
+                    if (processorInfo.legatoInfo.legatoIsActive) {
+                        notesThatDidntEnd.remove(notesThatDidntEnd.indexOf(midiNoteNumber));
+                    }
                     stopVoice(voice, 1.0f, true);
                 }
 

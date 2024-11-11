@@ -116,7 +116,7 @@ void DelayProcessor::setMaxDelayTime(int channel, float newMaxDelay)
         if (newMaxDelay != maxDelayValueLeft && newMaxDelay != maxDelayValueRight) {
             maxDelayValueLeft = newMaxDelay;
             maxDelayValueRight = newMaxDelay;
-            updateDelayLineSize(channel); // [1]
+            updateDelayLineSize(channel);
         }
     }
 }
@@ -146,7 +146,7 @@ void DelayProcessor::setDelayTime(size_t channel, float newValue)
     delayTimeLeft = newValue;
     delayTimeRight = newValue;
 
-    updateDelayTime();  // [3]
+    updateDelayTime();
 }
 
 void DelayProcessor::updateDelayTime() noexcept

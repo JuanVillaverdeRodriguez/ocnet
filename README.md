@@ -1,4 +1,4 @@
-# OCNET
+# Ocnet: Free modular synthesizer for music producers.
 
 <div align="center">
   <img src="./ImagesReadme/OcnetEffectsSection.png" alt="Effects Section" width="45%" style="margin-right: 10px;">

@@ -1,9 +1,9 @@
-# ocnet
+# OCNET
 
-Este proyecto representa mi trabajo de final de grado (TFG) del grado en Ingeniería Informática en la Universidad de A Coruña (UDC).
+**OCNET** is a free, digital, modular, and easy-to-use synthesizer designed to provide both experienced and beginner music producers with a free modular alternative to the commercial options currently available on the market. It includes the essential features every synthesizer needs to create unique sounds in a creative and versatile way. Each module has been implemented with a focus on both quality and efficiency.
 
-Consiste en un sintetizador de audio modular, que puede ser incoporado como plugin en formato VST3 a un DAW cualquiera.
+This project is my final year Computer Science project at the University of A Coruña (UDC).
 
-## Licencia
+## License
 
-Este proyecto está licenciado bajo la Licencia Pública General Affero de GNU, versión 3 (AGPLv3). Para más información, consulta el archivo [LICENSE](./LICENSE).
+This project is licensed under the **GNU Affero General Public License, version 3 (AGPLv3)**. For more details, see the [LICENSE](./LICENSE.md) file.

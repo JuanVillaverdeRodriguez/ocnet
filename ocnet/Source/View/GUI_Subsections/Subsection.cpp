@@ -11,7 +11,7 @@
 #include "Subsection.h"
 
 Subsection::Subsection(GUI_EventHandler& eventHandler, int id, const juce::String& type, const juce::String& subType) 
-    : eventHandler(eventHandler), defaultKnobSize(45), subType(subType), id(id), type(type), desiredHeight(80)
+    : eventHandler(eventHandler), defaultKnobSize(45), subType(subType), id(id), type(type), desiredHeight(125)
 {
     bypassParameterID = createParameterID("bypass");
 

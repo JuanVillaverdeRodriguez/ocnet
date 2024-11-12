@@ -43,7 +43,7 @@ private:
     std::unique_ptr<Knob1> speedKnob;
     std::unique_ptr<OcnetSliderAttachment> speedParameterAttachment;
 
-    juce::ComboBox tempoComboBox;
+    OcnetComboBox tempoComboBox;
     std::unique_ptr<OcnetComboBoxAttachment> tempoComboBoxAttachment;
 
 

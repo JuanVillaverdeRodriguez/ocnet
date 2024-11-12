@@ -46,8 +46,12 @@
         <GROUP id="{A8633C04-BAF0-C482-E4B8-B30DCE05F41B}" name="LookAndFeel_V4">
           <FILE id="nMFwTE" name="OcnetLookAndFeel.h" compile="0" resource="0"
                 file="Source/View/LookAndFeel_V4/OcnetLookAndFeel.h"/>
+          <FILE id="rd8r19" name="OcnetLookAndFeel_AddButton.h" compile="0" resource="0"
+                file="Source/View/LookAndFeel_V4/OcnetLookAndFeel_AddButton.h"/>
           <FILE id="OZPNhY" name="OcnetLookAndFeel_BypassButton.h" compile="0"
                 resource="0" file="Source/View/LookAndFeel_V4/OcnetLookAndFeel_BypassButton.h"/>
+          <FILE id="sZXCfa" name="OcnetLookAndFeel_ComboBox.h" compile="0" resource="0"
+                file="Source/View/LookAndFeel_V4/OcnetLookAndFeel_ComboBox.h"/>
           <FILE id="KUmbNf" name="OcnetLookAndFeel_SubsectionButtons.h" compile="0"
                 resource="0" file="Source/View/LookAndFeel_V4/OcnetLookAndFeel_SubsectionButtons.h"/>
         </GROUP>

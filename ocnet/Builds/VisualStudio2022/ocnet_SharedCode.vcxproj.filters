@@ -3936,7 +3936,13 @@
     <ClInclude Include="..\..\Source\View\LookAndFeel_V4\OcnetLookAndFeel.h">
       <Filter>ocnet\Source\View\LookAndFeel_V4</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Source\View\LookAndFeel_V4\OcnetLookAndFeel_AddButton.h">
+      <Filter>ocnet\Source\View\LookAndFeel_V4</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\Source\View\LookAndFeel_V4\OcnetLookAndFeel_BypassButton.h">
+      <Filter>ocnet\Source\View\LookAndFeel_V4</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\View\LookAndFeel_V4\OcnetLookAndFeel_ComboBox.h">
       <Filter>ocnet\Source\View\LookAndFeel_V4</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\View\LookAndFeel_V4\OcnetLookAndFeel_SubsectionButtons.h">

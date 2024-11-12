@@ -12,6 +12,8 @@
 
 WavetableOscillatorSubsection::WavetableOscillatorSubsection(int id, GUI_EventHandler& eventHandler) : OscillatorsSubsection(eventHandler, id, "WavetableOscillator")
 {
+    setDesiredHeight(125);
+
     volumeParameterID = createParameterID("WavetableOscillator", getId(), "volume");
     panningParameterID = createParameterID("WavetableOscillator", getId(), "panning");
     waveTypeParameterID = createParameterID("WavetableOscillator", getId(), "waveType");
@@ -74,17 +76,22 @@ WavetableOscillatorSubsection::WavetableOscillatorSubsection(int id, GUI_EventHa
 
 void WavetableOscillatorSubsection::subsectionResized()
 {
-    //DBG("WavetableOscillatorSubsection::resized()");
-
     auto area = getLocalBounds();
 
-    volumeKnob->setBounds(0, 20, defaultKnobSize, defaultKnobSize);
-    panningKnob->setBounds(defaultKnobSize, 20, defaultKnobSize, defaultKnobSize);
-    numVoicesKnob->setBounds(defaultKnobSize*2, 20, defaultKnobSize, defaultKnobSize);
-    fmAmountKnob->setBounds(defaultKnobSize * 3, 20, defaultKnobSize, defaultKnobSize);
-    detuneAmountKnob->setBounds(defaultKnobSize * 4, 20, defaultKnobSize, defaultKnobSize);
-    transposeKnob->setBounds(defaultKnobSize * 5, 20, defaultKnobSize, defaultKnobSize);
+    // Control
 
+    waveTypeComboBox.setBounds(30, 25, defaultKnobSize * 2, defaultKnobSize - 10);
+    volumeKnob->setBounds(10, 60, defaultKnobSize, defaultKnobSize);
+    panningKnob->setBounds(10 + defaultKnobSize, 60, defaultKnobSize, defaultKnobSize);
+    transposeKnob->setBounds(10 + defaultKnobSize * 2, 60, 50, defaultKnobSize);
+    // Unison
+
+    numVoicesKnob->setBounds(defaultKnobSize * 4, 60, defaultKnobSize, defaultKnobSize);
+    detuneAmountKnob->setBounds(defaultKnobSize * 5, 60, defaultKnobSize, defaultKnobSize);
+
+    // FM
+    fmFromComboBox.setBounds(defaultKnobSize * 7, 25, defaultKnobSize * 2, defaultKnobSize - 10);
+    fmAmountKnob->setBounds(defaultKnobSize * 7.5, 60, defaultKnobSize, defaultKnobSize);
 
     volumeKnob->showLabel(*this, *volumeKnob);
     panningKnob->showLabel(*this, *panningKnob);
@@ -94,8 +101,6 @@ void WavetableOscillatorSubsection::subsectionResized()
     transposeKnob->showLabel(*this, *transposeKnob);
 
 
-    waveTypeComboBox.setBounds(defaultKnobSize * 6, area.getHeight() - defaultKnobSize, defaultKnobSize * 2, defaultKnobSize - 10);
-    fmFromComboBox.setBounds(defaultKnobSize * 7 + (defaultKnobSize * 2), area.getHeight() - defaultKnobSize, defaultKnobSize * 2, defaultKnobSize - 10);
 }
 
 void WavetableOscillatorSubsection::attachParameters(ParameterHandler& parameterHandler)
@@ -153,5 +158,24 @@ void WavetableOscillatorSubsection::comboBoxChanged(juce::ComboBox* comboBoxThat
     if (comboBoxThatHasChanged == &fmFromComboBox) {
         eventHandler.onFmFromChanged(getIdAsString(), fmFromComboBox.getText());
     }
+}
+
+void WavetableOscillatorSubsection::paintCalled(juce::Graphics& g)
+{
+    // Configuración del color para las líneas
+    g.setColour(juce::Colours::white);
+
+    // Obtén el área disponible para calcular las posiciones de las líneas
+    auto area = getLocalBounds();
+
+    // Coordenadas X para las líneas (ajustar según tu diseño)
+    const int firstDividerX = 10 + defaultKnobSize * 3.5; // Después de TRANSPOSE
+    const int secondDividerX = defaultKnobSize * 6.5;    // Después de DETUNE
+
+    // Dibujar las líneas verticales
+
+    g.fillRect(juce::Rectangle<float>(firstDividerX, 30, 1, getHeight() - 50));
+    g.fillRect(juce::Rectangle<float>(secondDividerX, 30, 1, getHeight() - 50));
+
 }
 

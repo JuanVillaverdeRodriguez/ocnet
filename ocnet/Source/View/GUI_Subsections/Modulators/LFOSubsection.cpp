@@ -53,12 +53,12 @@ void LFOSubsection::subsectionResized()
     auto area = getLocalBounds();
 
     int posX = 35;
-    speedKnob->setBounds(posX, 20, defaultKnobSize, defaultKnobSize);
-    posX += defaultKnobSize;
+    tempoComboBox.setBounds(10 + posX, 25, defaultKnobSize * 2, defaultKnobSize - 10);
+    posX += defaultKnobSize * 2;
     
+    speedKnob->setBounds(10 + posX, 20, defaultKnobSize+30, defaultKnobSize);
     speedKnob->showLabel(*this, *speedKnob);
 
-    tempoComboBox.setBounds(posX, 20, defaultKnobSize * 2, defaultKnobSize - 10);
 
     posX = 35 + 5;
     lfoGraph.setBounds(posX, 75, area.getWidth() - 45, area.getHeight() - 80);

@@ -21,7 +21,6 @@ class WavetableOscillatorSubsection : public OscillatorsSubsection, public juce:
 public:
     WavetableOscillatorSubsection(int id, GUI_EventHandler& eventHandler);
 
-
     void attachParameters(ParameterHandler& parameterHandler) override;
     void addParametersToParameterHandler(ParameterHandler& parameterHandler) override;
     void subsectionResized() override;
@@ -29,6 +28,7 @@ public:
     void updateFMCombo(juce::Array<int> ids);
     void comboBoxChanged(juce::ComboBox* comboBoxThatHasChanged) override;
 
+    void paintCalled(juce::Graphics& g) override;
 
 private:
     juce::String volumeParameterID;
@@ -60,10 +60,11 @@ private:
     std::unique_ptr<Knob1> transposeKnob;
     std::unique_ptr<OcnetSliderAttachment> transposeParameterAttachment;
 
-    juce::ComboBox fmFromComboBox;
+    OcnetComboBox fmFromComboBox;
     std::unique_ptr<OcnetComboBoxAttachment> fmFromParameterAttachment;
 
-    juce::ComboBox waveTypeComboBox;
+    //juce::ComboBox waveTypeComboBox;
+    OcnetComboBox waveTypeComboBox;
     std::unique_ptr<OcnetComboBoxAttachment> waveTypeParameterAttachment;
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(WavetableOscillatorSubsection)

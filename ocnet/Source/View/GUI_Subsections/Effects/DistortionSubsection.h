@@ -45,7 +45,7 @@ private:
 
     std::unique_ptr<OcnetSliderAttachment> driveParameterAttachment;
 
-    juce::ComboBox distortionTypeComboBox;
+    OcnetComboBox distortionTypeComboBox;
     std::unique_ptr<OcnetComboBoxAttachment> distortionTypeParameterAttachment;
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(DistortionSubsection)

@@ -2934,7 +2934,9 @@
     <ClInclude Include="..\..\Source\Controller\GUI_EventHandler.h"/>
     <ClInclude Include="..\..\Source\View\OcnetGUI.h"/>
     <ClInclude Include="..\..\Source\View\LookAndFeel_V4\OcnetLookAndFeel.h"/>
+    <ClInclude Include="..\..\Source\View\LookAndFeel_V4\OcnetLookAndFeel_AddButton.h"/>
     <ClInclude Include="..\..\Source\View\LookAndFeel_V4\OcnetLookAndFeel_BypassButton.h"/>
+    <ClInclude Include="..\..\Source\View\LookAndFeel_V4\OcnetLookAndFeel_ComboBox.h"/>
     <ClInclude Include="..\..\Source\View\LookAndFeel_V4\OcnetLookAndFeel_SubsectionButtons.h"/>
     <ClInclude Include="..\..\Source\View\GUI_Elements\ModulatorDragZone\DragZone.h"/>
     <ClInclude Include="..\..\Source\View\GUI_Elements\Knobs\Knob1.h"/>

@@ -32,7 +32,7 @@ private:
     std::unique_ptr<Knob1> speedKnob;
     std::unique_ptr<OcnetSliderAttachment> speedParameterAttachment;
 
-    juce::ComboBox modeComboBox;
+    OcnetComboBox modeComboBox;
     std::unique_ptr<OcnetComboBoxAttachment> modeComboBoxAttachment;
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(RandomizerSubsection)

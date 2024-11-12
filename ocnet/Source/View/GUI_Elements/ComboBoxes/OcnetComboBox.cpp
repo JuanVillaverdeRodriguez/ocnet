@@ -9,3 +9,17 @@
 */
 
 #include "OcnetComboBox.h"
+
+OcnetComboBox::OcnetComboBox()
+{
+    this->setLookAndFeel(&lookAndFeel);
+}
+
+void OcnetComboBox::comboBoxChanged(juce::ComboBox* comboBoxThatHasChanged)
+{
+}
+
+OcnetComboBox::~OcnetComboBox()
+{
+    setLookAndFeel(nullptr);
+}

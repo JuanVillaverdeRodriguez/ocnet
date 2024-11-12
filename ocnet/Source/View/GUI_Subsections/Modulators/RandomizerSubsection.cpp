@@ -50,12 +50,12 @@ void RandomizerSubsection::subsectionResized()
     auto area = getLocalBounds();
 
     int posX = 35;
-    speedKnob->setBounds(posX, 20, defaultKnobSize, defaultKnobSize);
-    posX += defaultKnobSize;
+    modeComboBox.setBounds(getWidth()/2 - ((defaultKnobSize * 3)/2), 25, defaultKnobSize * 3, defaultKnobSize - 10);
+    posX += defaultKnobSize * 3;
 
+    speedKnob->setBounds(modeComboBox.getX()+ ((defaultKnobSize * 3) / 4), 60, defaultKnobSize + 30, defaultKnobSize);
     speedKnob->showLabel(*this, *speedKnob);
 
-    modeComboBox.setBounds(posX, 20, defaultKnobSize * 2, defaultKnobSize - 10);
 
     int lastX = 0;
     for (auto& modulationBubble : modulationBubblesVector) {

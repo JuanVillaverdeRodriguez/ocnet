@@ -16,6 +16,7 @@
 #include "../../Model/ParameterHandler/ButtonParameterAttachment.h"
 #include "../LookAndFeel_V4/OcnetLookAndFeel_SubsectionButtons.h"
 #include "../../View/GUI_Elements/Knobs/Knob1.h"
+#include "../GUI_Elements/ComboBoxes/OcnetComboBox.h"
 
 using namespace Ocnet;
 
@@ -90,6 +91,7 @@ protected:
 
     juce::Label subsectionName;
 
+    //45
     int defaultKnobSize;
 
 

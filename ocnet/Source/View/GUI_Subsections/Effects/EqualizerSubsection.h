@@ -81,12 +81,12 @@ private:
     std::unique_ptr<ButtonParameterAttachment> highFreqButtonAttachment;
     juce::String highFreqParameterID;
 
-    juce::ComboBox lowCutSlopeSelectorComboBox;
+    OcnetComboBox lowCutSlopeSelectorComboBox;
     std::unique_ptr<OcnetComboBoxAttachment> lowCutSlopeSelectorComboBoxAttachment;
     juce::String lowCutSlopeSelectorParameterID;
     juce::Label lowCutSlopeLabel;
     
-    juce::ComboBox highCutSlopeSelectorComboBox;
+    OcnetComboBox highCutSlopeSelectorComboBox;
     std::unique_ptr<OcnetComboBoxAttachment> highCutSlopeSelectorComboBoxAttachment;
     juce::String highCutSlopeSelectorParameterID;
     juce::Label highCutSlopeLabel;

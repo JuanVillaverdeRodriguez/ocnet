@@ -1,9 +1,9 @@
 # OCNET
 
-Ocnet is a digital-modular synthesizer designed to provide both experienced and begginer music producers a free modular alternative to the ones laying on the market. It has the main features a synthesizer should have in order to create unique sounds in a different way.
+**OCNET** is a free, digital, modular, and easy-to-use synthesizer designed to provide both experienced and beginner music producers with a free modular alternative to the commercial options currently available on the market. It includes the essential features every synthesizer needs to create unique sounds in a creative and versatile way. Each module has been implemented with a focus on both quality and efficiency.
 
-This project represents my Computer Science final year project at the University of A Coruña (UDC).
+This project is my final year Computer Science project at the University of A Coruña (UDC).
 
-## Licencia
+## License
 
-This project is under the license of GNU Affero General Public License, version 3 (AGPLv3). See more in [LICENSE](./LICENSE.md).
+This project is licensed under the **GNU Affero General Public License, version 3 (AGPLv3)**. For more details, see the [LICENSE](./LICENSE.md) file.

@@ -142,6 +142,10 @@
           </GROUP>
         </GROUP>
         <GROUP id="{0CFAC4A2-8953-FE87-2F35-5E3903C2974E}" name="GUI_Sections">
+          <GROUP id="{75EB88A5-ABF8-3A8C-065B-572230BB0CE0}" name="Separators">
+            <FILE id="GS660P" name="Separators.cpp" compile="1" resource="0" file="Source/View/GUI_Sections/Separators/Separators.cpp"/>
+            <FILE id="FfVMyY" name="Separators.h" compile="0" resource="0" file="Source/View/GUI_Sections/Separators/Separators.h"/>
+          </GROUP>
           <FILE id="vIA5Ab" name="Section.cpp" compile="1" resource="0" file="Source/View/GUI_Sections/Section.cpp"/>
           <FILE id="xUeT3p" name="Section.h" compile="0" resource="0" file="Source/View/GUI_Sections/Section.h"/>
           <GROUP id="{7DF2814D-0A87-F2C5-8591-068EF35C064B}" name="Oscillators">

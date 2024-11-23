@@ -18,7 +18,8 @@ EffectsSection::EffectsSection(GUI_EventHandler& eventHandler) : eventHandler(ev
 {
     this->addAndMakeVisible(addEffectButton);
     addEffectButton.setButtonText("+");
-
+    
+    addEffectButton.setLookAndFeel(&lookAndFeel_AddButton);
     addEffectButton.addListener(this);
 }
 

@@ -94,6 +94,11 @@ private:
     float glideValue;
     int numVoicesValue;
     bool paramsSynced;
-    
+
+    std::mutex effectsMutex;                   // Mutex para proteger la lista de efectos.
+    std::atomic<bool> pendingAddEffect{ false }; // Flag para indicar si hay un efecto pendiente.
+    std::unique_ptr<Effector> effectToAdd;     // Efecto que se añadirá.
+    std::vector<int> effectsToDelete; // IDs de los efectos a eliminar.
+
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (OcnetAudioProcessor)
 };

@@ -44,7 +44,7 @@ FooterSection::FooterSection(GUI_EventHandler& eventHandler) : eventHandler(even
 void FooterSection::paint(juce::Graphics& g)
 {
     // (Our component is opaque, so we must completely fill the background with a solid colour)
-    g.fillAll(Palette::Section);
+    //g.fillAll(Palette::Section);
 }
 
 void FooterSection::addSynthParams(ParameterHandler& parameterHandler)

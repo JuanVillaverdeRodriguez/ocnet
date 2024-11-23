@@ -20,7 +20,7 @@ ModulatorsSection::ModulatorsSection(GUI_EventHandler& eventHandler) : eventHand
     addModulatorButton.setButtonText("+");
 
     addModulatorButton.addListener(this);
-    
+    addModulatorButton.setLookAndFeel(&lookAndFeel_AddButton);
 }
 
 std::unique_ptr<Subsection>* ModulatorsSection::addModulator(int processorType, int numberOfEnvelopes, ParameterHandler& parameterHandler, int subMenuID)

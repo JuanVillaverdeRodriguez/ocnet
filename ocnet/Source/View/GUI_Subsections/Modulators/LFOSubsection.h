@@ -32,7 +32,12 @@ private:
         void updateParams(float freq);
 
     private:
-        float freq;
+        void recalculatePoints(); // Método para recalcular los puntos de la onda.
+
+        float freq = 1.0f;
+
+        juce::Rectangle<int> constrainedArea; // Área restringida para la onda.
+        juce::Path sineWavePath; // Ruta precomputada para la onda.
     };
 
     LFOGraph lfoGraph;

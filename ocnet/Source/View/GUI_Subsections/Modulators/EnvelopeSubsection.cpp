@@ -98,9 +98,6 @@ void EnvelopeSubsection::paintCalled(juce::Graphics& g)
         sustainKnob->getValue(), 
         releaseKnob->getValue()
     );
-
-
-    envelopeGraph.repaint();
 }
 
 
@@ -129,41 +126,58 @@ void EnvelopeSubsection::addParametersToParameterHandler(ParameterHandler& param
 
 void EnvelopeSubsection::EnvelopeGraph::paint(juce::Graphics& g)
 {
-    // Definir las dimensiones del gráfico de ADSR
-//auto area = getLocalBounds().reduced(10); // Margen dentro del componente
-    const float cornerRadius = 5.0f; // Radio para los bordes redondeados
+    const float cornerRadius = 5.0f; // Radio para bordes redondeados.
     const float lineThickness = 3.0f;
 
+    // Dibujar el fondo con bordes redondeados.
     juce::Path roundedRect;
     roundedRect.addRoundedRectangle(0, 0, getWidth(), getHeight(), cornerRadius, cornerRadius, true, true, true, true);
     g.setColour(Palette::Section);
     g.fillPath(roundedRect);
 
-    auto area = getLocalBounds();
-    juce::Rectangle<int> constrainedArea = juce::Rectangle<int>(area.getX() + lineThickness, area.getY() + lineThickness, area.getWidth() - (lineThickness * 2), area.getHeight() - (lineThickness*2));
-
-    float width = constrainedArea.getWidth();
-    float height = constrainedArea.getHeight();
-
-    // Definir puntos iniciales y proporciones
-    juce::Point<float> start(constrainedArea.getX(), constrainedArea.getBottom()); // Inicio en el fondo (punto 0)
-    juce::Point<float> attackPoint(start.getX() + attack * width, constrainedArea.getY()); // Punto final del ataque (sube a la parte superior)
-    juce::Point<float> decayPoint(attackPoint.getX() + decay * width, constrainedArea.getBottom() - sustain * height); // Decae hasta el nivel de sustain
-    juce::Point<float> sustainPoint(decayPoint.getX(), decayPoint.getY()); // Mantiene sustain
-    juce::Point<float> releasePoint(sustainPoint.getX() + release * width, constrainedArea.getBottom()); // Baja hasta el fondo en release
-
-    // Dibujar líneas del ADSR
-    g.setColour(Palette::White); // Color de las líneas
+    // Dibujar las líneas del ADSR.
+    g.setColour(Palette::White);
     g.drawLine(start.getX(), start.getY(), attackPoint.getX(), attackPoint.getY(), lineThickness); // Ataque
     g.drawLine(attackPoint.getX(), attackPoint.getY(), decayPoint.getX(), decayPoint.getY(), lineThickness); // Decay
     g.drawLine(decayPoint.getX(), decayPoint.getY(), sustainPoint.getX(), sustainPoint.getY(), lineThickness); // Sustain
     g.drawLine(sustainPoint.getX(), sustainPoint.getY(), releasePoint.getX(), releasePoint.getY(), lineThickness); // Release
 }
 
+void EnvelopeSubsection::EnvelopeGraph::recalculatePoints()
+{
+    // Calculamos el área restringida.
+    const float lineThickness = 3.0f;
+    auto area = getLocalBounds();
+    constrainedArea = juce::Rectangle<int>(
+        area.getX() + lineThickness,
+        area.getY() + lineThickness,
+        area.getWidth() - (lineThickness * 2),
+        area.getHeight() - (lineThickness * 2)
+    );
+
+    float width = constrainedArea.getWidth();
+    float height = constrainedArea.getHeight();
+
+    // Calculamos los puntos del gráfico ADSR.
+    start = juce::Point<float>(constrainedArea.getX(), constrainedArea.getBottom());
+    attackPoint = juce::Point<float>(start.getX() + attack * width, constrainedArea.getY());
+    decayPoint = juce::Point<float>(attackPoint.getX() + decay * width, constrainedArea.getBottom() - sustain * height);
+    sustainPoint = juce::Point<float>(decayPoint.getX(), decayPoint.getY());
+    releasePoint = juce::Point<float>(sustainPoint.getX() + release * width, constrainedArea.getBottom());
+}
+
 void EnvelopeSubsection::EnvelopeGraph::updateParams(float attack, float decay, float sustain, float release)
 {
-    this->attack = attack;
-    this->decay = decay;
-    this->sustain = sustain;
-    this->release = release;
+    // Solo repintamos este componente si los valores han cambiado
+    if (this->attack != attack || this->decay != decay ||
+        this->sustain != sustain || this->release != release)
+    {
+        this->attack = attack;
+        this->decay = decay;
+        this->sustain = sustain;
+        this->release = release;
+
+        recalculatePoints(); // Recalcular los puntos del gráfico.
+        repaint(); // Esto no afecta al padre.
+    }
 }

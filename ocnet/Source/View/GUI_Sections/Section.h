@@ -12,6 +12,7 @@
 
 #include "../GUI_Subsections/Subsection.h"
 #include <JuceHeader.h>
+#include "../LookAndFeel_V4/OcnetLookAndFeel_AddButton.h"
 
 class Section : public juce::Component {
 public:
@@ -25,9 +26,8 @@ public:
     int sectionResized();
     juce::Array<Knob1*> getAllKnobs();
 
-
     Subsection* getSubsectionWithID(int id);
 
 protected:
-
+    OcnetLookAndFeel_AddButton lookAndFeel_AddButton;
 };

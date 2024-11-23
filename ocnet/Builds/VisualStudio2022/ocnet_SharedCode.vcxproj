@@ -163,6 +163,7 @@
     <ClCompile Include="..\..\Source\View\GUI_Subsections\Oscillators\WavetableOscillatorSubsection.cpp"/>
     <ClCompile Include="..\..\Source\View\GUI_Subsections\Oscillators\OscillatorsSubsection.cpp"/>
     <ClCompile Include="..\..\Source\View\GUI_Subsections\Oscillators\SamplerSubsection.cpp"/>
+    <ClCompile Include="..\..\Source\View\GUI_Sections\Separators\Separators.cpp"/>
     <ClCompile Include="..\..\Source\View\GUI_Sections\Section.cpp"/>
     <ClCompile Include="..\..\Source\View\GUI_Sections\Oscillators\OscillatorsSection.cpp"/>
     <ClCompile Include="..\..\Source\View\GUI_Sections\Modulators\ModulatorsSection.cpp"/>
@@ -2958,6 +2959,7 @@
     <ClInclude Include="..\..\Source\View\GUI_Subsections\Oscillators\WavetableOscillatorSubsection.h"/>
     <ClInclude Include="..\..\Source\View\GUI_Subsections\Oscillators\OscillatorsSubsection.h"/>
     <ClInclude Include="..\..\Source\View\GUI_Subsections\Oscillators\SamplerSubsection.h"/>
+    <ClInclude Include="..\..\Source\View\GUI_Sections\Separators\Separators.h"/>
     <ClInclude Include="..\..\Source\View\GUI_Sections\Section.h"/>
     <ClInclude Include="..\..\Source\View\GUI_Sections\Oscillators\OscillatorsSection.h"/>
     <ClInclude Include="..\..\Source\View\GUI_Sections\Modulators\ModulatorsSection.h"/>

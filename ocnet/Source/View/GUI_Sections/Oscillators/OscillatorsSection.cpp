@@ -19,6 +19,11 @@ OscillatorsSection::OscillatorsSection(GUI_EventHandler& eventHandler) : eventHa
     addOscillatorButton.setButtonText("+");
 
     addOscillatorButton.addListener(this);
+    addOscillatorButton.setLookAndFeel(&lookAndFeel_AddButton);
+}
+
+OscillatorsSection::~OscillatorsSection()
+{
 }
 
 void OscillatorsSection::paint(juce::Graphics& g)

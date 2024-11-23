@@ -36,10 +36,21 @@ private:
         void updateParams(float attack, float decay, float sustain, float release);
 
     private:
-        float attack;
-        float decay;
-        float sustain;
-        float release;
+        void recalculatePoints(); // Método para recalcular los puntos del ADSR.
+
+        float attack = 0.0f;
+        float decay = 0.0f;
+        float sustain = 0.0f;
+        float release = 0.0f;
+
+        // Puntos precomputados para el gráfico ADSR.
+        juce::Point<float> start;
+        juce::Point<float> attackPoint;
+        juce::Point<float> decayPoint;
+        juce::Point<float> sustainPoint;
+        juce::Point<float> releasePoint;
+
+        juce::Rectangle<int> constrainedArea; // Área restringida para el gráfico.
     };
 
     EnvelopeGraph envelopeGraph;

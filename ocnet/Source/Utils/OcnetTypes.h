@@ -39,8 +39,8 @@ namespace Ocnet::Palette {
     const juce::Colour BackgroundSecondary { 0xff353535 }; // Raisin Black
     const juce::Colour BackgroundThird { 0xff525252 }; // Raisin Black
     const juce::Colour Primary { 0xff5B4373 }; // Space Cadet
-    const juce::Colour Secondary { 0xff436C73 }; // Mexican Pink
-    const juce::Colour Accent { 0xff4B7981 }; // Vivid Sky Blue
+    const juce::Colour Secondary { 0xff78AEFF }; // Mexican Pink
+    const juce::Colour Accent { 0xff78AEFF }; // Vivid Sky Blue
     const juce::Colour White { 0xffE3E3E3 }; // White Smoke
 
     //==============================================

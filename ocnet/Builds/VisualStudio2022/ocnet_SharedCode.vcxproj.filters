@@ -44,6 +44,9 @@
     <Filter Include="ocnet\Source\View\GUI_Subsections">
       <UniqueIdentifier>{DFA7B3A1-D1C7-D8E8-252A-EACD2A4360FF}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ocnet\Source\View\GUI_Sections\Separators">
+      <UniqueIdentifier>{EB78D5F8-5C96-6CD2-AA5F-E60FF7541317}</UniqueIdentifier>
+    </Filter>
     <Filter Include="ocnet\Source\View\GUI_Sections\Oscillators">
       <UniqueIdentifier>{CADA55A6-EC55-7C33-4E82-9D165167E9EE}</UniqueIdentifier>
     </Filter>
@@ -867,6 +870,9 @@
     </ClCompile>
     <ClCompile Include="..\..\Source\View\GUI_Subsections\Oscillators\SamplerSubsection.cpp">
       <Filter>ocnet\Source\View\GUI_Subsections\Oscillators</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\View\GUI_Sections\Separators\Separators.cpp">
+      <Filter>ocnet\Source\View\GUI_Sections\Separators</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\View\GUI_Sections\Section.cpp">
       <Filter>ocnet\Source\View\GUI_Sections</Filter>
@@ -4007,6 +4013,9 @@
     </ClInclude>
     <ClInclude Include="..\..\Source\View\GUI_Subsections\Oscillators\SamplerSubsection.h">
       <Filter>ocnet\Source\View\GUI_Subsections\Oscillators</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\View\GUI_Sections\Separators\Separators.h">
+      <Filter>ocnet\Source\View\GUI_Sections\Separators</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\View\GUI_Sections\Section.h">
       <Filter>ocnet\Source\View\GUI_Sections</Filter>

@@ -6,10 +6,12 @@ OcnetGUI::OcnetGUI(GUI_EventHandler& eventHandler, juce::MidiKeyboardState& keyb
     keyboardComponent(keyboardState, juce::MidiKeyboardComponent::horizontalKeyboard) 
 {
     headerSection = std::make_unique<HeaderSection>();
+    separatorsSection = std::make_unique<Separators>();
     footerSection = std::make_unique<FooterSection>(eventHandler);
     oscillatorsSection = std::make_unique<OscillatorsSection>(eventHandler);
     modulatorsSection = std::make_unique<ModulatorsSection>(eventHandler);
     effectsSection = std::make_unique<EffectsSection>(eventHandler);
+
 
     headerSection->addListener(this);
 
@@ -19,6 +21,7 @@ OcnetGUI::OcnetGUI(GUI_EventHandler& eventHandler, juce::MidiKeyboardState& keyb
     this->addAndMakeVisible(effectsSectionViewport);
     this->addAndMakeVisible(oscillatorsSectionViewport);
     this->addAndMakeVisible(modulatorsSectionViewport);
+    this->addAndMakeVisible(separatorsSection.get());
 
     //this->addAndMakeVisible(oscillatorsSection.get());
     //this->addAndMakeVisible(modulatorsSection.get());
@@ -33,9 +36,8 @@ OcnetGUI::OcnetGUI(GUI_EventHandler& eventHandler, juce::MidiKeyboardState& keyb
     oscillatorsSectionViewport.setScrollBarsShown(true, false, false, false);
 
     addAndMakeVisible(keyboardComponent);
-
-
-    
+    separatorsSection.get()->setInterceptsMouseClicks(false, false);
+    visualizeOscillatorSection();
 }
 
 OcnetGUI::~OcnetGUI()
@@ -79,16 +81,17 @@ void OcnetGUI::attachSynthParams(ParameterHandler& parameterHandler)
 
 void OcnetGUI::paint(juce::Graphics& g)
 {
-    g.setColour(Palette::Section);
+    g.setColour(Palette::BackgroundThird);
     g.fillAll();
+
 }
 
 void OcnetGUI::resized()
 {
-
     auto area = getLocalBounds();
+    const int margin = 0;
 
-    auto headerSectionBounds = area.withTrimmedRight(area.getWidth() / 2.2).withTrimmedBottom(area.getHeight() - 50);
+    auto headerSectionBounds = area.withTrimmedRight(area.getWidth() / 2).withTrimmedBottom(area.getHeight() - 50);
 
     area = getLocalBounds();
     auto keyboardSectionBounds = area.removeFromBottom(50);
@@ -97,31 +100,44 @@ void OcnetGUI::resized()
     auto footerSectionBounds = area.removeFromBottom(105);
 
     area = getLocalBounds();
-    auto oscillatorsSectionViewportBounds = area.removeFromLeft(headerSectionBounds.getWidth()).withTrimmedTop(headerSectionBounds.getHeight()).withTrimmedBottom(footerSectionBounds.getHeight());
+    auto oscillatorsSectionViewportBounds = area.removeFromLeft(headerSectionBounds.getWidth())
+        .withTrimmedTop(headerSectionBounds.getHeight())
+        .withTrimmedBottom(footerSectionBounds.getHeight() + margin);
 
     area = getLocalBounds();
-    auto modulatorsSectionViewportBounds = area.withTrimmedLeft(headerSectionBounds.getWidth()).withTrimmedBottom(footerSectionBounds.getHeight());
+    auto modulatorsSectionViewportBounds = area.withTrimmedLeft(headerSectionBounds.getWidth() - (margin * 2))
+        //.withTrimmedTop(headerSectionBounds.getHeight() + margin)
+        .withTrimmedBottom(footerSectionBounds.getHeight() + margin);
+    //modulatorsSectionViewportBounds.setX(headerSectionBounds.getWidth() + margin);
 
     area = getLocalBounds();
-    auto effectsSectionViewportBounds = area.removeFromLeft(headerSectionBounds.getWidth()).withTrimmedTop(headerSectionBounds.getHeight()).withTrimmedBottom(footerSectionBounds.getHeight());
+    auto effectsSectionViewportBounds = area.removeFromLeft(headerSectionBounds.getWidth())
+        .withTrimmedTop(headerSectionBounds.getHeight())
+        .withTrimmedBottom(footerSectionBounds.getHeight() + margin);
 
     modulatorsSectionViewport.setBounds(modulatorsSectionViewportBounds);
     effectsSectionViewport.setBounds(effectsSectionViewportBounds);
     oscillatorsSectionViewport.setBounds(oscillatorsSectionViewportBounds);
 
+    // Ajustar el teclado MIDI
+    int keyboardWidth = keyboardSectionBounds.getWidth();
+    int numKeys = 128; // Número total de teclas MIDI
+    float keyWidth = 8 + static_cast<float>(keyboardWidth) / numKeys; // Ancho de cada tecla
+
+    keyboardComponent.setKeyWidth(keyWidth); // Ajustar el ancho de las teclas
+    keyboardComponent.setAvailableRange(0, 127); // Rango completo de notas MIDI
     keyboardComponent.setBounds(keyboardSectionBounds);
+
     footerSection.get()->setBounds(footerSectionBounds);
+    separatorsSection.get()->setBounds(getLocalBounds());
     modulatorsSection.get()->setBounds(modulatorsSectionViewportBounds);
     headerSection.get()->setBounds(headerSectionBounds);
     oscillatorsSection.get()->setBounds(oscillatorsSectionViewportBounds);
     effectsSection.get()->setBounds(effectsSectionViewportBounds);
 
-    // Oculta las barras de desplazamiento (debería ser innecesario si el tamaño es correcto)
     keyboardComponent.setScrollButtonsVisible(false);
-    keyboardComponent.setAvailableRange(24, 127);
-
-
 }
+
 
 Section* OcnetGUI::getSection(const juce::String& type)
 {

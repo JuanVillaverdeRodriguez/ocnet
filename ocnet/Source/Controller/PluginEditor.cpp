@@ -10,7 +10,7 @@ OcnetAudioProcessorEditor::OcnetAudioProcessorEditor(OcnetAudioProcessor & ocnet
 {
     addAndMakeVisible(getGui());
 
-    setSize(1280 / 1.5, 720 / 1.5);
+    setSize(1280 / 1, 720 / 1);
     triggerAsyncUpdate(); // Programa la actualización asíncrona
 
 

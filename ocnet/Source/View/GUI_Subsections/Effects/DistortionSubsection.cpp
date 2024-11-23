@@ -51,7 +51,6 @@ void DistortionSubsection::subsectionResized()
 void DistortionSubsection::paintCalled(juce::Graphics& g)
 {
     distortionGraph.updateParams(driveKnob->getValue());
-    distortionGraph.repaint();
 }
 
 void DistortionSubsection::attachParameters(ParameterHandler& parameterHandler)
@@ -68,57 +67,69 @@ void DistortionSubsection::addParametersToParameterHandler(ParameterHandler& par
 
 void DistortionSubsection::DistortionGraph::paint(juce::Graphics& g)
 {
-    const float cornerRadius = 5.0f; // Radio para los bordes redondeados
-    const float lineThickness = 3.0f;
+    const float cornerRadius = 5.0f;
 
-    // Dibujar fondo con esquinas redondeadas
+    // Dibujar fondo con esquinas redondeadas.
     juce::Path roundedRect;
     roundedRect.addRoundedRectangle(0, 0, getWidth(), getHeight(), cornerRadius, cornerRadius, true, true, true, true);
-    g.setColour(Palette::Section);  // Color del fondo
+    g.setColour(Palette::Section);
     g.fillPath(roundedRect);
 
-    // Área restringida para dibujar la función
-    auto area = getLocalBounds();
-    juce::Rectangle<int> constrainedArea = juce::Rectangle<int>(area.getX() + lineThickness, area.getY() + lineThickness, area.getWidth() - (lineThickness * 2), area.getHeight() - (lineThickness * 2));
+    // Dibujar la función de distorsión precomputada.
+    g.setColour(juce::Colours::white);
+    g.strokePath(distortionPath, juce::PathStrokeType(2.0f));
+}
 
-    // Parámetros del gráfico
+void DistortionSubsection::DistortionGraph::recalculatePoints()
+{
+    // Limpiar la trayectoria previa.
+    distortionPath.clear();
+
+    // Determinar el área restringida.
+    const float lineThickness = 3.0f;
+    auto area = getLocalBounds();
+    constrainedArea = juce::Rectangle<int>(
+        area.getX() + lineThickness,
+        area.getY() + lineThickness,
+        area.getWidth() - (lineThickness * 2),
+        area.getHeight() - (lineThickness * 2)
+    );
+
     float width = constrainedArea.getWidth();
     float height = constrainedArea.getHeight();
-    float midY = constrainedArea.getY() + height / 2.0f;  // Punto medio vertical
+    float midY = constrainedArea.getY() + height / 2.0f; // Punto medio vertical.
 
-    juce::Path distortionPath;
-
-    // Rango de x que representará el gráfico (desde -1 a 1)
+    // Parámetros para la función de distorsión.
     float startX = -1.0f;
     float endX = 1.0f;
+
+    // Crear la trayectoria para la función de distorsión.
 
     float y2 = std::tanh(-1.0f * drive);
     float scaledY2 = juce::jmap(y2, -1.0f, 1.0f, height, 0.0f); // y invertido para que +1 esté arriba
     // Crear la trayectoria de la función de distorsión (tanh)
     distortionPath.startNewSubPath(constrainedArea.getX(), constrainedArea.getY() + scaledY2);
 
-    // Generar puntos a lo largo del ancho del área
-    for (float x = startX + 0.1f; x <= endX; x += 0.1f)
-    {
-        // Escalar x al área gráfica
+    for (float x = startX + 0.01f; x <= endX; x += 0.01f) {
+        // Escalar x al área gráfica.
         float normalizedX = juce::jmap(x, startX, endX, 0.0f, width);
 
-        // Aplicar la función f(x) = tanh(x * drive)
+        // Aplicar la función f(x) = tanh(x * drive).
         float y = std::tanh(x * drive);
 
-        // Escalar y para que ocupe el área vertical del gráfico (mitad de la altura es la amplitud máxima)
-        float scaledY = juce::jmap(y, -1.0f, 1.0f, height, 0.0f); // y invertido para que +1 esté arriba
+        // Escalar y al área gráfica (invertir para que +1 esté arriba).
+        float scaledY = juce::jmap(y, -1.0f, 1.0f, height, 0.0f);
 
-        // Dibujar el punto en el gráfico
+        // Dibujar el punto en el gráfico.
         distortionPath.lineTo(constrainedArea.getX() + normalizedX, constrainedArea.getY() + scaledY);
     }
-
-    // Dibujar la función de distorsión
-    g.setColour(juce::Colours::white);  // Color de la línea
-    g.strokePath(distortionPath, juce::PathStrokeType(2.0f));  // Grosor de la línea
 }
 
 void DistortionSubsection::DistortionGraph::updateParams(float drive)
 {
-    this->drive = drive;
+    if (this->drive != drive) {
+        this->drive = drive;
+        recalculatePoints(); // Recalcula la trayectoria del gráfico.
+        repaint();           // Solicita redibujar el componente.
+    }
 }

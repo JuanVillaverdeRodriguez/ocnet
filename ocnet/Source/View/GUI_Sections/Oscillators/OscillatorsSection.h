@@ -24,6 +24,8 @@ using namespace Ocnet;
 class OscillatorsSection : public Section, juce::Button::Listener {
 public:
     OscillatorsSection(GUI_EventHandler& eventHandler);
+    ~OscillatorsSection();
+
 
     std::unique_ptr<Subsection>* addOscillator(int processorType, int numberOfWavetableOscillators, ParameterHandler& parameterHandler);
 
@@ -39,6 +41,7 @@ public:
 
 private:
     OcnetLookAndFeel lookAndFeel;
+
 
     std::vector<std::unique_ptr<Subsection>> subsectionsVector;
 

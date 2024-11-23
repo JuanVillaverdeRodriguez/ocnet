@@ -75,51 +75,61 @@ void LFOSubsection::subsectionResized()
 void LFOSubsection::paintCalled(juce::Graphics& g)
 {
     lfoGraph.updateParams(speedKnob->getValue());
-    lfoGraph.repaint();
 }
 
 void LFOSubsection::LFOGraph::paint(juce::Graphics& g)
 {
-    const float cornerRadius = 5.0f; // Radio para los bordes redondeados
-    const float lineThickness = 3.0f;
+    const float cornerRadius = 5.0f;
 
-    // Dibujar fondo con esquinas redondeadas
+    // Dibujar fondo con esquinas redondeadas.
     juce::Path roundedRect;
     roundedRect.addRoundedRectangle(0, 0, getWidth(), getHeight(), cornerRadius, cornerRadius, true, true, true, true);
-    g.setColour(Palette::Section);  // Color del fondo
+    g.setColour(Palette::Section);
     g.fillPath(roundedRect);
 
-    // Área restringida para dibujar la onda
-    auto area = getLocalBounds();
-    juce::Rectangle<int> constrainedArea = juce::Rectangle<int>(area.getX() + lineThickness, area.getY() + lineThickness, area.getWidth() - (lineThickness * 2), area.getHeight() - (lineThickness * 2));
-
-    // Parámetros para la onda
-    float width = constrainedArea.getWidth();
-    float height = constrainedArea.getHeight();
-    float midY = constrainedArea.getY() + height / 2.0f;  // Punto medio vertical
-
-    juce::Path sineWavePath;
-
-    // Crear la trayectoria de la onda sinusoidal
-    float numCycles = freq;  // Solo un ciclo
-    float frequency = numCycles / width;  // Frecuencia para un ciclo completo
-    float amplitude = height / 2.0f;  // Amplitud de la onda (la mitad de la altura del área restringida)
-
-    sineWavePath.startNewSubPath(constrainedArea.getX(), midY);  // Iniciar la onda en el borde izquierdo
-
-    // Crear puntos de la onda
-    for (float x = 0; x < width; ++x)
-    {
-        float y = std::sin(x * juce::MathConstants<float>::twoPi * frequency) * amplitude;  // y = sin(x)
-        sineWavePath.lineTo(constrainedArea.getX() + x, midY - y);  // Dibujar la onda desde el medio
-    }
-
-    // Dibujar la onda sinusoidal
-    g.setColour(juce::Colours::white);  // Color de la onda
-    g.strokePath(sineWavePath, juce::PathStrokeType(2.0f));  // Grosor de la línea de la onda
+    // Dibujar la onda sinusoidal precomputada.
+    g.setColour(juce::Colours::white);
+    g.strokePath(sineWavePath, juce::PathStrokeType(2.0f));
 }
-
 void LFOSubsection::LFOGraph::updateParams(float freq)
 {
-    this->freq = freq;
+
+    if (this->freq != freq) {
+        this->freq = freq;
+
+        recalculatePoints(); // Recalcular los puntos del gráfico.
+        repaint(); // Esto no afecta al padre.
+    }
+
+}
+
+void LFOSubsection::LFOGraph::recalculatePoints()
+{
+    // Limpiar la trayectoria previa.
+    sineWavePath.clear();
+
+    // Determinar el área restringida.
+    const float lineThickness = 3.0f;
+    auto area = getLocalBounds();
+    constrainedArea = juce::Rectangle<int>(
+        area.getX() + lineThickness,
+        area.getY() + lineThickness,
+        area.getWidth() - (lineThickness * 2),
+        area.getHeight() - (lineThickness * 2)
+    );
+
+    float width = constrainedArea.getWidth();
+    float height = constrainedArea.getHeight();
+    float midY = constrainedArea.getY() + height / 2.0f; // Punto medio vertical.
+
+    // Parámetros de la onda.
+    float amplitude = height / 2.0f; // Amplitud de la onda (mitad de la altura).
+    float frequency = freq / width; // Frecuencia relativa a la anchura.
+
+    // Construir la onda sinusoidal.
+    sineWavePath.startNewSubPath(constrainedArea.getX(), midY);
+    for (float x = 0; x < width; ++x) {
+        float y = std::sin(x * juce::MathConstants<float>::twoPi * frequency) * amplitude;
+        sineWavePath.lineTo(constrainedArea.getX() + x, midY - y);
+    }
 }

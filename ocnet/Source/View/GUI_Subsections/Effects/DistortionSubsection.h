@@ -33,7 +33,12 @@ private:
         void updateParams(float drive);
 
     private:
-        float drive;
+        void recalculatePoints(); // Recalcula los puntos del gráfico.
+
+        float drive = 1.0f; // Valor predeterminado de drive.
+
+        juce::Rectangle<int> constrainedArea; // Área restringida para el gráfico.
+        juce::Path distortionPath; // Trayectoria precomputada de la función de distorsión.
     };
 
     DistortionGraph distortionGraph;

@@ -71,7 +71,7 @@ public:
 
         // Áreas del arco
         juce::Path backgroundArc;
-        backgroundArc.addPieSegment(rx, ry, rw, rw, rotaryStartAngle, rotaryEndAngle, 0.5f);
+        backgroundArc.addPieSegment(rx, ry, rw, rw, rotaryStartAngle, rotaryEndAngle, 0.65f);
         g.setColour(Palette::SliderBackground);
         g.fillPath(backgroundArc);
 
@@ -81,7 +81,7 @@ public:
 
         // Arco del valor actual
         juce::Path valueArc;
-        valueArc.addPieSegment(rx, ry, rw, rw, rotaryStartAngle, angle, 0.5f);
+        valueArc.addPieSegment(rx, ry, rw, rw, rotaryStartAngle, angle, 0.65f);
         g.setColour(fillColour); // Color personalizado del arco
         g.fillPath(valueArc);
 
@@ -89,7 +89,7 @@ public:
         juce::Path whiteSection;
         float whiteSectionStartAngle = angle - 0.1f; // Ajusta este valor para que el tamaño y posición sean correctos
         float whiteSectionEndAngle = angle + 0.2f; // Ajusta este valor para el grosor de la sección blanca
-        whiteSection.addPieSegment(rx, ry, rw, rw, whiteSectionStartAngle, whiteSectionEndAngle, 0.5f);
+        whiteSection.addPieSegment(rx, ry, rw, rw, whiteSectionStartAngle, whiteSectionEndAngle, 0.65f);
         g.setColour(Palette::SliderDot);
         g.fillPath(whiteSection);
     }

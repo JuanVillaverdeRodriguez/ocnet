@@ -167,40 +167,55 @@ bool OcnetAudioProcessor::isBusesLayoutSupported (const BusesLayout& layouts) co
 }
 #endif
 
-void OcnetAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juce::MidiBuffer& midiMessages)
+void OcnetAudioProcessor::processBlock(juce::AudioBuffer<float>& buffer, juce::MidiBuffer& midiMessages)
 {
     juce::ScopedNoDenormals noDenormals;
     auto totalNumInputChannels = getTotalNumInputChannels();
     auto totalNumOutputChannels = getTotalNumOutputChannels();
 
-
-    // Limpiar el buffer
+    // Limpia las salidas no utilizadas.
     for (auto i = totalNumInputChannels; i < totalNumOutputChannels; ++i)
         buffer.clear(i, 0, buffer.getNumSamples());
 
-    if (paramsSynced)  
+    // Verifica si hay operaciones pendientes (añadir o eliminar).
+    if (pendingAddEffect.load())
+    {
+        std::lock_guard<std::mutex> lock(effectsMutex);
+
+        // Añadir efecto si `effectToAdd` no es nulo.
+        if (effectToAdd) {
+            effectsProcessorsList.push_back(std::move(effectToAdd));
+        }
+
+        // Eliminar efectos marcados en `effectsToDelete`.
+        for (int id : effectsToDelete) {
+            effectsProcessorsList.erase(
+                std::remove_if(effectsProcessorsList.begin(), effectsProcessorsList.end(),
+                    [id](const std::unique_ptr<Effector>& effector) {
+                        return effector->getId() == id;
+                    }),
+                effectsProcessorsList.end()
+            );
+        }
+        effectsToDelete.clear(); // Limpia los IDs después de eliminarlos.
+        pendingAddEffect.store(false); // Resetear el flag.
+    }
+
+    if (paramsSynced)
         updateSynthParameters();
 
     processorInfo.hostInfo.process(getPlayHead(), buffer.getNumSamples());
-
-    renderNextBlock(buffer, midiMessages,  0, buffer.getNumSamples()); // Procesar voces (moduladores y osciladores)
-
+    renderNextBlock(buffer, midiMessages, 0, buffer.getNumSamples());
     updateEffectsParameters();
-    processEffects(buffer); // Aplicar efectos
-
+    processEffects(buffer);
 }
-
 void OcnetAudioProcessor::deleteEffect(int processorID)
 {
-    // Buscar el processor dentro del vector de efectos
-    effectsProcessorsList.erase(
-        std::remove_if(effectsProcessorsList.begin(), effectsProcessorsList.end(),
-            [&processorID](const std::unique_ptr<Effector>& effector) {
-                return effector->getId() == processorID;
-            }
-        ),
-        effectsProcessorsList.end()
-    );
+    {
+        std::lock_guard<std::mutex> lock(effectsMutex);
+        effectsToDelete.push_back(processorID); // Marca el ID para eliminación.
+        pendingAddEffect.store(true);           // Indica que hay operaciones pendientes.
+    }
 }
 
 void OcnetAudioProcessor::moveEffect(int id, int positions)
@@ -340,14 +355,19 @@ void OcnetAudioProcessor::addEffect(int processorType, int id)
         return;
     }
 
-    // Configurar antes de añadir a la lista
-    newEffect->setVoiceNumberId(8); // Los efectos usan una voz reservada monofonica
+    // Configurar el efecto antes de añadirlo.
+    newEffect->setVoiceNumberId(8);
     newEffect->syncParams(parameterHandler);
     newEffect->prepareToPlay(procesSpec);
 
-    // Añadir el efecto una vez este preparado
-    effectsProcessorsList.push_back(std::move(newEffect));
+    // Almacena el efecto y marca la operación como pendiente.
+    {
+        std::lock_guard<std::mutex> lock(effectsMutex);
+        effectToAdd = std::move(newEffect);
+        pendingAddEffect.store(true); // Marca que hay un efecto pendiente.
+    }
 }
+
 //==============================================================================
 // This creates new instances of the plugin..
 juce::AudioProcessor* JUCE_CALLTYPE createPluginFilter()

@@ -7,6 +7,7 @@
 #include "GUI_Sections/Modulators/ModulatorsSection.h"
 #include "GUI_Sections/Effects/EffectsSection.h"
 #include "GUI_Sections/Header/HeaderSection.h"
+#include "GUI_Sections/Separators/Separators.h"
 #include "../Controller/GUI_EventHandler.h"
 #include "GUI_Sections/Section.h"
 #include "../Model/ParameterHandler/ParameterHandler.h"
@@ -55,6 +56,7 @@ protected:
     std::unique_ptr<OscillatorsSection> oscillatorsSection;
     std::unique_ptr<ModulatorsSection> modulatorsSection;
     std::unique_ptr<EffectsSection> effectsSection;
+    std::unique_ptr<Separators> separatorsSection;
 
     juce::Viewport modulatorsSectionViewport;
     juce::Viewport oscillatorsSectionViewport;

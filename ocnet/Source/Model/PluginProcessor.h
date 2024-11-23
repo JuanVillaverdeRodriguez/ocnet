@@ -36,6 +36,8 @@ public:
 
     void processBlock (juce::AudioBuffer<float>&, juce::MidiBuffer&) override;
 
+    bool isBufferSilent(const juce::AudioBuffer<float>& buffer) const;
+
 
 
     //==============================================================================
@@ -78,6 +80,8 @@ protected:
     void bypassEffect(int id, bool bypassed) override;
 private:
     //==============================================================================
+    bool longLastingEffectsAreOver();
+
     void processEffects(juce::AudioBuffer<float>& buffer);
     juce::dsp::ProcessSpec procesSpec;
 

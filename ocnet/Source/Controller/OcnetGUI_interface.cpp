@@ -22,11 +22,7 @@ OcnetGUI_interface::OcnetGUI_interface(OcnetAudioProcessor *processor) : process
     gui_->addSynthParams(processor->parameterHandler);
     gui_->attachSynthParams(processor->parameterHandler);
 
-    // Si no esta añadido, añadir un envelope principal
-    if (!processor->getHasMainEnvelope()) {
-        maxCurrentID = 0;
-        onAddModulator(Envelope, -1);
-    }
+
 
 }
 
@@ -300,6 +296,12 @@ void OcnetGUI_interface::editorIsShowing()
     gui_->editorIsShowing();
     initialiseGUIFromTree(processor.parameterHandler.getRootTree());
     processor.syncSynthParameters();
+
+    // Si no esta añadido, añadir un envelope principal
+    if (!processor.getHasMainEnvelope()) {
+        maxCurrentID = 0;
+        onAddModulator(Envelope, -1);
+    }
 
     //gui_->addSynthParams(processor.parameterHandler);
     //gui_->attachSynthParams(processor.parameterHandler);

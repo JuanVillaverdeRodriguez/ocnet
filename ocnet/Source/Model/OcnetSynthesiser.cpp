@@ -333,10 +333,20 @@ void OcnetSynthesiser::noteOn(const int midiChannel, const int midiNoteNumber, c
                     }
                     stopVoice(voice, 1.0f, true);
                 }
-
             startVoice(findFreeVoice(sound, midiChannel, midiNoteNumber, shouldStealNotes),
                 sound, midiChannel, midiNoteNumber, velocity);
         }
     }
+}
+
+bool OcnetSynthesiser::isAnyVoiceActive() {
+    for (int i = 0; i < getNumVoices(); i++) {
+        if (auto voice = dynamic_cast<SynthVoice*>(getVoice(i))) {
+            if (voice->isVoiceActive())
+                return true;
+        }
+    }
+
+    return false;
 }
 

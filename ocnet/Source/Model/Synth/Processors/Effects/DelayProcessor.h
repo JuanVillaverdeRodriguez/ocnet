@@ -25,7 +25,7 @@ public:
 	void syncParams(const ParameterHandler& parameterHandler) override;
 	void processBlock(juce::AudioBuffer<float>& buffer) override;
 	float getNextSample(float currentSampleValue) override;
-	bool isActive();
+	bool isLongLasting();
 
 private:
 	juce::dsp::ProcessSpec spec2;
@@ -34,6 +34,10 @@ private:
 	float maxDelayValueLeft;
 	float maxDelayValueRight;
 	float maxMixValue;
+
+	float delayedSampleLeft;
+	float delayedSampleRight;
+
 	void setMaxDelayTime(int channel, float newMaxDelay);
 	void updateDelayLineSize(int channel);
 	void setDelayTime(size_t channel, float newValue);

@@ -207,8 +207,23 @@ void OcnetAudioProcessor::processBlock(juce::AudioBuffer<float>& buffer, juce::M
     processorInfo.hostInfo.process(getPlayHead(), buffer.getNumSamples());
     renderNextBlock(buffer, midiMessages, 0, buffer.getNumSamples());
     updateEffectsParameters();
-    processEffects(buffer);
+
+    if (isAnyVoiceActive() || !longLastingEffectsAreOver()) {
+        processEffects(buffer);
+    }
 }
+
+bool OcnetAudioProcessor::isBufferSilent(const juce::AudioBuffer<float>& buffer) const
+{
+    for (int channel = 0; channel < buffer.getNumChannels(); ++channel) {
+        auto minMax = juce::FloatVectorOperations::findMinAndMax(buffer.getReadPointer(channel), buffer.getNumSamples());
+        if (minMax.getStart() != 0.0f || minMax.getEnd() != 0.0f) {
+            return false; // El buffer no está en silencio.
+        }
+    }
+    return true; // Todos los valores son cero.
+}
+
 void OcnetAudioProcessor::deleteEffect(int processorID)
 {
     {
@@ -307,6 +322,18 @@ void OcnetAudioProcessor::syncSynthParameters()
     numVoicesParameter = parameterHandler.syncWithSliderParam("Synth_-1_numVoices");
     glideParameter = parameterHandler.syncWithSliderParam("Synth_-1_glide");
     legatoParameter = parameterHandler.syncWithButtonParam("Synth_-1_legato");
+}
+
+bool OcnetAudioProcessor::longLastingEffectsAreOver()
+{
+    for (auto& effect : effectsProcessorsList) {
+        if (!effect->isBypassed()) {
+            if (effect->isLongLasting()) 
+                return false;
+        }
+    }
+
+    return true;
 }
 
 void OcnetAudioProcessor::processEffects(juce::AudioBuffer<float>& buffer)

@@ -56,6 +56,8 @@ public:
         const int midiNoteNumber,
         const float velocity) override;
 
+    bool isAnyVoiceActive();
+
     ProcessorInfo processorInfo;
 
 

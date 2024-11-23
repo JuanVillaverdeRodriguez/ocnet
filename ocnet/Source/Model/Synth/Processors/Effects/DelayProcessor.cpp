@@ -74,8 +74,8 @@ void DelayProcessor::processBlock(juce::AudioBuffer<float>& buffer)
         const float inputSampleLeft = leftChannelBuffer[sample];
         const float inputSampleRight = rightChannelBuffer[sample];
 
-        auto delayedSampleLeft = delayBufferLeft.popSample(0, delayTimeLeftSamples);
-        auto delayedSampleRight = delayBufferRight.popSample(0, delayTimeRightSamples);
+        delayedSampleLeft = delayBufferLeft.popSample(0, delayTimeLeftSamples);
+        delayedSampleRight = delayBufferRight.popSample(0, delayTimeRightSamples);
         
         auto dlineInputSampleLeft = std::tanh(inputSampleLeft + decayValue.getNextValue() * delayedSampleLeft); // [12]
         auto dlineInputSampleRight = std::tanh(inputSampleRight + decayValue.getNextValue() * delayedSampleRight); // [12]
@@ -93,10 +93,11 @@ float DelayProcessor::getNextSample(float currentSampleValue)
     return 0.0f;
 }
 
-bool DelayProcessor::isActive()
+bool DelayProcessor::isLongLasting()
 {
-    return true;
+    return (delayedSampleLeft > 0.0f || delayedSampleRight > 0.0f);
 }
+
 
 void DelayProcessor::setMaxDelayTime(int channel, float newMaxDelay)
 {

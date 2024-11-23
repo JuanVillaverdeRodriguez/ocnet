@@ -20,6 +20,8 @@ public:
     
     virtual float getNextSample(float currentSampleValue) = 0 {};
 
+    virtual bool isLongLasting() { return false; };
+
 private:
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(Effector)

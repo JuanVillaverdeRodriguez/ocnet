@@ -89,7 +89,7 @@ float ReverbProcessor::getNextSample(float currentSampleValue)
 // El reverb estara activo si:
 // - La nota esta activa.
 // - La nota esta apagada pero el tiempo de reverberacion aun no ha terminado.
-bool ReverbProcessor::isActive()
+bool ReverbProcessor::isLongLasting()
 {
     return (!noteIsOff || (noteIsOff && averageOutputValue > 0.00001));
 }

@@ -95,7 +95,7 @@ float DelayProcessor::getNextSample(float currentSampleValue)
 
 bool DelayProcessor::isLongLasting()
 {
-    return (delayedSampleLeft > 0.0f || delayedSampleRight > 0.0f);
+    return true;
 }
 
 

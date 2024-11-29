@@ -33,7 +33,7 @@ public:
     void syncParams(const ParameterHandler& parameterHandler) override;
     void processBlock(juce::AudioBuffer<float>& buffer) override;
     float getNextSample(float currentSampleValue) override;
-    bool isLongLasting();
+    bool isLongLasting() override;
 
 
 private:

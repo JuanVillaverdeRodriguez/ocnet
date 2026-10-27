@@ -18,6 +18,7 @@ MacroSubsection::MacroSubsection(int id, int subMenuID, GUI_EventHandler& eventH
     macroKnob = std::make_unique<Knob1>(macroParameterID, eventHandler, "Value");
 
     macroKnob->setRange(0.0f, 1.0f, 0.01f);
+    setDesiredHeight(102);
 
     addAndMakeVisible(*macroKnob);
 
@@ -37,24 +38,10 @@ void MacroSubsection::addParametersToParameterHandler(ParameterHandler& paramete
 
 void MacroSubsection::subsectionResized()
 {
-    auto area = getLocalBounds();
+    auto content = getContentArea();
+    placeKnob(*macroKnob, content.getX(), content.getY());
 
-
-    int posX = 35;
-    macroKnob->setBounds(posX, 20, defaultKnobSize, defaultKnobSize);
-    posX += defaultKnobSize;
-
-    macroKnob->showLabel(*this, *macroKnob);
-
-    int lastX = 0;
-    for (auto& modulationBubble : modulationBubblesVector) {
-        juce::Rectangle<int> globalBounds = this->getParentComponent()->getParentComponent()->getLocalArea(this, dragZone.getBounds());
-
-        modulationBubble->setBounds(globalBounds.getX() + lastX, globalBounds.getY(), defaultKnobSize - 25, defaultKnobSize - 25);
-        lastX += modulationBubble->getBounds().getWidth() + 3;
-    }
-
-
+    layoutModulationBubbles();
 }
 
 int MacroSubsection::getMacroID()

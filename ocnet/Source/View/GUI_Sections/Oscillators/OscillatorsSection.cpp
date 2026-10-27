@@ -16,7 +16,8 @@ using namespace Ocnet;
 OscillatorsSection::OscillatorsSection(GUI_EventHandler& eventHandler) : eventHandler(eventHandler)
 {
     this->addAndMakeVisible(addOscillatorButton);
-    addOscillatorButton.setButtonText("+");
+    addOscillatorButton.setButtonText("+   Add oscillator");
+    addOscillatorButton.setColour(juce::TextButton::buttonOnColourId, Palette::Primary);
 
     addOscillatorButton.addListener(this);
     addOscillatorButton.setLookAndFeel(&lookAndFeel_AddButton);
@@ -39,10 +40,10 @@ void OscillatorsSection::resized()
 
     int lastSubsection = sectionResized();
 
-    addOscillatorButton.setBounds(area.getWidth() / 2 - 25, lastSubsection + 5, 50, 50);
+    addOscillatorButton.setBounds(10, lastSubsection, area.getWidth() - 20, 40);
 
-    if (lastSubsection + 100 >= this->getBounds().getHeight()) {
-        this->setBounds(this->getBounds().withHeight(lastSubsection + 100));
+    if (lastSubsection + 60 >= this->getBounds().getHeight()) {
+        this->setBounds(this->getBounds().withHeight(lastSubsection + 60));
     }
 }
 
@@ -92,9 +93,9 @@ void OscillatorsSection::buttonClicked(juce::Button* clickedButton)
 {
     if (clickedButton == &addOscillatorButton) {
         juce::PopupMenu menu;
+        menu.setLookAndFeel(&getLookAndFeel());
         menu.addItem(1, "Wavetable oscillator");
         menu.addItem(2, "Sampler");
-        menu.addItem(3, "Opcion 3");
 
         menu.showMenuAsync(juce::PopupMenu::Options().withTargetComponent(addOscillatorButton),
             [this](int result)

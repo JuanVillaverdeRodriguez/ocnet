@@ -2,7 +2,7 @@
 
 <JUCERPROJECT id="x4XYiE" name="ocnet" projectType="audioplug" useAppConfig="0"
               addUsingNamespaceToJuceHeader="0" displaySplashScreen="1" jucerFormatVersion="1"
-              pluginFormats="buildVST3" pluginAUMainType="'augn'" pluginVST3Category="Instrument"
+              pluginFormats="buildStandalone,buildVST3" pluginAUMainType="'augn'" pluginVST3Category="Instrument"
               pluginVSTCategory="kPlugCategSynth" pluginCharacteristicsValue="pluginIsSynth,pluginWantsMidiIn">
   <MAINGROUP id="Fay8LI" name="ocnet">
     <GROUP id="{B897E036-BD65-2195-C049-E6C429F0FF25}" name="Source">

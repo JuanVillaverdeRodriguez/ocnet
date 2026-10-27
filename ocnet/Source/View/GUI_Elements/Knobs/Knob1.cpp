@@ -13,10 +13,13 @@ Knob1::Knob1(const juce::String& parameterID, GUI_EventHandler& eventHandler) : 
 	this->setPopupDisplayEnabled(true, true, nullptr);
 	setLookAndFeel(&lookAndFeel);
 
-	knobLabel.setText(propertyName, juce::dontSendNotification);
+	knobLabel.setText(propertyName.toUpperCase(), juce::dontSendNotification);
 	knobLabel.setJustificationType(juce::Justification::centred); // Centrar el texto
-	knobLabel.setFont(juce::Font("Bahnschrift", 12.0f, juce::Font::bold));
-	knobLabel.setColour(knobLabel.textColourId, Palette::Text);
+	knobLabel.setFont(Fonts::caps(9.5f, true, 0.04f));
+	knobLabel.setColour(knobLabel.textColourId, Palette::TextDim);
+	knobLabel.setBorderSize(juce::BorderSize<int>(0));
+	knobLabel.setMinimumHorizontalScale(0.7f);
+	knobLabel.setInterceptsMouseClicks(false, false);
 }
 
 Knob1::Knob1(const juce::String& parameterID, GUI_EventHandler& eventHandler, juce::String knobLabelText) : eventHandler(eventHandler), parameterID(parameterID), shouldRepaintParent(false)
@@ -34,8 +37,11 @@ Knob1::Knob1(const juce::String& parameterID, GUI_EventHandler& eventHandler, ju
 
 	knobLabel.setText(knobLabelText.toUpperCase(), juce::dontSendNotification);
 	knobLabel.setJustificationType(juce::Justification::centred); // Centrar el texto
-	knobLabel.setFont(juce::Font("Bahnschrift", 10.0f, juce::Font::plain));
-	knobLabel.setColour(knobLabel.textColourId, Palette::Text);
+	knobLabel.setFont(Fonts::caps(9.5f, true, 0.04f));
+	knobLabel.setColour(knobLabel.textColourId, Palette::TextDim);
+	knobLabel.setBorderSize(juce::BorderSize<int>(0));
+	knobLabel.setMinimumHorizontalScale(0.7f);
+	knobLabel.setInterceptsMouseClicks(false, false);
 }
 
 Knob1::~Knob1()
@@ -59,9 +65,11 @@ bool Knob1::isInterestedInDragSource(const SourceDetails& dragSourceDetails)
 
 juce::String Knob1::getTextFromValue(double value)
 {
-	//return propertyName + juce::String(": ") + juce::String(value);
-	//return propertyName;
-	return juce::String(value);
+	// Valores enteros sin decimales, el resto con dos
+	if (getInterval() >= 1.0)
+		return juce::String(juce::roundToInt(value));
+
+	return juce::String(value, 2);
 }
 
 juce::String Knob1::getParameterID()
@@ -71,8 +79,9 @@ juce::String Knob1::getParameterID()
 
 void Knob1::showLabel(juce::Component& component, juce::Rectangle<int> bounds)
 {
-	component.addAndMakeVisible(knobLabel);
-	knobLabel.setBounds(bounds.getX(), bounds.getY() + 40, 45, 18);
+	component.addChildComponent(knobLabel);
+	knobLabel.setVisible(isVisible());
+	knobLabel.setBounds(bounds.getX() - 6, bounds.getBottom() - 4, bounds.getWidth() + 12, 14);
 }
 
 void Knob1::paint(juce::Graphics& g)
@@ -82,22 +91,29 @@ void Knob1::paint(juce::Graphics& g)
 
 	if (shouldShowModulationTarget)
 	{
-		// Establecemos el color naranja
-		g.setColour(juce::Colours::orange.withAlpha(0.3f));
+		// Resalta los knobs que pueden recibir la modulacion que se esta arrastrando
+		auto bounds = getLocalBounds().toFloat().reduced(1.0f);
+		const float cornerRadius = 8.0f;
 
-		auto bounds = getLocalBounds().reduced(2).toFloat();
-		float cornerRadius = 10.0f; 
-
+		g.setColour(Palette::Modulation.withAlpha(0.12f));
 		g.fillRoundedRectangle(bounds, cornerRadius);
+		g.setColour(Palette::Modulation.withAlpha(0.7f));
+		g.drawRoundedRectangle(bounds, cornerRadius, 1.2f);
 	}
+}
+
+void Knob1::visibilityChanged()
+{
+	knobLabel.setVisible(isVisible() && knobLabel.getParentComponent() != nullptr);
 }
 
 void Knob1::showLabel(juce::Component& parentComp, juce::Component& attachToComp)
 {
 	juce::Rectangle<int> bounds = attachToComp.getBounds();
 
-	parentComp.addAndMakeVisible(knobLabel);
-	knobLabel.setBounds(bounds.getX(), bounds.getY() + 40, attachToComp.getWidth(), 18);
+	parentComp.addChildComponent(knobLabel);
+	knobLabel.setVisible(isVisible());
+	knobLabel.setBounds(bounds.getX() - 6, bounds.getBottom() - 4, attachToComp.getWidth() + 12, 14);
 }
 
 void Knob1::showModulationTarget(bool shouldShow)

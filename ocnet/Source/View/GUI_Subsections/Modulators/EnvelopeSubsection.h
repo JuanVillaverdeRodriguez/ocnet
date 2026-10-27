@@ -34,23 +34,24 @@ private:
     public:
         void paint(juce::Graphics& g) override;
         void updateParams(float attack, float decay, float sustain, float release);
+        void resized() override { recalculatePoints(); }
 
     private:
-        void recalculatePoints(); // MÈtodo para recalcular los puntos del ADSR.
+        void recalculatePoints(); // M√©todo para recalcular los puntos del ADSR.
 
         float attack = 0.0f;
         float decay = 0.0f;
         float sustain = 0.0f;
         float release = 0.0f;
 
-        // Puntos precomputados para el gr·fico ADSR.
+        // Puntos precomputados para el gr√°fico ADSR.
         juce::Point<float> start;
         juce::Point<float> attackPoint;
         juce::Point<float> decayPoint;
         juce::Point<float> sustainPoint;
         juce::Point<float> releasePoint;
 
-        juce::Rectangle<int> constrainedArea; // ¡rea restringida para el gr·fico.
+        juce::Rectangle<int> constrainedArea; // √Årea restringida para el gr√°fico.
     };
 
     EnvelopeGraph envelopeGraph;

@@ -12,7 +12,7 @@
 
 LFOSubsection::LFOSubsection(int id, GUI_EventHandler& eventHandler) : ModulatorsSubsection(eventHandler, id, "LFO")
 {
-    setDesiredHeight(175);
+    setDesiredHeight(132);
 
     speedParameterID = createParameterID("freq");
     tempoComboParameterID = createParameterID("tempo");
@@ -50,26 +50,15 @@ void LFOSubsection::addParametersToParameterHandler(ParameterHandler& parameterH
 
 void LFOSubsection::subsectionResized()
 {
-    auto area = getLocalBounds();
+    auto content = getContentArea();
+    const int columnWidth = 116;
 
-    int posX = 35;
-    tempoComboBox.setBounds(10 + posX, 25, defaultKnobSize * 2, defaultKnobSize - 10);
-    posX += defaultKnobSize * 2;
-    
-    speedKnob->setBounds(10 + posX, 20, defaultKnobSize+30, defaultKnobSize);
-    speedKnob->showLabel(*this, *speedKnob);
+    tempoComboBox.setBounds(content.getX(), content.getY(), columnWidth, 26);
+    placeKnob(*speedKnob, content.getX() + (columnWidth - knobWidth) / 2, content.getY() + 30);
 
+    lfoGraph.setBounds(content.withLeft(content.getX() + columnWidth + 12));
 
-    posX = 35 + 5;
-    lfoGraph.setBounds(posX, 75, area.getWidth() - 45, area.getHeight() - 80);
-
-    int lastX = 0;
-    for (auto& modulationBubble : modulationBubblesVector) {
-        juce::Rectangle<int> globalBounds = this->getParentComponent()->getParentComponent()->getLocalArea(this, dragZone.getBounds());
-
-        modulationBubble->setBounds(globalBounds.getX() + lastX, globalBounds.getY(), defaultKnobSize - 25, defaultKnobSize - 25);
-        lastX += modulationBubble->getBounds().getWidth() + 3;
-    }
+    layoutModulationBubbles();
 }
 
 void LFOSubsection::paintCalled(juce::Graphics& g)
@@ -79,17 +68,14 @@ void LFOSubsection::paintCalled(juce::Graphics& g)
 
 void LFOSubsection::LFOGraph::paint(juce::Graphics& g)
 {
-    const float cornerRadius = 5.0f;
+    const auto bounds = getLocalBounds().toFloat();
+    Draw::graphBackground(g, bounds);
 
-    // Dibujar fondo con esquinas redondeadas.
-    juce::Path roundedRect;
-    roundedRect.addRoundedRectangle(0, 0, getWidth(), getHeight(), cornerRadius, cornerRadius, true, true, true, true);
-    g.setColour(Palette::Section);
-    g.fillPath(roundedRect);
+    // Linea central
+    g.setColour(Palette::BorderStrong);
+    g.drawHorizontalLine(juce::roundToInt(bounds.getCentreY()), bounds.getX() + 2.0f, bounds.getRight() - 2.0f);
 
-    // Dibujar la onda sinusoidal precomputada.
-    g.setColour(juce::Colours::white);
-    g.strokePath(sineWavePath, juce::PathStrokeType(2.0f));
+    Draw::curve(g, sineWavePath, bounds, Palette::Modulation, bounds.getCentreY());
 }
 void LFOSubsection::LFOGraph::updateParams(float freq)
 {
@@ -97,7 +83,7 @@ void LFOSubsection::LFOGraph::updateParams(float freq)
     if (this->freq != freq) {
         this->freq = freq;
 
-        recalculatePoints(); // Recalcular los puntos del gr·fico.
+        recalculatePoints(); // Recalcular los puntos del gr√°fico.
         repaint(); // Esto no afecta al padre.
     }
 
@@ -108,21 +94,14 @@ void LFOSubsection::LFOGraph::recalculatePoints()
     // Limpiar la trayectoria previa.
     sineWavePath.clear();
 
-    // Determinar el ·rea restringida.
-    const float lineThickness = 3.0f;
-    auto area = getLocalBounds();
-    constrainedArea = juce::Rectangle<int>(
-        area.getX() + lineThickness,
-        area.getY() + lineThickness,
-        area.getWidth() - (lineThickness * 2),
-        area.getHeight() - (lineThickness * 2)
-    );
+    // Determinar el √°rea restringida.
+    constrainedArea = getLocalBounds().reduced(4, 8);
 
     float width = constrainedArea.getWidth();
     float height = constrainedArea.getHeight();
     float midY = constrainedArea.getY() + height / 2.0f; // Punto medio vertical.
 
-    // Par·metros de la onda.
+    // Par√°metros de la onda.
     float amplitude = height / 2.0f; // Amplitud de la onda (mitad de la altura).
     float frequency = freq / width; // Frecuencia relativa a la anchura.
 

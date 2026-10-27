@@ -24,6 +24,8 @@ ReverbSubsection::ReverbSubsection(int id, GUI_EventHandler& eventHandler)
 
     delayKnob->setRange(0.0f, 1.0f, 0.01f);
     decayKnob->setRange(0.0f, 1.0f, 0.01f);
+
+    setDesiredHeight(102);
 }
 
 ReverbSubsection::~ReverbSubsection()
@@ -44,20 +46,12 @@ void ReverbSubsection::addParametersToParameterHandler(ParameterHandler& paramet
 
 void ReverbSubsection::subsectionResized()
 {
-    auto area = getLocalBounds();
+    auto content = getContentArea();
+    int posX = content.getX();
 
-    int posX = 0;
-    mixKnob->setBounds(posX, 20, defaultKnobSize, defaultKnobSize);
-    posX += defaultKnobSize;
-
-    delayKnob->setBounds(posX, 20, defaultKnobSize, defaultKnobSize);
-    posX += defaultKnobSize;
-
-    decayKnob->setBounds(posX, 20, defaultKnobSize, defaultKnobSize);
-    posX += defaultKnobSize;
-
-    mixKnob->showLabel(*this, *mixKnob);
-    delayKnob->showLabel(*this, *delayKnob);
-    decayKnob->showLabel(*this, *decayKnob);
-    
+    placeKnob(*delayKnob, posX, content.getY());
+    posX += knobWidth;
+    placeKnob(*decayKnob, posX, content.getY());
+    posX += knobWidth;
+    placeKnob(*mixKnob, posX, content.getY());
 }

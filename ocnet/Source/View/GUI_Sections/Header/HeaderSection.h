@@ -25,6 +25,7 @@ public:
     };
 
     void resized() override;
+    void paint(juce::Graphics& g) override;
 
     void addListener(Listener* listener);
 
@@ -32,6 +33,8 @@ public:
 
 
 private:
+    juce::Rectangle<int> getTabsArea() const;
+
     OcnetLookAndFeel lookAndFeel;
     std::vector<Listener*> listeners;
 

@@ -18,8 +18,8 @@ DelaySubsection::DelaySubsection(int id, GUI_EventHandler& eventHandler)
     decayParameterID = createParameterID("decay");
 
 
-    delayLeftKnob = std::make_unique<Knob1>(delayLeftParameterID, eventHandler, "DelayLeft");
-    delayRightKnob = std::make_unique<Knob1>(delayRightParameterID, eventHandler, "DelayRight");
+    delayLeftKnob = std::make_unique<Knob1>(delayLeftParameterID, eventHandler, "Delay L");
+    delayRightKnob = std::make_unique<Knob1>(delayRightParameterID, eventHandler, "Delay R");
     decayKnob = std::make_unique<Knob1>(decayParameterID, eventHandler, "Decay");
 
 
@@ -30,6 +30,8 @@ DelaySubsection::DelaySubsection(int id, GUI_EventHandler& eventHandler)
     delayLeftKnob->setRange(0.0f, 1.0f, 0.01f);
     delayRightKnob->setRange(0.0f, 1.0f, 0.01f);
     decayKnob->setRange(0.0f, 1.0f, 0.01f);
+
+    setDesiredHeight(102);
 }
 
 
@@ -49,23 +51,14 @@ void DelaySubsection::addParametersToParameterHandler(ParameterHandler& paramete
 
 void DelaySubsection::subsectionResized()
 {
-    auto area = getLocalBounds();
+    auto content = getContentArea();
+    int posX = content.getX();
 
-    int posX = 0;
-    mixKnob->setBounds(posX, 20, defaultKnobSize, defaultKnobSize);
-    posX += defaultKnobSize;
-
-    delayLeftKnob->setBounds(posX, 20, defaultKnobSize, defaultKnobSize);
-    posX += defaultKnobSize;
-
-    delayRightKnob->setBounds(posX, 20, defaultKnobSize, defaultKnobSize);
-    posX += defaultKnobSize;
-
-    decayKnob->setBounds(posX, 20, defaultKnobSize, defaultKnobSize);
-    posX += defaultKnobSize;
-
-    mixKnob->showLabel(*this, *mixKnob);
-    delayLeftKnob->showLabel(*this, *delayLeftKnob);
-    delayRightKnob->showLabel(*this, *delayRightKnob);
-    decayKnob->showLabel(*this, *decayKnob);
+    placeKnob(*delayLeftKnob, posX, content.getY());
+    posX += knobWidth;
+    placeKnob(*delayRightKnob, posX, content.getY());
+    posX += knobWidth;
+    placeKnob(*decayKnob, posX, content.getY());
+    posX += knobWidth;
+    placeKnob(*mixKnob, posX, content.getY());
 }

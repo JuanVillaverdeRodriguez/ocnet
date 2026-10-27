@@ -31,14 +31,15 @@ private:
     public:
         void paint(juce::Graphics& g) override;
         void updateParams(float drive);
+        void resized() override { recalculatePoints(); }
 
     private:
-        void recalculatePoints(); // Recalcula los puntos del gráfico.
+        void recalculatePoints(); // Recalcula los puntos del grÃ¡fico.
 
         float drive = 1.0f; // Valor predeterminado de drive.
 
-        juce::Rectangle<int> constrainedArea; // Área restringida para el gráfico.
-        juce::Path distortionPath; // Trayectoria precomputada de la función de distorsión.
+        juce::Rectangle<int> constrainedArea; // Ãrea restringida para el grÃ¡fico.
+        juce::Path distortionPath; // Trayectoria precomputada de la funciÃ³n de distorsiÃ³n.
     };
 
     DistortionGraph distortionGraph;

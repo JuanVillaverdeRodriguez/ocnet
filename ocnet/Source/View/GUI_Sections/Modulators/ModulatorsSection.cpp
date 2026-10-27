@@ -17,7 +17,8 @@ using namespace Ocnet;
 ModulatorsSection::ModulatorsSection(GUI_EventHandler& eventHandler) : eventHandler(eventHandler)
 {
     this->addAndMakeVisible(addModulatorButton);
-    addModulatorButton.setButtonText("+");
+    addModulatorButton.setButtonText("+   Add modulator");
+    addModulatorButton.setColour(juce::TextButton::buttonOnColourId, Palette::Secondary);
 
     addModulatorButton.addListener(this);
     addModulatorButton.setLookAndFeel(&lookAndFeel_AddButton);
@@ -72,10 +73,10 @@ void ModulatorsSection::resized()
 
 
 
-    addModulatorButton.setBounds(area.getWidth() / 2 - 25, lastSubsection + 5, 50, 50);
+    addModulatorButton.setBounds(10, lastSubsection, area.getWidth() - 20, 40);
 
-    if (lastSubsection + 100 >= this->getBounds().getHeight()) {
-        this->setBounds(this->getBounds().withHeight(lastSubsection + 100));
+    if (lastSubsection + 60 >= this->getBounds().getHeight()) {
+        this->setBounds(this->getBounds().withHeight(lastSubsection + 60));
     }
 }
 
@@ -108,12 +109,14 @@ void ModulatorsSection::buttonClicked(juce::Button* clickedButton)
 {
     if (clickedButton == &addModulatorButton) {
         juce::PopupMenu menu;
+        menu.setLookAndFeel(&getLookAndFeel());
         menu.addItem(1, "Envelope");
         menu.addItem(2, "LFO");
         menu.addItem(3, "Randomizer");
 
         juce::Array<int> usedMacros = getMacrosInUse();
         juce::PopupMenu subMenu;
+        subMenu.setLookAndFeel(&getLookAndFeel());
         const int macroBaseID = 100;
         for (int i = 1; i <= 12; i++) {
             if (usedMacros.contains(i))

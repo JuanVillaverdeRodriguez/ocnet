@@ -58,11 +58,12 @@ int Section::sectionResized()
 
     auto area = getLocalBounds();
 
-    int lastSubsectionPosition = 5;
+    const int margin = 10;
+    int lastSubsectionPosition = margin;
 
-    for (auto& wavetableOscillator : subsectionsVector) {
-        wavetableOscillator->setBounds(5, lastSubsectionPosition, area.getWidth()-10, wavetableOscillator->getDesiredHeight());
-        lastSubsectionPosition += wavetableOscillator->getHeight()+5;
+    for (auto& subsection : subsectionsVector) {
+        subsection->setBounds(margin, lastSubsectionPosition, area.getWidth() - margin * 2, subsection->getDesiredHeight());
+        lastSubsectionPosition += subsection->getHeight() + margin;
     }
 
     return lastSubsectionPosition;

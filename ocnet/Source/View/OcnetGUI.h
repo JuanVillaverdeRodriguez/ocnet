@@ -47,7 +47,22 @@ public:
 
 
 protected:
+    void paintLogo(juce::Graphics& g, juce::Rectangle<float> area);
+    void paintPanel(juce::Graphics& g, juce::Rectangle<int> panel);
+
+    // Debe declararse antes que los componentes para destruirse despues de ellos
+    OcnetBaseLookAndFeel baseLookAndFeel;
+
     int currentView = 0;
+
+    juce::Rectangle<int> topBarBounds;
+    juce::Rectangle<int> leftPanelBounds;
+    juce::Rectangle<int> rightPanelBounds;
+    juce::Rectangle<int> keyboardPanelBounds;
+
+    static constexpr int topBarHeight = 56;
+    static constexpr int panelHeaderHeight = 46;
+    static constexpr int margin = 12;
 
     GUI_EventHandler& eventHandler;
 
@@ -63,6 +78,7 @@ protected:
     juce::Viewport effectsSectionViewport;
 
     juce::MidiKeyboardComponent keyboardComponent;
+    juce::TooltipWindow tooltipWindow { this, 700 };
 
 
     

@@ -30,13 +30,14 @@ private:
     public:
         void paint(juce::Graphics& g) override;
         void updateParams(float freq);
+        void resized() override { recalculatePoints(); }
 
     private:
-        void recalculatePoints(); // MÈtodo para recalcular los puntos de la onda.
+        void recalculatePoints(); // M√©todo para recalcular los puntos de la onda.
 
         float freq = 1.0f;
 
-        juce::Rectangle<int> constrainedArea; // ¡rea restringida para la onda.
+        juce::Rectangle<int> constrainedArea; // √Årea restringida para la onda.
         juce::Path sineWavePath; // Ruta precomputada para la onda.
     };
 

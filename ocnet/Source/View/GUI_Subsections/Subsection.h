@@ -34,6 +34,7 @@ public:
     juce::String inline getIdAsString() const { return juce::String(id); }
 
     void paint(juce::Graphics& g) override;
+    void paintOverChildren(juce::Graphics& g) override;
 
     void setBypassed(bool bypassed);
 
@@ -78,6 +79,24 @@ private:
 
 protected:
     virtual void paintCalled(juce::Graphics& g) {};
+
+    // Coloca los botones de la cabecera y aplica el color del tipo a los controles
+    void layoutHeader();
+
+    // Area disponible para los controles (debajo de la cabecera, con margen)
+    virtual juce::Rectangle<int> getContentArea();
+
+    // Coloca un knob con su etiqueta debajo en (x, y)
+    void placeKnob(Knob1& knob, int x, int y);
+
+    juce::Colour getTypeColour();
+    juce::String getDisplayName();
+
+    static constexpr int headerHeight = 28;
+    static constexpr int padding = 10;
+    static constexpr int knobWidth = 58;
+    static constexpr int knobHeight = 44;
+    static constexpr int knobCellHeight = 54; // knob + etiqueta
 
     OcnetLookAndFeel_2 lookAndFeel;
     GUI_EventHandler& eventHandler;

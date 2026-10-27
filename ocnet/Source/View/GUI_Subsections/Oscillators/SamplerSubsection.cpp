@@ -33,6 +33,8 @@ SamplerSubsection::SamplerSubsection(int id, GUI_EventHandler& eventHandler) : O
     searchButtonPrevious.setLookAndFeel(&lookAndFeel);
     searchButtonNext.setLookAndFeel(&lookAndFeel);
 
+    setDesiredHeight(142);
+
     searchButtonPrevious.setButtonText("<");
     searchButtonNext.setButtonText(">");
     
@@ -64,19 +66,23 @@ void SamplerSubsection::addParametersToParameterHandler(ParameterHandler& parame
 
 void SamplerSubsection::subsectionResized()
 {
-    auto area = getLocalBounds();
+    auto content = getContentArea();
+    const int x0 = content.getX();
+    const int y0 = content.getY();
+    const int waveformHeight = 64;
+    const int knobY = y0 + (content.getHeight() - knobCellHeight) / 2;
 
-    volumeKnob->setBounds(0, 20, defaultKnobSize, defaultKnobSize);
-    panningKnob->setBounds(defaultKnobSize, 20, defaultKnobSize, defaultKnobSize);
+    placeKnob(*volumeKnob, x0, knobY);
+    placeKnob(*panningKnob, x0 + knobWidth, knobY);
 
-    waveformViewRectangleBounds.setBounds((defaultKnobSize * 2) + 10, 20, 240, 40);
-    //search.setBounds(waveformViewRectangleBounds.getX() + 225 + (defaultKnobSize * 1.4), 20, defaultKnobSize * 1.4, area.getHeight()-20);
-    search.setBounds(waveformViewRectangleBounds.getX() + (waveformViewRectangleBounds.getWidth() / 2) - (waveformViewRectangleBounds.getWidth() / 4), waveformViewRectangleBounds.getHeight() + 20, waveformViewRectangleBounds.getWidth()/2, 20);
-    searchButtonNext.setBounds(waveformViewRectangleBounds.getX() + waveformViewRectangleBounds.getWidth() - 20, waveformViewRectangleBounds.getHeight() + 20, 20, 20);
-    searchButtonPrevious.setBounds(waveformViewRectangleBounds.getX(), waveformViewRectangleBounds.getHeight() + 20, 20, 20);
-    
-    volumeKnob->showLabel(*this, *volumeKnob);
-    panningKnob->showLabel(*this, *panningKnob);
+    const int waveformX = x0 + knobWidth * 2 + 20;
+    waveformViewRectangleBounds = juce::Rectangle<float>((float)waveformX, (float)y0,
+                                                         (float)juce::jmin(360, content.getRight() - waveformX), (float)waveformHeight);
+
+    auto selectorRow = juce::Rectangle<int>(waveformX, y0 + waveformHeight + 6, (int)waveformViewRectangleBounds.getWidth(), 24);
+    searchButtonPrevious.setBounds(selectorRow.removeFromLeft(24));
+    searchButtonNext.setBounds(selectorRow.removeFromRight(24));
+    search.setBounds(selectorRow.reduced(4, 0));
 }
 
 void SamplerSubsection::updateWaveformView(juce::Array<float> samples)
@@ -88,36 +94,33 @@ void SamplerSubsection::updateWaveformView(juce::Array<float> samples)
 
 void SamplerSubsection::paintCalled(juce::Graphics& g)
 {
-    if (repaintWaveform) {
-        repaintWaveform = false;
-        // Dibujar la forma de onda
+    repaintWaveform = false;
 
-        g.setColour(Palette::White); // Color de la forma de onda
+    Draw::graphBackground(g, waveformViewRectangleBounds, 8, 2);
 
-        // Obtener el tamaño del componente
-        auto width = waveformViewRectangleBounds.getWidth();
-        auto height = waveformViewRectangleBounds.getHeight();
-
-        if (waveformSamples.isEmpty())
-            return;
-
-        // Dibujar la forma de onda
-        juce::Path waveformPath;
-        float centerY = height / 2.0f;
-        float scaleX = static_cast<float>(width) / static_cast<float>(waveformSamples.size());
-        float scaleY = centerY; // Escala vertical para ajustar la amplitud
-
-        waveformPath.startNewSubPath(waveformViewRectangleBounds.getX(), waveformViewRectangleBounds.getY() + centerY); // Empieza en el centro del componente
-
-        for (int i = 0; i < waveformSamples.size(); i+=4)
-        {
-            float x = i * scaleX;
-            float y = centerY - (waveformSamples[i] * scaleY); // Invertimos la Y para que la onda suba y baje
-            waveformPath.lineTo(waveformViewRectangleBounds.getX() + x, waveformViewRectangleBounds.getY() + y);
-        }
-
-        g.strokePath(waveformPath, juce::PathStrokeType(1.0f)); // Dibujar la línea de la forma de onda
+    if (waveformSamples.isEmpty()) {
+        g.setColour(Palette::TextFaint);
+        g.setFont(Fonts::caps(10.0f, true, 0.12f));
+        g.drawText("NO SAMPLE LOADED", waveformViewRectangleBounds, juce::Justification::centred);
+        return;
     }
+
+    // Forma de onda
+    auto area = waveformViewRectangleBounds.reduced(4.0f, 6.0f);
+    const float centerY = area.getCentreY();
+    const float scaleX = area.getWidth() / static_cast<float>(waveformSamples.size());
+    const float scaleY = area.getHeight() / 2.0f;
+
+    juce::Path waveformPath;
+    waveformPath.startNewSubPath(area.getX(), centerY);
+
+    for (int i = 0; i < waveformSamples.size(); i += 4)
+        waveformPath.lineTo(area.getX() + i * scaleX, centerY - waveformSamples[i] * scaleY);
+
+    juce::Graphics::ScopedSaveState state(g);
+    g.reduceClipRegion(waveformViewRectangleBounds.toNearestInt());
+    g.setColour(getTypeColour());
+    g.strokePath(waveformPath, juce::PathStrokeType(1.2f));
 }
 
 void SamplerSubsection::loadAudioFiles()
@@ -126,7 +129,7 @@ void SamplerSubsection::loadAudioFiles()
 
     if (!directory.isDirectory())
     {
-        jassertfalse; // Asegura que el directorio sea válido para depuración
+        jassertfalse; // Asegura que el directorio sea vÃ¡lido para depuraciÃ³n
         return;
     }
 
@@ -145,9 +148,13 @@ void SamplerSubsection::loadAudioFiles()
 
 void SamplerSubsection::openMenu()
 {
+    searchMenu.setLookAndFeel(&getLookAndFeel());
     searchMenu.showMenuAsync(juce::PopupMenu::Options().withTargetComponent(search),
         [this](int result)
         {
+            if (result <= 0)
+                return;
+
             eventHandler.onSamplerSampleChanged(getId(), filenameParameterID, sampleFilenames[result - 1]);
             search.setButtonText(sampleFilenames[result - 1]);
         });

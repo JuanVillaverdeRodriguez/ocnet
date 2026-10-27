@@ -28,6 +28,12 @@ FooterSection::FooterSection(GUI_EventHandler& eventHandler) : eventHandler(even
     legatoButton.addListener(this);
 
     legatoButton.setButtonText("Legato");
+    legatoButton.setColour(juce::TextButton::buttonOnColourId, Palette::Primary);
+    legatoButton.setMouseCursor(juce::MouseCursor::PointingHandCursor);
+
+    numVoicesKnob->setMouseCursor(juce::MouseCursor::UpDownResizeCursor);
+    numVoicesKnob->setTooltip("Polyphony (drag up / down)");
+    glideKnob->setColour(juce::Slider::rotarySliderFillColourId, Palette::Primary);
 
     legatoButton.setLookAndFeel(&lookAndFeelFooter);
     legatoButton.setToggleable(true);
@@ -43,8 +49,11 @@ FooterSection::FooterSection(GUI_EventHandler& eventHandler) : eventHandler(even
 
 void FooterSection::paint(juce::Graphics& g)
 {
-    // (Our component is opaque, so we must completely fill the background with a solid colour)
-    //g.fillAll(Palette::Section);
+    auto glideBounds = glideKnob->getBounds();
+
+    g.setColour(Palette::TextDim);
+    g.setFont(Fonts::caps(10.0f, true, 0.12f));
+    g.drawText("GLIDE", glideBounds.withX(glideBounds.getX() - 46).withWidth(42), juce::Justification::centredRight);
 }
 
 void FooterSection::addSynthParams(ParameterHandler& parameterHandler)
@@ -71,14 +80,12 @@ void FooterSection::buttonClicked(juce::Button* clickedButton)
 
 void FooterSection::resized()
 {
+    // Controles globales alineados a la derecha de la barra superior
     auto area = getLocalBounds();
+    const int centreY = area.getCentreY();
+    const int gap = 22;
 
-    numVoicesKnob->setBounds(0, 0, 50, 50);
-    glideKnob->setBounds(area.getWidth() - 150, 0 , 45, 45);
-
-    legatoButton.setBounds(area.getWidth() - 100, 0, 45, 45);
-    legatoButton.changeWidthToFitText();
-
-    glideKnob->showLabel(*this, *glideKnob);
-
+    legatoButton.setBounds(area.getRight() - 86, centreY - 14, 86, 28);
+    glideKnob->setBounds(legatoButton.getX() - gap - 40, centreY - 20, 40, 40);
+    numVoicesKnob->setBounds(glideKnob->getX() - 46 - gap - 112, centreY - 16, 112, 32);
 }

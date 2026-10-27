@@ -45,21 +45,43 @@ void ModulationBubble::sliderValueChanged(juce::Slider* slider)
 
 void ModulationBubble::paint(juce::Graphics& g)
 {
-    g.setColour(juce::Colours::blue.withAlpha(0.5f));
-    g.fillEllipse(getBubbleArea().toFloat());
+    // Mini knob bipolar: el arco crece desde arriba hacia la izquierda o la derecha
+    auto bounds = getLocalBounds().toFloat().reduced(1.0f);
+    const auto centre = bounds.getCentre();
+    const float radius = juce::jmin(bounds.getWidth(), bounds.getHeight()) * 0.5f;
+    const bool hovering = isMouseOverOrDragging();
+
+    g.setColour(Palette::Inset);
+    g.fillEllipse(bounds);
+    g.setColour(Palette::Modulation.withAlpha(hovering ? 0.9f : 0.45f));
+    g.drawEllipse(bounds.reduced(0.5f), 1.0f);
+
+    // El attachment puede cambiar el valor sin notificar, asi que se lee directamente
+    const float amount = (float)getValue();
+
+    if (std::abs(amount) > 0.005f) {
+        const float maxAngle = juce::MathConstants<float>::pi * 0.85f;
+        juce::Path arc;
+        arc.addCentredArc(centre.x, centre.y, radius - 3.5f, radius - 3.5f, 0.0f, 0.0f, amount * maxAngle, true);
+        g.setColour(Palette::Modulation);
+        g.strokePath(arc, juce::PathStrokeType(2.2f, juce::PathStrokeType::curved, juce::PathStrokeType::rounded));
+    }
+
+    g.setColour(Palette::Modulation);
+    g.fillEllipse(juce::Rectangle<float>(3.0f, 3.0f).withCentre(centre));
 }
 
 void ModulationBubble::resized()
 {
-    auto bounds = getLocalBounds();
-    auto labelHeight = 15;
-    auto bubbleArea = getBubbleArea();
+    // La etiqueta vive en el padre: se centra debajo de la burbuja
+    modulationLabel.setBounds(getX() + getWidth() / 2 - modulationLabel.getWidth() / 2, getBottom() + 4,
+                              modulationLabel.getWidth(), modulationLabel.getHeight());
+    modulationLabel.toFront(false);
+}
 
-    //auto labelX = getX() + bounds.getCentreX() - modulationLabel.getWidth() / 2;
-    auto labelX = bounds.getX() - modulationLabel.getWidth() / 4;
-    auto labelY = getY() + bubbleSize + 5;
-
-    modulationLabel.setBounds(labelX, labelY, modulationLabel.getWidth(), labelHeight);
+void ModulationBubble::moved()
+{
+    resized();
 }
 
 juce::String ModulationBubble::getParameterModulating()
@@ -80,6 +102,7 @@ void ModulationBubble::parentHierarchyChanged()
     if (auto* parent = getParentComponent())
     {
         parent->addChildComponent(modulationLabel);
+        modulationLabel.setVisible(false);
     }
 }
 
@@ -121,6 +144,7 @@ void ModulationBubbleListener::mouseDown(const juce::MouseEvent& event)
     if (event.mods.isRightButtonDown())
     {
         juce::PopupMenu menu;
+        menu.setLookAndFeel(&modBubble.getLookAndFeel());
         menu.addItem(1, "Remove modulation");
         menu.addItem(2, "Set value");
 

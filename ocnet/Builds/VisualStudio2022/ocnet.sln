@@ -2,6 +2,11 @@
 Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio Version 17
 
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ocnet - Standalone Plugin", "ocnet_StandalonePlugin.vcxproj", "{1D3F3B5D-73C5-EE57-C000-1651FFCE5EEB}"
+	ProjectSection(ProjectDependencies) = postProject
+		{8F9AE56A-8D2A-4B1F-759D-F2F8BBD04140} = {8F9AE56A-8D2A-4B1F-759D-F2F8BBD04140}
+	EndProjectSection
+EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ocnet - VST3", "ocnet_VST3.vcxproj", "{3BC0BAA9-2E99-9FB7-65A2-6692912B2FC5}"
 	ProjectSection(ProjectDependencies) = postProject
 		{8F9AE56A-8D2A-4B1F-759D-F2F8BBD04140} = {8F9AE56A-8D2A-4B1F-759D-F2F8BBD04140}
@@ -22,6 +27,10 @@ Global
 		{3BC0BAA9-2E99-9FB7-65A2-6692912B2FC5}.Debug|x64.Build.0 = Debug|x64
 		{3BC0BAA9-2E99-9FB7-65A2-6692912B2FC5}.Release|x64.ActiveCfg = Release|x64
 		{3BC0BAA9-2E99-9FB7-65A2-6692912B2FC5}.Release|x64.Build.0 = Release|x64
+		{1D3F3B5D-73C5-EE57-C000-1651FFCE5EEB}.Debug|x64.ActiveCfg = Debug|x64
+		{1D3F3B5D-73C5-EE57-C000-1651FFCE5EEB}.Debug|x64.Build.0 = Debug|x64
+		{1D3F3B5D-73C5-EE57-C000-1651FFCE5EEB}.Release|x64.ActiveCfg = Release|x64
+		{1D3F3B5D-73C5-EE57-C000-1651FFCE5EEB}.Release|x64.Build.0 = Release|x64
 		{8F9AE56A-8D2A-4B1F-759D-F2F8BBD04140}.Debug|x64.ActiveCfg = Debug|x64
 		{8F9AE56A-8D2A-4B1F-759D-F2F8BBD04140}.Debug|x64.Build.0 = Debug|x64
 		{8F9AE56A-8D2A-4B1F-759D-F2F8BBD04140}.Release|x64.ActiveCfg = Release|x64

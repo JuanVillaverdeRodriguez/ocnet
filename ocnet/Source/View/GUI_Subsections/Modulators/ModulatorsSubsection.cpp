@@ -63,15 +63,11 @@ void ModulatorsSubsection::resized()
 {
     auto area = getLocalBounds();
 
-    removeButton.setBounds(area.getWidth() - 25, 0, 20, 20);
-    moveDownButton.setBounds(area.getWidth() - 50, 0, 20, 20);
-    moveUpButton.setBounds(area.getWidth() - 75, 0, 20, 20);
-    bypassButton.setBounds(0, 0, 20, 20);
-
-    subsectionName.setBounds(bypassButton.getWidth() + 5, 0, 100, 20);
+    layoutHeader();
 
 
-    dragZone.setBounds(0, 20, 35, area.getHeight() - 20);
+
+    dragZone.setBounds(0, headerHeight, dragZoneWidth, area.getHeight() - headerHeight);
 
     subsectionResized();
 }
@@ -107,5 +103,28 @@ void ModulatorsSubsection::removeModulationBubble(const juce::String modulationI
     DBG("DESPUES removeModulationBubble: ");
     for (auto& modulationBubble : modulationBubblesVector) {
         DBG(modulationBubble->getModulationID());
+    }
+}
+
+juce::Rectangle<int> ModulatorsSubsection::getContentArea()
+{
+    return Subsection::getContentArea().withTrimmedLeft(dragZoneWidth);
+}
+
+void ModulatorsSubsection::layoutModulationBubbles()
+{
+    // Las burbujas viven en el abuelo (para poder solaparse con otros componentes),
+    // asi que se colocan en la cabecera convirtiendo las coordenadas.
+    auto* container = getParentComponent() != nullptr ? getParentComponent()->getParentComponent() : nullptr;
+    if (container == nullptr)
+        return;
+
+    const int bubbleSize = 20;
+    int x = moveUpButton.getX() - 8 - bubbleSize;
+
+    for (auto& modulationBubble : modulationBubblesVector) {
+        auto local = juce::Rectangle<int>(x, (headerHeight - bubbleSize) / 2, bubbleSize, bubbleSize);
+        modulationBubble->setBounds(container->getLocalArea(this, local));
+        x -= bubbleSize + 4;
     }
 }

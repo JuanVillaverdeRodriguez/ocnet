@@ -17,7 +17,8 @@ using namespace Ocnet;
 EffectsSection::EffectsSection(GUI_EventHandler& eventHandler) : eventHandler(eventHandler)
 {
     this->addAndMakeVisible(addEffectButton);
-    addEffectButton.setButtonText("+");
+    addEffectButton.setButtonText("+   Add effect");
+    addEffectButton.setColour(juce::TextButton::buttonOnColourId, Palette::Tertiary);
     
     addEffectButton.setLookAndFeel(&lookAndFeel_AddButton);
     addEffectButton.addListener(this);
@@ -35,10 +36,10 @@ void EffectsSection::resized()
 
     int lastSubsection = sectionResized();
 
-    addEffectButton.setBounds(area.getWidth() / 2 - 25, lastSubsection + 5, 50, 50);
+    addEffectButton.setBounds(10, lastSubsection, area.getWidth() - 20, 40);
 
-    if (lastSubsection + 100 >= this->getBounds().getHeight()) {
-        this->setBounds(this->getBounds().withHeight(lastSubsection + 100));
+    if (lastSubsection + 60 >= this->getBounds().getHeight()) {
+        this->setBounds(this->getBounds().withHeight(lastSubsection + 60));
     }
 }
 
@@ -86,6 +87,7 @@ void EffectsSection::buttonClicked(juce::Button* clickedButton)
 {
     if (clickedButton == &addEffectButton) {
         juce::PopupMenu menu;
+        menu.setLookAndFeel(&getLookAndFeel());
         menu.addItem(1, "Distortion");
         menu.addItem(2, "Reverb");
         menu.addItem(3, "Filter");

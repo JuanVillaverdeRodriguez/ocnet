@@ -21,21 +21,24 @@ Subsection::Subsection(GUI_EventHandler& eventHandler, int id, const juce::Strin
     this->addAndMakeVisible(moveUpButton);
     this->addAndMakeVisible(moveDownButton);
     this->addAndMakeVisible(bypassButton);
-    this->addAndMakeVisible(subsectionName);
-
+    // El titulo se dibuja en paint() (nombre + numero en dos tonos)
+    this->addChildComponent(subsectionName);
     subsectionName.setText(subType + " " + getIdAsString(), juce::dontSendNotification);
 
-    subsectionName.setFont(juce::Font("Bahnschrift", 12.0f, juce::Font::bold));
-    subsectionName.setColour(subsectionName.textColourId, Palette::Text);
-
     removeButton.setButtonText("X");
-    moveUpButton.setButtonText("<");
-    moveDownButton.setButtonText(">");
+    moveUpButton.setButtonText("^");
+    moveDownButton.setButtonText("v");
     bypassButton.setButtonText("");
+
+    removeButton.setTooltip("Remove");
+    moveUpButton.setTooltip("Move up");
+    moveDownButton.setTooltip("Move down");
+    bypassButton.setTooltip("Enable / bypass");
 
     removeButton.setLookAndFeel(&lookAndFeel);
     moveUpButton.setLookAndFeel(&lookAndFeel);
     moveDownButton.setLookAndFeel(&lookAndFeel);
+    bypassButton.setLookAndFeel(&lookAndFeel);
 
     removeButton.addListener(this);
     moveUpButton.addListener(this);
@@ -107,44 +110,116 @@ int Subsection::getDesiredHeight()
 
 void Subsection::paint(juce::Graphics& g)
 {
-    const float cornerRadius = 5.0f; // Radio para los bordes redondeados
-    const float blackSectionHeight = 20.0f; // Altura de la sección superior negra
+    const float cornerRadius = 8.0f;
+    const auto bounds = getLocalBounds().toFloat();
+    const auto typeColour = getTypeColour();
 
-    juce::Path topRoundedRect;
-    juce::Path bottomRoundedRect;
+    // Tarjeta
+    g.setColour(Palette::Subsection);
+    g.fillRoundedRectangle(bounds, cornerRadius);
 
-    // Crear el rectángulo superior con bordes redondeados solo arriba
-    topRoundedRect.addRoundedRectangle(0, 0, getWidth(), blackSectionHeight, cornerRadius, cornerRadius, true, true, false, false);
+    // Cabecera
+    juce::Path header;
+    header.addRoundedRectangle(0.0f, 0.0f, bounds.getWidth(), (float)headerHeight, cornerRadius, cornerRadius, true, true, false, false);
+    g.setColour(Palette::SubsectionTop);
+    g.fillPath(header);
 
-    // Crear el rectángulo inferior con bordes redondeados solo abajo
-    bottomRoundedRect.addRoundedRectangle(0, blackSectionHeight, getWidth(), getHeight() - blackSectionHeight, cornerRadius, cornerRadius, false, false, true, true);
+    g.setColour(Palette::Border);
+    g.drawHorizontalLine(headerHeight, 0.0f, bounds.getWidth());
+    g.drawRoundedRectangle(bounds.reduced(0.5f), cornerRadius, 1.0f);
 
-    if (bypassed) {
-        // Pintar la parte superior con bordes redondeados solo arriba
-        g.setColour(Palette::SubsectionTop);
-        g.setOpacity(0.5);
-        g.fillPath(topRoundedRect);
+    // LED de bypass (o un punto fijo si la subseccion no se puede desactivar)
+    auto led = bypassButton.getBounds().toFloat().withSizeKeepingCentre(9.0f, 9.0f);
+    if (!bypassButton.isVisible())
+        led = juce::Rectangle<float>(9.0f, 9.0f).withCentre({ 16.0f, headerHeight * 0.5f });
 
-        // Pintar el resto de la región de gris con bordes redondeados solo abajo
-        g.setColour(Palette::Subsection);
-        g.setOpacity(0.5);
-        g.fillPath(bottomRoundedRect);
-
-        bypassButton.setColour(juce::TextButton::buttonColourId, Palette::BypasButtonToggled);
+    if (!bypassed) {
+        g.setColour(typeColour.withAlpha(0.25f));
+        g.fillEllipse(led.expanded(3.0f));
+        g.setColour(typeColour);
+        g.fillEllipse(led);
     }
     else {
-        // Pintar la parte superior con bordes redondeados solo arriba
-        g.setColour(Palette::SubsectionTop);
-        g.fillPath(topRoundedRect);
-
-        // Pintar el resto de la región de gris con bordes redondeados solo abajo
-        g.setColour(Palette::Subsection);
-        g.fillPath(bottomRoundedRect);
-
-        bypassButton.setColour(juce::TextButton::buttonColourId, Palette::BypasButtonOff);
+        g.setColour(Palette::TextFaint);
+        g.drawEllipse(led.reduced(0.5f), 1.4f);
     }
 
+    // Titulo: "WAVETABLE  1"
+    auto titleArea = juce::Rectangle<int>(30, 0, moveUpButton.getX() - 30, headerHeight);
+    const auto nameFont = Fonts::caps(12.0f, true, 0.12f);
+    const auto name = getDisplayName().toUpperCase();
+
+    g.setFont(nameFont);
+    g.setColour(bypassed ? Palette::TextDim : Palette::Text);
+    g.drawText(name, titleArea, juce::Justification::centredLeft, true);
+
+    juce::GlyphArrangement glyphs;
+    glyphs.addLineOfText(nameFont, name, 0.0f, 0.0f);
+    const int nameWidth = (int)std::ceil(glyphs.getBoundingBox(0, -1, true).getWidth());
+
+    g.setColour(Palette::TextFaint);
+    g.drawText(getIdAsString(), titleArea.withTrimmedLeft(nameWidth + 8), juce::Justification::centredLeft, true);
+
     paintCalled(g);
+}
+
+void Subsection::paintOverChildren(juce::Graphics& g)
+{
+    if (!bypassed)
+        return;
+
+    // Atenua el contenido de la subseccion cuando esta desactivada
+    juce::Path body;
+    body.addRoundedRectangle(1.0f, (float)headerHeight + 1.0f, (float)getWidth() - 2.0f, (float)getHeight() - headerHeight - 2.0f,
+                             7.0f, 7.0f, false, false, true, true);
+    g.setColour(Palette::Subsection.withAlpha(0.55f));
+    g.fillPath(body);
+}
+
+void Subsection::layoutHeader()
+{
+    auto area = getLocalBounds();
+    const int buttonSize = 24;
+    const int buttonY = (headerHeight - buttonSize) / 2;
+
+    removeButton.setBounds(area.getWidth() - buttonSize - 4, buttonY, buttonSize, buttonSize);
+    moveDownButton.setBounds(removeButton.getX() - buttonSize, buttonY, buttonSize, buttonSize);
+    moveUpButton.setBounds(moveDownButton.getX() - buttonSize, buttonY, buttonSize, buttonSize);
+    bypassButton.setBounds(4, buttonY, buttonSize, buttonSize);
+
+    // Los controles toman el color del tipo de subseccion
+    const auto typeColour = getTypeColour();
+    for (auto* child : getChildren()) {
+        if (auto* slider = dynamic_cast<juce::Slider*>(child))
+            slider->setColour(juce::Slider::rotarySliderFillColourId, typeColour);
+        else if (auto* button = dynamic_cast<juce::TextButton*>(child))
+            button->setColour(juce::TextButton::buttonOnColourId, typeColour);
+    }
+}
+
+juce::Rectangle<int> Subsection::getContentArea()
+{
+    return getLocalBounds().withTrimmedTop(headerHeight).reduced(padding);
+}
+
+void Subsection::placeKnob(Knob1& knob, int x, int y)
+{
+    knob.setBounds(x, y, knobWidth, knobHeight);
+    knob.showLabel(*this, knob);
+}
+
+juce::Colour Subsection::getTypeColour()
+{
+    return Palette::forType(type);
+}
+
+juce::String Subsection::getDisplayName()
+{
+    if (subType == "WavetableOscillator")
+        return "Wavetable";
+    if (subType == "Equalizer")
+        return "EQ";
+    return subType;
 }
 
 juce::String Subsection::createParameterID(const juce::String& type, int id, const juce::String& parameterName)

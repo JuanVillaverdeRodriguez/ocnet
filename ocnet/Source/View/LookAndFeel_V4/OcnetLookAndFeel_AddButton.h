@@ -1,9 +1,12 @@
+#pragma once
+
 #include <JuceHeader.h>
-#include "../../Utils/OcnetTypes.h"
+#include "OcnetLookAndFeel.h"
 
 using namespace Ocnet;
 
-class OcnetLookAndFeel_AddButton : public juce::LookAndFeel_V4
+// Boton "+ Add ..." de cada seccion: contorno discontinuo a todo lo ancho
+class OcnetLookAndFeel_AddButton : public OcnetBaseLookAndFeel
 {
 public:
     static OcnetLookAndFeel_AddButton& getInstance()
@@ -16,25 +19,31 @@ public:
         const juce::Colour& backgroundColour,
         bool isMouseOverButton, bool isButtonDown) override
     {
-        // Obtener los límites del botón
-        auto bounds = button.getLocalBounds().toFloat();
+        auto bounds = button.getLocalBounds().toFloat().reduced(1.0f);
+        const auto accent = button.findColour(juce::TextButton::buttonOnColourId);
 
-        // Aplicar color de fondo
-        g.setColour(Palette::BackgroundSecondary);
-
-        // Dibujar un rectángulo sólido sin bordes
-        g.fillRect(bounds);
-
-        // Efecto visual para hover y clic
         if (isMouseOverButton)
         {
-            g.setColour(Palette::BackgroundSecondary.brighter(0.1f));
-            g.fillRect(bounds);
+            g.setColour(accent.withAlpha(isButtonDown ? 0.14f : 0.08f));
+            g.fillRoundedRectangle(bounds, 8.0f);
         }
-        if (isButtonDown)
-        {
-            g.setColour(Palette::BackgroundSecondary.darker(0.1f));
-            g.fillRect(bounds);
-        }
+
+        juce::Path outline, dashed;
+        outline.addRoundedRectangle(bounds, 8.0f);
+        const float dashes[] = { 5.0f, 4.0f };
+        juce::PathStrokeType(1.0f).createDashedStroke(dashed, outline, dashes, 2);
+
+        g.setColour(isMouseOverButton ? accent.withAlpha(0.8f) : Palette::BorderStrong);
+        g.fillPath(dashed);
+    }
+
+    void drawButtonText(juce::Graphics& g, juce::TextButton& button, bool isMouseOverButton, bool) override
+    {
+        button.setMouseCursor(juce::MouseCursor::PointingHandCursor);
+        const auto accent = button.findColour(juce::TextButton::buttonOnColourId);
+
+        g.setColour(isMouseOverButton ? accent.interpolatedWith(Palette::White, 0.4f) : Palette::TextDim);
+        g.setFont(Fonts::caps(12.0f, true, 0.1f));
+        g.drawText(button.getButtonText().toUpperCase(), button.getLocalBounds(), juce::Justification::centred, false);
     }
 };

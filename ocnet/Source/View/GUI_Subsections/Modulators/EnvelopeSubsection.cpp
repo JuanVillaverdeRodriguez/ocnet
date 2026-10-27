@@ -12,7 +12,7 @@
 
 EnvelopeSubsection::EnvelopeSubsection(int id, GUI_EventHandler& eventHandler) : ModulatorsSubsection(eventHandler, id, "Envelope")
 {
-    setDesiredHeight(175);
+    setDesiredHeight(132);
 
     // Significa que es el envelope principal, no se puede eliminar
     if (id == 0) {
@@ -57,37 +57,22 @@ EnvelopeSubsection::EnvelopeSubsection(int id, GUI_EventHandler& eventHandler) :
 
 void EnvelopeSubsection::subsectionResized()
 {
-    auto area = getLocalBounds();
+    auto content = getContentArea();
+    const int knobY = content.getY() + (content.getHeight() - knobCellHeight) / 2;
 
-    int posX = 35;
-    attackKnob->setBounds(posX, 20, defaultKnobSize, defaultKnobSize);
-    posX += defaultKnobSize;
+    int posX = content.getX();
+    placeKnob(*attackKnob, posX, knobY);
+    posX += knobWidth;
+    placeKnob(*decayKnob, posX, knobY);
+    posX += knobWidth;
+    placeKnob(*sustainKnob, posX, knobY);
+    posX += knobWidth;
+    placeKnob(*releaseKnob, posX, knobY);
+    posX += knobWidth + 12;
 
-    decayKnob->setBounds(posX, 20, defaultKnobSize, defaultKnobSize);
-    posX += defaultKnobSize;
+    envelopeGraph.setBounds(content.withLeft(posX));
 
-    sustainKnob->setBounds(posX, 20, defaultKnobSize, defaultKnobSize);
-    posX += defaultKnobSize;
-
-    releaseKnob->setBounds(posX, 20, defaultKnobSize, defaultKnobSize);
-    posX += defaultKnobSize;
-
-    posX = 35 + 5;
-    envelopeGraph.setBounds(posX, 75, area.getWidth() - 45, area.getHeight() - 80);
-
-    attackKnob->showLabel(*this, *attackKnob);
-    decayKnob->showLabel(*this, *decayKnob);
-    sustainKnob->showLabel(*this, *sustainKnob);
-    releaseKnob->showLabel(*this, *releaseKnob);
-
-    int lastX = 0;
-    for (auto& modulationBubble : modulationBubblesVector) {
-        juce::Rectangle<int> globalBounds = this->getParentComponent()->getParentComponent()->getLocalArea(this, dragZone.getBounds());
-
-        modulationBubble->setBounds(globalBounds.getX() + lastX, globalBounds.getY(), defaultKnobSize - 25, defaultKnobSize - 25);
-        lastX += modulationBubble->getBounds().getWidth() + 3;
-    }
-
+    layoutModulationBubbles();
 }
 
 void EnvelopeSubsection::paintCalled(juce::Graphics& g)
@@ -126,44 +111,45 @@ void EnvelopeSubsection::addParametersToParameterHandler(ParameterHandler& param
 
 void EnvelopeSubsection::EnvelopeGraph::paint(juce::Graphics& g)
 {
-    const float cornerRadius = 5.0f; // Radio para bordes redondeados.
-    const float lineThickness = 3.0f;
+    const auto bounds = getLocalBounds().toFloat();
+    Draw::graphBackground(g, bounds);
 
-    // Dibujar el fondo con bordes redondeados.
-    juce::Path roundedRect;
-    roundedRect.addRoundedRectangle(0, 0, getWidth(), getHeight(), cornerRadius, cornerRadius, true, true, true, true);
-    g.setColour(Palette::Section);
-    g.fillPath(roundedRect);
+    juce::Path envelope;
+    envelope.startNewSubPath(start);
+    envelope.lineTo(attackPoint);
+    envelope.lineTo(decayPoint);
+    envelope.lineTo(sustainPoint);
+    envelope.lineTo(releasePoint);
 
-    // Dibujar las líneas del ADSR.
-    g.setColour(Palette::White);
-    g.drawLine(start.getX(), start.getY(), attackPoint.getX(), attackPoint.getY(), lineThickness); // Ataque
-    g.drawLine(attackPoint.getX(), attackPoint.getY(), decayPoint.getX(), decayPoint.getY(), lineThickness); // Decay
-    g.drawLine(decayPoint.getX(), decayPoint.getY(), sustainPoint.getX(), sustainPoint.getY(), lineThickness); // Sustain
-    g.drawLine(sustainPoint.getX(), sustainPoint.getY(), releasePoint.getX(), releasePoint.getY(), lineThickness); // Release
+    Draw::curve(g, envelope, bounds, Palette::Modulation, (float)constrainedArea.getBottom());
+
+    // Puntos de control
+    for (auto point : { attackPoint, decayPoint, sustainPoint }) {
+        g.setColour(Palette::Inset);
+        g.fillEllipse(juce::Rectangle<float>(7.0f, 7.0f).withCentre(point));
+        g.setColour(Palette::Modulation);
+        g.drawEllipse(juce::Rectangle<float>(7.0f, 7.0f).withCentre(point), 1.5f);
+    }
 }
 
 void EnvelopeSubsection::EnvelopeGraph::recalculatePoints()
 {
-    // Calculamos el área restringida.
-    const float lineThickness = 3.0f;
-    auto area = getLocalBounds();
-    constrainedArea = juce::Rectangle<int>(
-        area.getX() + lineThickness,
-        area.getY() + lineThickness,
-        area.getWidth() - (lineThickness * 2),
-        area.getHeight() - (lineThickness * 2)
-    );
+    // Area util del grafico (con margen para el trazo y los puntos)
+    constrainedArea = getLocalBounds().reduced(8, 8);
 
-    float width = constrainedArea.getWidth();
-    float height = constrainedArea.getHeight();
+    const float width = (float)constrainedArea.getWidth();
+    const float height = (float)constrainedArea.getHeight();
 
-    // Calculamos los puntos del gráfico ADSR.
-    start = juce::Point<float>(constrainedArea.getX(), constrainedArea.getBottom());
-    attackPoint = juce::Point<float>(start.getX() + attack * width, constrainedArea.getY());
-    decayPoint = juce::Point<float>(attackPoint.getX() + decay * width, constrainedArea.getBottom() - sustain * height);
-    sustainPoint = juce::Point<float>(decayPoint.getX(), decayPoint.getY());
-    releasePoint = juce::Point<float>(sustainPoint.getX() + release * width, constrainedArea.getBottom());
+    // Ataque, decay y release ocupan como maximo 1/3.3 del ancho cada uno y el
+    // sustain un tramo fijo, para que la envolvente siempre quepa en el grafico.
+    const float segment = width / 3.3f;
+    const float sustainHold = segment * 0.3f;
+
+    start = juce::Point<float>((float)constrainedArea.getX(), (float)constrainedArea.getBottom());
+    attackPoint = juce::Point<float>(start.getX() + attack * segment, (float)constrainedArea.getY());
+    decayPoint = juce::Point<float>(attackPoint.getX() + decay * segment, constrainedArea.getBottom() - sustain * height);
+    sustainPoint = juce::Point<float>(decayPoint.getX() + sustainHold, decayPoint.getY());
+    releasePoint = juce::Point<float>(sustainPoint.getX() + release * segment, (float)constrainedArea.getBottom());
 }
 
 void EnvelopeSubsection::EnvelopeGraph::updateParams(float attack, float decay, float sustain, float release)
@@ -177,7 +163,7 @@ void EnvelopeSubsection::EnvelopeGraph::updateParams(float attack, float decay, 
         this->sustain = sustain;
         this->release = release;
 
-        recalculatePoints(); // Recalcular los puntos del gráfico.
+        recalculatePoints(); // Recalcular los puntos del grÃ¡fico.
         repaint(); // Esto no afecta al padre.
     }
 }

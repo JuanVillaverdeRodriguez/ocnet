@@ -42,6 +42,11 @@ protected:
 
     DragZone dragZone;
 
+    juce::Rectangle<int> getContentArea() override;
+    void layoutModulationBubbles();
+
+    static constexpr int dragZoneWidth = 36;
+
     //std::vector<ModulationBubble> modulationBubblesVector;
     //ModulationBubble modulationBubble;
     std::vector<std::unique_ptr<ModulationBubble>> modulationBubblesVector;

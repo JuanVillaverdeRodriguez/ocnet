@@ -16,7 +16,7 @@ FilterSubsection::FilterSubsection(int id, GUI_EventHandler& eventHandler) : Eff
     resonanceParameterID = createParameterID("Filter", getId(), "resonance");
     highPassParameterID = createParameterID("Filter", getId(), "highPass");
 
-    freqCutKnob = std::make_unique<Knob1>(freqParameterID, eventHandler, "Frequency");
+    freqCutKnob = std::make_unique<Knob1>(freqParameterID, eventHandler, "Cutoff");
     resonanceKnob = std::make_unique<Knob1>(resonanceParameterID, eventHandler, "Resonance");
 
 
@@ -31,7 +31,8 @@ FilterSubsection::FilterSubsection(int id, GUI_EventHandler& eventHandler) : Eff
     highPassButton.setLookAndFeel(&lookAndFeelButtons);
     highPassButton.addListener(this);
     highPassButton.setToggleState(false, juce::NotificationType::dontSendNotification);
-    highPassButton.setButtonText("HighPass");
+    highPassButton.setButtonText("High pass");
+    setDesiredHeight(102);
     //freqCutKnob->setValue(20000.0f);
 
     freqCutKnob->setSkewFactor(0.2f);
@@ -48,26 +49,16 @@ FilterSubsection::FilterSubsection(int id, GUI_EventHandler& eventHandler) : Eff
 
 void FilterSubsection::subsectionResized()
 {
-    auto area = getLocalBounds();
+    auto content = getContentArea();
+    const int x0 = content.getX();
+    const int y0 = content.getY();
 
-    int posX = 0;
-    freqCutKnob->setBounds(posX, 20, defaultKnobSize, defaultKnobSize);
-    posX += defaultKnobSize;
+    placeKnob(*freqCutKnob, x0, y0);
+    placeKnob(*resonanceKnob, x0 + knobWidth, y0);
 
-    resonanceKnob->setBounds(posX, 20, defaultKnobSize, defaultKnobSize);
-    posX += defaultKnobSize;
+    highPassButton.setBounds(x0 + knobWidth * 2 + 14, y0 + (knobHeight - 26) / 2, 96, 26);
 
-    highPassButton.setBounds(posX, 20, 50, defaultKnobSize);
-    highPassButton.changeWidthToFitText();
-    posX += highPassButton.getWidth();
-
-
-    mixKnob->setBounds(posX, 20, defaultKnobSize, defaultKnobSize);
-    posX += defaultKnobSize;
-
-    freqCutKnob->showLabel(*this, *freqCutKnob);
-    resonanceKnob->showLabel(*this, *resonanceKnob);
-    mixKnob->showLabel(*this, *mixKnob);
+    placeKnob(*mixKnob, highPassButton.getRight() + 14, y0);
 }
 
 void FilterSubsection::buttonClickedCalled(juce::Button* clickedButton)

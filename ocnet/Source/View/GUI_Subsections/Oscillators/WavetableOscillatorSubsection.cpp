@@ -12,7 +12,7 @@
 
 WavetableOscillatorSubsection::WavetableOscillatorSubsection(int id, GUI_EventHandler& eventHandler) : OscillatorsSubsection(eventHandler, id, "WavetableOscillator")
 {
-    setDesiredHeight(125);
+    setDesiredHeight(136);
 
     volumeParameterID = createParameterID("WavetableOscillator", getId(), "volume");
     panningParameterID = createParameterID("WavetableOscillator", getId(), "panning");
@@ -76,31 +76,27 @@ WavetableOscillatorSubsection::WavetableOscillatorSubsection(int id, GUI_EventHa
 
 void WavetableOscillatorSubsection::subsectionResized()
 {
-    auto area = getLocalBounds();
+    auto content = getContentArea();
+    const int x0 = content.getX();
+    const int comboY = content.getY();
+    const int knobY = comboY + 26 + 8;
+    const int groupGap = 25;
 
-    // Control
+    // Oscilador
+    waveTypeComboBox.setBounds(x0, comboY, knobWidth * 3, 26);
+    placeKnob(*volumeKnob, x0, knobY);
+    placeKnob(*panningKnob, x0 + knobWidth, knobY);
+    placeKnob(*transposeKnob, x0 + knobWidth * 2, knobY);
 
-    waveTypeComboBox.setBounds(30, 25, defaultKnobSize * 2, defaultKnobSize - 10);
-    volumeKnob->setBounds(10, 60, defaultKnobSize, defaultKnobSize);
-    panningKnob->setBounds(10 + defaultKnobSize, 60, defaultKnobSize, defaultKnobSize);
-    transposeKnob->setBounds(10 + defaultKnobSize * 2, 60, 50, defaultKnobSize);
     // Unison
-
-    numVoicesKnob->setBounds(defaultKnobSize * 4, 60, defaultKnobSize, defaultKnobSize);
-    detuneAmountKnob->setBounds(defaultKnobSize * 5, 60, defaultKnobSize, defaultKnobSize);
+    const int unisonX = x0 + knobWidth * 3 + groupGap * 2;
+    placeKnob(*numVoicesKnob, unisonX, knobY);
+    placeKnob(*detuneAmountKnob, unisonX + knobWidth, knobY);
 
     // FM
-    fmFromComboBox.setBounds(defaultKnobSize * 7, 25, defaultKnobSize * 2, defaultKnobSize - 10);
-    fmAmountKnob->setBounds(defaultKnobSize * 7.5, 60, defaultKnobSize, defaultKnobSize);
-
-    volumeKnob->showLabel(*this, *volumeKnob);
-    panningKnob->showLabel(*this, *panningKnob);
-    numVoicesKnob->showLabel(*this, *numVoicesKnob);
-    fmAmountKnob->showLabel(*this, *fmAmountKnob);
-    detuneAmountKnob->showLabel(*this, *detuneAmountKnob);
-    transposeKnob->showLabel(*this, *transposeKnob);
-
-
+    const int fmX = unisonX + knobWidth * 2 + groupGap * 2;
+    fmFromComboBox.setBounds(fmX, comboY, knobWidth * 2, 26);
+    placeKnob(*fmAmountKnob, fmX + knobWidth / 2, knobY);
 }
 
 void WavetableOscillatorSubsection::attachParameters(ParameterHandler& parameterHandler)
@@ -162,20 +158,19 @@ void WavetableOscillatorSubsection::comboBoxChanged(juce::ComboBox* comboBoxThat
 
 void WavetableOscillatorSubsection::paintCalled(juce::Graphics& g)
 {
-    // Configuración del color para las líneas
-    g.setColour(juce::Colours::white);
+    // Separadores verticales entre grupos (oscilador | unison | FM)
+    const int top = waveTypeComboBox.getY();
+    const int bottom = volumeKnob->getBottom() + 8;
+    const int firstDividerX = (transposeKnob->getRight() + numVoicesKnob->getX()) / 2;
+    const int secondDividerX = (detuneAmountKnob->getRight() + fmFromComboBox.getX()) / 2;
 
-    // Obtén el área disponible para calcular las posiciones de las líneas
-    auto area = getLocalBounds();
+    g.setColour(Palette::Border);
+    g.drawVerticalLine(firstDividerX, (float)top, (float)bottom);
+    g.drawVerticalLine(secondDividerX, (float)top, (float)bottom);
 
-    // Coordenadas X para las líneas (ajustar según tu diseño)
-    const int firstDividerX = 10 + defaultKnobSize * 3.5; // Después de TRANSPOSE
-    const int secondDividerX = defaultKnobSize * 6.5;    // Después de DETUNE
-
-    // Dibujar las líneas verticales
-
-    g.fillRect(juce::Rectangle<float>(firstDividerX, 30, 1, getHeight() - 50));
-    g.fillRect(juce::Rectangle<float>(secondDividerX, 30, 1, getHeight() - 50));
-
+    // Titulo del grupo unison (los otros grupos tienen su combo)
+    g.setColour(Palette::TextFaint);
+    g.setFont(Fonts::caps(10.0f, true, 0.15f));
+    g.drawText("UNISON", juce::Rectangle<int>(numVoicesKnob->getX(), top, knobWidth * 2, 26), juce::Justification::centred);
 }
 

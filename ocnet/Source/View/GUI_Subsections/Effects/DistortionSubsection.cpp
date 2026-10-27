@@ -18,6 +18,8 @@ DistortionSubsection::DistortionSubsection(int id, GUI_EventHandler& eventHandle
 
     this->addAndMakeVisible(*driveKnob);
 
+    setDesiredHeight(118);
+
     driveKnob->setRange(0.0f, 10.0f, 0.01f); // Quizas mejor seria volumeKnob.setRange(0, 1, 0.01f)?;
     addAndMakeVisible(distortionGraph);
 
@@ -30,22 +32,16 @@ DistortionSubsection::DistortionSubsection(int id, GUI_EventHandler& eventHandle
 
 void DistortionSubsection::subsectionResized()
 {
-    auto area = getLocalBounds();
+    auto content = getContentArea();
+    const int x0 = content.getX();
+    const int y0 = content.getY();
+    const int knobY = y0 + (content.getHeight() - knobCellHeight) / 2;
 
-    int posX = 0;
-    driveKnob->setBounds(posX, 20, defaultKnobSize, defaultKnobSize);
-    posX += defaultKnobSize;
+    placeKnob(*driveKnob, x0, knobY);
+    placeKnob(*mixKnob, x0 + knobWidth, knobY);
 
-    mixKnob->setBounds(posX, 20, defaultKnobSize, defaultKnobSize);
-    posX += defaultKnobSize;
-
-    distortionGraph.setBounds(posX, 20+5, 100, defaultKnobSize);
-    posX += 100+5;
-
-    distortionTypeComboBox.setBounds(posX, area.getHeight() - defaultKnobSize, defaultKnobSize * 2, defaultKnobSize - 10);
-
-    driveKnob->showLabel(*this, *driveKnob);
-    mixKnob->showLabel(*this, *mixKnob);
+    distortionGraph.setBounds(x0 + knobWidth * 2 + 16, y0, 150, content.getHeight());
+    distortionTypeComboBox.setBounds(distortionGraph.getRight() + 16, y0 + (content.getHeight() - 26) / 2, 150, 26);
 }
 
 void DistortionSubsection::paintCalled(juce::Graphics& g)
@@ -67,17 +63,15 @@ void DistortionSubsection::addParametersToParameterHandler(ParameterHandler& par
 
 void DistortionSubsection::DistortionGraph::paint(juce::Graphics& g)
 {
-    const float cornerRadius = 5.0f;
+    const auto bounds = getLocalBounds().toFloat();
+    Draw::graphBackground(g, bounds, 4, 4);
 
-    // Dibujar fondo con esquinas redondeadas.
-    juce::Path roundedRect;
-    roundedRect.addRoundedRectangle(0, 0, getWidth(), getHeight(), cornerRadius, cornerRadius, true, true, true, true);
-    g.setColour(Palette::Section);
-    g.fillPath(roundedRect);
+    // Referencia lineal (sin distorsion)
+    g.setColour(Palette::BorderStrong);
+    g.drawLine((float)constrainedArea.getX(), (float)constrainedArea.getBottom(),
+               (float)constrainedArea.getRight(), (float)constrainedArea.getY(), 1.0f);
 
-    // Dibujar la función de distorsión precomputada.
-    g.setColour(juce::Colours::white);
-    g.strokePath(distortionPath, juce::PathStrokeType(2.0f));
+    Draw::curve(g, distortionPath, bounds, Palette::Tertiary, bounds.getCentreY(), false);
 }
 
 void DistortionSubsection::DistortionGraph::recalculatePoints()
@@ -85,42 +79,35 @@ void DistortionSubsection::DistortionGraph::recalculatePoints()
     // Limpiar la trayectoria previa.
     distortionPath.clear();
 
-    // Determinar el área restringida.
-    const float lineThickness = 3.0f;
-    auto area = getLocalBounds();
-    constrainedArea = juce::Rectangle<int>(
-        area.getX() + lineThickness,
-        area.getY() + lineThickness,
-        area.getWidth() - (lineThickness * 2),
-        area.getHeight() - (lineThickness * 2)
-    );
+    // Determinar el Ã¡rea restringida.
+    constrainedArea = getLocalBounds().reduced(6);
 
     float width = constrainedArea.getWidth();
     float height = constrainedArea.getHeight();
     float midY = constrainedArea.getY() + height / 2.0f; // Punto medio vertical.
 
-    // Parámetros para la función de distorsión.
+    // ParÃ¡metros para la funciÃ³n de distorsiÃ³n.
     float startX = -1.0f;
     float endX = 1.0f;
 
-    // Crear la trayectoria para la función de distorsión.
+    // Crear la trayectoria para la funciÃ³n de distorsiÃ³n.
 
     float y2 = std::tanh(-1.0f * drive);
-    float scaledY2 = juce::jmap(y2, -1.0f, 1.0f, height, 0.0f); // y invertido para que +1 esté arriba
-    // Crear la trayectoria de la función de distorsión (tanh)
+    float scaledY2 = juce::jmap(y2, -1.0f, 1.0f, height, 0.0f); // y invertido para que +1 estÃ© arriba
+    // Crear la trayectoria de la funciÃ³n de distorsiÃ³n (tanh)
     distortionPath.startNewSubPath(constrainedArea.getX(), constrainedArea.getY() + scaledY2);
 
     for (float x = startX + 0.01f; x <= endX; x += 0.01f) {
-        // Escalar x al área gráfica.
+        // Escalar x al Ã¡rea grÃ¡fica.
         float normalizedX = juce::jmap(x, startX, endX, 0.0f, width);
 
-        // Aplicar la función f(x) = tanh(x * drive).
+        // Aplicar la funciÃ³n f(x) = tanh(x * drive).
         float y = std::tanh(x * drive);
 
-        // Escalar y al área gráfica (invertir para que +1 esté arriba).
+        // Escalar y al Ã¡rea grÃ¡fica (invertir para que +1 estÃ© arriba).
         float scaledY = juce::jmap(y, -1.0f, 1.0f, height, 0.0f);
 
-        // Dibujar el punto en el gráfico.
+        // Dibujar el punto en el grÃ¡fico.
         distortionPath.lineTo(constrainedArea.getX() + normalizedX, constrainedArea.getY() + scaledY);
     }
 }
@@ -129,7 +116,7 @@ void DistortionSubsection::DistortionGraph::updateParams(float drive)
 {
     if (this->drive != drive) {
         this->drive = drive;
-        recalculatePoints(); // Recalcula la trayectoria del gráfico.
+        recalculatePoints(); // Recalcula la trayectoria del grÃ¡fico.
         repaint();           // Solicita redibujar el componente.
     }
 }

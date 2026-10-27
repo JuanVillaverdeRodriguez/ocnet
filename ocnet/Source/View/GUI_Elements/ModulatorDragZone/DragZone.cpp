@@ -26,32 +26,42 @@ void DragZone::resized()
 {
 }
 
+// Icono de modulacion: tres nodos conectados
+static void drawModulationIcon(juce::Graphics& g, juce::Rectangle<float> area, juce::Colour colour)
+{
+    const float r = area.getWidth() * 0.16f;
+    const juce::Point<float> nodes[] = { { area.getX() + r, area.getBottom() - r },
+                                         { area.getCentreX(), area.getY() + r },
+                                         { area.getRight() - r, area.getBottom() - r } };
+
+    g.setColour(colour);
+    g.drawLine({ nodes[0], nodes[1] }, 1.6f);
+    g.drawLine({ nodes[1], nodes[2] }, 1.6f);
+
+    for (auto node : nodes) {
+        g.setColour(Palette::Subsection);
+        g.fillEllipse(juce::Rectangle<float>(r * 2.0f, r * 2.0f).withCentre(node));
+        g.setColour(colour);
+        g.drawEllipse(juce::Rectangle<float>(r * 2.0f, r * 2.0f).withCentre(node), 1.6f);
+    }
+}
+
 void DragZone::paint(juce::Graphics& g)
 {
-    // Llenar el fondo con el color especificado
-    g.fillAll(Palette::BackgroundSecondary);
+    auto bounds = getLocalBounds().toFloat();
 
-    juce::Image dragImage;
-    if (!mouseHovering) {
-        dragImage = juce::PNGImageFormat::loadFrom(BinaryData::AddAutomationIcon_NotHovering_png, BinaryData::AddAutomationIcon_NotHovering_pngSize);
-    }
-    else {
-        dragImage = juce::PNGImageFormat::loadFrom(BinaryData::AddAutomationIcon_Hovering_png, BinaryData::AddAutomationIcon_Hovering_pngSize);
-    }
-    // Cargar la imagen
+    // Franja lateral de la tarjeta (esquina inferior izquierda redondeada)
+    juce::Path strip;
+    strip.addRoundedRectangle(bounds.getX() + 1.0f, bounds.getY(), bounds.getWidth() - 1.0f, bounds.getHeight() - 1.0f,
+                              7.0f, 7.0f, false, false, true, false);
+    g.setColour(mouseHovering ? Palette::Modulation.withAlpha(0.10f) : Palette::Inset.withAlpha(0.45f));
+    g.fillPath(strip);
 
-    // Escalar la imagen al tamaño deseado
-    dragImage = dragImage.rescaled(32, 32);
+    g.setColour(Palette::Border);
+    g.drawVerticalLine(getWidth() - 1, 0.0f, bounds.getBottom());
 
-    if (dragImage.isValid())
-    {
-        // Calcular la posición para centrar la imagen
-        int x = (getWidth() - dragImage.getWidth()) / 2;
-        int y = (getHeight() - dragImage.getHeight()) / 2;
-
-        // Dibujar la imagen centrada
-        g.drawImageAt(dragImage, x, y);
-    }
+    auto iconArea = bounds.withSizeKeepingCentre(20.0f, 20.0f);
+    drawModulationIcon(g, iconArea, mouseHovering ? Palette::Modulation : Palette::TextDim);
 }
 
 void DragZone::mouseDown(const juce::MouseEvent& event)
@@ -60,9 +70,17 @@ void DragZone::mouseDown(const juce::MouseEvent& event)
     {
         juce::var dragDescription = "LFO1"; // Descripción de lo que se está arrastrando
 
-        juce::Image dragImage = juce::PNGImageFormat::loadFrom(BinaryData::AddAutomationIcon_Hovering_png, BinaryData::AddAutomationIcon_Hovering_pngSize);
-        
-        dragImage = dragImage.rescaled(64, 64);
+        // Imagen que sigue al cursor mientras se arrastra la modulacion
+        juce::Image dragImage(juce::Image::ARGB, 40, 40, true);
+        {
+            juce::Graphics ig(dragImage);
+            auto area = juce::Rectangle<float>(40.0f, 40.0f).reduced(2.0f);
+            ig.setColour(Palette::Modulation.withAlpha(0.18f));
+            ig.fillEllipse(area);
+            ig.setColour(Palette::Modulation);
+            ig.drawEllipse(area.reduced(1.0f), 2.0f);
+            drawModulationIcon(ig, area.withSizeKeepingCentre(18.0f, 18.0f), Palette::Modulation);
+        }
 
         if (dragImage.isValid()) // Verifica que la imagen se haya cargado correctamente
         {

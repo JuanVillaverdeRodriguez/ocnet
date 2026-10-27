@@ -12,7 +12,7 @@
 
 EqualizerSubsection::EqualizerSubsection(int id, GUI_EventHandler& eventHandler) : EffectsSubsection(eventHandler, id, "Equalizer")
 {
-    setDesiredHeight(200);
+    setDesiredHeight(136);
 
     gainLParameterID = createParameterID("gainL");
     cutOffLParameterID = createParameterID("cutOffL");
@@ -99,8 +99,14 @@ EqualizerSubsection::EqualizerSubsection(int id, GUI_EventHandler& eventHandler)
     highCutSlopeSelectorComboBox.setName(highCutSlopeSelectorParameterID);
     lowCutSlopeSelectorComboBox.setName(lowCutSlopeSelectorParameterID);
 
-    lowCutSlopeLabel.setText("LowCut slope", juce::NotificationType::dontSendNotification);
-    highCutSlopeLabel.setText("HighCut slope", juce::NotificationType::dontSendNotification);
+    lowCutSlopeLabel.setText("LOW CUT SLOPE", juce::NotificationType::dontSendNotification);
+    highCutSlopeLabel.setText("HIGH CUT SLOPE", juce::NotificationType::dontSendNotification);
+
+    for (auto* label : { &lowCutSlopeLabel, &highCutSlopeLabel }) {
+        label->setFont(Fonts::caps(10.0f, true, 0.1f));
+        label->setColour(juce::Label::textColourId, Palette::TextFaint);
+        label->setBorderSize(juce::BorderSize<int>(0, 2, 0, 0));
+    }
 
     addAndMakeVisible(*gainLKnob);
     addAndMakeVisible(*cutOffLKnob);
@@ -146,6 +152,14 @@ void EqualizerSubsection::attachParameters(ParameterHandler& parameterHandler)
 
     lowCutSlopeSelectorComboBoxAttachment = std::make_unique<OcnetComboBoxAttachment>(lowCutSlopeSelectorComboBox, *parameterHandler.getComboBoxParameter(lowCutSlopeSelectorParameterID)->get());
     highCutSlopeSelectorComboBoxAttachment = std::make_unique<OcnetComboBoxAttachment>(highCutSlopeSelectorComboBox, *parameterHandler.getComboBoxParameter(highCutSlopeSelectorParameterID)->get());
+
+    // Muestra solo los knobs de la banda seleccionada
+    if (midFreqButton.getToggleState())
+        buttonClickedCalled(&midFreqButton);
+    else if (highFreqButton.getToggleState())
+        buttonClickedCalled(&highFreqButton);
+    else
+        buttonClickedCalled(&lowFreqButton);
 }
 
 void EqualizerSubsection::addParametersToParameterHandler(ParameterHandler& parameterHandler)
@@ -172,72 +186,35 @@ void EqualizerSubsection::addParametersToParameterHandler(ParameterHandler& para
 
 void EqualizerSubsection::subsectionResized()
 {
-    auto area = getLocalBounds();
-    const int buttonsY = 20;
-    const int knobsY = 60;
-    const int combosY = 60 + defaultKnobSize + 5;
+    auto content = getContentArea();
+    const int x0 = content.getX();
+    const int y0 = content.getY();
+    const int knobsY = y0 + 26 + 8;
+    const int bandButtonWidth = knobWidth;
 
-    int posX = 0;
-    gainLKnob->setBounds(posX, knobsY, defaultKnobSize, defaultKnobSize);
-    posX += defaultKnobSize;
+    // Selector de banda
+    lowFreqButton.setBounds(x0, y0, bandButtonWidth, 26);
+    midFreqButton.setBounds(x0 + bandButtonWidth, y0, bandButtonWidth, 26);
+    highFreqButton.setBounds(x0 + bandButtonWidth * 2, y0, bandButtonWidth, 26);
 
-    cutOffLKnob->setBounds(posX, knobsY, defaultKnobSize, defaultKnobSize);
-    posX += defaultKnobSize;
+    // Knobs de cada banda (solo una banda visible a la vez)
+    Knob1* bands[3][3] = { { gainLKnob.get(), cutOffLKnob.get(), resonanceLKnob.get() },
+                           { gainMKnob.get(), cutOffMKnob.get(), resonanceMKnob.get() },
+                           { gainHKnob.get(), cutOffHKnob.get(), resonanceHKnob.get() } };
 
-    resonanceLKnob->setBounds(posX, knobsY, defaultKnobSize, defaultKnobSize);
-    posX += defaultKnobSize;
+    for (auto& band : bands)
+        for (int i = 0; i < 3; ++i)
+            placeKnob(*band[i], x0 + knobWidth * i, knobsY);
 
-    posX = 0;
-    gainMKnob->setBounds(posX, knobsY, defaultKnobSize, defaultKnobSize);
-    posX += defaultKnobSize;
+    // Pendientes de los filtros de corte
+    const int slopesX = x0 + knobWidth * 3 + 30;
+    const int comboWidth = 130;
 
-    cutOffMKnob->setBounds(posX, knobsY, defaultKnobSize, defaultKnobSize);
-    posX += defaultKnobSize;
+    lowCutSlopeLabel.setBounds(slopesX, y0, comboWidth, 14);
+    lowCutSlopeSelectorComboBox.setBounds(slopesX, y0 + 16, comboWidth, 26);
 
-    resonanceMKnob->setBounds(posX, knobsY, defaultKnobSize, defaultKnobSize);
-    posX += defaultKnobSize;
-
-    posX = 0;
-    gainHKnob->setBounds(posX, knobsY, defaultKnobSize, defaultKnobSize);
-    posX += defaultKnobSize;
-
-    cutOffHKnob->setBounds(posX, knobsY, defaultKnobSize, defaultKnobSize);
-    posX += defaultKnobSize;
-
-    resonanceHKnob->setBounds(posX, knobsY, defaultKnobSize, defaultKnobSize);
-    posX += defaultKnobSize;
-
-    posX = 0;
-    lowFreqButton.setBounds(posX, buttonsY, 60, 40);
-    posX += 60;
-
-    midFreqButton.setBounds(posX, buttonsY, 60, 40);
-    posX += 60;
-
-    highFreqButton.setBounds(posX, buttonsY, 60, 40);
-    posX += 60;
-
-    posX = 0;
-    lowCutSlopeSelectorComboBox.setBounds(posX, combosY + 4, 100, 40);
-    posX += 100;
-
-    highCutSlopeSelectorComboBox.setBounds(posX, combosY + 4, 100, 40);
-    posX += 100;
-
-    lowCutSlopeLabel.setBounds(lowCutSlopeSelectorComboBox.getBounds().getX(), lowCutSlopeSelectorComboBox.getBounds().getY() + lowCutSlopeSelectorComboBox.getBounds().getHeight() + 2, lowCutSlopeSelectorComboBox.getBounds().getWidth(), 20);
-    highCutSlopeLabel.setBounds(highCutSlopeSelectorComboBox.getBounds().getX(), highCutSlopeSelectorComboBox.getBounds().getY() + highCutSlopeSelectorComboBox.getBounds().getHeight() + 2, highCutSlopeSelectorComboBox.getBounds().getWidth(), 20);
-
-    gainLKnob->showLabel(*this, *gainLKnob);
-    cutOffLKnob->showLabel(*this, *cutOffLKnob);
-    resonanceLKnob->showLabel(*this, *resonanceLKnob);
-
-    gainMKnob->showLabel(*this, *gainMKnob);
-    cutOffMKnob->showLabel(*this, *cutOffMKnob);
-    resonanceMKnob->showLabel(*this, *resonanceMKnob);
-
-    gainHKnob->showLabel(*this, *gainHKnob);
-    cutOffHKnob->showLabel(*this, *cutOffHKnob);
-    resonanceHKnob->showLabel(*this, *resonanceHKnob);
+    highCutSlopeLabel.setBounds(slopesX, y0 + 50, comboWidth, 14);
+    highCutSlopeSelectorComboBox.setBounds(slopesX, y0 + 66, comboWidth, 26);
 }
 
 void EqualizerSubsection::buttonClickedCalled(juce::Button* clickedButton)

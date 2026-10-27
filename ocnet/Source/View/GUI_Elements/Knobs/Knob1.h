@@ -23,6 +23,7 @@ public:
 	void showLabel(juce::Component& component, juce::Rectangle<int> bounds);
 
 	void paint(juce::Graphics& g) override;
+	void visibilityChanged() override;
 
 	// Colocar la label debajo de attachToComp
 	void showLabel(juce::Component& parentComp, juce::Component& attachToComp);

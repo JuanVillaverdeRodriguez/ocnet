@@ -1,9 +1,10 @@
 # Ocnet: Free modular synthesizer for music producers.
 
 <div align="center">
-  <img src="./ImagesReadme/OcnetEffectsSection.png" alt="Effects Section" width="45%" style="margin-right: 10px;">
-  <img src="./ImagesReadme/OcnetOscSection.png" alt="Oscillators Section" width="45%">
-  <img src="https://img.shields.io/github/license/martinge17/escooter-monitoring"> <img src="https://img.shields.io/github/v/release/martinge17/escooter-monitoring">
+  <img src="./ImagesReadme/OcnetOscSection.png" alt="Ocnet: oscillators and modulators" width="49%">
+  <img src="./ImagesReadme/OcnetEffectsSection.png" alt="Ocnet: effects and modulators" width="49%">
+  <br><br>
+  <img src="https://img.shields.io/github/license/JuanVillaverdeRodriguez/ocnet">
 
   <hr>
 </div>
